@@ -8,3 +8,14 @@
       - 화이트보드
       - 화면공유
       - sticky note
+
+- 당장 필요한 것들
+  - 월드
+    - 상호작용 가능한 오브젝트들 (like johnlemon Level)
+  - 캐릭터 (model 및 animation)
+  - 캐릭터의 이동 및 자연스러운 카메라 전환
+  - webGL build 후 local 브라우저에서 돌아가는지 확인 -> 안되면 client까지 고려
+  - 필수 SDK
+    - 비디오, 오디오 SDK
+    - 화면공유
+    - 내부 브라우저
