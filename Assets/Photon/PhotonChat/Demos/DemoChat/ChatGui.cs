@@ -333,10 +333,12 @@ namespace Photon.Chat.Demo
             {
                 if (doingPrivateChat)
                 {
+                    Debug.Log("sending private message" + inputLine);
                     this.chatClient.SendPrivateMessage(privateChatTarget, inputLine);
                 }
                 else
                 {
+                    Debug.Log("sending public message" + inputLine);
                     this.chatClient.PublishMessage(this.selectedChannelName, inputLine);
                 }
             }
