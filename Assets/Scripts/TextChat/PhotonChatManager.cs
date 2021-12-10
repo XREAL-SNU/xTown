@@ -1,44 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+//unity
 using UnityEngine;
 using UnityEngine.UI;
+//photon chat
 using Photon.Chat;
 using Photon.Realtime;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
+//pun
 using Photon.Pun;
 
 /*
- * Written by Hanjun Kim
- * 2021. 12. 05
+ * Contributors:
+ * Drafted by Hanjun Kim 2021. 12. 05
  */
+
+
 namespace PhotonTextChat
 {
-
     public class PhotonChatManager : MonoBehaviour, IChatClientListener {
 
         //channels
-        //private readonly Dictionary<string, Toggle> channelToggles = new Dictionary<string, Toggle>();
+        //list of channels currently subscribed to
         private readonly List<string> myChannels = new List<string>();
         private string selectedChannelName; // mainly used for GUI/input
 
-        //default channels
+        //default channels: automatically join on Connect()
         public string[] ChannelsToJoinOnConnect;
         public int HistoryLengthToFetch; // # previously sent messages that can be fetched for context
-        public string UserName = "Default Name";
+        public string UserName;
 
         
         [Header("Panels")]
-        //the ui elements - panels
+        //the ui elements - panels -> set in inspector
         public RectTransform ChatPanel;    
         public GameObject UsernamePanel;
 
         [Header("UI")]
-        //the ui elements - buttons and texts
+        //the ui elements - buttons and texts -> set in inspector
         public InputField InputFieldChat; 
         public InputField InputFieldSendTo;
         public Button SendButton;
         public Text CurrentChannelText;
 
+        //set in inspector!
         [SerializeField] 
         string userID;
 
@@ -54,11 +59,12 @@ namespace PhotonTextChat
                 this.UserName = "default user";
             }
 
+            //add listeners to input field and send button
             InputFieldChat.onEndEdit.AddListener(delegate { OnEnterSend(); });
             SendButton.onClick.AddListener(delegate { OnClickSend(); });
         
-        //connect on start
-        Connect();
+            //connect on start
+            Connect();
         }
 
         void Connect()
@@ -77,12 +83,13 @@ namespace PhotonTextChat
         {
             if (this.chatClient != null)
             {
-                //maybe we should call it less often?
+                //check for new messages: call every frame
                 this.chatClient.Service();
             }
         }
 
         //send callbacks
+        //on enter pressed
         void OnEnterSend()
         {
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
@@ -93,6 +100,7 @@ namespace PhotonTextChat
             }
         }
 
+        //on send button clicked
         void OnClickSend()
         {
             if (this.InputFieldChat != null)
@@ -111,18 +119,18 @@ namespace PhotonTextChat
                 return;
             }
 
-
+            //is this message private?
             bool doingPrivateChat = this.chatClient.PrivateChannels.ContainsKey(this.selectedChannelName);
             string privateChatTarget = string.Empty;
             if (doingPrivateChat)
             {
-                // the channel name for a private  user1 : user2
+                // the channel name for a private is in form:  user1 : user2
                 //we need the user2 part.
                 string[] splitNames = this.selectedChannelName.Split(new char[] { ':' });
                 privateChatTarget = splitNames[1];
             }
 
-            if (inputLine[0].Equals('\\')) //commands
+            if (inputLine[0].Equals('\\')) //commands begin with character '\'
             {
                 string[] tokens = inputLine.Split(new char[] { ' ' }, 2);
                 
@@ -136,7 +144,7 @@ namespace PhotonTextChat
                 {
                     this.chatClient.Unsubscribe(tokens[1].Split(new char[] { ' ', ',' }));
                 }
-                //clearing channel
+                //clearing channel - delete all messages (testing purpose)
                 else if (tokens[0].Equals("\\clear"))
                 {
                     if (doingPrivateChat)
@@ -162,12 +170,12 @@ namespace PhotonTextChat
                     {
                         this.ShowChannel(subtokens[0]);
                     }
-                    else //not yet joined
+                    else //not yet joined - create a new channel and enter
                     {
                         this.chatClient.Subscribe(new string[] { subtokens[0] });
                     }
                 }
-                else
+                else //invalid input
                 {
                     Debug.Log("The command '" + tokens[0] + "' is invalid.");
                 }
@@ -267,19 +275,21 @@ namespace PhotonTextChat
         {
             foreach (string channelName in channels)
             {
-                if (this.myChannels.Contains(channelName))
+                if (this.myChannels.Contains(channelName))//if i'm subscribed to the channel
                 {
                     Debug.Log("Unsubscribed from channel '" + channelName + "'.");
 
                     // Showing another channel if the active channel is the one we unsubscribed from
                     if (channelName == this.selectedChannelName && this.myChannels.Count > 0)
                     {
+                        //get enumerator(like cpp iterator) to the first in the channels.
                         IEnumerator<string> firstEntry = this.myChannels.GetEnumerator();
                         firstEntry.MoveNext();
+                        //IEnumerator.Current gets the element pointed to by the enumerator in the collection
                         this.ShowChannel(firstEntry.Current);
                     }
                 }
-                else
+                else//trying to unsuscribe to a channel not subscribed to.
                 {
                     Debug.Log("Can't unsubscribe from channel '" + channelName + "' because you are currently not subscribed to it.");
                 }
@@ -288,7 +298,7 @@ namespace PhotonTextChat
 
 
 
-        //more code(must be implemented)
+        //more code(requires implementation by IChatClientListener interface)
 
         public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
         {
