@@ -10,6 +10,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool sit;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -42,7 +43,16 @@ namespace StarterAssets
 			SprintInput(value.isPressed);
 		}
 
+		public void OnSit(InputValue value)
+		{
+			SitInput(value.isPressed);
+		}
 
+		public void SitInput(bool newSitState)
+        {
+			sit = newSitState;
+			Debug.Log("Sit command : " +sit);
+        }
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{

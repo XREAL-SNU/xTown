@@ -64,6 +64,7 @@ namespace StarterAssets
 		private float _rotationVelocity;
 		private float _verticalVelocity;
 		private float _terminalVelocity = 53.0f;
+		private bool _sitting = false;
 
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
@@ -74,6 +75,7 @@ namespace StarterAssets
 		private int _animIDGrounded;
 		private int _animIDJump;
 		private int _animIDFreeFall;
+		private int _animIDSit;
 		private int _animIDMotionSpeed;
 
 		private Animator _animator;
@@ -110,10 +112,21 @@ namespace StarterAssets
 		private void Update()
 		{
 			_hasAnimator = TryGetComponent(out _animator);
-			
-			JumpAndGravity();
-			GroundedCheck();
-			Move();
+
+			if (!_sitting)
+			{
+				JumpAndGravity();
+				GroundedCheck();
+				Move();
+				
+			}
+            else
+            {
+				GroundedCheck();
+			}
+
+			SitCheck();
+
 		}
 
 		private void LateUpdate()
@@ -128,6 +141,7 @@ namespace StarterAssets
 			_animIDJump = Animator.StringToHash("Jump");
 			_animIDFreeFall = Animator.StringToHash("FreeFall");
 			_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+			_animIDSit = Animator.StringToHash("Sitting");
 		}
 
 		private void GroundedCheck()
@@ -143,6 +157,35 @@ namespace StarterAssets
 			}
 		}
 
+		private void SitCheck()
+        {
+			
+			if (!_sitting && _input.sit) // standing -> sitting
+			{
+				_sitting = true;
+				_input.sit = false;
+				_controller.Move(new Vector3(0.0f, 0.8f, 0.0f));
+				if (_hasAnimator)
+				{
+					_animator.SetBool(_animIDSit, true);
+				}
+				
+			}
+			else if(_sitting && _input.sit) // sitting -> standing
+            {
+				_sitting = false;
+				_input.sit = false;
+				_controller.Move(new Vector3(0.0f, -0.8f, 0.0f));
+
+				if (_hasAnimator)
+				{
+					_animator.SetBool(_animIDSit, false);
+				}
+				Debug.Log("_sitting @standup!: " + _sitting);
+
+			}
+
+		}
 		private void CameraRotation()
 		{
 			// if there is an input and camera position is not fixed
@@ -150,7 +193,6 @@ namespace StarterAssets
 			{
 				_cinemachineTargetYaw += _input.look.x * Time.deltaTime;
 				_cinemachineTargetPitch += _input.look.y * Time.deltaTime;
-				Debug.Log("Yaw " + _input.look);
 			}
 
 			// clamp our rotations so our values are limited 360 degrees

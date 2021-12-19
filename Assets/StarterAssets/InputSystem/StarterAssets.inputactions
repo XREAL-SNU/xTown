@@ -36,6 +36,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Sit",
+                    "type": "Button",
+                    "id": "d8c97086-f156-4367-9d83-4dae42151bd6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -212,6 +220,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "019643f8-2be6-4f1d-a641-aed4ef5463da",
+                    "path": "<Keyboard>/#(e)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Sit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
