@@ -27,9 +27,9 @@ public class AvatarMovement : MonoBehaviour
         m_Movement.Normalize();
 
         bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool HasVerticalInput = !Mathf.Approximately(vertical, 0f);
+        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
 
-        bool isWalking = hasHorizontalInput || HasVerticalInput;
+        bool isWalking = hasHorizontalInput || hasVerticalInput;
         m_Animator.SetBool("IsWalking", isWalking);
 
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
@@ -38,6 +38,7 @@ public class AvatarMovement : MonoBehaviour
 
     void OnAnimatorMove()
     {
+        Debug.Log("deltaPos: " + m_Rigidbody.position);
         m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
         m_Rigidbody.MoveRotation(m_Rotation);
     }
