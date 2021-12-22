@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
+
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [Header("DisconnectPanel")]
@@ -18,6 +19,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Button ClickUpgradeBtn, AutoUpgradeBtn;
 
     float nextTime;
+    int clickUpgradeCostPer = 10;
+    int clickUpgradeAddPer = 2;
+    int autoUpgradeostPer = 500;
+    int autoUpgradeAddPer = 2;
 
     void Start()
     {
@@ -27,8 +32,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
-        PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
-        PhotonNetwork.ConnectUsingSettings();
+        if (PhotonNetwork.LocalPlayer != null)
+        {
+            PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -71,8 +79,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             Player.value -= Player.clickUpgradeCost;
             Player.valuePerClick += Player.clickUpgradeAdd;
-            Player.clickUpgradeCost += Player.clickUpgradeAdd * 10;
-            Player.clickUpgradeAdd += 2;
+            Player.clickUpgradeCost += Player.clickUpgradeAdd * clickUpgradeCostPer;
+            Player.clickUpgradeAdd += clickUpgradeAddPer;
 
             ClickUpgradeText.text = Player.clickUpgradeAdd + " / click" + "\n" + "Cost : "
                 + Player.clickUpgradeCost;
@@ -89,8 +97,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             Player.value -= Player.autoUpgradeCost;
             Player.valuePerSecond += Player.autoUpgradeAdd;
-            Player.autoUpgradeCost += 500;
-            Player.autoUpgradeAdd += 2;
+            Player.autoUpgradeCost += autoUpgradeostPer;
+            Player.autoUpgradeAdd += autoUpgradeAddPer;
 
             AutoUpgradeText.text = Player.autoUpgradeAdd + " / sec" + "\n" + "Cost : "
                 + Player.autoUpgradeCost;
@@ -119,7 +127,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         AutoUpgradeBtn.interactable = Player.value >= Player.autoUpgradeCost;
     }
 
-    void ValuePerSecond()
+    void UpdateValue()
     {
         PlayerScript Player = FindPlayer();
         Player.value += Player.valuePerSecond;
@@ -134,7 +142,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if(Time.time > nextTime)
         {
             nextTime = Time.time + 1;
-            ValuePerSecond();
+            UpdateValue();
         }
     }
 }
