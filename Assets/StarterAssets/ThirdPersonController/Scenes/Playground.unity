@@ -769,7 +769,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7846504136111666201, guid: b286af571f3a3774ebb753908fc60f1f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b286af571f3a3774ebb753908fc60f1f, type: 3}
 --- !u!1001 &1128491677
 PrefabInstance:
@@ -839,6 +840,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1488114437439743541, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
+      propertyPath: MoveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488114437439743541, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -847,11 +852,16 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1488114437439743541, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
+      propertyPath: SprintSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488114437439743541, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
       propertyPath: GroundLayers.m_Bits
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1488114437439743533, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
+    - {fileID: 1488114437439743532, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: daf3942f748d11b40bb7409fc03e574f, type: 3}
 --- !u!1001 &1283938639
 PrefabInstance:
