@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+using Photon.Realtime;
 
 namespace XReal.XTown.Yacht
 {
@@ -20,7 +21,7 @@ namespace XReal.XTown.Yacht
         finish
     }
 
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IPunTurnManagerCallbacks
     {
         public static GameManager instance;
         public static Quaternion[] rotArray = new Quaternion[6];
@@ -28,6 +29,10 @@ namespace XReal.XTown.Yacht
         public static bool rollTrigger = false;
         public static GameState currentGameState = GameState.initializing;
 
+
+        public TakeTurns turnManager;
+
+        /* events: set callbacks in inspector */ 
         public UnityEvent onInitialize;
         public UnityEvent onReadyStart;
         public UnityEvent onReadyToSelect;
@@ -40,11 +45,15 @@ namespace XReal.XTown.Yacht
         private bool initializeTrigger = false;
         private bool readyTrigger = false;
         private float posX = 1.4f;
-        private float posY = 7.0f;
+        private float posY = 7.0f; 
+
+
+        /* Monobehaviour callbacks */
 
 
         void Awake()
         {
+            /*
             if (instance == null)
             {
                 instance = this;
@@ -57,7 +66,7 @@ namespace XReal.XTown.Yacht
                     Destroy(this.gameObject);
                 }
             }
-
+            */
             rotArray[0] = Quaternion.Euler(90f, 0f, 0f);
             rotArray[1] = Quaternion.Euler(0f, 0f, 0f);
             rotArray[2] = Quaternion.Euler(0f, 90f, 90f);
@@ -73,9 +82,25 @@ namespace XReal.XTown.Yacht
 
         }
 
-        // Update is called once per frame
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.X)) // a special event
+            {
+                int rand = UnityEngine.Random.Range(0, 100);
+                Debug.Log("sending " + rand + " final");
+                turnManager.SendMove(rand, true);
+            }
+            if (Input.GetKeyDown(KeyCode.E)) // an ordinary event
+            {
+                int rand = UnityEngine.Random.Range(0, 100);
+                Debug.Log("sending " + rand + " not final");
+                turnManager.SendMove(rand, false);
+            }
+        }
+        /* Update is called once per frame
+        void Update()
+        {
+
             // 주사위 및 기타 변수 초기화 후 ready로 이동
             if (currentGameState == GameState.initializing)
             {
@@ -102,6 +127,7 @@ namespace XReal.XTown.Yacht
                 onReadyToSelect.Invoke();
                 Debug.Log("ready to selecting");
             }
+            
 
             // ready에서 스페이스바 누르면 shaking으로 전환.
             if (Input.GetKeyDown(KeyCode.Space) && currentGameState == GameState.ready && CupManager.playingAnim == false)
@@ -115,14 +141,15 @@ namespace XReal.XTown.Yacht
                 }
 
             }
+            
 
-            // shaking에서 스페이스바 떼면 pouring으로 전환.
+            //shaking에서 스페이스바 떼면 pouring으로 전환.
             if (Input.GetKeyUp(KeyCode.Space) && currentGameState == GameState.shaking)
             {
                 SetGameState(GameState.pouring);
                 onPouringStart.Invoke();
             }
-
+            
             // rolling으로 바뀌면 실행
             if (currentGameState == GameState.rolling && rollTrigger == true)
             {
@@ -130,10 +157,9 @@ namespace XReal.XTown.Yacht
                 onRollingStart.Invoke();
             }
 
-
+            // 모든 주사위가 rolling이 끝나면 selecting으로 전환
             bool rollingFinished = !DiceScript.diceInfoList.Any(x => x.diceNumber == 0);
 
-            // 모든 주사위가 rolling이 끝나면 selecting으로 전환
             if (currentGameState == GameState.rolling && rollingFinished)
             {
                 SetGameState(GameState.selecting);
@@ -160,15 +186,42 @@ namespace XReal.XTown.Yacht
                 }
             }
         }
+        */
 
-
+        /* public methods */
         public static void SetGameState(GameState newGameState)
         {
             if (Enum.IsDefined(typeof(GameState), newGameState))
             {
                 currentGameState = newGameState;
+                Debug.Log("state: " + newGameState);
             }
         }
+
+        /* Turn Listener callbacks */
+        public void OnTurnBegins(int turn)
+        {
+            Debug.Log("Turn " + turn + "begins!");
+        }
+
+        public void OnTurnCompleted(int turn)
+        {
+            Debug.Log("Turn " + turn + "ends");
+        }
+
+        public void OnPlayerMove(Player player, int turn, object move)
+        {
+            int mv = (int)move;
+            Debug.Log("player" + player.ActorNumber + "has made a move " + mv);
+        }
+
+        // When a player finishes a turn (includes the move of that player)
+        public void OnPlayerFinished(Player player, int turn, object move)
+        {
+            int mv = (int)move;
+            Debug.Log("player" + player.ActorNumber + "'s turn has ended!" + mv);
+        }
+
     }
 }
 

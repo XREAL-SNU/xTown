@@ -21,6 +21,8 @@ namespace XReal.XTown.Yacht
             scoreTemplate.gameObject.SetActive(false);
 
             float templateHeight = 24f;
+
+            // Instantiate score table items
             for (int i = 0; i < 14; i++)
             {
                 Transform scoreTransform = Instantiate(scoreTemplate, scoreContainer);

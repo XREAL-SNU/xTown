@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/* ui script for selecting hands */
 namespace XReal.XTown.Yacht
 {
     public class SelectScore : MonoBehaviour, IPointerClickHandler

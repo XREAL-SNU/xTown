@@ -23,11 +23,7 @@ namespace XReal.XTown.Yacht
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
 
-        }
 
         public void OnInitialze()
         {
@@ -126,6 +122,8 @@ namespace XReal.XTown.Yacht
                 PickedSlotController.instance.PutIntoEmptySlot(diceInfo.diceIndex);
                 yield return new WaitForSecondsRealtime(0.05f);
             }
+            
+
         }
     }
 }
