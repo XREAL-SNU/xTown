@@ -7,14 +7,13 @@ public class LoadCharacter : MonoBehaviour
 {
     public GameObject[] CharacterPrefabs;
     public Transform SpawnPoint;
-    public Transform FollowTarget;
-    public GameObject Player;
-    public CinemachineVirtualCamera vcam;
+    public CinemachineFreeLook FreeLookCam;
+    private Transform FollowTarget;
+    private GameObject Player;
 
     // Start is called before the first frame update
     void Start()
     {
-        //vcam = GetComponent<CinemachineVirtualCamera>();
         int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter");
         GameObject Prefab = CharacterPrefabs[selectedCharacter];
         GameObject Clone = Instantiate(Prefab, SpawnPoint.position, Quaternion.identity);
@@ -28,9 +27,10 @@ public class LoadCharacter : MonoBehaviour
             Player = GameObject.FindWithTag("Player");
             if (Player != null)
             {
-                FollowTarget = Player.transform;
-                vcam.Follow = FollowTarget;
-                vcam.LookAt = FollowTarget;
+                //FollowTarget = Player.transform;
+                FollowTarget = GameObject.Find("FollowTarget").transform;
+                FreeLookCam.Follow = Player.transform;
+                FreeLookCam.LookAt = FollowTarget;
             }
         }
     }

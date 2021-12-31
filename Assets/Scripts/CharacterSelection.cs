@@ -13,7 +13,6 @@ public class CharacterSelection : MonoBehaviour
         Characters[selectedCharacter].SetActive(false);
         selectedCharacter = (selectedCharacter + 1) % Characters.Length;
         Characters[selectedCharacter].SetActive(true);
-        Debug.Log("Click Next");
     }
 
     public void PreviousCharacter()
@@ -25,7 +24,6 @@ public class CharacterSelection : MonoBehaviour
             selectedCharacter += Characters.Length;
         }
         Characters[selectedCharacter].SetActive(true);
-        Debug.Log("Click Previous");
     }
 
     public void Enter()
