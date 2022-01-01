@@ -187,7 +187,9 @@ namespace XReal.XTown.Yacht
             int[] ss1 = new int[] { 1, 2, 3, 4 };
             int[] ss2 = new int[] { 2, 3, 4, 5 };
             int[] ss3 = new int[] { 3, 4, 5, 6 };
-            if (uniqueNumberArray.SequenceEqual(ss1) || uniqueNumberArray.SequenceEqual(ss2) || uniqueNumberArray.SequenceEqual(ss3))
+
+            bool isSubset = (!ss1.Except(uniqueNumberArray).Any() || !ss2.Except(uniqueNumberArray).Any() || !ss3.Except(uniqueNumberArray).Any());
+            if (isSubset)
             {
                 return 15;
             }
