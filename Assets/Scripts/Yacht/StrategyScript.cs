@@ -17,10 +17,11 @@ namespace XReal.XTown.Yacht
 
         private void Awake()
         {
+            /*
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -29,7 +30,7 @@ namespace XReal.XTown.Yacht
                     Destroy(this.gameObject);
                 }
             }
-
+            */
             foreach (string strategyName in strategiesOrder)
             {
                 Dictionary<string, int> strategy_info = new Dictionary<string, int>();

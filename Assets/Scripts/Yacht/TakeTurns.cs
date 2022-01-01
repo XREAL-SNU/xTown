@@ -16,7 +16,8 @@ namespace XReal.XTown.Yacht
 
         /* list of finished players */
         private readonly HashSet<Player> finishedPlayers = new HashSet<Player>();
-        
+
+
 
 
         /* the turn property -> a custom room property shared inside the room */
@@ -37,7 +38,7 @@ namespace XReal.XTown.Yacht
 
 
 
-
+        /* event sending */
 
 
         // event codes
@@ -52,6 +53,7 @@ namespace XReal.XTown.Yacht
         /* Turn management functions - either increments turns or raises events */
         public void BeginTurn()
         {
+            Debug.Log("Yacht/TakeTurns: turn increment event");
             Turn = this.Turn + 1; // note: this will set a property in the room, which is available to the other players.
         }
 
@@ -125,6 +127,7 @@ namespace XReal.XTown.Yacht
 
                         if (Turn > 0 && this.finishedPlayers.Count == PhotonNetwork.CurrentRoom.PlayerCount)
                         {
+                            Debug.Log("Yacht/TakeTurns: turn end event");
                             TurnListener.OnTurnCompleted(this.Turn);
                         }
                         break;

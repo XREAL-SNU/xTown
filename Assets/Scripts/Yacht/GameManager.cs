@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+using Photon.Pun;
 using Photon.Realtime;
 
 namespace XReal.XTown.Yacht
@@ -30,9 +31,9 @@ namespace XReal.XTown.Yacht
         public static GameState currentGameState = GameState.initializing;
 
 
-        public TakeTurns turnManager;
+        
 
-        /* events: set callbacks in inspector */ 
+        /* events: set callbacks in inspector */
         public UnityEvent onInitialize;
         public UnityEvent onReadyStart;
         public UnityEvent onReadyToSelect;
@@ -44,8 +45,19 @@ namespace XReal.XTown.Yacht
 
         private bool initializeTrigger = false;
         private bool readyTrigger = false;
-        private float posX = 1.4f;
-        private float posY = 7.0f; 
+
+        /* multiplay */
+        // set this to true to enable multiplay. you must build again. 
+        // still in experimental stage.
+        public static bool multiplayMode = false;
+
+        public static int currentTurn = 0;
+        public TakeTurns turnManager;
+
+        [SerializeField]
+        private NetworkDebugger _debugger;
+        [SerializeField]
+        private GameObject _waitingPanel;
 
 
         /* Monobehaviour callbacks */
@@ -75,31 +87,38 @@ namespace XReal.XTown.Yacht
             rotArray[5] = Quaternion.Euler(-90f, 90f, 0f);
         }
 
-        // Start is called before the first frame update
+        /* MonoBehaviour callbacks */
         void Start()
         {
-            initializeTrigger = true;
-
+            /* multiplay */
+            if (multiplayMode && PhotonNetwork.IsMasterClient)
+            {
+                initializeTrigger = true;
+            }
+            else if(!multiplayMode)
+            {
+                _waitingPanel.SetActive(false);
+            }
         }
+
+
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.X)) // a special event
+            /* multiplayer testing */
+            // check for my turn
+            if (multiplayMode && (!IsMyTurn || currentTurn <= 0)) return;
+
+            if (Input.GetKeyDown(KeyCode.F)) // a special event
             {
                 int rand = UnityEngine.Random.Range(0, 100);
-                Debug.Log("sending " + rand + " final");
                 turnManager.SendMove(rand, true);
             }
-            if (Input.GetKeyDown(KeyCode.E)) // an ordinary event
+            if (Input.GetKeyDown(KeyCode.S)) // an ordinary event
             {
                 int rand = UnityEngine.Random.Range(0, 100);
-                Debug.Log("sending " + rand + " not final");
                 turnManager.SendMove(rand, false);
             }
-        }
-        /* Update is called once per frame
-        void Update()
-        {
 
             // 주사위 및 기타 변수 초기화 후 ready로 이동
             if (currentGameState == GameState.initializing)
@@ -127,7 +146,7 @@ namespace XReal.XTown.Yacht
                 onReadyToSelect.Invoke();
                 Debug.Log("ready to selecting");
             }
-            
+
 
             // ready에서 스페이스바 누르면 shaking으로 전환.
             if (Input.GetKeyDown(KeyCode.Space) && currentGameState == GameState.ready && CupManager.playingAnim == false)
@@ -141,7 +160,7 @@ namespace XReal.XTown.Yacht
                 }
 
             }
-            
+
 
             //shaking에서 스페이스바 떼면 pouring으로 전환.
             if (Input.GetKeyUp(KeyCode.Space) && currentGameState == GameState.shaking)
@@ -149,7 +168,7 @@ namespace XReal.XTown.Yacht
                 SetGameState(GameState.pouring);
                 onPouringStart.Invoke();
             }
-            
+
             // rolling으로 바뀌면 실행
             if (currentGameState == GameState.rolling && rollTrigger == true)
             {
@@ -185,8 +204,36 @@ namespace XReal.XTown.Yacht
                     readyTrigger = true;
                 }
             }
+
         }
-        */
+
+
+        /* Multiplayer only */
+        void OnEnable()
+        {
+            
+            if (!multiplayMode) return;
+            Debug.Log("Yacht/GameManager: my actorNum" + PhotonNetwork.LocalPlayer.ActorNumber);
+            _debugger.NetworkDebug("Yacht/GameManager: my actorNum" + PhotonNetwork.LocalPlayer.ActorNumber);
+            //CupManager.DisableCupAnims();
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            {
+                Debug.Log("Yacht/GameManager: It's my turn at beginning!");
+                IsMyTurn = true;
+            }
+            else
+            {
+                Debug.Log("Yacht/GameManager: It's other player's turn at beginning!");
+                IsMyTurn = false;
+            }
+
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            {
+                _debugger.NetworkDebug("starting game!");
+                turnManager.BeginTurn();
+            }
+            
+        }
 
         /* public methods */
         public static void SetGameState(GameState newGameState)
@@ -196,17 +243,26 @@ namespace XReal.XTown.Yacht
                 currentGameState = newGameState;
                 Debug.Log("state: " + newGameState);
             }
+            Debug.Log(IsMyTurn ? "and still my turn" : " not my turn");
         }
 
         /* Turn Listener callbacks */
         public void OnTurnBegins(int turn)
         {
+            if (turn == 1)
+            {
+                _waitingPanel.SetActive(false);
+                if(IsMyTurn) CupManager.EnableCupAnims();
+            }
             Debug.Log("Turn " + turn + "begins!");
+            currentTurn = turn;
         }
 
         public void OnTurnCompleted(int turn)
         {
             Debug.Log("Turn " + turn + "ends");
+            if (PhotonNetwork.IsMasterClient)
+                turnManager.BeginTurn();
         }
 
         public void OnPlayerMove(Player player, int turn, object move)
@@ -215,11 +271,32 @@ namespace XReal.XTown.Yacht
             Debug.Log("player" + player.ActorNumber + "has made a move " + mv);
         }
 
+        /* my turn script */
+
+        public static bool IsMyTurn;
+
         // When a player finishes a turn (includes the move of that player)
         public void OnPlayerFinished(Player player, int turn, object move)
         {
+            if (player.ActorNumber < 0)
+            {
+                Debug.LogError("invalid actor number");
+                return;
+            }
             int mv = (int)move;
-            Debug.Log("player" + player.ActorNumber + "'s turn has ended!" + mv);
+            
+            if(player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                Debug.Log("(my)player: " + player.ActorNumber + "'s turn has ended!"  + mv);
+                _debugger.NetworkDebug("(my)player: " + player.ActorNumber + "'s turn has ended!" + mv);
+                IsMyTurn = false;
+            }
+            else
+            {
+                Debug.Log("(other)player: " + player.ActorNumber + "'s turn has ended!" + mv);
+                _debugger.NetworkDebug("(other)player: " + player.ActorNumber + "'s turn has ended!" + mv);
+                IsMyTurn = true;
+            }
         }
 
     }

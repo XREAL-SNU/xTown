@@ -49,12 +49,24 @@ namespace XReal.XTown.Yacht
             diceInfoList.Add(info);
             diceInfo = info;
 
+            Debug.Log("START Dicescript");
         }
 
         // Update is called once per frame
         void Update()
         {
+            /* Multiplay */
+            if (GameManager.multiplayMode && (!GameManager.IsMyTurn || GameManager.currentTurn <= 0)) return;
+
             diceVelocity = rb.velocity;
+
+            // debug
+            Debug.Log("Dice[" + diceInfoList[0].diceIndex + "] " + diceInfoList[0].diceNumber);
+            Debug.Log("Dice[" + diceInfoList[1].diceIndex + "] " + diceInfoList[1].diceNumber);
+            Debug.Log("Dice[" + diceInfoList[2].diceIndex + "] " + diceInfoList[2].diceNumber);
+            Debug.Log("Dice[" + diceInfoList[3].diceIndex + "] " + diceInfoList[3].diceNumber);
+            Debug.Log("Dice[" + diceInfoList[4].diceIndex + "] " + diceInfoList[4].diceNumber);
+            
 
             if (Input.GetMouseButtonDown(0) && GameManager.turnCount <= 3)
             {
@@ -120,7 +132,7 @@ namespace XReal.XTown.Yacht
         public void Ready()
         {
             rb.isKinematic = false;
-            transform.position = CupManager.instance.inCupSpawnTransforms[diceIndex].position;
+            transform.position = CupManager.inCupSpawnTransforms[diceIndex].position;
             transform.rotation = Random.rotation;
         }
 
@@ -137,6 +149,7 @@ namespace XReal.XTown.Yacht
 
         public void OnRollingFinish()
         {
+            Debug.Log("Dice" + diceIndex + "finished roll");
             rb.isKinematic = true;
             prevPosition = transform.position;
             prevRotation = transform.rotation;

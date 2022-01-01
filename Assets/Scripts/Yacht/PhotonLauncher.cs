@@ -23,6 +23,7 @@ namespace XReal.XTown.Yacht
 		private string _gameVersion = "0";
 		private bool isConnecting;
 
+
 		/* Monobehaviour callbacks */
 
 		void Awake()

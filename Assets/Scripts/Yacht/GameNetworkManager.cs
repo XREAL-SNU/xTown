@@ -9,7 +9,10 @@ using Photon.Realtime;
 public class GameNetworkManager : MonoBehaviourPunCallbacks
 {
 
+
+
     /* Pun callbacks */
+
     public override void OnLeftRoom()
     {
         Debug.Log("Yacht/GameNetworkManager: leaving room");
@@ -18,15 +21,17 @@ public class GameNetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player other)
     {
+        Debug.Log("new player joined: " + PhotonNetwork.CurrentRoom.PlayerCount + " in room");
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("Yacht/GameNetworkManager: master client entered: ActorNum = " + other.ActorNumber);
-            LoadGame();
+            Debug.Log("Yacht/GameNetworkManager: master ActorNum = " + PhotonNetwork.LocalPlayer.ActorNumber);
+            LoadGame(); // so other players are looking at the same scene
         }
         else
         {
-            Debug.Log("Yacht/GameNetworkManager: non-master client entered: ActorNum = " + other.ActorNumber);
+            Debug.Log("Yacht/GameNetworkManager: master ActorNum = " + other.ActorNumber);
         }
+
     }
 
     public override void OnPlayerLeftRoom(Player other)
