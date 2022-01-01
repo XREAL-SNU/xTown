@@ -68,7 +68,7 @@ namespace XReal.XTown.Yacht
             Debug.Log("Dice[" + diceInfoList[4].diceIndex + "] " + diceInfoList[4].diceNumber);
             
 
-            if (Input.GetMouseButtonDown(0) && GameManager.turnCount <= 3)
+            if (Input.GetMouseButtonDown(0) && GameManager.turnCount <= 3 && GameManager.currentGameState == GameState.selecting)
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
