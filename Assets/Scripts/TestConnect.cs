@@ -13,14 +13,12 @@ public class TestConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
         PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
         PhotonNetwork.ConnectUsingSettings();
+        //PlayerPrefs.DeleteAll();
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Photon.", this);
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName, this);
-        if(!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
+        Debug.Log("Connected to Photon.", this);   
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -28,8 +26,9 @@ public class TestConnect : MonoBehaviourPunCallbacks
         Debug.Log("Failed to connect to Photon: " + cause.ToString(), this);
     }
 
-    public override void OnJoinedLobby()
+    public override void OnLeftLobby()
     {
-        Debug.Log("Joined Lobby");
+        Debug.Log("Player Left Lobby.", this);
     }
+
 }

@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateOrJoinRoomCanvas : MonoBehaviour
+public class PlayerNameInputCanvas : MonoBehaviour
 {
     [SerializeField]
-    private CreateRoomMenu _createRoomMenu;
-    [SerializeField]
-    private RoomListingsMenu _roomListingsMenu;
+    private PlayerNameInputMenu _playerNameInputMenu;
 
     private RoomsCanvases _roomCanvases;
     public void FirstInitialize(RoomsCanvases canvases)
     {
         _roomCanvases = canvases;
-        _createRoomMenu.FirstInitialize(canvases);
-        _roomListingsMenu.FirstInitilize(canvases);
+        _playerNameInputMenu.FirstInitialize(canvases);
     }
 
     public void Show()
