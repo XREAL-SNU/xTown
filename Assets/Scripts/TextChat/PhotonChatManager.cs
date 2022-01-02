@@ -10,11 +10,6 @@ using AuthenticationValues = Photon.Chat.AuthenticationValues;
 //pun
 using Photon.Pun;
 
-/*
- * Contributors:
- * Drafted by Hanjun Kim 2021. 12. 05
- */
-
 
 namespace PhotonTextChat
 {
@@ -25,12 +20,11 @@ namespace PhotonTextChat
         private readonly List<string> myChannels = new List<string>();
         private string selectedChannelName; // mainly used for GUI/input
 
+        private readonly List<string> activeUsers = new List<string>();
         //default channels: automatically join on Connect()
         public string[] ChannelsToJoinOnConnect;
         public int HistoryLengthToFetch; // # previously sent messages that can be fetched for context
 
-        //username to use
-        public string UserName;
 
         
         [Header("Panels")]
@@ -49,19 +43,14 @@ namespace PhotonTextChat
 
         //set in inspector!
         [SerializeField] 
-        string userID;
+        private string userID;
 
         ChatClient chatClient;
         // Start is called before the first frame update
         void Start()
         {
             DontDestroyOnLoad(this.gameObject);
-            if (string.IsNullOrEmpty(this.UserName))
-            {
-                //assign the name set in editor to the client.
-                UserName = "default user";
-            }
-
+            userID = "ChatUser" + UnityEngine.Random.Range(0, 1000).ToString();
             //add listeners to input field and send button
             InputFieldChat.onEndEdit.AddListener(delegate { OnEnterSend(); });
             SendButton.onClick.AddListener(delegate { OnClickSend(); });
@@ -78,7 +67,7 @@ namespace PhotonTextChat
             this.chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
                 PhotonNetwork.AppVersion, new AuthenticationValues(userID));
 
-            Debug.Log("Connecting as: " + UserName);
+            Debug.Log("ChatManager/Connecting as: " + userID);
         }
 
 
@@ -98,7 +87,6 @@ namespace PhotonTextChat
         {
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
             {
-                Debug.Log("Enter clicked");
                 SendChatMessage(InputFieldChat.text, InputFieldSendTo.text);
                 InputFieldChat.text = "";
                 InputFieldSendTo.text = "";
@@ -187,7 +175,7 @@ namespace PhotonTextChat
             {
                 if (doingPrivateChat)
                 {
-                    Debug.Log("sending private message" + inputLine);
+                    Debug.Log("sending private message to " + privateChatTarget);
                     this.chatClient.SendPrivateMessage(privateChatTarget, inputLine);
                 }
                 else
@@ -198,6 +186,10 @@ namespace PhotonTextChat
             }
         }
 
+        public void SendHello(string toID)
+        {
+            this.chatClient.SendPrivateMessage(toID, "user " + userID + " says hi");
+        }
 
         public void OnConnected()
         {
@@ -207,7 +199,7 @@ namespace PhotonTextChat
                 this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
             }
 
-            Debug.Log( "Connected as " + this.UserName );
+            Debug.Log( "Connected as " + this.userID );
             this.ChatPanel.gameObject.SetActive(true);
 
         }
@@ -223,7 +215,7 @@ namespace PhotonTextChat
             ShowChannel(ChannelDropdown.options[ChannelDropdown.value].text);
         }
 
-        //this shows messages buffered on the channel
+        //this updates and shows messages buffered on the channel
         public void ShowChannel(string channelName)
         {
 
@@ -243,9 +235,20 @@ namespace PhotonTextChat
             for (int i = 0; i < ChannelDropdown.options.Count; ++i)
             {
                 if (ChannelDropdown.options[i].Equals(channelName)) ChannelDropdown.value = i;
-            } 
+            }
 
+            // display private hints
+            string[] subtokens = channelName.Split(':');
+            if(subtokens[0] == userID)
+            {
+                InputFieldSendTo.text = subtokens[1];
+            }
+            else
+            {
+                InputFieldSendTo.text = "send to..";
+            }
             //display message
+
             CurrentChannelText.text = channel.ToStringMessages();
             Debug.Log("ShowChannel: " + selectedChannelName);
 
@@ -270,6 +273,14 @@ namespace PhotonTextChat
                 Dropdown.OptionData option = new Dropdown.OptionData();
                 option.text = channelName;
                 ChannelDropdown.options.Add(option);
+
+
+                if (!activeUsers.Exists(id => id == sender))
+                {
+                    Debug.Log("user " + sender + " added to local list");
+                    return;
+                }
+
             }
 
             
@@ -288,7 +299,9 @@ namespace PhotonTextChat
             //notify entry on each channel
             foreach (string channel in channels)
             {
-                this.chatClient.PublishMessage(channel, "says 'hi'.");
+                string msg = userID + " subscribed to channel";
+                this.chatClient.PublishMessage(channel, msg);
+
                 //add to my channels
                 if (!myChannels.Contains(channel))
                 {
@@ -335,6 +348,19 @@ namespace PhotonTextChat
 
         }
 
+        public void OnUserSubscribed(string channel, string user)
+        {
+            Debug.LogFormat("OnUserSubscribed: channel=\"{0}\" userId=\"{1}\"", channel, user);
+            activeUsers.Add(user);
+            SendHello(user);
+        }
+
+        public void OnUserUnsubscribed(string channel, string user)
+        {
+            Debug.LogFormat("OnUserUnsubscribed: channel=\"{0}\" userId=\"{1}\"", channel, user);
+            activeUsers.Remove(user);
+
+        }
 
 
         //more code(requires implementation by IChatClientListener interface)
@@ -343,15 +369,7 @@ namespace PhotonTextChat
         {
             throw new System.NotImplementedException();
         }
-        public void OnUserSubscribed(string channel, string user)
-        {
-            Debug.LogFormat("OnUserSubscribed: channel=\"{0}\" userId=\"{1}\"", channel, user);
-        }
 
-        public void OnUserUnsubscribed(string channel, string user)
-        {
-            Debug.LogFormat("OnUserUnsubscribed: channel=\"{0}\" userId=\"{1}\"", channel, user);
-        }
 
         public void DebugReturn(ExitGames.Client.Photon.DebugLevel level, string message)
         {
