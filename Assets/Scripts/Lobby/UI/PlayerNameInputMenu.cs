@@ -16,23 +16,15 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
     {
         _roomCanvases = canvases;
     }
-    //const string playerNamePrefKey = "PlayerName";
+    const string playerNamePrefKey = "PlayerName";
   
 
     private void Start()
-    {/*
-        string defaultName = string.Empty;
-        InputField _inputField = this.GetComponent<InputField>();
-        if (_inputField != null)
-        {
-            if (PlayerPrefs.HasKey(playerNamePrefKey))
+    {
+        if (PlayerPrefs.HasKey(playerNamePrefKey))
             {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                _inputField.text = defaultName;
-            }
-        }
-
-        PhotonNetwork.NickName = defaultName;*/
+            PhotonNetwork.NickName = PlayerPrefs.GetString(playerNamePrefKey);
+        }       
     }
 
     public void OnClick_SetPlayerName()
@@ -45,9 +37,12 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = _playerName.text;
         Debug.Log("Player Name is "+ _playerName.text, this);
 
-        //PlayerPrefs.SetString(playerNamePrefKey, _playerName.text);
-    }
+        PlayerPrefs.SetString(playerNamePrefKey, _playerName.text);
 
+        _roomCanvases.AvatarSelectionCanvas.Show();
+        _roomCanvases.PlayerNameInputCanvas.Hide();
+    }
+/*
     public void OnClick_JoinLobby()
     {
         if (!PhotonNetwork.IsConnected)
@@ -64,5 +59,5 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         Debug.Log("Joined Lobby");
         _roomCanvases.CreateOrJoinRoomCanvas.Show();
     }
-
+*/
 }

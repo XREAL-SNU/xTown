@@ -29,7 +29,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("Created room successfully.");
+        Debug.Log(PhotonNetwork.NickName + " Created room successfully.");
         _roomCanvases.CurrentRoomCanvas.Show();
     }
 

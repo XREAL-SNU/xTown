@@ -16,9 +16,17 @@ public class RoomsCanvases : MonoBehaviour
     private PlayerNameInputCanvas _playerNameInputCanvas;
     public PlayerNameInputCanvas PlayerNameInputCanvas { get { return _playerNameInputCanvas; } }
 
+    [SerializeField]
+    private AvatarSelectionCanvas _avatarSelectionCanvas;
+    public AvatarSelectionCanvas AvatarSelectionCanvas { get { return _avatarSelectionCanvas; } }
+
     private void Awake()
     {
         FirstInitialize();
+        if(PlayerPrefs.GetString("PastScene") == "MainRoom")
+        {
+            CreateOrJoinRoomCanvas.Show();
+        }
     }
 
     private void FirstInitialize()
@@ -26,5 +34,6 @@ public class RoomsCanvases : MonoBehaviour
         CreateOrJoinRoomCanvas.FirstInitialize(this);
         CurrentRoomCanvas.FirstInitialize(this);
         PlayerNameInputCanvas.FirstInitialize(this);
+        AvatarSelectionCanvas.FirstInitialize(this);
     }
 }

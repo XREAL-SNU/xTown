@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class TestConnect : MonoBehaviourPunCallbacks
 {
     private void Start()
     {
-        Debug.Log("Connecting to Photon...", this);
-        PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
-        PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
-        PhotonNetwork.ConnectUsingSettings();
-        //PlayerPrefs.DeleteAll();
+        if (!PlayerPrefs.HasKey("PastScene"))
+        {
+            Debug.Log("Connecting to Photon...", this);
+            PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
+            PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+            PlayerPrefs.DeleteKey("PastScene");
     }
 
     public override void OnConnectedToMaster()
@@ -29,6 +34,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnLeftLobby()
     {
         Debug.Log("Player Left Lobby.", this);
+        PlayerPrefs.DeleteAll();
     }
 
 }

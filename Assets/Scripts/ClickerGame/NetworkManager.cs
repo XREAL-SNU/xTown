@@ -8,10 +8,6 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    [Header("DisconnectPanel")]
-    public GameObject DisconnectPanel;
-    public InputField NicknameInput;
-
     [Header("RoomPanel")]
     public GameObject RoomPanel;
     public Text ValueText, PlayersText, ClickUpgradeText, AutoUpgradeText,
@@ -30,20 +26,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void Connect()
-    {
-        if (PhotonNetwork.LocalPlayer != null)
-        {
-            PhotonNetwork.LocalPlayer.NickName = NicknameInput.text;
-            PhotonNetwork.ConnectUsingSettings();
-        }
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions { MaxPlayers = 5 }, null);
-
-    }
     public override void OnJoinedRoom()
     {
         ShowPanel(RoomPanel);
@@ -52,7 +34,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void ShowPanel(GameObject CurPanel)
     {
-        DisconnectPanel.SetActive(false);
         RoomPanel.SetActive(false);
         CurPanel.SetActive(true);
     }
