@@ -60,6 +60,7 @@ namespace XReal.Xtown.PhotonChat
             SendButton.onClick.AddListener(delegate { OnClickSend(); });
             ChannelDropdown.ClearOptions();
             ChannelDropdown.onValueChanged.AddListener(delegate { OnSwitchChannel(); });
+            ChatPanel.gameObject.SetActive(false);
             //connect on start
             Connect();
         }
