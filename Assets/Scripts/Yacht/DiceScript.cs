@@ -49,7 +49,6 @@ namespace XReal.XTown.Yacht
             diceInfoList.Add(info);
             diceInfo = info;
 
-            Debug.Log("START Dicescript");
         }
 
         // Update is called once per frame
@@ -60,13 +59,6 @@ namespace XReal.XTown.Yacht
 
             diceVelocity = rb.velocity;
 
-            // debug
-            Debug.Log("Dice[" + diceInfoList[0].diceIndex + "] " + diceInfoList[0].diceNumber);
-            Debug.Log("Dice[" + diceInfoList[1].diceIndex + "] " + diceInfoList[1].diceNumber);
-            Debug.Log("Dice[" + diceInfoList[2].diceIndex + "] " + diceInfoList[2].diceNumber);
-            Debug.Log("Dice[" + diceInfoList[3].diceIndex + "] " + diceInfoList[3].diceNumber);
-            Debug.Log("Dice[" + diceInfoList[4].diceIndex + "] " + diceInfoList[4].diceNumber);
-            
 
             if (Input.GetMouseButtonDown(0) && GameManager.turnCount <= 3 && GameManager.currentGameState == GameState.selecting)
             {
