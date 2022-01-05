@@ -2265,7 +2265,6 @@ GameObject:
   - component: {fileID: 1488114437439743535}
   - component: {fileID: 1488114437439743534}
   - component: {fileID: 1488114437439743533}
-  - component: {fileID: 1488114437439743532}
   - component: {fileID: 1488114437439743538}
   - component: {fileID: 1488114437439743540}
   - component: {fileID: 1488114437439743539}
@@ -2366,19 +2365,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &1488114437439743532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1488114437439743531}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba4eba1846181084badc33d32f0deb55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSpeed: 20
 --- !u!136 &1488114437439743538
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2457,6 +2443,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  sit: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
