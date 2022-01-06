@@ -9,14 +9,13 @@ namespace XReal.XTown.Yacht
         public static CupManager instance;
         public static bool playingAnim = false;
 
-        public static Transform[] inCupSpawnTransforms = new Transform[5];
+        public Transform[] inCupSpawnTransforms = new Transform[5];
 
-        private static Animator anim;
-        private static BoxCollider ceiling;
+        private Animator anim;
+        private BoxCollider ceiling;
 
         void Awake()
         {
-            /*
             if (instance == null)
             {
                 instance = this;
@@ -29,7 +28,7 @@ namespace XReal.XTown.Yacht
                     Destroy(this.gameObject);
                 }
             }
-            */
+
             int i = 0;
 
             Transform spawnPositions = transform.Find("DiceInCupPositions");
@@ -45,22 +44,9 @@ namespace XReal.XTown.Yacht
         void Start()
         {
             anim = GetComponent<Animator>();
-            if(GameManager.multiplayMode) anim.enabled = false;
             ceiling = transform.Find("Ceiling").GetComponent<BoxCollider>();
         }
 
-
-        /* animator */
-        public static void EnableCupAnims()
-        {
-            anim.enabled = true;
-        }
-        public static void DisableCupAnims()
-        {
-            anim.enabled = false;
-        }
-        
-        /* callbacks */
 
         public void OnReadyStart()
         {

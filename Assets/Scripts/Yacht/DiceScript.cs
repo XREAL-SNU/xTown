@@ -54,11 +54,7 @@ namespace XReal.XTown.Yacht
         // Update is called once per frame
         void Update()
         {
-            /* Multiplay */
-            if (GameManager.multiplayMode && (!GameManager.IsMyTurn || GameManager.currentTurn <= 0)) return;
-
             diceVelocity = rb.velocity;
-
 
             if (Input.GetMouseButtonDown(0) && GameManager.turnCount <= 3 && GameManager.currentGameState == GameState.selecting)
             {
@@ -124,7 +120,7 @@ namespace XReal.XTown.Yacht
         public void Ready()
         {
             rb.isKinematic = false;
-            transform.position = CupManager.inCupSpawnTransforms[diceIndex].position;
+            transform.position = CupManager.instance.inCupSpawnTransforms[diceIndex].position;
             transform.rotation = Random.rotation;
         }
 
@@ -141,7 +137,6 @@ namespace XReal.XTown.Yacht
 
         public void OnRollingFinish()
         {
-            Debug.Log("Dice" + diceIndex + "finished roll");
             rb.isKinematic = true;
             prevPosition = transform.position;
             prevRotation = transform.rotation;

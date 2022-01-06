@@ -11,11 +11,6 @@ namespace XReal.XTown.Yacht
         public static DiceScript[] dices;
         public UnityEvent onRollingFinish;
 
-        /*
-        [SerializeField]
-        private DiceScript _dicePrefab;
-        */
-
         // Start is called before the first frame update
         void Awake()
         {
@@ -28,21 +23,14 @@ namespace XReal.XTown.Yacht
             }
         }
 
+        // Update is called once per frame
+        void Update()
+        {
 
+        }
 
         public void OnInitialze()
         {
-            /* Multiplay */
-            if (GameManager.multiplayMode && (!GameManager.IsMyTurn || GameManager.currentTurn <= 0)) return;
-            /*
-            for(int i = 0; i < 5; ++i)
-            {
-                DiceScript dice = Instantiate(_dicePrefab).GetComponent<DiceSctipt>();
-                dice.diceIndex = i;
-            }
-            */
-
-
             List<DiceInfo> diceInfoList = DiceScript.diceInfoList;
 
             foreach (DiceInfo diceInfo in diceInfoList)
@@ -62,8 +50,6 @@ namespace XReal.XTown.Yacht
                     }
                 }
             }
-
-            Debug.Log("INIT DiceManager");
         }
 
         public void OnReadyStart()
@@ -84,7 +70,6 @@ namespace XReal.XTown.Yacht
             {
                 if (dice.diceInfo.keeping == false)
                 {
-                    // Roll dices!!
                     dice.Roll();
                 }
             }
@@ -141,8 +126,6 @@ namespace XReal.XTown.Yacht
                 PickedSlotController.instance.PutIntoEmptySlot(diceInfo.diceIndex);
                 yield return new WaitForSecondsRealtime(0.05f);
             }
-            
-
         }
     }
 }

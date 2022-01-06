@@ -17,11 +17,10 @@ namespace XReal.XTown.Yacht
 
         private void Awake()
         {
-            /*
             if (instance == null)
             {
                 instance = this;
-                //DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -30,7 +29,7 @@ namespace XReal.XTown.Yacht
                     Destroy(this.gameObject);
                 }
             }
-            */
+
             foreach (string strategyName in strategiesOrder)
             {
                 Dictionary<string, int> strategy_info = new Dictionary<string, int>();
@@ -45,6 +44,14 @@ namespace XReal.XTown.Yacht
         {
             diceNumberArray = DiceScript.diceInfoList.OrderBy(x => x.diceNumber).Select(x => x.diceNumber).ToArray();
             uniqueNumberArray = diceNumberArray.Distinct().ToArray();
+            Debug.Log(uniqueNumberArray);
+
+            string b = "";
+             foreach (var a in uniqueNumberArray)
+            {
+                b += a.ToString();
+            }
+            Debug.Log(b);
 
             int upperScore = 0;
             for (int i = 1; i < 7; i++)
@@ -179,6 +186,7 @@ namespace XReal.XTown.Yacht
 
         public int SmallStraight()
         {
+            
             if (LargeStraight() > 0)
             {
                 return 15;
