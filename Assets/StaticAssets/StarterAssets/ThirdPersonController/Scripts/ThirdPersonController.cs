@@ -164,7 +164,7 @@ namespace StarterAssets
 			{
 				_sitting = true;
 				_input.sit = false;
-				_controller.Move(new Vector3(0.0f, 0.8f, 0.0f));
+				//_controller.Move(new Vector3(0.0f, 0.8f, 0.0f));
 				if (_hasAnimator)
 				{
 					_animator.SetBool(_animIDSit, true);
@@ -175,7 +175,7 @@ namespace StarterAssets
             {
 				_sitting = false;
 				_input.sit = false;
-				_controller.Move(new Vector3(0.0f, -0.8f, 0.0f));
+				//_controller.Move(new Vector3(0.0f, -0.8f, 0.0f));
 
 				if (_hasAnimator)
 				{
