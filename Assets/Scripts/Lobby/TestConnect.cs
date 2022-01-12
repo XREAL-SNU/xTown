@@ -9,16 +9,12 @@ public class TestConnect : MonoBehaviourPunCallbacks
 {
     private void Start()
     {
-        if (!PlayerPrefs.HasKey("PastScene"))
-        {
+
             Debug.Log("Connecting to Photon...", this);
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
             PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
             PhotonNetwork.ConnectUsingSettings();
-        }
-        else
-            PlayerPrefs.DeleteKey("PastScene");
     }
 
     public override void OnConnectedToMaster()
