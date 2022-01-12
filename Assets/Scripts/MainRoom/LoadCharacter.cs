@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using StarterAssets;
 
 public class LoadCharacter : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class LoadCharacter : MonoBehaviour
     public CinemachineFreeLook FreeLookCam;
     private Transform FollowTarget;
     private GameObject Player;
+    public ThirdPersonControllerMulti PlayerControl
+    {
+        get => Player.GetComponent<ThirdPersonControllerMulti>();
+        private set
+        {
+            return;
+        }
+    }
     private GameObject _prefab;
     public static LoadCharacter Instance = null;
 
@@ -81,7 +90,16 @@ public class LoadCharacter : MonoBehaviour
     void InitCharacter()
     {
         Debug.Log("LoadCharacter/InitCharacter");
-        Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+        if(!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
+        {// instantiate locally
+            Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+        }
+        else
+        {
+            // instantiate over the network
+            Debug.Log("LoadCharacter/Instantiating player over the network");
+            Player = PhotonNetwork.Instantiate("Character1", SpawnPoint.position, Quaternion.identity);
+        }
 
         FollowTarget = Player.transform.Find("FollowTarget");
         FreeLookCam.Follow = Player.transform;

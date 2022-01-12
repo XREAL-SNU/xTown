@@ -7,6 +7,22 @@ using UnityEngine.SceneManagement;
 
 public class TestConnect : MonoBehaviourPunCallbacks
 {
+    public static TestConnect Instance = null;
+
+    private void Awake()
+    {
+        // singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
     private void Start()
     {
 
@@ -42,6 +58,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     {
         Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name);
         Debug.Log(PhotonNetwork.InLobby ? "in lobby" : "not in lobby");
+        LoadCharacter.Instance.PlayerControl.enabled = false;
     }
 
     public override void OnLeftRoom()

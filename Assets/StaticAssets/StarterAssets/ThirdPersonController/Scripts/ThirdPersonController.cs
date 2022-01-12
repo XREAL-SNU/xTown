@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-/* Note: animations are called via the controller for both the character and capsule using animator null checks
+/*
+ * please check ThirdPersonControllerMulti for multiplayer class.
  */
 
 namespace StarterAssets
@@ -87,7 +88,7 @@ namespace StarterAssets
 
 		private bool _hasAnimator;
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			// get a reference to our main camera
 			if (_mainCamera == null)
@@ -96,7 +97,7 @@ namespace StarterAssets
 			}
 		}
 
-		private void Start()
+		protected virtual void Start()
 		{
 			_hasAnimator = TryGetComponent(out _animator);
 			_controller = GetComponent<CharacterController>();
@@ -109,7 +110,7 @@ namespace StarterAssets
 			_fallTimeoutDelta = FallTimeout;
 		}
 
-		private void Update()
+		protected virtual void Update()
 		{
 			_hasAnimator = TryGetComponent(out _animator);
 
@@ -181,7 +182,6 @@ namespace StarterAssets
 				{
 					_animator.SetBool(_animIDSit, false);
 				}
-				Debug.Log("_sitting @standup!: " + _sitting);
 
 			}
 
