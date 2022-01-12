@@ -9,9 +9,9 @@ public class ClickerGamePortal : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Player play ClickerGame");
             PlayerPrefs.SetString("PastScene", "MainRoom");
-            SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
+            RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Show();
+            RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName = "GameScene";
         }
     }
 }

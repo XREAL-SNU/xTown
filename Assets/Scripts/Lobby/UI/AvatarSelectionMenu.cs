@@ -40,7 +40,6 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsConnected)
             return;
 
-        Debug.Log("Joining to Lobby...", this);
         Debug.Log(PhotonNetwork.LocalPlayer.NickName, this);
         PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
         if (!PhotonNetwork.InLobby)
@@ -49,8 +48,9 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Joined Lobby");
+        Debug.Log("Joined Lobby -- from Avatar selection menu");
         SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
+        gameObject.SetActive(false);
     }
 
 }

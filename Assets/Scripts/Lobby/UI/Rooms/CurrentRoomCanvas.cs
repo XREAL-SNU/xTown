@@ -12,6 +12,17 @@ public class CurrentRoomCanvas : MonoBehaviour
     public LeaveRoomMenu LeaveRoomMenu { get { return _leaveRoomMenu; } }
 
     private RoomsCanvases _roomCanvases;
+
+    private string _linkedSceneName;
+    public string LinkedSceneName
+    {
+        get => _linkedSceneName;
+        set
+        {
+            Debug.Log("linked current game scene " + value);
+            _linkedSceneName = value;
+        }
+    }
     public void FirstInitialize(RoomsCanvases canvases)
     {
         _roomCanvases = canvases;

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 {
@@ -18,6 +19,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
     private RoomsCanvases _roomsCanvases;
     private bool _ready = false;
 
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -27,6 +29,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     public override void OnDisable()
     {
+
         base.OnDisable();
         for (int i = 0; i < _listings.Count; i++)
             Destroy(_listings[i].gameObject);
@@ -36,6 +39,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     public void FirstInitialize(RoomsCanvases canvases)
     {
+
         _roomsCanvases = canvases;
     }
 
@@ -73,6 +77,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         else
         {
             PlayerListing listing = Instantiate(_playerListing, _content);
+
             if (listing != null)
             {
                 listing.SetPlayerInfo(player);
@@ -83,6 +88,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("new player entered room! #" + newPlayer.ActorNumber + "name:" + newPlayer.NickName);
         AddPlayerListing(newPlayer);
     }
 
@@ -94,6 +100,8 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         int index = _listings.FindIndex(x => x.Player == otherPlayer);
+        Debug.Log("player left room! #" + otherPlayer.ActorNumber + "name:" + otherPlayer.NickName);
+
         if (index != -1)
         {
             Destroy(_listings[index].gameObject);
@@ -101,8 +109,10 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         }
     }
 
+    // UI callbacks
     public void OnClick_StartGame()
     {
+        string linkedSceneName = RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName;
         if (PhotonNetwork.IsMasterClient)
         {
             for(int i = 0; i < _listings.Count; i++)
@@ -116,7 +126,17 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-            //PhotonNetwork.LoadLevel(1);
+            
+            if (SceneManager.GetActiveScene().name.Equals(linkedSceneName))
+            { // already in that level
+                RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+                return;
+            }
+            else
+            { // not in level
+                PhotonNetwork.LoadLevel(RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName);
+                RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+            }
         }
     }
 

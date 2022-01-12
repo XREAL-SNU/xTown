@@ -10,6 +10,16 @@ public class CreateOrJoinRoomCanvas : MonoBehaviour
     private RoomListingsMenu _roomListingsMenu;
 
     private RoomsCanvases _roomCanvases;
+    private string _linkedSceneName;
+    public string LinkedSceneName
+    {
+        get => _linkedSceneName;
+        set
+        {
+            Debug.Log("linked create game scene " + value);
+            _linkedSceneName = value;
+        }
+    }
     public void FirstInitialize(RoomsCanvases canvases)
     {
         _roomCanvases = canvases;

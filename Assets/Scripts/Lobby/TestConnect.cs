@@ -23,7 +23,8 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Photon.", this);   
+        Debug.Log("Connected to Master.", this);
+
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -36,5 +37,28 @@ public class TestConnect : MonoBehaviourPunCallbacks
         Debug.Log("Player Left Lobby.", this);
         PlayerPrefs.DeleteAll();
     }
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("Player Joined Lobby. (TestConnect)");
+    }
 
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log(PhotonNetwork.InLobby ? "in lobby" : "not in lobby");
+    }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Player Left Room");
+
+    }
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("new player entered room! #" + newPlayer.ActorNumber + "name:" + newPlayer.NickName);
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("player left room! #" + otherPlayer.ActorNumber + "name:" + otherPlayer.NickName);
+    }
 }
