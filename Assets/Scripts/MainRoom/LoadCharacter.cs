@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class LoadCharacter : MonoBehaviour
 {
@@ -11,15 +12,41 @@ public class LoadCharacter : MonoBehaviour
     public CinemachineFreeLook FreeLookCam;
     private Transform FollowTarget;
     private GameObject Player;
+    private GameObject _prefab;
+    public static LoadCharacter Instance = null;
 
-    // Start is called before the first frame update
-    void Start()
+    // singleton
+    private void Awake()
+    {
+        // singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    /// <summary>
+    /// Monobeviour callbacks
+    /// </summary>
+    void OnEnable()
     {
         int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter");
-        GameObject Prefab = CharacterPrefabs[selectedCharacter];
-        GameObject Clone = Instantiate(Prefab, SpawnPoint.position, Quaternion.identity);
-        Player = null;
+        _prefab = CharacterPrefabs[selectedCharacter];
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    private void OnDisable()
+    {
+        Debug.Log("Load Character disabled");
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
 
     void Update()
     {
@@ -35,4 +62,30 @@ public class LoadCharacter : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Scene callbacks
+    /// </summary>
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("LoadCharacter/OnSceneLoaded: " + scene.name);
+        SpawnPoint = GameObject.Find("SpawnPoint").transform;
+        FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
+        InitCharacter();
+    }
+
+    /// <summary>
+    /// Private members
+    /// </summary>
+
+    void InitCharacter()
+    {
+        Debug.Log("LoadCharacter/InitCharacter");
+        Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+
+        FollowTarget = Player.transform.Find("FollowTarget");
+        FreeLookCam.Follow = Player.transform;
+        FreeLookCam.LookAt = FollowTarget;
+    }
+
 }
