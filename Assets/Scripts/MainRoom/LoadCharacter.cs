@@ -98,7 +98,7 @@ public class LoadCharacter : MonoBehaviour
         {
             // instantiate over the network
             Debug.Log("LoadCharacter/Instantiating player over the network");
-            Player = PhotonNetwork.Instantiate("Character1", SpawnPoint.position, Quaternion.identity);
+            Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
         }
 
         FollowTarget = Player.transform.Find("FollowTarget");
