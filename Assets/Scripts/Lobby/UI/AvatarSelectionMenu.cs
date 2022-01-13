@@ -17,23 +17,6 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
         _roomCanvases = canvases;
     }
 
-    public void NextCharacter()
-    {
-        Characters[selectedCharacter].SetActive(false);
-        selectedCharacter = (selectedCharacter + 1) % Characters.Length;
-        Characters[selectedCharacter].SetActive(true);
-    }
-
-    public void PreviousCharacter()
-    {
-        Characters[selectedCharacter].SetActive(false);
-        selectedCharacter--;
-        if (selectedCharacter < 0)
-        {
-            selectedCharacter += Characters.Length;
-        }
-        Characters[selectedCharacter].SetActive(true);
-    }
 
     public void OnClick_JoinLobby()
     {
@@ -48,7 +31,6 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Joined Lobby -- from Avatar selection menu");
         SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
         gameObject.SetActive(false);
     }
