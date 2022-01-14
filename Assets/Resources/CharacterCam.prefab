@@ -163,7 +163,7 @@ MonoBehaviour:
       m_LegacyHeadingDefinition: -1
       m_LegacyVelocityFilterStrength: -1
   m_YAxisRecentering:
-    m_enabled: 1
+    m_enabled: 0
     m_WaitTime: 60
     m_RecenteringTime: 5
     m_LegacyHeadingDefinition: -1
@@ -200,11 +200,11 @@ MonoBehaviour:
   m_SplineCurvature: 0.2
   m_Orbits:
   - m_Height: 15
-    m_Radius: 15
+    m_Radius: 5
   - m_Height: 5
-    m_Radius: 15
+    m_Radius: 5
   - m_Height: 0.3
-    m_Radius: 15
+    m_Radius: 5
   m_LegacyHeadingBias: 3.4028235e+38
   m_Rigs:
   - {fileID: 485195349649768543}
@@ -224,8 +224,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FreeLookCam: {fileID: 485195349616051577}
   zoomSpeed: 0.1
-  xRotateSpeed: 2
+  xRotateSpeed: 0.5
   yRotateSpeed: 0.1
+  xRotateDecelerate: 2
+  TopClamp: 0.7
+  BottomClamp: 0.1
 --- !u!1 &485195349633916397
 GameObject:
   m_ObjectHideFlags: 3
