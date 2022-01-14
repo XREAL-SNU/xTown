@@ -20,7 +20,19 @@ public class RoomListing : MonoBehaviour
 
     public void OnClick_Button()
     {
+        // order matters!!!! Join room first.
+        RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Hide();
+        if (RoomInfo is null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         PhotonNetwork.JoinRoom(RoomInfo.Name);
+        Debug.Log($"RoomListing/Join room called on : {RoomInfo.Name}");
+        /* moved to TestConnect.OnJoinedRoom
+        RoomsCanvases.Instance.CurrentRoomCanvas.Show();
+        RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        */
     }
    
 }

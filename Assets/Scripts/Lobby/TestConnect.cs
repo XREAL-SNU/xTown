@@ -35,8 +35,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Master.", this);
-
+        Debug.Log("TestConnect/Connected to Master.", this);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -51,19 +50,26 @@ public class TestConnect : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedLobby()
     {
-        Debug.Log("Player Joined Lobby. (TestConnect)");
+        Debug.Log("TestConnect/Player Joined Lobby");
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name);
-        Debug.Log(PhotonNetwork.InLobby ? "in lobby" : "not in lobby");
+        Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name +", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
         LoadCharacter.Instance.PlayerControl.enabled = false;
+        // activate the current room canvases
+        RoomsCanvases.Instance.CurrentRoomCanvas.Show();
+        RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
     }
-
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log($"master client switched to : {newMasterClient.ActorNumber}");
+    }
     public override void OnLeftRoom()
     {
         Debug.Log("Player Left Room");
+        // loading the default scene.
+        PhotonNetwork.LoadLevel("MainRoom");
 
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)

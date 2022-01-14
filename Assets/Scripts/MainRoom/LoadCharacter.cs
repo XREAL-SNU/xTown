@@ -80,6 +80,9 @@ public class LoadCharacter : MonoBehaviour
         Debug.Log("LoadCharacter/OnSceneLoaded: " + scene.name);
         SpawnPoint = GameObject.Find("SpawnPoint").transform;
         FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
+
+        // disable currentRoomCanvas
+        RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
         InitCharacter();
     }
 

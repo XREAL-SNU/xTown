@@ -22,6 +22,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     public override void OnEnable()
     {
+        Debug.Log("PlayerListingMenu/fetching current room's players!");
         base.OnEnable();
         SetReadyUp(false);
         GetCurrentRoomPlayers();
@@ -94,6 +95,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
+        // why?
         _roomsCanvases.CurrentRoomCanvas.LeaveRoomMenu.OnClick_LeaveRoom();
     }
 
