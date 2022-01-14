@@ -34,8 +34,14 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
             return;
 
         RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Hide();
-        if(PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel("MainRoom");
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            Debug.Log("CreateRoomMenu/back to lobby, reload scene Mainroom");
+            PhotonNetwork.LoadLevel("MainRoom");
+        } 
+
+
     }
 
     public override void OnCreatedRoom()

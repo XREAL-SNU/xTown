@@ -119,7 +119,6 @@ public class CameraControl : MonoBehaviour
         */
         FreeLookCam.m_XAxis.Value = _cinemachineTargetYaw;
         FreeLookCam.m_YAxis.Value = _cinemachineTargetPitch;
-        Debug.Log($"x: {FreeLookCam.m_XAxis.Value} >> {_cinemachineTargetYaw}, y: {FreeLookCam.m_YAxis.Value} >> {_cinemachineTargetPitch}");
 
     }
     
