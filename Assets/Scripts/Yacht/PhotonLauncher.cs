@@ -41,6 +41,7 @@ namespace XReal.XTown.Yacht
 			isConnecting = true;
 			_joinPanel.SetActive(false);
 
+			/*
 			if (PhotonNetwork.IsConnected)
 			{
 				Debug.Log("Connected to Photon");
@@ -52,6 +53,7 @@ namespace XReal.XTown.Yacht
 				PhotonNetwork.ConnectUsingSettings();
 				PhotonNetwork.GameVersion = _gameVersion;
 			}
+			*/
 		}
 
 
@@ -71,7 +73,7 @@ namespace XReal.XTown.Yacht
 		}
 		/* Pun Callbacks */
 
-		// called even when we just exited a scene. that's why we need that isConnecting variable
+		/* called even when we just exited a scene. that's why we need that isConnecting variable
 		public override void OnConnectedToMaster()
 		{
 			if (isConnecting)
@@ -112,6 +114,8 @@ namespace XReal.XTown.Yacht
 			isConnecting = false;
 			_joinPanel.SetActive(true);
 		}
+
+		*/
 	}
 
 

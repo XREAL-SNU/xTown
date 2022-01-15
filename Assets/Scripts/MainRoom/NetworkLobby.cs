@@ -11,16 +11,17 @@ public class NetworkLobby : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.JoinLobby();
-    }
-       
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("Joined Lobby.", this);
-    }
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("Connected to Photon.", this);
+
+
+        
     }
 
+    public override void OnConnectedToMaster()
+    {
+        if (!PhotonNetwork.InLobby)
+        {
+            Debug.Log("NetworkLobby/Joining lobby");
+            PhotonNetwork.JoinLobby();
+        }
+    }
 }

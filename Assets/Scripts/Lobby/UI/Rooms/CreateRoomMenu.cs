@@ -33,13 +33,24 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsConnected)
             return;
 
-        SceneManager.LoadScene("MainRoom",LoadSceneMode.Single);
+        RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Hide();
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            Debug.Log("CreateRoomMenu/back to lobby, reload scene Mainroom");
+        } 
+
+
     }
 
     public override void OnCreatedRoom()
     {
         Debug.Log(PhotonNetwork.NickName + " Created room successfully.");
-        _roomCanvases.CurrentRoomCanvas.Show();
+        RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Hide();
+        /* moved to TestConnect.OnJoinedRoom
+        RoomsCanvases.Instance.CurrentRoomCanvas.Show();
+        RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        */
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
