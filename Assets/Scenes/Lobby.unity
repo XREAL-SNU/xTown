@@ -123,6 +123,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &248730455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 759869755990059859, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+  m_PrefabInstance: {fileID: 913219959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &248730456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248730455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!224 &707432844 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 759869756270910900, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+  m_PrefabInstance: {fileID: 913219959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &913219959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,6 +294,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvases
       objectReference: {fileID: 0}
+    - target: {fileID: 759869755042252620, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869755042252620, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 759869755285214458, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -277,6 +317,38 @@ PrefabInstance:
     - target: {fileID: 759869755841605103, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869755923078890, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1074645938}
+    - target: {fileID: 759869755923078890, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick_CreateRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869755923078890, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CreateRoomMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869755983896287, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869755990059859, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869756042336270, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869756042336270, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869756042336270, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 759869756268214911, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_IsActive
@@ -1076,6 +1148,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+--- !u!114 &1074645938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 759869755229467151, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+  m_PrefabInstance: {fileID: 913219959}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11199c9e9a00de4caa598198ed03125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1360250943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,6 +1295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba6f3e1d370c6014e90272ec1e0e1786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _content: {fileID: 707432844}
+  _roomListing: {fileID: 4758989083169022277, guid: 45c388ba935a2cf45af8021c62a89da6, type: 3}
 --- !u!1 &1469419126
 GameObject:
   m_ObjectHideFlags: 0

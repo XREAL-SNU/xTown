@@ -32,6 +32,7 @@ public class RoomListingsMenu : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinLobby();
     }
 
+    /*
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach(RoomInfo info in roomList)
@@ -67,6 +68,6 @@ public class RoomListingsMenu : MonoBehaviourPunCallbacks
                 }
             }
         }
-    }
+    }*/
 
 }

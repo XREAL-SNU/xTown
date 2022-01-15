@@ -121,13 +121,10 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
             {
                 if(_listings[i].Player != PhotonNetwork.LocalPlayer)
                 {
-                    if (_listings[i].Ready)
+                    if (!_listings[i].Ready)
                         return;
                 }
             }
-
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.CurrentRoom.IsVisible = false;
             
             if (SceneManager.GetActiveScene().name.Equals(linkedSceneName))
             { // already in that level
@@ -139,6 +136,9 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName);
                 RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
             }
+
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
         }
     }
 
@@ -147,7 +147,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
         {
             SetReadyUp(!_ready);
-            base.photonView.RPC("RPC_ChangeReadyState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, _ready);
+            photonView.RPC("RPC_ChangeReadyState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer, _ready);
         }
     }
 
