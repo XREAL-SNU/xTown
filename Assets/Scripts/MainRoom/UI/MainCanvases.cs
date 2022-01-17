@@ -21,6 +21,7 @@ public class MainCanvases : MonoBehaviour
     public AvatarInteractionCanvas AvatarInteractionCanvas { get { return _avatarInteractionCanvas; } }
 
     public static MainCanvases Instance = null;
+
     private void Awake()
     {
         Debug.Log("Awake called on singleton MainCanvases:");

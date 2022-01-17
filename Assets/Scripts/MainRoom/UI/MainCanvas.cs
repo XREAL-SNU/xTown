@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MainCanvas : MonoBehaviour
 {
+    [SerializeField]
+    private MinimapPanel _minimapPanel;
+
     private MainCanvases _mainCanvases;
 
     public void FirstInitialize(MainCanvases canvases)
