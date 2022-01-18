@@ -6,10 +6,11 @@ using UnityEngine.EventSystems;
 
 namespace XReal.XTown.Yacht
 {
-    public class SelectScore : MonoBehaviour, IPointerClickHandler
+    public class SelectScoreMulti : SelectScore
     {
-        public virtual void OnPointerClick(PointerEventData eventData)
+        public override void OnPointerClick(PointerEventData eventData)
         {
+            if (NetworkManager.Instance.MeDone) return;
             if (GameManager.currentGameState == GameState.selecting)
             {
                 GameObject go = eventData.pointerCurrentRaycast.gameObject;
@@ -21,9 +22,10 @@ namespace XReal.XTown.Yacht
                 if (done != 1)
                 {
                     StrategyScript.strategies[categoryText.text]["done"] = 1;
-                    // SOOOO HARD TO FIND!!!
+                    /* SOOOO HARD TO FIND!!!
                     GameManager.SetGameState(GameState.initializing);
-                    
+                    */
+                    GameManagerMulti.TurnFinish();
                 }
             }
         }

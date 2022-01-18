@@ -11,24 +11,14 @@ namespace XReal.XTown.Yacht
 
         public Transform[] inCupSpawnTransforms = new Transform[5];
 
-        private Animator anim;
-        private BoxCollider ceiling;
+        protected Animator anim;
+        protected BoxCollider ceiling;
 
-        void Awake()
+        protected virtual void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                if (instance != this)
-                {
-                    Destroy(this.gameObject);
-                }
-            }
-
+            // DELETED singleton.
+            instance = this;
+        
             int i = 0;
 
             Transform spawnPositions = transform.Find("DiceInCupPositions");
@@ -41,16 +31,33 @@ namespace XReal.XTown.Yacht
 
 
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
             anim = GetComponent<Animator>();
             ceiling = transform.Find("Ceiling").GetComponent<BoxCollider>();
         }
 
+        /// <summary>
+        /// some addition
+        /// </summary>
+        /// 
+
+        public void EnableAnimator()
+        {
+            Debug.Log("enable animator!");
+            if (!anim.enabled) anim.enabled = true;
+        }
+
+        public void DisableAnimator()
+        {
+            Debug.Log("disable animator!");
+            if (anim.enabled) anim.enabled = false;
+        }
 
         public void OnReadyStart()
         {
             playingAnim = true;
+            Debug.Log("CupManager/Ready triggered");
             anim.SetTrigger("Ready");
         }
 

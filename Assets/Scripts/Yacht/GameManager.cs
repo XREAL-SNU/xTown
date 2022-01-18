@@ -1,10 +1,12 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.UI;
 
 namespace XReal.XTown.Yacht
 {
@@ -37,19 +39,18 @@ namespace XReal.XTown.Yacht
         public UnityEvent onRollingFinish;
         public UnityEvent onFinish;
 
-        private bool initializeTrigger = false;
-        private bool readyTrigger = false;
-        private float posX = 1.4f;
-        private float posY = 7.0f;
+
+        protected bool readyTrigger = false;
 
 
-        void Awake()
+        protected void Awake()
         {
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
+                // DontDestroyOnLoad(gameObject);
             }
+            /*
             else
             {
                 if (instance != this)
@@ -57,7 +58,9 @@ namespace XReal.XTown.Yacht
                     Destroy(this.gameObject);
                 }
             }
+            */
 
+            /* dice rotatons */
             rotArray[0] = Quaternion.Euler(90f, 0f, 0f);
             rotArray[1] = Quaternion.Euler(0f, 0f, 0f);
             rotArray[2] = Quaternion.Euler(0f, 90f, 90f);
@@ -66,25 +69,19 @@ namespace XReal.XTown.Yacht
             rotArray[5] = Quaternion.Euler(-90f, 90f, 0f);
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            initializeTrigger = true;
-
-        }
-
+        
         // Update is called once per frame
-        void Update()
+        protected virtual void Update()
         {
             // 주사위 및 기타 변수 초기화 후 ready로 이동
             if (currentGameState == GameState.initializing)
             {
                 SetGameState(GameState.ready);
                 turnCount = 1;
+
                 onInitialize.Invoke();
-                initializeTrigger = false;
                 readyTrigger = true;
-                // ShownSlot 초기화도 onInitialize 이벤트에 추가해야 함
+                // TODO ShownSlot 초기화도 onInitialize 이벤트에 추가해야 함
             }
 
             // ready
@@ -160,15 +157,20 @@ namespace XReal.XTown.Yacht
                 }
             }
         }
-
+        
+        
 
         public static void SetGameState(GameState newGameState)
         {
             if (Enum.IsDefined(typeof(GameState), newGameState))
             {
                 currentGameState = newGameState;
+                Debug.Log("game state update:" + newGameState);
             }
+            
         }
+
+
     }
 }
 

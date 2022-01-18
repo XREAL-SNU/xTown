@@ -86,9 +86,9 @@ GameObject:
   - component: {fileID: 2600534443599852370}
   - component: {fileID: 284293049490540440}
   - component: {fileID: 1113102504935418223}
-  - component: {fileID: 6201493371832150446}
   - component: {fileID: 4322949286060764535}
   - component: {fileID: 2718745945713004}
+  - component: {fileID: 553515360159447482}
   m_Layer: 0
   m_Name: Cup
   m_TagString: Untagged
@@ -175,24 +175,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6099800089077584851, guid: c8243c4092aabdb478565a730e62814d, type: 3}
---- !u!114 &6201493371832150446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797780081470383693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b540890b8e57540a5bbcc50f46130c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inCupSpawnTransforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!95 &4322949286060764535
 Animator:
   serializedVersion: 3
@@ -228,6 +210,24 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &553515360159447482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797780081470383693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b02539be63d9d948b0ec68a835efc15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inCupSpawnTransforms:
+  - {fileID: 1527355814299844579}
+  - {fileID: 1871696196465176264}
+  - {fileID: 696227689768068353}
+  - {fileID: 427019190961349842}
+  - {fileID: 3303212041643439794}
 --- !u!1 &3076721893037216698
 GameObject:
   m_ObjectHideFlags: 0
