@@ -68,7 +68,7 @@ public class Emotion : MonoBehaviour
     private int getCurrentMenu(){
         currentMousePosition = new Vector2(Input.mousePosition.x - emoticonCenterPosition.x, Input.mousePosition.y - emoticonCenterPosition.y);
         // 마우스의 현재위치가 많이 안 움직였다면 취소합니다.
-        if(Mathf.Pow(currentMousePosition.x,2) + Mathf.Pow(currentMousePosition.y,2)>900f){
+        if(Mathf.Pow(currentMousePosition.x,2) + Mathf.Pow(currentMousePosition.y,2)>1000f){
             currentAngle = Mathf.Atan2(currentMousePosition.y, currentMousePosition.x) * Mathf.Rad2Deg;
             currentAngle = (currentAngle + 360) % 360;
             currentMenu = (int)currentAngle / 90;
