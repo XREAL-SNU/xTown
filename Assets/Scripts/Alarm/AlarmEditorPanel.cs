@@ -14,6 +14,8 @@ public class AlarmEditorPanel : MonoBehaviour
     private TMP_InputField _minuteInputField;
     [SerializeField]
     private Toggle _privateToggle;
+    [SerializeField]
+    private Toggle _amToggle;
 
     private AlarmCanvas _alarmCanvas;
 
@@ -29,6 +31,20 @@ public class AlarmEditorPanel : MonoBehaviour
         if (isValid)
         {
             // Save new alarm to alarm list and close this panel.
+            Alarm newAlarm = new Alarm();
+
+            newAlarm.name = _nameInputField.text;
+            newAlarm.isPrivate = _privateToggle.isOn;
+            newAlarm.isAM = _amToggle.isOn;
+            newAlarm.hour = int.Parse(_hourInputField.text);
+            newAlarm.minute = int.Parse(_minuteInputField.text);
+
+            AlarmCanvas.AddAlarm(newAlarm);
+            AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
+
+            // Fetch new alarmList to AlarmListPanel.
+
+
             Hide();
         }
         else
@@ -36,6 +52,15 @@ public class AlarmEditorPanel : MonoBehaviour
             // Do nothing or display warning popup.
             Debug.Log("inputs are not valid");
         }
+    }
+
+    public void OnClick_Plus()
+    {
+
+    }
+    public void OnClick_Minus()
+    {
+
     }
 
     public void Show()
@@ -64,6 +89,25 @@ public class AlarmEditorPanel : MonoBehaviour
         _minuteInputField.text = "";
     }
 
+    public void FirstInitialize(AlarmCanvas alarmCanvas)
+    {
+        _alarmCanvas = alarmCanvas;
+    }
+
+    public void ClampHourInput(string value)
+    {
+        int clampedNumber = Mathf.Clamp(int.Parse(value), 0, 12);
+
+        _hourInputField.text = clampedNumber.ToString();
+    }
+
+    public void ClampMinuteInput(string value)
+    {
+        int clampedNumber = Mathf.Clamp(int.Parse(value), 0, 59);
+
+        _minuteInputField.text = clampedNumber.ToString();
+    }
+
     private bool CheckInputValid()
     {
         if (CheckIfEmpty(_nameInputField)) return false;
@@ -85,8 +129,5 @@ public class AlarmEditorPanel : MonoBehaviour
         }
     }
 
-    public void FirstInitialize(AlarmCanvas alarmCanvas)
-    {
-        _alarmCanvas = alarmCanvas;
-    }
+
 }
