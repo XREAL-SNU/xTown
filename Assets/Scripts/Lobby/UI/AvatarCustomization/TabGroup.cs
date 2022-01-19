@@ -23,6 +23,7 @@ public class TabGroup : MonoBehaviour
 
         Tabs.Add(button);
         SelectedTab = Tabs[0];
+        OnTabSelect(Tabs[0]);
     }
 
     public void OnTabEnter(TabButton button)
