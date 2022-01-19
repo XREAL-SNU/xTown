@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeUI : MonoBehaviour
 {
     [SerializeField]
-    private Text timeText;
+    private Text _timeText;
 
     private void OnEnable()
     {
@@ -38,6 +38,6 @@ public class TimeUI : MonoBehaviour
 
     private void UpdateTime(int hour, int minute)
     {
-        timeText.text = $"{hour:00}:{minute:00}";
+        _timeText.text = $"{hour:00}:{minute:00}";
     }
 }

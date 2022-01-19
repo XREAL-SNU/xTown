@@ -5,12 +5,12 @@ using UnityEngine;
 public class AlarmManager : MonoBehaviour
 {
     [SerializeField]
-    private static int targetHour;
+    private static int _targetHour;
     [SerializeField]
-    private static int targetMinute;
+    private static int _targetMinute;
 
-    private int hour;
-    private int minute;
+    private int _hour;
+    private int _minute;
 
     private void OnEnable()
     {
@@ -30,11 +30,11 @@ public class AlarmManager : MonoBehaviour
 
     private void OnTickHandler(object sender, TimeManager.OnTickEventArgs e)
     {
-        hour = e.hour;
-        minute = e.minute;
+        _hour = e.hour;
+        _minute = e.minute;
 
-        if (targetHour != hour) return;
-        if (targetMinute != minute) return;
+        if (_targetHour != _hour) return;
+        if (_targetMinute != _minute) return;
 
         // 알람에 설정한 시간 도달
         Debug.Log("알람이 울립니다.");
@@ -43,8 +43,8 @@ public class AlarmManager : MonoBehaviour
 
     public static void SetAlarm(int hour, int minute)
     {
-        targetHour = hour;
-        targetMinute = minute;
+        _targetHour = hour;
+        _targetMinute = minute;
         Debug.Log("alarm is set");
     }
 }
