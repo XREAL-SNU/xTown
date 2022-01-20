@@ -135,10 +135,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Characters:
-  - {fileID: 4142847262815404090, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
-  - {fileID: 4142847262815404090, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
-  - {fileID: 4142847262815404090, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
-  - {fileID: 4142847262815404090, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
+  - {fileID: 838453597186146747}
+  - {fileID: 838453597186146747}
+  - {fileID: 838453597186146747}
+  - {fileID: 838453597186146747}
   selectedCharacter: 0
 --- !u!1 &2796091263360171
 GameObject:
@@ -5971,7 +5971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1831c49f111eb488816007a40c0569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarPart: {fileID: 2853173770659087775}
+  avatarPart: {fileID: 0}
   customizingButtons:
   - {fileID: 3256755966477798554}
   - {fileID: 2678339231723698653}
@@ -5979,7 +5979,7 @@ MonoBehaviour:
   - {fileID: 4734734247230984399}
   - {fileID: 5012042195715943294}
   avatarMaterial:
-  - {fileID: 2100000, guid: cbb9998be1a2f654b9bc51717b8c2fe3, type: 2}
+  - {fileID: 2100000, guid: 65baaf70449238d4d9bf3b9621059a05, type: 2}
   - {fileID: 2100000, guid: 4c83b05190e15f74b8542068d3f8b640, type: 2}
   - {fileID: 2100000, guid: 048e9679679bf2448a2b6d0c54b0f674, type: 2}
   - {fileID: 2100000, guid: dd9fb1a2cf1390943af1d7e9bac50cf4, type: 2}
@@ -9877,12 +9877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e693e3abf632b640befd33074fc39b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tabs:
-  - {fileID: 8992682839621960376}
-  - {fileID: 927738431230498900}
-  - {fileID: 1908215123336914541}
-  - {fileID: 4179689559362445465}
-  - {fileID: 8016076895420359678}
+  Tabs: []
   SelectedTab: {fileID: 0}
   TabDefaultImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   TabHoverImage: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
@@ -12485,7 +12480,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1117071679}
         m_TargetAssemblyTypeName: AvatarSelectionMenu, Assembly-CSharp
         m_MethodName: OnClick_JoinLobby
         m_Mode: 1
@@ -12957,7 +12952,7 @@ MonoBehaviour:
   - {fileID: 115472708659494429}
   - {fileID: 7887591364402031536}
   avatarMaterial:
-  - {fileID: 2100000, guid: de33b5e3f02d2ed48918a832a93ffe11, type: 2}
+  - {fileID: 2100000, guid: 83d5307a13e59a6419313fc6dec6e654, type: 2}
   - {fileID: 2100000, guid: 2d6c17bd9d1d9834bb94fdeb2ffdeba0, type: 2}
   - {fileID: 2100000, guid: 5ffb6a3447fd2054da9598a1edd4bf10, type: 2}
   - {fileID: 2100000, guid: 59116a81248389b4fa694a909d5407d7, type: 2}
@@ -13103,7 +13098,7 @@ MonoBehaviour:
   - {fileID: 8612368758002455780}
   - {fileID: 5465303051790981998}
   avatarMaterial:
-  - {fileID: 2100000, guid: 82d94d3f85ea4024b961470b90ad88b4, type: 2}
+  - {fileID: 2100000, guid: ca2ae280c6bd28b42b1ea37d06764aa7, type: 2}
   - {fileID: 2100000, guid: f5ca8ff7d72db02478e1d8586ee7c971, type: 2}
   - {fileID: 2100000, guid: fd6e7ceded06cbc4a9954096130f36c2, type: 2}
   - {fileID: 2100000, guid: 1986999ebaf20c8488737716fc2fa6f5, type: 2}
@@ -13396,7 +13391,7 @@ MonoBehaviour:
   - {fileID: 953071581036592064}
   - {fileID: 173241154809213323}
   avatarMaterial:
-  - {fileID: 2100000, guid: 19c0749e62057a7439b819fb1ecc9c9e, type: 2}
+  - {fileID: 2100000, guid: a4bb9194f90e41a459de75c53d1197bf, type: 2}
   - {fileID: 2100000, guid: 25b2fc7c5f29e1d4a8c01ec4b5b9ef38, type: 2}
   - {fileID: 2100000, guid: 56a884b2f62eba445a6ee655bdd0b3eb, type: 2}
   - {fileID: 2100000, guid: d25c9fa0ecb7b2841a870b0ab55b3b79, type: 2}
@@ -15515,7 +15510,7 @@ MonoBehaviour:
   - {fileID: 3021607015600746180}
   - {fileID: 7420216849381528746}
   avatarMaterial:
-  - {fileID: 2100000, guid: cb682b9732174e7458d74928bd9fe90c, type: 2}
+  - {fileID: 2100000, guid: a9baeb2b07c8b5048910d7f974b73a45, type: 2}
   - {fileID: 2100000, guid: 6da08f522d62a8649bb712c1de90d8f7, type: 2}
   - {fileID: 2100000, guid: 5ca7506862b84624582f4489fcf84b87, type: 2}
   - {fileID: 2100000, guid: ce97aed595d654a4eacf39c748566fa5, type: 2}
@@ -15772,7 +15767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6963951202599841695, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8804271251157672311, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
       propertyPath: m_Enabled
@@ -15780,14 +15775,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
+--- !u!4 &65611939826211585 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3617948570369366656, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
+  m_PrefabInstance: {fileID: 3664963318703063425}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2227015655070537069 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3187249223000429804, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
-  m_PrefabInstance: {fileID: 3664963318703063425}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2853173770659087775 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1532370479463711774, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
   m_PrefabInstance: {fileID: 3664963318703063425}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &745427919555549684 stripped
@@ -15800,9 +15795,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7397600780874643941, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
   m_PrefabInstance: {fileID: 3664963318703063425}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &65611939826211585 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3617948570369366656, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
+--- !u!1 &838453597186146747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4142847262815404090, guid: 8b57dcc0d1e29984aa2b2a90ff5b72e2, type: 3}
   m_PrefabInstance: {fileID: 3664963318703063425}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8616072122801463227 stripped
