@@ -21,7 +21,9 @@ public class RoomsCanvases : MonoBehaviour
     [SerializeField]
     private AvatarSelectionCanvas _avatarSelectionCanvas;
     public AvatarSelectionCanvas AvatarSelectionCanvas { get { return _avatarSelectionCanvas; } }
-
+    [SerializeField]
+    private AvatarConfirmCanvas _avatarConfirmCanvas;
+    public AvatarConfirmCanvas AvatarConfirmCanvas { get { return _avatarConfirmCanvas; } }
     public static RoomsCanvases Instance = null;
     private void Awake()
     {
@@ -53,5 +55,6 @@ public class RoomsCanvases : MonoBehaviour
         CurrentRoomCanvas.FirstInitialize(this);
         PlayerNameInputCanvas.FirstInitialize(this);
         AvatarSelectionCanvas.FirstInitialize(this);
+        AvatarConfirmCanvas.FirstInitialize(this);
     }
 }
