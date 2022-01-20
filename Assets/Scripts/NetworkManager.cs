@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 using UnityEngine;
+using XReal.XTown.Yacht;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace XReal.XTown.Yacht
@@ -27,7 +28,6 @@ namespace XReal.XTown.Yacht
         private void Awake()
         {
             Instance = this;
-
         }
 
         private void Start()
@@ -38,8 +38,16 @@ namespace XReal.XTown.Yacht
             {
                 TurnListener = GetComponent<GameManagerMulti>();
                 ScoreTableMulti.InitMultiTable();
+                // destroy local version of mugcup. will instantiate fresh over the network.
                 Destroy(GameObject.Find("MugCup"));
-
+                // destroy local version of dices, also clear the list.
+                Debug.Log("DiceManager/Start : Destroying dices");
+                foreach (DiceScript oldDice in DiceManager.dices)
+                {
+                    Destroy(oldDice.gameObject);
+                }
+                DiceScript.diceInfoList.Clear();
+                DiceManager.dices.Clear();
             }
             else
             {
@@ -54,19 +62,21 @@ namespace XReal.XTown.Yacht
 
 
 
+
         /// Photon callbacks
         public override void OnJoinedRoom()
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
-                Debug.Log("Yacht:NetworkManager/ alone in the room.");
+                Debug.Log("OnJoinedRoom/ alone in the room.");
             }
             else
             {
-                Debug.Log("Yacht:NetworkManager/Two players: Starting game");
+                Debug.Log("OnJoinedRoom/Two players: Starting game");
                 // the second player will instantiate the cup and the dices.
                 PhotonNetwork.Instantiate("MugCup", new Vector3(7.14f, 1.31f, 0f), Quaternion.Euler(0f, 90f, 0f));
-                Debug.Log("Yacht:NetworkManager/Cup initially owned by" + PhotonNetwork.LocalPlayer.ActorNumber);
+                // spawn dices
+                DiceManager.instance.GetComponent<DiceManagerMulti>().SpawnDices();
 
                 // only second player will start the game
                 BeginTurn();
@@ -134,16 +144,16 @@ namespace XReal.XTown.Yacht
         {
             if (MeDone)
             {
-                Debug.LogWarning("player" + PhotonNetwork.LocalPlayer.ActorNumber + "trying to send move against turn.");
                 return;
             }
 
-            Hashtable ht = new Hashtable();
-            ht.Add("turn", Turn);
-
             // I retire..
             MeDone = true;
-            Debug.Log("player" + PhotonNetwork.LocalPlayer.ActorNumber + "finished turn sent");
+            Debug.Log("NetworkManager:event/ player" + PhotonNetwork.LocalPlayer.ActorNumber + "finished turn sent");
+
+            // send finishing message
+            Hashtable ht = new Hashtable();
+            ht.Add("turn", Turn);
 
             PhotonNetwork.RaiseEvent(EvFinishTurn, ht, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache }, SendOptions.SendReliable);
             ProcessOnEvent(EvFinishTurn, ht, PhotonNetwork.LocalPlayer.ActorNumber);
@@ -202,7 +212,7 @@ namespace XReal.XTown.Yacht
             {
                 // both players hear this event.
                 TurnListener.OnTurnBegins(Turn);
-                Debug.Log($"NetworkManager/ Turn #{Turn}");
+                Debug.Log($"NetworkManager Room properties updated/ Turn #{Turn}");
             }
         }
     }

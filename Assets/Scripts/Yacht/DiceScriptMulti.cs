@@ -1,4 +1,5 @@
  using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,29 +7,49 @@ using UnityEngine;
 namespace XReal.XTown.Yacht
 {
 
-    public class DiceScriptMulti : DiceScript
+    public class DiceScriptMulti : DiceScript, IPunOwnershipCallbacks
     {
-        PhotonTransformView view;
-        protected void Awake()
-        {
-            view = GetComponent<PhotonTransformView>();
-        }
+        PhotonTransformView _transformView;
+        PhotonView _view;
+
+        
         protected override void Start()
         {
+            _transformView = GetComponent<PhotonTransformView>();
+            _view = GetComponent<PhotonView>();
+
+            if (DiceManager.dices.Count != 5) // list not full: because local copies destroyed
+            {
+                diceIndex = DiceManager.dices.Count;
+                DiceManager.dices.Add(this);
+                Debug.Log("DiceScript/Start: " + diceIndex);
+            }
+            base.Start();
+
             if (!NetworkManager.Instance.networked)
             {
-                view.enabled = false;
-                base.Start();
+                _transformView.enabled = false;
+                _view.enabled = false;
                 return;
             }
 
-            base.Start();
+
         }
 
-        public void BeginSyncDice()
+        void OnEnable()
         {
-            if (!view.enabled) view.enabled = true;
+            if (!NetworkManager.Instance.networked) return;
+            // this is needed to receive ownership transfer messages.
+            // maybe we should collect all ownership related functions to a single interface(ITransferable)
+            PhotonNetwork.AddCallbackTarget(this);
         }
+
+        void OnDisable()
+        {
+            if (!NetworkManager.Instance.networked) return;
+            PhotonNetwork.RemoveCallbackTarget(this);
+        }
+
         // Update is called once per frame
         protected override void Update()
         {
@@ -103,6 +124,39 @@ namespace XReal.XTown.Yacht
         }
 
 
+        /// Ownership
+        public void RequestOwnership()
+        {
+            if (_view.OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber) return;
+            Debug.Log("DiceScript/ Request ownership " + diceIndex);
+            _view.RequestOwnership();
+        }
+
+        public bool IsMine
+        {
+            get => _view.IsMine;
+        }
+
+        /// photon callbacks
+        public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
+        {
+            if (targetView != _view) return;
+            if (_view.OwnerActorNr != PhotonNetwork.LocalPlayer.ActorNumber) return;
+            Debug.Log("handing over dice" + diceIndex + "control to: player#" + requestingPlayer.ActorNumber);
+            _view.TransferOwnership(requestingPlayer);
+        }
+
+        public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
+        {
+            if (targetView != _view) return;
+            GameManagerMulti.CheckAllMine();
+        }
+
+        public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
+        {
+            if (targetView != _view) return;
+            Debug.Log("DiceScript/OnOwnershipTransferFailed" + diceIndex);
+        }
     }
 }
 

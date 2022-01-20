@@ -1,6 +1,11 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace XReal.XTown.Yacht
@@ -11,19 +16,22 @@ namespace XReal.XTown.Yacht
     {
 
 
-        // Update is called once per frame
+        /// <summary>
+        /// Monobehaviour event callbacks
+        /// </summary>
         protected override void Update()
         {
-            if (NetworkManager.Instance is null) return;
             if (!NetworkManager.Instance.networked)
             { // call base function if not networked.
                 base.Update();
                 return;
             }
-            if (NetworkManager.Instance.MeDone || NetworkManager.Instance.Turn < 1) return;
+            if (NetworkManager.Instance.MeDone || !IsReady || NetworkManager.Instance.Turn < 1) return;
             base.Update();
         }
 
+        // public methods
+        public static bool IsReady = false;
 
         // called by selectScore once score selected.
         public static void TurnFinish()
@@ -34,23 +42,7 @@ namespace XReal.XTown.Yacht
             }
             // this will set MeDone.
             NetworkManager.Instance.SendFinishTurn();
-            
-            // you must not reinitialize gameState. That'll cause animator collision!
         }
-        /* 
-=
-
-        public void Onclick_endTurn()
-        {
-            NetworkManager.Instance.SendFinishTurn();
-            if (NetworkManager.Instance.MeDone)
-            {
-                diceBtn.interactable = false;
-                endBtn.interactable = false;
-            }
-        }
-
-        */
         public Text turnText;
 
         
@@ -66,12 +58,35 @@ namespace XReal.XTown.Yacht
         /// </summary>
         public void OnTurnBegins(int turn)
         {
-            if (NetworkManager.Instance.MeDone) return;
-            // request ownership
-            CupManagerMulti.RequestCupOwnership();
-            SetGameState(GameState.initializing);
-            Debug.Log("GameManager/OnTurnBegins Turn #" + turn);
             SetTurnText(turn);
+            SetGameState(GameState.initializing);
+
+            if (NetworkManager.Instance.MeDone)
+            {
+                Debug.Log($"GameManager/I'm done, it's other's turn" + turn);
+                return;
+            }
+
+            // request ownership
+            if (CheckAllMine()) return;
+            // these are non-blocking. wait for callback.
+            CupManagerMulti.RequestCupOwnership();
+            DiceManagerMulti.RequestDiceOwnership();
+            Debug.Log("GameManager/My turn begins: #" + turn);
+
+
+        }
+
+        public static bool CheckAllMine()
+        {
+            bool isMine = CupManagerMulti.instance.GetComponent<CupManagerMulti>().IsMine;
+            foreach (DiceScriptMulti dice in DiceManager.dices)
+            {
+                isMine = isMine & dice.IsMine;
+            }
+            IsReady = isMine;
+            Debug.Log("GameManager/CheckAllMine:" + isMine);
+            return isMine;
         }
 
         public void OnPlayerDiceResult(Player player, int turn, int[] results)
@@ -94,14 +109,12 @@ namespace XReal.XTown.Yacht
                 return;
             }
 
+
             if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber) // me finished
             {
                 return;
             }
-            // other's turn finished
-            Debug.Log("player #" + player.ActorNumber + "'s turn end synced");
-            Debug.Log("player #" + PhotonNetwork.LocalPlayer.ActorNumber + " beginning turn");
-            // if I'm not finished, I guess it's my turn -> will invoke OnBeginTurn
+            // other's turn finished I take control
             NetworkManager.Instance.BeginTurn();
         }
     }

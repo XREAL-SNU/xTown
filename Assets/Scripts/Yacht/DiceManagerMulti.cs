@@ -1,41 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System.Linq;
+using Photon.Pun;
 
 namespace XReal.XTown.Yacht
 {
     public class DiceManagerMulti : DiceManager
     {
+        // Dice prefab to instantiate over the network. should be inside Resources folder.
+        public DiceScriptMulti DicePrefab;
 
 
-        // Start is called before the first frame update
-        protected override void Start()
+        public void SpawnDices()
         {
-
-            if (!NetworkManager.Instance.networked)
+            Debug.Log("DiceManager/SpawnDices");
+            DiceScriptMulti dice;
+            for (int diceIndex = 0; diceIndex < 5; diceIndex++)
             {
-                base.Start();
-                return;
-            }
-
-            
-            int diceIndex = 0;
-            foreach (var dice in dices)
-            {
+                // dice info list will be initialized inside Instantiated dice's Start method.
+                dice = PhotonNetwork.Instantiate(DicePrefab.name, this.transform.position, Quaternion.identity).GetComponent<DiceScriptMulti>();
+                /*
                 dice.diceIndex = diceIndex;
-                diceIndex += 1;
-                dice.InitDice();
+                dices[diceIndex] = dice;
+                */
             }
         }
 
-        public static void BeginSyncDices()
+        public static void RequestDiceOwnership()
         {
-            foreach (DiceScriptMulti dice in dices)
+            Debug.Log("Requesting ownership of all dices count" + dices.Count);
+            
+            foreach(DiceScriptMulti dice in dices)
             {
-                dice.BeginSyncDice();
+                dice.RequestOwnership();
             }
         }
+
     }
 }

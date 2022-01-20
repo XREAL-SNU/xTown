@@ -16,10 +16,12 @@ namespace XReal.XTown.Yacht
                 base.OnTriggerStay(col);
                 return;
             }
-            if (NetworkManager.Instance.MeDone) return;
+            if (NetworkManager.Instance.MeDone || NetworkManager.Instance.Turn < 1) return;
             if (col.gameObject.tag == "Side")
             {
                 diceScriptMulti = col.transform.parent.gameObject.GetComponent<DiceScriptMulti>();
+                if (diceScriptMulti is null) return;
+
                 diceVelocity = diceScriptMulti.diceVelocity;
 
                 if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)

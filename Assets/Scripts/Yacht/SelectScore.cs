@@ -21,7 +21,6 @@ namespace XReal.XTown.Yacht
                 if (done != 1)
                 {
                     StrategyScript.strategies[categoryText.text]["done"] = 1;
-                    // SOOOO HARD TO FIND!!!
                     GameManager.SetGameState(GameState.initializing);
                     
                 }

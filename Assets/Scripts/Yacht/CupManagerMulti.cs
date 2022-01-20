@@ -6,13 +6,18 @@ using UnityEngine;
 
 namespace XReal.XTown.Yacht
 {
-    public class CupManagerMulti : CupManager
+    public class CupManagerMulti : CupManager, IPunOwnershipCallbacks
     {
 
 
         private static PhotonTransformView transformView;
         private static PhotonAnimatorView animView;
         private static PhotonView view;
+
+
+        /// <summary>
+        /// Monobehaviour callbacks
+        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -22,6 +27,15 @@ namespace XReal.XTown.Yacht
             view = GetComponent<PhotonView>();
         }
 
+        void OnEnable()
+        {
+            PhotonNetwork.AddCallbackTarget(this);
+        }
+
+        void OnDisable()
+        {
+            PhotonNetwork.RemoveCallbackTarget(this);
+        }
 
         protected override void Start()
         {
@@ -36,24 +50,45 @@ namespace XReal.XTown.Yacht
             GameManagerMulti.instance.onRollingFinish.AddListener(OnRollingFinish);
         }
 
-        /// <summary>
-        /// photon view methods
-        /// </summary>
+
         public static void DisableCupView()
         {
             if (transformView.enabled) transformView.enabled = false;
             if (animView.enabled) animView.enabled = false;
             if (view.enabled) view.enabled = false;
         }
+        public bool IsMine
+        {
+            get => view.IsMine;
+        }
 
+        // ownership methods
         public static void RequestCupOwnership()
         {
             if (view.OwnerActorNr == PhotonNetwork.LocalPlayer.ActorNumber) return;
-            Debug.Log($"Player{PhotonNetwork.LocalPlayer.ActorNumber} requesting ownership to player{view.OwnerActorNr}");
+            Debug.Log($"CupManager/ Player{PhotonNetwork.LocalPlayer.ActorNumber} requesting ownership to player{view.OwnerActorNr}");
             view.RequestOwnership();
         }
 
         /// photon callbacks
+        public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer)
+        {
+            if (targetView != view) return;
+            if (view.OwnerActorNr != PhotonNetwork.LocalPlayer.ActorNumber) return;
+            Debug.Log("handing over cup control to: player#" + requestingPlayer.ActorNumber);
+            view.TransferOwnership(requestingPlayer);
+        }
+
+        public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner)
+        {
+            if (targetView != view) return;
+            GameManagerMulti.CheckAllMine();
+        }
+
+        public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest)
+        {
+            if (targetView != view) return;
+        }
         public void OnOwnershipRequest(object[] viewAndPlayer)
         {
             PhotonView view = viewAndPlayer[0] as PhotonView;

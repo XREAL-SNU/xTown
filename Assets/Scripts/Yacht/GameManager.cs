@@ -121,7 +121,7 @@ namespace XReal.XTown.Yacht
             }
 
             // rolling으로 바뀌면 실행
-            if (currentGameState == GameState.rolling && rollTrigger == true)
+            if (currentGameState == GameState.rolling && rollTrigger)
             {
                 rollTrigger = false;
                 onRollingStart.Invoke();

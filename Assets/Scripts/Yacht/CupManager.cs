@@ -57,7 +57,6 @@ namespace XReal.XTown.Yacht
         public void OnReadyStart()
         {
             playingAnim = true;
-            Debug.Log("CupManager/Ready triggered");
             anim.SetTrigger("Ready");
         }
 
