@@ -79,6 +79,11 @@ public class LoadCharacter : MonoBehaviour
     {
         Debug.Log("LoadCharacter/OnSceneLoaded: " + scene.name);
         SpawnPoint = GameObject.Find("SpawnPoint").transform;
+        if (SpawnPoint is null)
+        {
+            Debug.Log("no character spawns on this scene");
+            return;
+        }
         FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
 
         // disable currentRoomCanvas
