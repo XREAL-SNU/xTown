@@ -36,25 +36,16 @@ public class AvatarViewMenu : MonoBehaviour
         Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity,_roomCanvases.transform);
         Player.transform.Rotate(0,180,0);
     }
+    public void DestroyAvatar()
+    {
+        Destroy(Player);
+    }
 
     public void Update()
     {
-        /*
-        if(Physics.Raycast(ray.origin,ray.direction*10, out hit))
-        {
-            Debug.Log("raycast"+hit.transform.gameObject);
-        }*/
         if(_dragMode && Input.GetMouseButton(0))
         {
-            //if(Physics.Raycast(ray, out hit))
-            //{
-            //    Debug.Log(hit.transform.gameObject);
-            //    if(hit.transform.gameObject.tag == "UI")
-            //    {
-                    Player.transform.Rotate(0f, -Input.GetAxis("Mouse X") * _speed, 0f, Space.World);
-                    Player.transform.Rotate(-Input.GetAxis("Mouse Y") * _speed, 0f, 0f);
-            //    }
-            //}
+            Player.transform.Rotate(0f, -Input.GetAxis("Mouse X") * _speed, 0f, Space.World);
         }
     }
 

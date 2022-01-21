@@ -28,6 +28,7 @@ public class AvatarConfirmCanvas : MonoBehaviour
 
     public void Hide()
     {
+        _avatarViewMenu.DestroyAvatar();
         gameObject.SetActive(false);
     }
 }
