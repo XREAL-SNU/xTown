@@ -35,4 +35,10 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
         gameObject.SetActive(false);
     }
 
+    public void OnClick_BackPlayerNameInputMenu()
+    {
+        _roomCanvases.AvatarSelectionCanvas.Hide();
+        _roomCanvases.PlayerNameInputCanvas.Show();
+    }
+
 }

@@ -67,7 +67,6 @@ public class AvatarCameraScript : MonoBehaviour
         _mouseX = 0;
         _mouseY = 0;
         StartCoroutine("_smoothMoving");
-        //CentralAxis.rotation = Quaternion.Euler(new Vector3(0, Avatar.eulerAngles.y - 180, 0));
     }
 
     IEnumerator _smoothMoving()
@@ -93,8 +92,6 @@ public class AvatarCameraScript : MonoBehaviour
         }
         Avatar.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
         CentralAxis.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        Debug.Log(CentralAxis.rotation);
-        Debug.Log("(x,y)=" + _mouseX + _mouseY);
         Cam.localPosition = new Vector3(0, 0, _wheel);
         _isMoving = false;
     }

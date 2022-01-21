@@ -31,8 +31,8 @@ public class TabGroup : MonoBehaviour
         ResetTabs();
         if(SelectedTab == null || button != SelectedTab)
         {
-            button.background.sprite = TabHoverImage;
-            button.background.color = Color.cyan;
+            button.Background.sprite = TabHoverImage;
+            button.Background.color = Color.cyan;
         }
     }
 
@@ -45,8 +45,8 @@ public class TabGroup : MonoBehaviour
     {
         SelectedTab = button;
         ResetTabs();
-        button.background.sprite = TabSelectedImage;
-        button.background.color = Color.green;
+        button.Background.sprite = TabSelectedImage;
+        button.Background.color = Color.green;
 
         // select page based on order in hierarchy.
         int index = button.transform.GetSiblingIndex();
@@ -62,8 +62,8 @@ public class TabGroup : MonoBehaviour
         foreach(TabButton button in Tabs)
         {
             if (SelectedTab != null && button == SelectedTab) continue;
-            button.background.sprite = TabDefaultImage;
-            button.background.color = Color.white;
+            button.Background.sprite = TabDefaultImage;
+            button.Background.color = Color.white;
         }
     }
 }

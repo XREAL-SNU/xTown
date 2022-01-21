@@ -5,24 +5,24 @@ using UnityEngine.UI;
 
 public class CustomizingButtonScript : MonoBehaviour
 {
-    private Color Normal;
-    private Color Selected;
+    private Color _normal;
+    private Color _selected;
 
     private void Awake()
     {
-        Normal = new Color(255, 255, 255, 255f);
-        Selected = new Color(255, 255, 255, 100 / 255f);
+        _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+        _selected = new Color(255 / 255, 255 / 255, 255 / 255, 100 / 255f);
     }
 
     public void Select()
     {
         this.gameObject.tag = "Selected";
-        this.gameObject.GetComponent<Image>().color = Selected;
+        this.gameObject.GetComponent<Image>().color = _selected;
     }
 
     public void Deselect()
     {
         this.gameObject.tag = "Unselected";
-        this.gameObject.GetComponent<Image>().color = Normal;
+        this.gameObject.GetComponent<Image>().color = _normal;
     }
 }

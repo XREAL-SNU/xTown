@@ -6,40 +6,53 @@ using UnityEngine.UI;
 public class CustomizingPanelScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject avatarPart;
+    private GameObject _avatarPart;
     [SerializeField]
-    private List<CustomizingButtonScript> customizingButtons;
+    private List<CustomizingButtonScript> _customizingColorButtons;
     [SerializeField]
-    private List<Material> avatarMaterial;
+    private List<CustomizingButtonScript> _customizingTextureButtons;
+    [SerializeField]
+    private List<Material> _avatarMaterial;
 
-    public FlexibleColorPicker fcp;
+    public FlexibleColorPicker Fcp;
 
-    private int selected = 0;
+    private Color _normal;
+    private int _selected = 0;
 
     private void Start()
     {
-        ClickButton(selected);
+        _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+        ClickButton(_selected);
     }
 
     private void Update()
     {
-        avatarMaterial[selected].color= fcp.color;
+        _avatarMaterial[_selected].color= Fcp.color;
     }
 
     public void ClickButton(int id)
     {
-        for(int i = 0; i < customizingButtons.Count; i++)
+        for(int i = 0; i < _customizingTextureButtons.Count; i++)
         {
-            selected = id;
+            _selected = id;
             if (i == id)
             {
-                avatarPart.gameObject.GetComponent<SkinnedMeshRenderer>().material = avatarMaterial[i];
-                customizingButtons[i].Select();
+                //_avatarPart.gameObject.GetComponent<SkinnedMeshRenderer>().material = _avatarMaterial[i];
+                _customizingTextureButtons[i].Select();
             }
             else
             {
-                customizingButtons[i].Deselect();
+                _customizingTextureButtons[i].Deselect();
             }
+        }
+    }
+
+    public void ColorReset()
+    {
+        Fcp.color = _normal;
+        for (int i = 0; i < _avatarMaterial.Count; i++)
+        {
+            _avatarMaterial[i].color = _normal;
         }
     }
 }
