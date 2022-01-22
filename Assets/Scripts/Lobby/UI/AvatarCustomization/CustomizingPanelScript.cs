@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class CustomizingPanelScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _avatarPart;
-    [SerializeField]
     private List<CustomizingButtonScript> _customizingColorButtons;
     [SerializeField]
     private List<CustomizingButtonScript> _customizingTextureButtons;
@@ -16,12 +14,11 @@ public class CustomizingPanelScript : MonoBehaviour
 
     public FlexibleColorPicker Fcp;
 
-    private Color _normal;
+    private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
     private int _selected = 0;
 
     private void Start()
     {
-        _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
         ClickButton(_selected);
     }
 
@@ -49,10 +46,17 @@ public class CustomizingPanelScript : MonoBehaviour
 
     public void ColorReset()
     {
+        Fcp.color = Color.red;
         Fcp.color = _normal;
+        Fcp.mode = FlexibleColorPicker.MainPickingMode.SV;
         for (int i = 0; i < _avatarMaterial.Count; i++)
         {
             _avatarMaterial[i].color = _normal;
         }
+    }
+
+    public void ResetSelected()
+    {
+        _selected = 0;
     }
 }

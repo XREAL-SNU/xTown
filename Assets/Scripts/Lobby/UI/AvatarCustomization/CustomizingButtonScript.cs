@@ -5,14 +5,8 @@ using UnityEngine.UI;
 
 public class CustomizingButtonScript : MonoBehaviour
 {
-    private Color _normal;
-    private Color _selected;
-
-    private void Awake()
-    {
-        _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
-        _selected = new Color(255 / 255, 255 / 255, 255 / 255, 100 / 255f);
-    }
+    private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+    private Color _selected = new Color(255 / 255, 255 / 255, 255 / 255, 100 / 255f);
 
     public void Select()
     {

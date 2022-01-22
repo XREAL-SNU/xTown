@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class AvatarCameraScript : MonoBehaviour
+public class AvatarCameraScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Transform CentralAxis;
     public Transform Cam;
@@ -15,23 +16,40 @@ public class AvatarCameraScript : MonoBehaviour
     private float _mouseY;
     private float _wheel;
     private bool _isMoving;
+    private bool _isEnter;
+    private bool _isExit;
 
     private void Start()
     {
-        _wheel = -6;
-        _mouseX = 0;
-        _mouseY = 0;
-        _isMoving = false;
+        ResetCam();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _isEnter = true;
+        _isExit = false;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _isExit = true;
+        if (!Input.GetMouseButton(1))
+        {
+            _isEnter = false;
+        }
     }
 
     private void Update()
     {
-        if (!_isMoving)
+        if (!_isMoving && _isEnter)
         {
             _camMove();
             _zoom();
         }
-        
+        if (_isExit && Input.GetMouseButtonUp(1))
+        {
+            _isEnter = false;
+        }
     }
 
     private void _camMove()
@@ -62,12 +80,25 @@ public class AvatarCameraScript : MonoBehaviour
 
     public void ResetCam()
     {
+        _wheel = -6;
+        _mouseX = 0;
+        _mouseY = 0;
+        _isMoving = false;
+        _isEnter = false;
+        Avatar.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
+        CentralAxis.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        Cam.localPosition = new Vector3(0, 0, _wheel);
+    }
+
+    public void ResetCamBtn()
+    {
         _isMoving = true;
         _wheel = -6;
         _mouseX = 0;
         _mouseY = 0;
         StartCoroutine("_smoothMoving");
     }
+
 
     IEnumerator _smoothMoving()
     {

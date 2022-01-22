@@ -14,6 +14,13 @@ public class TabGroup : MonoBehaviour
 
     public List<GameObject> Pages;
     // subscriber pattern for easy extension
+    
+    public void ResetTab()
+    {
+        SelectedTab = Tabs[0];
+        OnTabSelect(Tabs[0]);
+    }
+
     public void Subscribe(TabButton button)
     {
         if(Tabs is null)
