@@ -76,9 +76,8 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("Player Left Room");
-        // loading the default scene.
+        // loading the default scene. -> this isn't a problem!
         PhotonNetwork.LoadLevel("MainRoom");
-
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -91,8 +90,10 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        
         foreach (RoomInfo info in roomList)
         {
+            Debug.Log("TestConnect/RoomInfo updates:" + info.Name);
             //Removed from rooms list.
             if (info.RemovedFromList)
             {

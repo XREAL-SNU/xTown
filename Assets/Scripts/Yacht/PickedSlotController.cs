@@ -14,7 +14,7 @@ namespace XReal.XTown.Yacht
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
             else
             {

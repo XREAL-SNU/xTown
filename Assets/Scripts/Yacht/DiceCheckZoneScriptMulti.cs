@@ -16,6 +16,7 @@ namespace XReal.XTown.Yacht
                 base.OnTriggerStay(col);
                 return;
             }
+            if (col is null) return;
             if (NetworkManager.Instance.MeDone || NetworkManager.Instance.Turn < 1) return;
             if (col.gameObject.tag == "Side")
             {
