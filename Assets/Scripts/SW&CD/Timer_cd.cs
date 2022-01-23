@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class Timer_cd : MonoBehaviour
 {
-    public float timeValue = 90;
+    public float timeValue = 4;
     public Text TimerText;
     public InputField InputField_Sec;
-    public InputField InputField_Sec_tmp;
+    //public InputField InputField_Sec_tmp;
     //private bool timerisActive=true;
     //public string time_tmp;
 
@@ -17,14 +17,15 @@ public class Timer_cd : MonoBehaviour
     public void countdownstart()
     {
         //timeValue = float.Parse(InputField_Sec.text);
-        timeValue = float.Parse(InputField_Sec_tmp.text);
+        if(InputField_Sec.text is null) return;
+        timeValue = float.Parse(InputField_Sec.text);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        InputField_Sec_tmp = InputField_Sec;
+        //InputField_Sec_tmp = InputField_Sec;
 
         if (timeValue>0)
         {
