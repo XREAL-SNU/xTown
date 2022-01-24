@@ -33,17 +33,18 @@ public class TestConnect : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-
-            Debug.Log("Connecting to Photon...", this);
-            PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
-            PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
-            PhotonNetwork.ConnectUsingSettings();
+        Debug.Log("Connecting to Photon...", this);
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
+        PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("TestConnect/Connected to Master.", this);
+
+        //PhotonNetwork.JoinLobby(); // 시작하고 바로 로비에 join 
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -63,11 +64,14 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name +", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
-        LoadCharacter.Instance.PlayerControl.enabled = false;
-        // activate the current room canvases
-        RoomsCanvases.Instance.CurrentRoomCanvas.Show();
-        RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld"))
+        {
+            Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name + ", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
+            LoadCharacter.Instance.PlayerControl.enabled = false;
+            // activate the current room canvases
+            RoomsCanvases.Instance.CurrentRoomCanvas.Show();
+            RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        }
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {

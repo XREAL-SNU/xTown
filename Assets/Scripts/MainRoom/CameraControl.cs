@@ -27,8 +27,8 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        _camTarget = LoadCharacter.Instance.PlayerControl.CinemachineCameraTarget;
-        _input = LoadCharacter.Instance.PlayerControl.GetComponent<StarterAssetsInputs>();
+        _camTarget = NetworkLobby.Instance.PlayerControl.CinemachineCameraTarget;
+        _input = NetworkLobby.Instance.PlayerControl.GetComponent<StarterAssetsInputs>();
         _useMouseToRotate = false;
     }
     void Update()
