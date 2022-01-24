@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace JK
 {
-    public class PlayerScript : MonoBehaviour
+    public class CueScript : MonoBehaviour
     {
-        public static Vector3 playerPosition = Vector3.zero;
+        public GameObject Cue;
 
         // Start is called before the first frame update
         void Start()
@@ -16,8 +16,7 @@ namespace JK
         // Update is called once per frame
         void FixedUpdate()
         {
-            playerPosition = transform.position;
-
+            Cue.transform.position = GameManager.whitePosition;
             
         }
     }

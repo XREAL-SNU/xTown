@@ -11,6 +11,7 @@ namespace JK
         public UnityEvent BallStop;
         public UnityEvent GameOver;
 
+        public static Vector3 whitePosition;
         public static int[] isBall= new int[16];
         public static int[] isBallStop = new int[16];
 
@@ -19,7 +20,7 @@ namespace JK
         public static bool[] Arraytrigger = new bool[16];
 
         public static bool AorB= true; //현재 A의 턴인지 B의 턴인지 판단하는 bool 
-        public static bool CorL= true; //띠 공인지 색 공인지 -- A가 색공이면 true
+        public static bool CorL= true; //띠 공인지 색 공인지 -- A가 색공이면 true(1회용)
 
         public static int countA=8;
         public static int countB=8;

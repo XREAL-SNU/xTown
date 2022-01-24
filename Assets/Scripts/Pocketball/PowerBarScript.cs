@@ -16,7 +16,7 @@ namespace JK
         // Update is called once per frame
         void Update()
         {
-            RectTransform rectTran = gameObject.GetComponent<RectTransform>();
+            rectTran = gameObject.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, bar_width);
         }
     }
