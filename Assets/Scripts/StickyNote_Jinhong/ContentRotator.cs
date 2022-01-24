@@ -23,11 +23,11 @@ public class ContentRotator : MonoBehaviour, IDragHandler
         Debug.Log(eventData.delta);
         if (eventData.delta.x > _rotationSensitivity)
         {
-            _contentTransform.eulerAngles = new Vector3(_contentTransform.eulerAngles.x, _contentTransform.eulerAngles.y + _rotationAngle, _contentTransform.eulerAngles.z);
+            _contentTransform.eulerAngles = new Vector3(_contentTransform.eulerAngles.x, _contentTransform.eulerAngles.y - _rotationAngle, _contentTransform.eulerAngles.z);
         }
         else if (eventData.delta.x < -1 * _rotationSensitivity)
         {
-            _contentTransform.eulerAngles = new Vector3(_contentTransform.eulerAngles.x, _contentTransform.eulerAngles.y - _rotationAngle, _contentTransform.eulerAngles.z);
+            _contentTransform.eulerAngles = new Vector3(_contentTransform.eulerAngles.x, _contentTransform.eulerAngles.y + _rotationAngle, _contentTransform.eulerAngles.z);
         }
 
         if (eventData.delta.y > _rotationSensitivity)
