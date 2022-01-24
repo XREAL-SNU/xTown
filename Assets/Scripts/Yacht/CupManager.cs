@@ -13,6 +13,7 @@ namespace XReal.XTown.Yacht
 
         protected Animator anim;
         protected BoxCollider ceiling;
+        public GameObject Wall1;
 
         protected virtual void Awake()
         {
@@ -73,6 +74,7 @@ namespace XReal.XTown.Yacht
         public void OnPouringStart()
         {
             anim.SetTrigger("Pour");
+            Wall1.SetActive(true);
         }
 
         public void OnRollingStart()
@@ -85,10 +87,12 @@ namespace XReal.XTown.Yacht
         public void OnRollingFinish()
         {
             ceiling.enabled = true;
+            Wall1.SetActive(false);
         }
 
         public void OnAnimationStart()
         {
+            ceiling.enabled = true;
             playingAnim = true;
         }
 

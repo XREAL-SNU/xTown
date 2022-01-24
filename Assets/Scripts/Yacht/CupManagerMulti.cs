@@ -8,8 +8,6 @@ namespace XReal.XTown.Yacht
 {
     public class CupManagerMulti : CupManager, IPunOwnershipCallbacks
     {
-
-
         private static PhotonTransformView transformView;
         private static PhotonAnimatorView animView;
         private static PhotonView view;

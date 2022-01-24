@@ -9,8 +9,6 @@ namespace XReal.XTown.Yacht
     {
         // Dice prefab to instantiate over the network. should be inside Resources folder.
         public DiceScriptMulti DicePrefab;
-
-
         public void SpawnDices()
         {
             Debug.Log("DiceManager/SpawnDices");

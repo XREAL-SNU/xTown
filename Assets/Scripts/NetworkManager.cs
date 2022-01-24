@@ -3,7 +3,6 @@ using Photon.Pun;
 using Photon.Realtime;
 
 using UnityEngine;
-using XReal.XTown.Yacht;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace XReal.XTown.Yacht
@@ -27,8 +26,10 @@ namespace XReal.XTown.Yacht
         /// Monobehaviour callbacks
         private void Awake()
         {
+            Debug.Log("NetworkManger/Awake");
             Instance = this;
         }
+
 
         private void Start()
         {
@@ -48,6 +49,7 @@ namespace XReal.XTown.Yacht
                 }
                 DiceScript.diceInfoList.Clear();
                 DiceManager.dices.Clear();
+                LoadGameMulti();
             }
             else
             {
@@ -62,17 +64,16 @@ namespace XReal.XTown.Yacht
 
 
 
-
-        /// Photon callbacks
-        public override void OnJoinedRoom()
+        /// Callback (Not photon!)
+        public void LoadGameMulti()
         {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
             {
                 Debug.Log("OnJoinedRoom/ alone in the room.");
             }
-            else
+            else if(PhotonNetwork.LocalPlayer.ActorNumber == 2)
             {
-                Debug.Log("OnJoinedRoom/Two players: Starting game");
+                Debug.Log("OnJoinedRoom/ Two players: Starting game");
                 // the second player will instantiate the cup and the dices.
                 PhotonNetwork.Instantiate("MugCup", new Vector3(7.14f, 1.31f, 0f), Quaternion.Euler(0f, 90f, 0f));
                 // spawn dices
@@ -82,6 +83,7 @@ namespace XReal.XTown.Yacht
                 BeginTurn();
             }
         }
+
         /// turn passing methods
         // defining turn
         public int Turn
@@ -95,6 +97,7 @@ namespace XReal.XTown.Yacht
         public const byte EvDiceResult = 1 + TurnEventOffset;
         public const byte EvStrategySelected = 2 + TurnEventOffset;
         public const byte EvFinishTurn = 3 + TurnEventOffset;
+        public const byte EvEndGame = 4 + TurnEventOffset;
 
         // public methods
         public void BeginTurn()
@@ -124,7 +127,7 @@ namespace XReal.XTown.Yacht
             ProcessOnEvent(EvDiceResult, ht, PhotonNetwork.LocalPlayer.ActorNumber);
         }
 
-        public void SendStrategySelected(int strategy)
+        public void SendStrategySelected(int strategy, int score)
         {
             if (MeDone)
             {
@@ -135,6 +138,7 @@ namespace XReal.XTown.Yacht
             Hashtable ht = new Hashtable();
             ht.Add("turn", Turn);
             ht.Add("move", (object)strategy);
+            ht.Add("score",(object)score);
 
             PhotonNetwork.RaiseEvent(EvStrategySelected, ht, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache }, SendOptions.SendReliable);
             ProcessOnEvent(EvStrategySelected, ht, PhotonNetwork.LocalPlayer.ActorNumber);
@@ -154,7 +158,12 @@ namespace XReal.XTown.Yacht
             // send finishing message
             Hashtable ht = new Hashtable();
             ht.Add("turn", Turn);
-
+            if(Turn == 24)
+            {
+                PhotonNetwork.RaiseEvent(EvEndGame, ht, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache }, SendOptions.SendReliable);
+                ProcessOnEvent(EvEndGame, ht, PhotonNetwork.LocalPlayer.ActorNumber);
+                return;
+            }
             PhotonNetwork.RaiseEvent(EvFinishTurn, ht, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache }, SendOptions.SendReliable);
             ProcessOnEvent(EvFinishTurn, ht, PhotonNetwork.LocalPlayer.ActorNumber);
         }
@@ -181,8 +190,8 @@ namespace XReal.XTown.Yacht
                         Hashtable evTable = data as Hashtable;
                         int turn = (int)evTable["turn"];
                         int strategy = (int)evTable["move"];
-
-                        TurnListener.OnPlayerStrategySelected(sender, turn, strategy);
+                        int score = (int)evTable["score"];
+                        TurnListener.OnPlayerStrategySelected(sender, turn, strategy, score);
                         break;
                     }
                 case EvFinishTurn:
@@ -192,6 +201,13 @@ namespace XReal.XTown.Yacht
 
                         TurnListener.OnPlayerFinished(sender, turn);
                         break;
+                    }
+                case EvEndGame:
+                    {
+                         Hashtable evTable = data as Hashtable;
+                         int turn = (int)evTable["turn"];
+                         TurnListener.OnGameEnd(sender,turn);
+                         break;
                     }
             }
         }
@@ -225,9 +241,11 @@ namespace XReal.XTown.Yacht
 
         void OnPlayerDiceResult(Player player, int turn, int[] results);
 
-        void OnPlayerStrategySelected(Player player, int turn, int move);
+        void OnPlayerStrategySelected(Player player, int turn, int move, int score);
 
         void OnPlayerFinished(Player player, int turn);
+
+        void OnGameEnd(Player player, int turn);
     }
 
     public static class TurnExtensions

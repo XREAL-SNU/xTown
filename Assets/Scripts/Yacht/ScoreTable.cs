@@ -20,8 +20,9 @@ namespace XReal.XTown.Yacht
         }
         public static void InitSingleTable()
         {
+            scoreTemplate = scoreContainer.Find("ScoreTemplateMulti");
+            scoreTemplate.gameObject.SetActive(false);
             scoreTemplate = scoreContainer.Find("ScoreTemplate");
-
             scoreTemplate.gameObject.SetActive(false);
 
             float templateHeight = 24f;

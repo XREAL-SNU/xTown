@@ -31,11 +31,13 @@ namespace XReal.XTown.Yacht
                 }
             }
             */
-            foreach (string strategyName in strategiesOrder)
+            for(int i=0; i<14; i++)
             {
+                string strategyName = strategiesOrder[i];
                 Dictionary<string, int> strategy_info = new Dictionary<string, int>();
                 strategy_info.Add("score", 0);
                 strategy_info.Add("done", 0);
+                strategy_info.Add("order",i);
                 strategies.Add(strategyName, strategy_info);
             }
             strategies["Bonus"]["done"] = 1;

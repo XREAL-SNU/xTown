@@ -64,6 +64,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name +", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
+        NetDebugConsole.Instance.DisplayMessage("joined room #" + PhotonNetwork.CurrentRoom.Name +", actor Number:" + PhotonNetwork.LocalPlayer.ActorNumber);
         LoadCharacter.Instance.PlayerControl.enabled = false;
         // activate the current room canvases
         RoomsCanvases.Instance.CurrentRoomCanvas.Show();
@@ -82,10 +83,13 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("new player entered room! #" + newPlayer.ActorNumber + "name:" + newPlayer.NickName);
+        NetDebugConsole.Instance.DisplayMessage("new player name:" + newPlayer.NickName + " entered. currently " + PhotonNetwork.CurrentRoom.PlayerCount +" in room.");
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log("player left room! #" + otherPlayer.ActorNumber + "name:" + otherPlayer.NickName);
+        NetDebugConsole.Instance.DisplayMessage("player name:" + otherPlayer.NickName + " exited. currently " + PhotonNetwork.CurrentRoom.PlayerCount + " in room.");
+
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

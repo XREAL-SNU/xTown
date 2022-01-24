@@ -21,6 +21,8 @@ namespace XReal.XTown.Yacht
         /// </summary>
         protected override void Update()
         {
+            if(NetworkManager.Instance is null)
+            return;
             if (!NetworkManager.Instance.networked)
             { // call base function if not networked.
                 base.Update();
@@ -32,6 +34,8 @@ namespace XReal.XTown.Yacht
 
         // public methods
         public static bool IsReady = false;
+        public static int MyTotalPoints = 0;
+        public static int OtherTotalPoints = 0;
 
         // called by selectScore once score selected.
         public static void TurnFinish()
@@ -49,7 +53,10 @@ namespace XReal.XTown.Yacht
         
         public void SetTurnText(int turn)
         {
-            turnText.text = "turn " + turn;
+            turn++;
+            int round = (turn)/2;
+            int turnplayer = (turn % 2 + 1); 
+            turnText.text = "Turn : " + round + "-" + turnplayer;
         }
 
 
@@ -88,7 +95,6 @@ namespace XReal.XTown.Yacht
             Debug.Log("GameManager/CheckAllMine:" + isMine);
             return isMine;
         }
-
         public void OnPlayerDiceResult(Player player, int turn, int[] results)
         {
             string msg = "on turn #" + turn + ", player " + player.ActorNumber + " rolled: ";
@@ -96,9 +102,13 @@ namespace XReal.XTown.Yacht
             Debug.Log(msg);
         }
 
-        public void OnPlayerStrategySelected(Player player, int turn, int move)
+        public void OnPlayerStrategySelected(Player player, int turn, int move, int score)
         {
             string msg = "on turn #" + turn + ", player " + player.ActorNumber + " selected: " + move;
+            if(NetworkManager.Instance.MeDone)
+            {
+                OtherTotalPoints = ScoreTableMulti.UpdateOtherScoreTable(move,score);
+            }
         }
 
         public void OnPlayerFinished(Player player, int turn)
@@ -116,6 +126,21 @@ namespace XReal.XTown.Yacht
             }
             // other's turn finished I take control
             NetworkManager.Instance.BeginTurn();
+        }
+
+        public void OnGameEnd(Player player, int turn)
+        {
+            int result = 1;
+            if(MyTotalPoints>OtherTotalPoints) result = 2;
+            else if(MyTotalPoints<OtherTotalPoints) result = 0;
+            string msg;
+            if(result == 2)
+                msg = "You WIN";
+            else if(result == 1)
+                msg = "DRAW";
+            else
+                msg = "You LOSE";
+            turnText.text = msg;
         }
     }
 }

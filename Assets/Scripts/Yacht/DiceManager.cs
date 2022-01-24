@@ -57,7 +57,6 @@ namespace XReal.XTown.Yacht
 
         public void OnRollingStart()
         {
-
             foreach (var dice in dices)
             {
                 if (dice.diceInfo.keeping == false)
@@ -78,8 +77,6 @@ namespace XReal.XTown.Yacht
                 diceInfo.sortedIndex = i;
                 i += 1;
             }
-
-            // keeping이 false인 것들에 대해서만 loop through
             var sortedUnkeptList = sortedList.Where(x => x.keeping == false).ToList();
             StartCoroutine(DiceRollFinish(sortedUnkeptList));
         }

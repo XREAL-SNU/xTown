@@ -38,6 +38,7 @@ namespace XReal.XTown.Yacht
 
         void OnEnable()
         {
+            if (NetworkManager.Instance is null) return;
             if (!NetworkManager.Instance.networked) return;
             // this is needed to receive ownership transfer messages.
             // maybe we should collect all ownership related functions to a single interface(ITransferable)
@@ -46,6 +47,8 @@ namespace XReal.XTown.Yacht
 
         void OnDisable()
         {
+            if(NetworkManager.Instance is null)
+            return;
             if (!NetworkManager.Instance.networked) return;
             PhotonNetwork.RemoveCallbackTarget(this);
         }
@@ -53,6 +56,8 @@ namespace XReal.XTown.Yacht
         // Update is called once per frame
         protected override void Update()
         {
+            if(NetworkManager.Instance is null)
+            return;
             if (!NetworkManager.Instance.networked)
             {
                 base.Update();

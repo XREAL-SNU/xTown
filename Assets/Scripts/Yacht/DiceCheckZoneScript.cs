@@ -16,6 +16,8 @@ namespace XReal.XTown.Yacht
 
         protected virtual void OnTriggerStay(Collider col)
         {
+            if(col is null)
+            return; 
             if (col.gameObject.tag == "Side")
             {
                 diceScript = col.transform.parent.gameObject.GetComponent<DiceScriptMulti>();
@@ -23,6 +25,8 @@ namespace XReal.XTown.Yacht
 
                 if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
                 {
+                    if(diceScript is null || diceScript.diceInfo is null)
+                    return;
                     switch (col.gameObject.name)
                     {
                         case "Side1":

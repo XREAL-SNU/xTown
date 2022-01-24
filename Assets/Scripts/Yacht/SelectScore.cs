@@ -10,6 +10,7 @@ namespace XReal.XTown.Yacht
     {
         public virtual void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log("OnPointerClick");
             if (GameManager.currentGameState == GameState.selecting)
             {
                 GameObject go = eventData.pointerCurrentRaycast.gameObject;
@@ -22,7 +23,6 @@ namespace XReal.XTown.Yacht
                 {
                     StrategyScript.strategies[categoryText.text]["done"] = 1;
                     GameManager.SetGameState(GameState.initializing);
-                    
                 }
             }
         }

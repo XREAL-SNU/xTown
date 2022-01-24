@@ -73,7 +73,6 @@ namespace XReal.XTown.Yacht
         // Update is called once per frame
         protected virtual void Update()
         {
-            // ÁÖ»çÀ§ ¹× ±âÅ¸ º¯¼ö ÃÊ±âÈ­ ÈÄ ready·Î ÀÌµ¿
             if (currentGameState == GameState.initializing)
             {
                 SetGameState(GameState.ready);
@@ -81,7 +80,6 @@ namespace XReal.XTown.Yacht
 
                 onInitialize.Invoke();
                 readyTrigger = true;
-                // TODO ShownSlot ÃÊ±âÈ­µµ onInitialize ÀÌº¥Æ®¿¡ Ãß°¡ÇØ¾ß ÇÔ
             }
 
             // ready
@@ -91,7 +89,6 @@ namespace XReal.XTown.Yacht
                 readyTrigger = false;
             }
 
-            // ready¿¡¼­ X ´©¸£¸é selectingÀ¸·Î ÀüÈ¯. ÀÌ°Ç Ã¹ ¹øÂ° ÁÖ»çÀ§ ±¼¸± ¶§´Â ºÒ°¡´É
             if (Input.GetKey(KeyCode.X) && currentGameState == GameState.ready && turnCount > 1 && CupManager.playingAnim == false)
             {
                 CupManager.playingAnim = true;
@@ -100,7 +97,6 @@ namespace XReal.XTown.Yacht
                 Debug.Log("ready to selecting");
             }
 
-            // ready¿¡¼­ ½ºÆäÀÌ½º¹Ù ´©¸£¸é shakingÀ¸·Î ÀüÈ¯.
             if (Input.GetKeyDown(KeyCode.Space) && currentGameState == GameState.ready && CupManager.playingAnim == false)
             {
                 bool moreThanOne = DiceScript.diceInfoList.Any(x => x.keeping == false);
@@ -113,14 +109,14 @@ namespace XReal.XTown.Yacht
 
             }
 
-            // shaking¿¡¼­ ½ºÆäÀÌ½º¹Ù ¶¼¸é pouringÀ¸·Î ÀüÈ¯.
+            // shakingï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ pouringï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯.
             if (Input.GetKeyUp(KeyCode.Space) && currentGameState == GameState.shaking)
             {
                 SetGameState(GameState.pouring);
                 onPouringStart.Invoke();
             }
 
-            // rollingÀ¸·Î ¹Ù²î¸é ½ÇÇà
+            // rollingï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (currentGameState == GameState.rolling && rollTrigger)
             {
                 rollTrigger = false;
@@ -130,7 +126,6 @@ namespace XReal.XTown.Yacht
 
             bool rollingFinished = !DiceScript.diceInfoList.Any(x => x.diceNumber == 0);
 
-            // ¸ðµç ÁÖ»çÀ§°¡ rollingÀÌ ³¡³ª¸é selectingÀ¸·Î ÀüÈ¯
             if (currentGameState == GameState.rolling && rollingFinished)
             {
                 SetGameState(GameState.selecting);
@@ -138,14 +133,12 @@ namespace XReal.XTown.Yacht
                 turnCount += 1;
             }
 
-            // 3¹ø ´Ù ´øÁö°í ³­ ÈÄ¿¡´Â selecting¿¡¼­ finish·Î ÀüÈ¯
-            if (currentGameState == GameState.selecting && turnCount > 3)
+            if (currentGameState == GameState.selecting && turnCount > 4)
             {
                 SetGameState(GameState.finish);
                 onFinish.Invoke();
             }
 
-            // selecting ´Ü°è¿¡¼­ X ´©¸£¸é ready ´Ü°è·Î ÀüÈ¯. ÀÌ°Ç ÁÖ»çÀ§ ¼¼ ¹ø ´Ù ±¼¸®¸é ºÒ°¡´É
             if (Input.GetKey(KeyCode.X) && currentGameState == GameState.selecting && turnCount <= 3 && CupManager.playingAnim == false)
             {
                 bool moreThanOne = DiceScript.diceInfoList.Any(x => x.keeping == false);
