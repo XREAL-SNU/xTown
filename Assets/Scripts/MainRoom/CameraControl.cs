@@ -49,12 +49,12 @@ public class CameraControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             _useMouseToRotate = false;
         }
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             _useMouseToRotate = true;
         }
