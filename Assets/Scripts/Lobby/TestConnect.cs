@@ -67,7 +67,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
         LoadCharacter.Instance.PlayerControl.enabled = false;
         // activate the current room canvases
         RoomsCanvases.Instance.CurrentRoomCanvas.Show();
-        MainCanvases.Instance.MainCanvas.Hide();
+        //MainCanvases.Instance.MainCanvas.Hide();
         RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -92,11 +92,13 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log("TestConnect/RoomListUpdated");
         foreach (RoomInfo info in roomList)
         {
             //Removed from rooms list.
             if (info.RemovedFromList)
             {
+                Debug.Log("TestConnect/RoomListRemoved!!!");
                 int index = _listings.FindIndex(x => x.RoomInfo.Name == info.Name);
                 if (index != -1)
                 {
