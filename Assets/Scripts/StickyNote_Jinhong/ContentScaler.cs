@@ -13,21 +13,21 @@ public class ContentScaler : MonoBehaviour, IDragHandler
     private float _minScale = 1f;
     private float _maxScale = 6f;
 
+    private float _newScale = 0f;
     public void OnDrag(PointerEventData eventData)
     {
-        float newScale = 0;
 
         if (eventData.delta.x > 0)
         {
-            newScale = _contentTransform.sizeDelta.x + _scalingSpeed;
+            _newScale = _contentTransform.sizeDelta.x + _scalingSpeed;
         }
         else if (eventData.delta.x < 0)
         {
-            newScale = _contentTransform.sizeDelta.x - _scalingSpeed;
+            _newScale = _contentTransform.sizeDelta.x - _scalingSpeed;
         }
 
-        newScale = Mathf.Clamp(newScale, _minScale, _maxScale);
-        _contentTransform.sizeDelta = new Vector2(newScale, newScale);
+        _newScale = Mathf.Clamp(_newScale, _minScale, _maxScale);
+        _contentTransform.sizeDelta = new Vector2(_newScale, _newScale);
     }
 
 }

@@ -6,9 +6,6 @@ using DG.Tweening;
 using TMPro;
 
 
-
-
-
 public class StickyNote : MonoBehaviour
 {
     [Header("Controller")]
