@@ -29,4 +29,5 @@ public class MinimapPanel : MonoBehaviour
             _worldMinimap.Hide();
         }
     }
+
 }

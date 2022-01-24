@@ -35,7 +35,7 @@ public class MinimapScreenScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Player == null) return;
         //World Minimap
         if(gameObject.name == "WorldMinimapScreen")
         {

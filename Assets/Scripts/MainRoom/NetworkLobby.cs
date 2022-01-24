@@ -12,8 +12,8 @@ public class NetworkLobby : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
 
-
         
+
     }
 
     public override void OnConnectedToMaster()
