@@ -14,15 +14,8 @@ namespace XReal.XTown.Yacht
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
             }
-            else
-            {
-                if (instance != this)
-                {
-                    Destroy(this.gameObject);
-                }
-            }
+            
 
             pickedSlots = transform.GetComponentsInChildren<PickedSlot>();
             int slotIndex = 0;
