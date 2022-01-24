@@ -98,10 +98,10 @@ public class TestConnect : MonoBehaviourPunCallbacks
             //Removed from rooms list.
             if (info.RemovedFromList)
             {
-                Debug.Log("TestConnect/RoomListRemoved!!!");
                 int index = _listings.FindIndex(x => x.RoomInfo.Name == info.Name);
                 if (index != -1)
                 {
+                    Debug.Log("TestConnect/RoomListRemoved " + _listings[index].RoomInfo.Name);
                     Destroy(_listings[index].gameObject);
                     _listings.RemoveAt(index);
                 }
