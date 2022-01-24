@@ -11,22 +11,17 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            OnStatusTable();
+            OnOffStatusTable();
         }
-        if(Input.GetKeyUp(KeyCode.Tab))
+    }
+
+    void OnOffStatusTable()
+    {
+        if (_statusPanel != null)
         {
-            OffStatusTable();
+              bool isActive=_statusPanel.gameObject.activeSelf;
+              _statusPanel.gameObject.SetActive(!isActive);
         }
-    }
-
-    void OnStatusTable()
-    {
-        _statusPanel.gameObject.SetActive(true);
-        _statusPanel.Show();
-    }
-
-    void OffStatusTable()
-    {
-        _statusPanel.gameObject.SetActive(false);
+        _statusPanel.UpdateTime();
     }
 }

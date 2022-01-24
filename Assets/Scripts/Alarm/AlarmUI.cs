@@ -6,40 +6,39 @@ using UnityEngine.UI;
 public class AlarmUI : MonoBehaviour
 {
     [SerializeField]
-    private GameObject settingPanel;
+    private GameObject _settingPanel;
     [SerializeField]
-    private InputField hourInputField;
+    private InputField _hourInputField;
     [SerializeField]
-    private InputField minuteInputField;
+    private InputField _minuteInputField;
     [SerializeField]
-    private GameObject alertPanel;
+    private GameObject _alertPanel;
 
-    [SerializeField]
-    private StatusPanel _statusPanel;
-    public AlarmManager _alarmManager;
-
-
-    private bool isPopupOpen;
+    private bool _isPopupOpen;
 
     // Start is called before the first frame update
     void Start()
     {
-        isPopupOpen = settingPanel.activeSelf;
+        _isPopupOpen = _settingPanel.activeSelf;
     }
 
     // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     public void SettingClicked()
     {
-        if (!isPopupOpen)
+        if (!_isPopupOpen)
         {
-            settingPanel.SetActive(true);
-            isPopupOpen = true;
+            _settingPanel.SetActive(true);
+            _isPopupOpen = true;
         }
         else
         {
-            settingPanel.SetActive(false);
-            isPopupOpen = false;
+            _settingPanel.SetActive(false);
+            _isPopupOpen = false;
         }
     }
 
@@ -52,20 +51,19 @@ public class AlarmUI : MonoBehaviour
         }
         else
         {
-            string hour = hourInputField.text;
-            string minute = minuteInputField.text;
+            string hour = _hourInputField.text;
+            string minute = _minuteInputField.text;
 
-            _alarmManager.SetAlarm(int.Parse(hour), int.Parse(minute));
-            _statusPanel.SetAlarm(hour,minute);
-            settingPanel.SetActive(false);
-            isPopupOpen = false;
+            AlarmManager.SetAlarm(int.Parse(hour), int.Parse(minute));
+            _settingPanel.SetActive(false);
+            _isPopupOpen = false;
         }
     }
 
     private bool CheckInputValid()
     {
-        string hour = hourInputField.text;
-        string minute = minuteInputField.text;
+        string hour = _hourInputField.text;
+        string minute = _minuteInputField.text;
 
         if (hour.Length == 0 || minute.Length == 0)
         {
@@ -80,8 +78,8 @@ public class AlarmUI : MonoBehaviour
 
     private void ShowAlert(string message)
     {
-        alertPanel.SetActive(true);
-        Text alertText = alertPanel.GetComponentInChildren<Text>();
+        _alertPanel.SetActive(true);
+        Text alertText = _alertPanel.GetComponentInChildren<Text>();
         alertText.text = message;
         StartCoroutine(ShowForSeconds());
     }
@@ -89,6 +87,6 @@ public class AlarmUI : MonoBehaviour
     IEnumerator ShowForSeconds()
     {
         yield return new WaitForSeconds(2);
-        alertPanel.SetActive(false);
+        _alertPanel.SetActive(false);
     }
 }
