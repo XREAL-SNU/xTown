@@ -12,7 +12,6 @@ public class RoomControls : MonoBehaviour
     // UI references
     public void OnClick_ShowRoomControls()
     {
-
         RoomsCanvases.Instance.CurrentRoomCanvas.Show();
     }
 

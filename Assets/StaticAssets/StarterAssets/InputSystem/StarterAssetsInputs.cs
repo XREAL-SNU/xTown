@@ -66,6 +66,7 @@ namespace StarterAssets
 
 		public void JumpInput(bool newJumpState)
 		{
+			Debug.Log("Jump?" + newJumpState);
 			jump = newJumpState;
 		}
 

@@ -11,24 +11,15 @@ namespace XReal.XTown.Yacht
 
         public Transform[] inCupSpawnTransforms = new Transform[5];
 
-        private Animator anim;
-        private BoxCollider ceiling;
+        protected Animator anim;
+        protected BoxCollider ceiling;
+        public GameObject Wall1;
 
-        void Awake()
+        protected virtual void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                if (instance != this)
-                {
-                    Destroy(this.gameObject);
-                }
-            }
-
+            // DELETED singleton.
+            instance = this;
+        
             int i = 0;
 
             Transform spawnPositions = transform.Find("DiceInCupPositions");
@@ -41,12 +32,28 @@ namespace XReal.XTown.Yacht
 
 
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
             anim = GetComponent<Animator>();
             ceiling = transform.Find("Ceiling").GetComponent<BoxCollider>();
         }
 
+        /// <summary>
+        /// some addition
+        /// </summary>
+        /// 
+
+        public void EnableAnimator()
+        {
+            Debug.Log("enable animator!");
+            if (!anim.enabled) anim.enabled = true;
+        }
+
+        public void DisableAnimator()
+        {
+            Debug.Log("disable animator!");
+            if (anim.enabled) anim.enabled = false;
+        }
 
         public void OnReadyStart()
         {
@@ -67,6 +74,7 @@ namespace XReal.XTown.Yacht
         public void OnPouringStart()
         {
             anim.SetTrigger("Pour");
+            Wall1.SetActive(true);
         }
 
         public void OnRollingStart()
@@ -79,10 +87,12 @@ namespace XReal.XTown.Yacht
         public void OnRollingFinish()
         {
             ceiling.enabled = true;
+            Wall1.SetActive(false);
         }
 
         public void OnAnimationStart()
         {
+            ceiling.enabled = true;
             playingAnim = true;
         }
 

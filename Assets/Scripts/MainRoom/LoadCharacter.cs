@@ -45,6 +45,7 @@ public class LoadCharacter : MonoBehaviour
     /// </summary>
     void OnEnable()
     {
+        Debug.Log("Load character enabled");
         int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter");
         _prefab = CharacterPrefabs[selectedCharacter];
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -78,11 +79,18 @@ public class LoadCharacter : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("LoadCharacter/OnSceneLoaded: " + scene.name);
+        // disable currentRoomCanvas
+        RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+
+        if (GameObject.Find("SpawnPoint") is null)
+        {
+            Debug.Log("no character spawns on this scene");
+            return;
+        }
         SpawnPoint = GameObject.Find("SpawnPoint").transform;
         FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
 
-        // disable currentRoomCanvas
-        RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+
         InitCharacter();
     }
 
@@ -92,7 +100,7 @@ public class LoadCharacter : MonoBehaviour
 
     void InitCharacter()
     {
-        Debug.Log("LoadCharacter/InitCharacter");
+        Debug.Log("LoadCharacter/InitCharacter without network");
         if(!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
         {// instantiate locally
             Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
