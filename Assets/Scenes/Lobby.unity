@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -395,6 +395,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1117071677, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 619609580568536798, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -474,6 +478,10 @@ PrefabInstance:
     - target: {fileID: 759869754606807199, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_Name
       value: Canvases
+      objectReference: {fileID: 0}
+    - target: {fileID: 759869755285214458, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 812587103559783548, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1531,6 +1539,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5256719695554142454, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: MoveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256719695554142454, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: SprintSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5293743799494625537, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1658,6 +1674,10 @@ PrefabInstance:
     - target: {fileID: 5851175489974196943, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5942636050277740062, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5991413142707784068, guid: 3e4e7873d8d3bbe4a9e242c400af1949, type: 3}
       propertyPath: Fcp
