@@ -33,4 +33,15 @@ public class MainCanvas : MonoBehaviour
     {
         _mainCanvases.AvatarInteractionCanvas.Show();
     }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
 }

@@ -67,6 +67,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
         LoadCharacter.Instance.PlayerControl.enabled = false;
         // activate the current room canvases
         RoomsCanvases.Instance.CurrentRoomCanvas.Show();
+        MainCanvases.Instance.MainCanvas.Hide();
         RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
