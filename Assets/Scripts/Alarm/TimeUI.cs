@@ -21,13 +21,7 @@ public class TimeUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateTime(TimeManager.hour, TimeManager.minute);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        UpdateTime(AlarmScript.Instance.TimeManager.hour, AlarmScript.Instance.TimeManager.minute);
     }
 
 

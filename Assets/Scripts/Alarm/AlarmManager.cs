@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AlarmManager : MonoBehaviour
 {
-    [SerializeField]
-    private static int _targetHour;
-    [SerializeField]
-    private static int _targetMinute;
+    public static List<Alarm> alarmList;
+    public static int maxNumber = 10;
 
-    private int _hour;
-    private int _minute;
+    private void Awake()
+    {
+        alarmList = new List<Alarm>();
+    }
 
     private void OnEnable()
     {
@@ -22,29 +22,31 @@ public class AlarmManager : MonoBehaviour
         TimeManager.OnTick -= OnTickHandler;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTickHandler(object sender, TimeManager.OnTickEventArgs e)
     {
-        _hour = e.hour;
-        _minute = e.minute;
+        if (alarmList.Count > 0)
+        {
+            foreach (Alarm alarm in alarmList)
+            {
+                if (alarm.hour != e.hour) continue;
+                if (alarm.minute != e.minute) continue;
 
-        if (_targetHour != _hour) return;
-        if (_targetMinute != _minute) return;
-
-        // 알람에 설정한 시간 도달
-        Debug.Log("알람이 울립니다.");
-
+                AlarmScript.Instance.AlarmCanvas.ShowAlarmAlert(alarm);
+            }
+        }
     }
 
-    public static void SetAlarm(int hour, int minute)
+    public static void AddAlarm(Alarm alarm)
     {
-        _targetHour = hour;
-        _targetMinute = minute;
-        Debug.Log("alarm is set");
+        alarmList.Add(alarm);
+    }
+
+    public static void RemoveAlarm(int i)
+    {
+        if (alarmList != null)
+        {
+            alarmList.Remove(alarmList[i]);
+        }
     }
 }

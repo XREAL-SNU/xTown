@@ -7,8 +7,6 @@ using TMPro;
 
 public class AlarmListPanel : MonoBehaviour
 {
-    private AlarmCanvas _alarmCanvas;
-
     [SerializeField]
     private Transform _alarmListTransform;
 
@@ -46,7 +44,7 @@ public class AlarmListPanel : MonoBehaviour
 
     private void DrawAlarmList()
     {
-        foreach (Alarm alarm in AlarmCanvas.alarmList)
+        foreach (Alarm alarm in AlarmManager.alarmList)
         {
             DrawAlarm(alarm);
         }
@@ -54,7 +52,7 @@ public class AlarmListPanel : MonoBehaviour
 
     private void DrawAlarmNumber()
     {
-        _alarmNumberText.text = AlarmCanvas.alarmList.Count.ToString() + " / " + AlarmCanvas.maxNumber.ToString();
+        _alarmNumberText.text = AlarmManager.alarmList.Count.ToString() + " / " + AlarmManager.maxNumber.ToString();
     }
 
     private void DrawAlarm(Alarm alarm)
@@ -84,21 +82,14 @@ public class AlarmListPanel : MonoBehaviour
         obj.transform.GetChild(2).GetComponent<TMP_Text>().text = time;
     }
 
-
-
-    public void OnClick_Exit()
-    {
-        Hide();
-    }
-
     public void OnClick_Add()
     {
-        if (AlarmCanvas.alarmList != null)
+        if (AlarmManager.alarmList != null)
         {
-            if (AlarmCanvas.alarmList.Count < AlarmCanvas.maxNumber)
+            if (AlarmManager.alarmList.Count < AlarmManager.maxNumber)
             {
-                AlarmCanvas.Instance.AlarmEditorPanel.Initialize();
-                AlarmCanvas.Instance.AlarmEditorPanel.Show();
+                AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Initialize();
+                AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Show();
             }
         }
     }
@@ -109,9 +100,14 @@ public class AlarmListPanel : MonoBehaviour
 
         int alarmIndex = obj.transform.GetSiblingIndex();
 
-        Alarm selectedAlarm = AlarmCanvas.alarmList[alarmIndex];
-        AlarmCanvas.Instance.AlarmEditorPanel.Initialize(alarmIndex, selectedAlarm);
-        AlarmCanvas.Instance.AlarmEditorPanel.Show();
+        Alarm selectedAlarm = AlarmManager.alarmList[alarmIndex];
+        AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Initialize(alarmIndex, selectedAlarm);
+        AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Show();
+    }
+
+    public void OnClick_Exit()
+    {
+        Hide();
     }
 
     public void Show()
@@ -123,10 +119,4 @@ public class AlarmListPanel : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
-    public void FirstInitialize(AlarmCanvas alarmCanvas)
-    {
-        _alarmCanvas = alarmCanvas;
-    }
-
 }

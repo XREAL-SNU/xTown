@@ -23,46 +23,15 @@ public class AlarmCanvas : MonoBehaviour
     private AlarmEditorPanel _alarmEditorPanel;
     public AlarmEditorPanel AlarmEditorPanel { get { return _alarmEditorPanel; } }
 
-    public static AlarmCanvas Instance = null;
+    [SerializeField]
+    private GameObject _alarmAlertTemplate;
 
-    public static List<Alarm> alarmList;
-    public static int maxNumber = 10;
-
-    private void Awake()
+    public void ShowAlarmAlert(Alarm alarm)
     {
-        Debug.Log("Awake called on singleton AlarmCanvas:");
-        // singleton
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-
-        DontDestroyOnLoad(this.gameObject);
-
-        FirstInitialize();
-    }
-
-    private void FirstInitialize()
-    {
-        AlarmListPanel.FirstInitialize(this);
-        AlarmEditorPanel.FirstInitialize(this);
-        alarmList = new List<Alarm>();
-    }
-
-    public static void AddAlarm(Alarm alarm)
-    {
-        alarmList.Add(alarm);
-    }
-
-    public static void RemoveAlarm(int i)
-    {
-        if (alarmList != null)
-        {
-            alarmList.Remove(alarmList[i]);
-        }
+        GameObject obj = Instantiate(_alarmAlertTemplate);
+        AlarmAlertPanel alarmAlertPanel = obj.GetComponent<AlarmAlertPanel>();
+        alarmAlertPanel.AlarmText.text = alarm.name;
+        obj.transform.SetParent(transform, false);
+        obj.SetActive(true);
     }
 }

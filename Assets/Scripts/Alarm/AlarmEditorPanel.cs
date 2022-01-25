@@ -21,75 +21,8 @@ public class AlarmEditorPanel : MonoBehaviour
     [SerializeField]
     private Toggle _amToggle;
 
-    private AlarmCanvas _alarmCanvas;
     private bool _isEditing = false;
     private int _currentAlarmIndex;
-
-    public void OnClick_Exit()
-    {
-        Hide();
-    }
-
-    public void OnClick_Confirm()
-    {
-        // If editing alarm already existed before
-        if (_isEditing)
-        {
-            Alarm alarm = AlarmCanvas.alarmList[_currentAlarmIndex];
-
-            alarm.name = _nameInputField.text;
-            alarm.isPrivate = _privateToggle.isOn;
-            alarm.isAM = _amToggle.isOn;
-            alarm.hour = int.Parse(_hourInputField.text);
-            alarm.minute = int.Parse(_minuteInputField.text);
-
-            AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
-
-            Hide();
-        }
-        // If adding a new alarm which didn't exist before
-        else
-        {
-            Alarm newAlarm = new Alarm();
-
-            newAlarm.name = _nameInputField.text;
-            newAlarm.isPrivate = _privateToggle.isOn;
-            newAlarm.isAM = _amToggle.isOn;
-            newAlarm.hour = int.Parse(_hourInputField.text);
-            newAlarm.minute = int.Parse(_minuteInputField.text);
-
-            AlarmCanvas.AddAlarm(newAlarm);
-            AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
-
-            Hide();
-        }
-    }
-    
-    public void OnClick_Delete()
-    {
-        AlarmCanvas.RemoveAlarm(_currentAlarmIndex);
-        AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
-        Hide();
-    }
-
-    public void OnClick_Plus()
-    {
-
-    }
-    public void OnClick_Minus()
-    {
-
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
 
     // When adding a new alarm which didn't exist before
     public void Initialize()
@@ -119,16 +52,78 @@ public class AlarmEditorPanel : MonoBehaviour
         _minuteInputField.text = alarm.minute.ToString();
     }
 
+    #region ButtonCallbacks
+    public void OnClick_Confirm()
+    {
+        // If editing alarm already existed before
+        if (_isEditing)
+        {
+            Alarm alarm = AlarmManager.alarmList[_currentAlarmIndex];
+
+            alarm.name = _nameInputField.text;
+            alarm.isPrivate = _privateToggle.isOn;
+            alarm.isAM = _amToggle.isOn;
+            alarm.hour = int.Parse(_hourInputField.text);
+            alarm.minute = int.Parse(_minuteInputField.text);
+
+            AlarmScript.Instance.AlarmCanvas.AlarmListPanel.InvokeChangedEvent();
+
+            Hide();
+        }
+        // If adding a new alarm which didn't exist before
+        else
+        {
+            Alarm newAlarm = new Alarm();
+
+            newAlarm.name = _nameInputField.text;
+            newAlarm.isPrivate = _privateToggle.isOn;
+            newAlarm.isAM = _amToggle.isOn;
+            newAlarm.hour = int.Parse(_hourInputField.text);
+            newAlarm.minute = int.Parse(_minuteInputField.text);
+
+            AlarmManager.AddAlarm(newAlarm);
+            AlarmScript.Instance.AlarmCanvas.AlarmListPanel.InvokeChangedEvent();
+
+            Hide();
+        }
+    }
+
+    public void OnClick_Delete()
+    {
+        AlarmManager.RemoveAlarm(_currentAlarmIndex);
+        AlarmScript.Instance.AlarmCanvas.AlarmListPanel.InvokeChangedEvent();
+        Hide();
+    }
+    public void OnClick_Exit()
+    {
+        Hide();
+    }
+
+    public void OnClick_Plus()
+    {
+
+    }
+    public void OnClick_Minus()
+    {
+
+    }
+    #endregion
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void ResetInputField(TMP_InputField inputField)
     {
         _nameInputField.text = "";
         _hourInputField.text = "";
         _minuteInputField.text = "";
-    }
-
-    public void FirstInitialize(AlarmCanvas alarmCanvas)
-    {
-        _alarmCanvas = alarmCanvas;
     }
 
     public void ClampHourInput(string value)
@@ -171,6 +166,4 @@ public class AlarmEditorPanel : MonoBehaviour
             return false;
         }
     }
-
-
 }
