@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class AlarmListPanel : MonoBehaviour
@@ -15,7 +16,7 @@ public class AlarmListPanel : MonoBehaviour
     private TMP_Text _alarmNumberText;
 
     [SerializeField]
-    private GameObject _alarmUIPrefab;
+    private GameObject _alarmUITemplate;
 
     public delegate void OnChangedEvent();
     public static event OnChangedEvent OnChanged;
@@ -59,8 +60,9 @@ public class AlarmListPanel : MonoBehaviour
     private void DrawAlarm(Alarm alarm)
     {
         // Instantiate single alarm UI element.
-        GameObject obj = Instantiate(_alarmUIPrefab);
+        GameObject obj = Instantiate(_alarmUITemplate);
         obj.transform.SetParent(_alarmListTransform, false);
+        obj.SetActive(true);
 
         // Set alarm type image color.
         Color typeColor;
@@ -91,15 +93,25 @@ public class AlarmListPanel : MonoBehaviour
 
     public void OnClick_Add()
     {
-
         if (AlarmCanvas.alarmList != null)
         {
             if (AlarmCanvas.alarmList.Count < AlarmCanvas.maxNumber)
             {
-                AlarmCanvas.Instance.AlarmEditorPanel.InitializeInputs();
+                AlarmCanvas.Instance.AlarmEditorPanel.Initialize();
                 AlarmCanvas.Instance.AlarmEditorPanel.Show();
             }
         }
+    }
+
+    public void OnClick_Edit()
+    {
+        GameObject obj = EventSystem.current.currentSelectedGameObject;
+
+        int alarmIndex = obj.transform.GetSiblingIndex();
+
+        Alarm selectedAlarm = AlarmCanvas.alarmList[alarmIndex];
+        AlarmCanvas.Instance.AlarmEditorPanel.Initialize(alarmIndex, selectedAlarm);
+        AlarmCanvas.Instance.AlarmEditorPanel.Show();
     }
 
     public void Show()

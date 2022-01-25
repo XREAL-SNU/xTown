@@ -64,7 +64,5 @@ public class AlarmCanvas : MonoBehaviour
         {
             alarmList.Remove(alarmList[i]);
         }
-
-        Debug.Log(alarmList.Count);
     }
 }

@@ -7,6 +7,10 @@ using TMPro;
 public class AlarmEditorPanel : MonoBehaviour
 {
     [SerializeField]
+    private GameObject _deleteButton;
+    [SerializeField]
+    private Button _confirmButton;
+    [SerializeField]
     private TMP_InputField _nameInputField;
     [SerializeField]
     private TMP_InputField _hourInputField;
@@ -18,6 +22,8 @@ public class AlarmEditorPanel : MonoBehaviour
     private Toggle _amToggle;
 
     private AlarmCanvas _alarmCanvas;
+    private bool _isEditing = false;
+    private int _currentAlarmIndex;
 
     public void OnClick_Exit()
     {
@@ -26,11 +32,24 @@ public class AlarmEditorPanel : MonoBehaviour
 
     public void OnClick_Confirm()
     {
-        bool isValid = CheckInputValid();
-
-        if (isValid)
+        // If editing alarm already existed before
+        if (_isEditing)
         {
-            // Save new alarm to alarm list and close this panel.
+            Alarm alarm = AlarmCanvas.alarmList[_currentAlarmIndex];
+
+            alarm.name = _nameInputField.text;
+            alarm.isPrivate = _privateToggle.isOn;
+            alarm.isAM = _amToggle.isOn;
+            alarm.hour = int.Parse(_hourInputField.text);
+            alarm.minute = int.Parse(_minuteInputField.text);
+
+            AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
+
+            Hide();
+        }
+        // If adding a new alarm which didn't exist before
+        else
+        {
             Alarm newAlarm = new Alarm();
 
             newAlarm.name = _nameInputField.text;
@@ -42,16 +61,15 @@ public class AlarmEditorPanel : MonoBehaviour
             AlarmCanvas.AddAlarm(newAlarm);
             AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
 
-            // Fetch new alarmList to AlarmListPanel.
-
-
             Hide();
         }
-        else
-        {
-            // Do nothing or display warning popup.
-            Debug.Log("inputs are not valid");
-        }
+    }
+    
+    public void OnClick_Delete()
+    {
+        AlarmCanvas.RemoveAlarm(_currentAlarmIndex);
+        AlarmCanvas.Instance.AlarmListPanel.InvokeChangedEvent();
+        Hide();
     }
 
     public void OnClick_Plus()
@@ -73,13 +91,32 @@ public class AlarmEditorPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
-    public void InitializeInputs()
+    // When adding a new alarm which didn't exist before
+    public void Initialize()
     {
+        _deleteButton.SetActive(false);
+        _confirmButton.interactable = false;
+        _isEditing = false;
         _privateToggle.isOn = true;
+
         ResetInputField(_nameInputField);
         ResetInputField(_hourInputField);
         ResetInputField(_minuteInputField);
+    }
+
+    // When editing alarm already existed before
+    public void Initialize(int i, Alarm alarm)
+    {
+        _deleteButton.SetActive(true);
+        _confirmButton.interactable = true;
+        _currentAlarmIndex = i;
+        _isEditing = true;
+
+        _privateToggle.isOn = alarm.isPrivate;
+        _amToggle.isOn = alarm.isAM;
+        _nameInputField.text = alarm.name;
+        _hourInputField.text = alarm.hour.ToString();
+        _minuteInputField.text = alarm.minute.ToString();
     }
 
     public void ResetInputField(TMP_InputField inputField)
@@ -103,18 +140,24 @@ public class AlarmEditorPanel : MonoBehaviour
 
     public void ClampMinuteInput(string value)
     {
-        int clampedNumber = Mathf.Clamp(int.Parse(value), 0, 59);
+        if (value != "")
+        {
+            int clampedNumber = Mathf.Clamp(int.Parse(value), 0, 59);
 
-        _minuteInputField.text = clampedNumber.ToString();
+            _minuteInputField.text = clampedNumber.ToString();
+        }
+
     }
 
-    private bool CheckInputValid()
+    public void CheckInputValid()
     {
-        if (CheckIfEmpty(_nameInputField)) return false;
-        if (CheckIfEmpty(_hourInputField)) return false;
-        if (CheckIfEmpty(_minuteInputField)) return false;
+        if (CheckIfEmpty(_nameInputField) || CheckIfEmpty(_hourInputField) || CheckIfEmpty(_minuteInputField))
+        {
+            _confirmButton.interactable = false;
+            return;
+        }
 
-        return true;
+        _confirmButton.interactable = true;
     }
 
     private bool CheckIfEmpty(TMP_InputField inputField)
