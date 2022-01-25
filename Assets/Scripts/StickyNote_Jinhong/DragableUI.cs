@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 콜라이더가 존재하는 게임 내 오브젝트를 드래그로 이동할 수 있게 하는 클래스
+/// </summary>
 public class DragableUI : MonoBehaviour
 {
     private Vector3 _offset;
