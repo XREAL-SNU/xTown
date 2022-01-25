@@ -99,13 +99,59 @@ public class AlarmEditorPanel : MonoBehaviour
         Hide();
     }
 
-    public void OnClick_Plus()
+    public void OnClick_Plus(int i)
     {
-
+        if (i == 0) // For hour inputfield
+        {
+            string temp = _hourInputField.text;
+            if (temp != "")
+            {
+                _hourInputField.text = Mathf.Clamp(int.Parse(temp) + 1, 0, 12).ToString();
+            }
+            else
+            {
+                _hourInputField.text = 0.ToString();
+            }
+        }
+        else // For minute inpurfield
+        {
+            string temp = _minuteInputField.text;
+            if (temp != "")
+            {
+                _minuteInputField.text = Mathf.Clamp(int.Parse(temp) + 1, 0, 59).ToString();
+            }
+            else
+            {
+                _minuteInputField.text = 0.ToString();
+            }
+        }
     }
-    public void OnClick_Minus()
+    public void OnClick_Minus(int i)
     {
-
+        if (i == 0) // For hour inputfield
+        {
+            string temp = _hourInputField.text;
+            if (temp != "")
+            {
+                _hourInputField.text = Mathf.Clamp(int.Parse(temp) - 1, 0, 12).ToString();
+            }
+            else
+            {
+                _hourInputField.text = 0.ToString();
+            }
+        }
+        else // For minute inpurfield
+        {
+            string temp = _minuteInputField.text;
+            if (temp != "")
+            {
+                _minuteInputField.text = Mathf.Clamp(int.Parse(temp) - 1, 0, 59).ToString();
+            }
+            else
+            {
+                _minuteInputField.text = 0.ToString();
+            }
+        }
     }
     #endregion
 
