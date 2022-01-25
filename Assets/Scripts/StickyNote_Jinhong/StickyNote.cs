@@ -13,14 +13,14 @@ public class StickyNote : MonoBehaviour
     private RectTransform _controllerTarget;
     [SerializeField]
     private Image _controllerImage;
-    [SerializeField]
-    private Animator _controllerAnimator;
 
     [Header("Content")]
     [SerializeField]
     private RectTransform _contentTransform;
     [SerializeField]
     private BoxCollider2D _contentCollider;
+    [SerializeField]
+    private Image _contentImage;
     [SerializeField]
     private TMP_Text _contentText;
 
@@ -30,8 +30,15 @@ public class StickyNote : MonoBehaviour
     [SerializeField]
     private TMP_InputField _editInputField;
 
+    [Header("Colors")]
+    [SerializeField]
+    private Color[] _backgroundColors;
+    [SerializeField]
+    private Image _colorChangerIcon;
+
     private bool _hoveringOnController;
     private bool _hoveringOnContent;
+    private int _colorIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +47,9 @@ public class StickyNote : MonoBehaviour
         _controllerImage.transform.DOScale(0, 0);
         _hoveringOnController = false;
         _hoveringOnContent = false;
+
+        _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        _colorChangerIcon.DOFade(0, 0);
     }
 
     // Update is called once per frame
@@ -71,6 +81,7 @@ public class StickyNote : MonoBehaviour
     {
         _hoveringOnContent = true;
         _controllerImage.transform.DOScale(1, 0.4f);
+        _colorChangerIcon.DOFade(1, 0.4f);
     }
 
     public void OnPointerExitContent()
@@ -89,6 +100,7 @@ public class StickyNote : MonoBehaviour
         else
         {
             _controllerImage.transform.DOScale(0, 0.4f);
+            _colorChangerIcon.DOFade(0, 0.4f);
         }
     }
     #endregion
@@ -112,6 +124,24 @@ public class StickyNote : MonoBehaviour
         _editCanvas.SetActive(false);
     }
 
+    public void OnClick_Color()
+    {
+        _colorIndex = GetNextColorIndex(_colorIndex);
 
+        _contentImage.color = _backgroundColors[_colorIndex];
+        _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+    }
+
+    private int GetNextColorIndex(int i)
+    {
+        if (i+1 > _backgroundColors.Length - 1)
+        {
+            return 0;
+        }
+        else
+        {
+            return i + 1;
+        }
+    }
     #endregion
 }
