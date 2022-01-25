@@ -13,7 +13,7 @@ public class AlarmAlertPanel : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
 
-    
+    // 알람 시작 시
     private void OnEnable()
     {
         StartCoroutine(WaitForAutoClose());
@@ -31,6 +31,7 @@ public class AlarmAlertPanel : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // 알람 시작 후 일정시간이 지나면 자동으로 종료시키는 코루틴
     IEnumerator WaitForAutoClose()
     {
         yield return new WaitForSeconds(20);

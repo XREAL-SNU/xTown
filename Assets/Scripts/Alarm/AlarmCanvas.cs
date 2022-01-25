@@ -26,6 +26,9 @@ public class AlarmCanvas : MonoBehaviour
     [SerializeField]
     private GameObject _alarmAlertTemplate;
 
+    /// <summary>
+    /// 현재 시간에 해당하는 알람 창 띄우는 함수
+    /// </summary>
     public void ShowAlarmAlert(Alarm alarm)
     {
         GameObject obj = Instantiate(_alarmAlertTemplate);

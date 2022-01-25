@@ -24,7 +24,6 @@ public class TimeUI : MonoBehaviour
         UpdateTime(AlarmScript.Instance.TimeManager.hour, AlarmScript.Instance.TimeManager.minute);
     }
 
-
     private void OnTickHandler(object sender, TimeManager.OnTickEventArgs e)
     {
         UpdateTime(e.hour, e.minute);
@@ -32,6 +31,12 @@ public class TimeUI : MonoBehaviour
 
     private void UpdateTime(int hour, int minute)
     {
-        _timeText.text = $"{hour:00}:{minute:00}";
+        string ampm = "AM";
+        if (hour >= 12)
+        {
+            hour -= 12;
+            ampm = "PM";
+        }
+        _timeText.text = $"{ampm} {hour:00}:{minute:00}";
     }
 }

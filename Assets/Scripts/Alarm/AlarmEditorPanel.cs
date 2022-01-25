@@ -24,7 +24,7 @@ public class AlarmEditorPanel : MonoBehaviour
     private bool _isEditing = false;
     private int _currentAlarmIndex;
 
-    // When adding a new alarm which didn't exist before
+    // 새로운 알람을 만들 때 입력필드 초기화하는 함수
     public void Initialize()
     {
         _deleteButton.SetActive(false);
@@ -37,7 +37,7 @@ public class AlarmEditorPanel : MonoBehaviour
         ResetInputField(_minuteInputField);
     }
 
-    // When editing alarm already existed before
+    // 기존의 알람을 편집할 때 입력필드 초기화하는 함수. 파라미터로 받은 알람 정보를 활용해 입력필드를 채워넣음
     public void Initialize(int i, Alarm alarm)
     {
         _deleteButton.SetActive(true);
@@ -53,9 +53,11 @@ public class AlarmEditorPanel : MonoBehaviour
     }
 
     #region ButtonCallbacks
+    
+    // Confirm 버튼을 눌렀을 때 
     public void OnClick_Confirm()
     {
-        // If editing alarm already existed before
+        // 기존의 알람을 편집할 때. alarmList 리스트의 기존 알람 정보를 수정함
         if (_isEditing)
         {
             Alarm alarm = AlarmManager.alarmList[_currentAlarmIndex];
@@ -70,7 +72,7 @@ public class AlarmEditorPanel : MonoBehaviour
 
             Hide();
         }
-        // If adding a new alarm which didn't exist before
+        // 새로운 알람을 만들 때. 새로운 알람을 alarmList 리스트에 추가함
         else
         {
             Alarm newAlarm = new Alarm();
@@ -88,17 +90,21 @@ public class AlarmEditorPanel : MonoBehaviour
         }
     }
 
+    // Delete 버튼을 눌렀을 때 
     public void OnClick_Delete()
     {
         AlarmManager.RemoveAlarm(_currentAlarmIndex);
         AlarmScript.Instance.AlarmCanvas.AlarmListPanel.InvokeChangedEvent();
         Hide();
     }
+
+    // Close 버튼을 눌렀을 때 
     public void OnClick_Exit()
     {
         Hide();
     }
 
+    // + 버튼을 눌렀을 때 
     public void OnClick_Plus(int i)
     {
         if (i == 0) // For hour inputfield
@@ -126,6 +132,8 @@ public class AlarmEditorPanel : MonoBehaviour
             }
         }
     }
+
+    // - 버튼을 눌렀을 때 
     public void OnClick_Minus(int i)
     {
         if (i == 0) // For hour inputfield
@@ -172,6 +180,7 @@ public class AlarmEditorPanel : MonoBehaviour
         _minuteInputField.text = "";
     }
 
+    // 시간 인풋필드의 입력값을 0~12의 값으로 클램핑
     public void ClampHourInput(string value)
     {
         int clampedNumber = Mathf.Clamp(int.Parse(value), 0, 12);
@@ -179,6 +188,7 @@ public class AlarmEditorPanel : MonoBehaviour
         _hourInputField.text = clampedNumber.ToString();
     }
 
+    // 분 인풋필드의 입력값을 0~59의 값으로 클램핑
     public void ClampMinuteInput(string value)
     {
         if (value != "")
@@ -192,12 +202,14 @@ public class AlarmEditorPanel : MonoBehaviour
 
     public void CheckInputValid()
     {
+        // 비어있는 인풋필드가 있으면 false를 반환
         if (CheckIfEmpty(_nameInputField) || CheckIfEmpty(_hourInputField) || CheckIfEmpty(_minuteInputField))
         {
             _confirmButton.interactable = false;
             return;
         }
 
+        // 비어있는 인풋필드가 없으면 true를 반환
         _confirmButton.interactable = true;
     }
 
