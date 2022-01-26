@@ -8,8 +8,9 @@ namespace XReal.XTown.Yacht
 {
     public class SelectScore : MonoBehaviour, IPointerClickHandler
     {
-        public void OnPointerClick(PointerEventData eventData)
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log("OnPointerClick");
             if (GameManager.currentGameState == GameState.selecting)
             {
                 GameObject go = eventData.pointerCurrentRaycast.gameObject;

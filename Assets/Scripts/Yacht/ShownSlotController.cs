@@ -15,14 +15,7 @@ namespace XReal.XTown.Yacht
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                if (instance != this)
-                {
-                    Destroy(this.gameObject);
-                }
+                
             }
 
             shownSlots = transform.GetComponentsInChildren<ShownSlot>();
@@ -34,17 +27,6 @@ namespace XReal.XTown.Yacht
             }
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
 
