@@ -257,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734596891581155851, guid: 91bc738b44681c649a8acc9b7c8eabff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8734596891581155851, guid: 91bc738b44681c649a8acc9b7c8eabff, type: 3}
       propertyPath: m_LocalPosition.y
@@ -265,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734596891581155851, guid: 91bc738b44681c649a8acc9b7c8eabff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8734596891581155851, guid: 91bc738b44681c649a8acc9b7c8eabff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -434,10 +434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c88c85f85a38c748a489eb0fa9f735e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterPrefabs:
-  - {fileID: 4142847262815404090, guid: 3538f48fe7596a642b89e8f7c1b81d57, type: 3}
-  SpawnPoint: {fileID: 1717984108}
-  FreeLookCam: {fileID: 196118896}
 --- !u!4 &576151718
 Transform:
   m_ObjectHideFlags: 0
@@ -452,6 +448,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &619889360
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 539637894680268948, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: SpawnPoint
+      value: 
+      objectReference: {fileID: 1717984108}
+    - target: {fileID: 539637894680268948, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: FreeLookCam
+      value: 
+      objectReference: {fileID: 196118896}
+    - target: {fileID: 539637894680268948, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: CharacterPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 539637894680268948, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: CharacterPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 4142847262815404090, guid: 3538f48fe7596a642b89e8f7c1b81d57, type: 3}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856206, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293173341827856207, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
+      propertyPath: m_Name
+      value: SpawnPoint
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d29e0a8f58ea83f459b5a763834d6a1d, type: 3}
 --- !u!1 &684789349
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +599,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 684789349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1462,7 +1531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717984107}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1983,7 +2052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 485195349616051576, guid: 2b9d2b3e80b46f24eb38fe2f7e570992, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 485195349616051576, guid: 2b9d2b3e80b46f24eb38fe2f7e570992, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1991,7 +2060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 485195349616051576, guid: 2b9d2b3e80b46f24eb38fe2f7e570992, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 485195349616051576, guid: 2b9d2b3e80b46f24eb38fe2f7e570992, type: 3}
       propertyPath: m_LocalRotation.w

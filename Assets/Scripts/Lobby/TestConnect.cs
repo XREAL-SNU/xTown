@@ -44,7 +44,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     {
         Debug.Log("TestConnect/Connected to Master.", this);
 
-        //PhotonNetwork.JoinLobby(); // 시작하고 바로 로비에 join 
+        PhotonNetwork.JoinLobby(); // 시작하고 바로 로비에 join 
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -67,7 +67,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld"))
         {
             Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name + ", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
-            LoadCharacter.Instance.PlayerControl.enabled = false;
+            //LoadCharacter.Instance.PlayerControl.enabled = false;
             // activate the current room canvases
             RoomsCanvases.Instance.CurrentRoomCanvas.Show();
             RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
@@ -80,8 +80,9 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("Player Left Room");
+        PhotonNetwork.JoinLobby();
         // loading the default scene.
-        PhotonNetwork.LoadLevel("MainRoom");
+        // PhotonNetwork.LoadLevel("MainRoom");
 
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -95,6 +96,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log("TestConnect/Room List Updated!!!!");
         foreach (RoomInfo info in roomList)
         {
             //Removed from rooms list.
@@ -103,6 +105,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
                 int index = _listings.FindIndex(x => x.RoomInfo.Name == info.Name);
                 if (index != -1)
                 {
+                    Debug.Log("Room Removed " + _listings[index].RoomInfo.Name);
                     Destroy(_listings[index].gameObject);
                     _listings.RemoveAt(index);
                 }
@@ -118,6 +121,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
                     {
                         listing.SetRoomInfo(info);
                         _listings.Add(listing);
+                        Debug.Log("Room Added " + listing.RoomInfo.Name);
                     }
                 }
                 else

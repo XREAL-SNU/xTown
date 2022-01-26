@@ -25,14 +25,14 @@ public class RoomListingsMenu : MonoBehaviourPunCallbacks
         _content.DestroyChilderen();
         _listings.Clear();
     }
-
+    /*
     public override void OnConnectedToMaster()
     {
         if (!PhotonNetwork.InLobby)
             PhotonNetwork.JoinLobby();
     }
 
-    /*
+    
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach(RoomInfo info in roomList)
