@@ -39,8 +39,7 @@ public class PlayerAvatar: MonoBehaviour
     public void ChangeMaterialColor()
     {
         Debug.Log("PlayerAvatar/ Change Material");
-        var renderer = LocalPlayerGo.GetComponent<Renderer>();
-
-        renderer.material.SetColor("_Color", Color.red);
+        var renderer = LocalPlayerGo.transform.Find("Space_Suit/Tpose_/Man_Suit/Body").GetComponent<SkinnedMeshRenderer>();
+        renderer.materials[0].SetColor("_Color", Color.red);
     }
 }
