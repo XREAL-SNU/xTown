@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeUI : MonoBehaviour
 {
     [SerializeField]
-    private Text timeText;
+    private Text _timeText;
 
     private void OnEnable()
     {
@@ -21,15 +21,8 @@ public class TimeUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateTime(TimeManager.hour, TimeManager.minute);
+        UpdateTime(AlarmScript.Instance.TimeManager.hour, AlarmScript.Instance.TimeManager.minute);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void OnTickHandler(object sender, TimeManager.OnTickEventArgs e)
     {
@@ -38,6 +31,12 @@ public class TimeUI : MonoBehaviour
 
     private void UpdateTime(int hour, int minute)
     {
-        timeText.text = $"{hour:00}:{minute:00}";
+        string ampm = "AM";
+        if (hour >= 12)
+        {
+            hour -= 12;
+            ampm = "PM";
+        }
+        _timeText.text = $"{ampm} {hour:00}:{minute:00}";
     }
 }

@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 알람을 관리 및 실행시키는 클래스
+/// </summary>
 public class AlarmManager : MonoBehaviour
 {
-    [SerializeField]
-    private static int _targetHour;
-    [SerializeField]
-    private static int _targetMinute;
+    public static List<Alarm> alarmList;
+    public static int maxNumber = 10;
 
-    private int _hour;
-    private int _minute;
+    private void Awake()
+    {
+        alarmList = new List<Alarm>();
+    }
 
     private void OnEnable()
     {
@@ -22,29 +25,41 @@ public class AlarmManager : MonoBehaviour
         TimeManager.OnTick -= OnTickHandler;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// 설정된 알람들 중 현재 시간에 해당하는 알람이 있는지 확인하는 함수
+    /// </summary>
     private void OnTickHandler(object sender, TimeManager.OnTickEventArgs e)
     {
-        _hour = e.hour;
-        _minute = e.minute;
+        if (alarmList.Count > 0)
+        {
+            foreach (Alarm alarm in alarmList)
+            {
+                int hour = alarm.hour;
 
-        if (_targetHour != _hour) return;
-        if (_targetMinute != _minute) return;
+                // 24시 형식으로 알람의 설정 시간을 변환해야 함. TimeManager의 시간은 24시 형식이기 때문.
+                if (!alarm.isAM) 
+                {
+                    hour += 12;
+                }
+                if (hour != e.hour) continue;
+                if (alarm.minute != e.minute) continue;
 
-        // 알람에 설정한 시간 도달
-        Debug.Log("알람이 울립니다.");
-
+                // AlarmCanvas에서 알람 패널 띄우기
+                AlarmScript.Instance.AlarmCanvas.ShowAlarmAlert(alarm);
+            }
+        }
     }
 
-    public static void SetAlarm(int hour, int minute)
+    public static void AddAlarm(Alarm alarm)
     {
-        _targetHour = hour;
-        _targetMinute = minute;
-        Debug.Log("alarm is set");
+        alarmList.Add(alarm);
+    }
+
+    public static void RemoveAlarm(int i)
+    {
+        if (alarmList != null)
+        {
+            alarmList.Remove(alarmList[i]);
+        }
     }
 }
