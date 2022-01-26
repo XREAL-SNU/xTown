@@ -76,6 +76,7 @@ public class NetworkLobby : MonoBehaviourPunCallbacks
     /// </summary>
     void OnEnable()
     {
+        Debug.Log("NetworkLobby/OnEnable");
         int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter");
         _prefab = CharacterPrefabs[selectedCharacter];
         //SceneManager.sceneLoaded += OnSceneLoaded;
