@@ -35,7 +35,6 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("AvatarSelectionMenu/Joined MainWorld!!!");
-        PhotonNetwork.LoadLevel("MainRoom");
         //SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
         gameObject.SetActive(false);
     }
@@ -43,6 +42,7 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         Debug.Log("AvatarSelectionMenu/Created MainWorld!!!");
+        PhotonNetwork.LoadLevel("MainRoom");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
