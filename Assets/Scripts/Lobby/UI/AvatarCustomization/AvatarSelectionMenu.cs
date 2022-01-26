@@ -20,19 +20,8 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
 
     public void OnClick_JoinLobby()
     {
-        if (!PhotonNetwork.IsConnected)
-            return;
-
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName, this);
-        PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
-    }
-
-    public override void OnJoinedLobby()
-    {
-        SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
-        gameObject.SetActive(false);
+        _roomCanvases.AvatarSelectionCanvas.Hide();
+        _roomCanvases.AvatarConfirmCanvas.Show();
     }
 
     public void OnClick_BackPlayerNameInputMenu()
