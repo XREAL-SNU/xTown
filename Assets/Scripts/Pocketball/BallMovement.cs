@@ -12,6 +12,8 @@ namespace JK
         public Vector3 ballVelocity;
         public Vector3 ballDirection;
         public Vector3 powerPosition;
+        public static float TimePress;
+        public static bool CueBool;
         private float power;
         private float start_time;
         private float bar_time;
@@ -28,6 +30,7 @@ namespace JK
             rb=GetComponent<Rigidbody>();
             BallNum=int.Parse(gameObject.name.Substring(5));
             power=0;
+            CueBool = true;
         }
 
         // Update is called once per frame
@@ -39,11 +42,14 @@ namespace JK
                 //Debug.Log("Hi"+BallNum.ToString());
                 GameManager.isBallStop[BallNum]=1;
                 GameManager.Arraytrigger[BallNum]=false;
+                //큐대 보이게
+               // CueBool = true;
             }
             if(BallNum==0)
             {
                 GameManager.whitePosition = transform.position;
             }
+            TimePress=press_time;
         }
 
         void OnMouseDown()
@@ -75,6 +81,8 @@ namespace JK
             {
                 if(BallNum==0)
                 {
+                    //지우기
+                     CueBool = false;
                     //흰공 방향 결정하자.
                     ballDirection=transform.position-PlayerScript.playerPosition;
                     ballDirection.y=0;                
@@ -111,6 +119,9 @@ namespace JK
                     {
                         GameManager.Arraytrigger[j]=true;
                     }
+                    //큐대 reset
+                    CueScript.PressTime = 0;
+                    
                 }
             }
         }
