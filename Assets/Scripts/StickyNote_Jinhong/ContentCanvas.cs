@@ -44,6 +44,12 @@ public class ContentCanvas : MonoBehaviour
     // private int _minRotation = -60;
     // private int _maxRotation = 60;
 
+    // 폰트 크기 조절 관련 변수들
+    private float _fontSizingSpeed = 0.02f;
+    private float _minFontSize = 0.15f;
+    private float _maxFontSize = 0.6f;
+    private float _newFontSize = 0f;
+
     // 스티키노트 색상 관련 변수
     private int _colorIndex = 0;
 
@@ -61,12 +67,16 @@ public class ContentCanvas : MonoBehaviour
         EventTrigger trigger = GetComponent<EventTrigger>();
         EventTrigger.Entry pointerEnterEntry = new EventTrigger.Entry();
         EventTrigger.Entry pointerExitEntry = new EventTrigger.Entry();
+        EventTrigger.Entry scrollEntry = new EventTrigger.Entry();
         pointerEnterEntry.eventID = EventTriggerType.PointerEnter;
         pointerExitEntry.eventID = EventTriggerType.PointerExit;
+        scrollEntry.eventID = EventTriggerType.Scroll;
         pointerEnterEntry.callback.AddListener((data) => { OnPointerEnter((PointerEventData)data); });
         pointerExitEntry.callback.AddListener((data) => { OnPointerExit((PointerEventData)data); });
+        scrollEntry.callback.AddListener((data) => { OnScrollContent((PointerEventData)data); });
         trigger.triggers.Add(pointerEnterEntry);
         trigger.triggers.Add(pointerExitEntry);
+        trigger.triggers.Add(scrollEntry);
 
         _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
         _colorChangerIcon.DOFade(0, 0);
@@ -166,6 +176,30 @@ public class ContentCanvas : MonoBehaviour
     {
         _hovering = false;
         StartCoroutine(_stickyNote.ControllerCanvas.HideController());
+    }
+
+    private void OnScrollContent(PointerEventData eventData)
+    {
+        switch(_stickyNote.CurrentState)
+        {
+            case (State.Edit):
+                {
+                    if (eventData.scrollDelta.y > 0)
+                    {
+                        _newFontSize = _contentText.fontSize + _fontSizingSpeed;
+                    }
+                    else
+                    {
+                        _newFontSize = _contentText.fontSize - _fontSizingSpeed;
+                    }
+                    _newFontSize = Mathf.Clamp(_newFontSize, _minFontSize, _maxFontSize);
+
+                    _contentText.fontSize = _newFontSize;
+                    break;
+                }
+        }
+        
+
     }
 
     // 스티키노트 편집하는 인풋필드 값이 바뀔 때마다 실제 스티키노트에 반영하는 함수

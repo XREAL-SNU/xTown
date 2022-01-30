@@ -27,6 +27,7 @@ public class EditCanvas : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        _stickyNote.CurrentState = State.Edit;
         _inputField.text = _stickyNote.ContentCanvas.ContentText.text;
         FocusInputfield(null);
 
@@ -35,6 +36,7 @@ public class EditCanvas : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
+        _stickyNote.CurrentState = State.Idle;
     }
 
     public void OnClick_Confirm()
