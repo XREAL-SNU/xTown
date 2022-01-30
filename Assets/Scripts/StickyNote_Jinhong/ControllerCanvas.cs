@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 using DG.Tweening;
 
 
@@ -12,6 +13,8 @@ public class ControllerCanvas : MonoBehaviour
 
     [SerializeField]
     private Image _background;
+    [SerializeField]
+    private Button _lockButton;
     [SerializeField]
     private Button _editButton;
     [SerializeField]
@@ -37,11 +40,20 @@ public class ControllerCanvas : MonoBehaviour
         trigger.triggers.Add(pointerEnterEntry);
         trigger.triggers.Add(pointerExitEntry);
 
+        // Lock 버튼에 잠금 함수 바인딩
+        _lockButton.onClick.AddListener(OnClick_Lock);
+
         // Edit 버튼에 내용 편집 함수 바인딩
         _editButton.onClick.AddListener(OnClick_Edit);
 
         // Remove 버튼에 스티키노트 제거 함수 바인딩
         _removeButton.onClick.AddListener(OnClick_Remove);
+
+        EventTrigger removeTrigger = _removeButton.GetComponent<EventTrigger>();
+        EventTrigger.Entry removeEntry = new EventTrigger.Entry();
+        removeEntry.eventID = EventTriggerType.PointerDown;
+        removeEntry.callback.AddListener((data) => { Test((PointerEventData)data); });
+        removeTrigger.triggers.Add(removeEntry);
 
         // Scale 버튼 이벤트 트리거에 스케일 함수 바인딩
         EventTrigger scaleTrigger = _scaleButton.GetComponent<EventTrigger>();
@@ -56,6 +68,9 @@ public class ControllerCanvas : MonoBehaviour
         rotateEntry.eventID = EventTriggerType.Drag;
         rotateEntry.callback.AddListener((data) => { OnDrag_Rotate((PointerEventData)data); });
         rotateTrigger.triggers.Add(rotateEntry);
+
+        _stickyNote.onLock += OnLock;
+        _stickyNote.onUnlock += OnUnlock;
 
         _background.transform.DOScale(0, 0);
         _hovering = false;
@@ -123,12 +138,48 @@ public class ControllerCanvas : MonoBehaviour
     // 스티키노트 컨트롤러의 Remove 버튼을 눌렀을 때
     public void OnClick_Remove()
     {
-        Destroy(_stickyNote.gameObject);
+        // Destroy(_stickyNote.gameObject);
+        Debug.Log("removing");
+    }
+
+    public void Test(PointerEventData eventData)
+    {
+        Debug.Log("removing with pointerdown");
+    }
+
+    private void OnClick_Lock()
+    {
+        if (_stickyNote.isLocked)
+        {
+            _stickyNote.Unlock();
+        }
+        else
+        {
+            _stickyNote.Lock();
+        }
     }
 
     // 스티키노트 컨트롤러 UI를 나타나게 하는 함수
     public void ShowController()
     {
         _background.transform.DOScale(1, 0.4f);
+    }
+
+    private void OnLock()
+    {
+        _lockButton.GetComponentInChildren<TMP_Text>().text = "Unlock";
+        _editButton.gameObject.SetActive(false);
+        _scaleButton.gameObject.SetActive(false);
+        _rotateButton.gameObject.SetActive(false);
+        _removeButton.gameObject.SetActive(false);
+    }
+
+    private void OnUnlock()
+    {
+        _lockButton.GetComponentInChildren<TMP_Text>().text = "Lock";
+        _editButton.gameObject.SetActive(true);
+        _scaleButton.gameObject.SetActive(true);
+        _rotateButton.gameObject.SetActive(true);
+        _removeButton.gameObject.SetActive(true);
     }
 }

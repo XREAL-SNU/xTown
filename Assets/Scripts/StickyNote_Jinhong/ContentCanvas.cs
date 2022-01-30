@@ -127,9 +127,12 @@ public class ContentCanvas : MonoBehaviour
     // 스티키노트의 색깔을 바꾸는 함수
     public void OnClick_Color()
     {
-        _colorIndex = GetNextColorIndex(_colorIndex);
-        _contentImage.color = _backgroundColors[_colorIndex];
-        _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        if (!_stickyNote.isLocked)
+        {
+            _colorIndex = GetNextColorIndex(_colorIndex);
+            _contentImage.color = _backgroundColors[_colorIndex];
+            _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        }
     }
 
     private int GetNextColorIndex(int i)
@@ -170,6 +173,4 @@ public class ContentCanvas : MonoBehaviour
     {
         _contentText.text = value;
     }
-
-
 }

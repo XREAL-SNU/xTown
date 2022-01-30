@@ -8,6 +8,9 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class DragableUI : MonoBehaviour
 {
+    [SerializeField]
+    private StickyNote _stickyNote;
+
     private Vector3 _offset;
     private float _zCoord;
 
@@ -33,6 +36,9 @@ public class DragableUI : MonoBehaviour
 
     void OnMouseDrag()
     {
-        transform.position = GetMouseAsWorldPoint() + _offset;
+        if (!_stickyNote.isLocked)
+        {
+            transform.position = GetMouseAsWorldPoint() + _offset;
+        }
     }
 }

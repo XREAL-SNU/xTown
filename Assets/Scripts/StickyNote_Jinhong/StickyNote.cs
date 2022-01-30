@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class StickyNote : MonoBehaviour
     private EditCanvas _editCanvas;
     public EditCanvas EditCanvas { get { return _editCanvas; } }
 
+    private bool _isLocked;
+    public bool isLocked { get { return _isLocked; } }
+
+    public event Action onLock;
+    public event Action onUnlock;
 
     private void Awake()
     {
@@ -30,5 +36,23 @@ public class StickyNote : MonoBehaviour
         _contentCanvas.Initialize(this);
         _controllerCanvas.Initialize(this);
         _editCanvas.Initialize(this);
+    }
+
+    public void Lock()
+    {
+        if (onLock != null)
+        {
+            onLock();
+        }
+        _isLocked = true;
+    }
+
+    public void Unlock()
+    {
+        if (onUnlock != null)
+        {
+            onUnlock();
+        }
+        _isLocked = false;
     }
 }
