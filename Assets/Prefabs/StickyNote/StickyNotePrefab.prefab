@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 5748472551087484681}
   - component: {fileID: 5748472551087484685}
   - component: {fileID: 5748472551087484684}
+  - component: {fileID: 1199241633164558607}
   - component: {fileID: 5748472551087484687}
   m_Layer: 5
   m_Name: ContentCanvas
@@ -428,6 +429,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c715ed8f51e864da1f375f2c573c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1199241633164558607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748472551087484694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca9161ac542288947bf7a972856c8fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controllerTarget: {fileID: 5748472551318418790}
+  _contentImage: {fileID: 5748472552644118333}
+  _contentText: {fileID: 5748472551919658679}
+  _rectTransform: {fileID: 5748472551087484682}
+  _collider: {fileID: 5748472551087484687}
+  _backgroundColors:
+  - {r: 1, g: 0.82212794, b: 0.035294116, a: 1}
+  - {r: 0.47080812, g: 0.8679245, b: 0.5086288, a: 1}
+  - {r: 0.3537736, g: 0.70906174, b: 1, a: 1}
+  - {r: 1, g: 0.43867922, b: 0.43867922, a: 1}
+  _colorChangerButton: {fileID: 2752687443174739599}
+  _colorChangerIcon: {fileID: 2851423142316090800}
 --- !u!61 &5748472551087484687
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -535,20 +560,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9c5e1a25fea7e4b985619525593973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controllerTarget: {fileID: 5748472551318418790}
-  _controllerImage: {fileID: 5748472551511896531}
-  _contentTransform: {fileID: 5748472551087484682}
-  _contentCollider: {fileID: 5748472551087484687}
-  _contentImage: {fileID: 5748472552644118333}
-  _contentText: {fileID: 5748472551919658679}
-  _editCanvas: {fileID: 5748472551392056867}
-  _editInputField: {fileID: 5748472551861603995}
-  _backgroundColors:
-  - {r: 1, g: 0.85882354, b: 0.015686275, a: 1}
-  - {r: 0.41037738, g: 0.6352511, b: 1, a: 1}
-  - {r: 0.47585443, g: 0.8679245, b: 0.45443216, a: 1}
-  - {r: 1, g: 0.4009434, b: 0.4009434, a: 1}
-  _colorChangerIcon: {fileID: 2851423142316090800}
+  _contentCanvas: {fileID: 1199241633164558607}
+  _controllerCanvas: {fileID: 3153306111924448096}
+  _editCanvas: {fileID: 2776490566870783622}
 --- !u!1 &5748472551392056867
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,13 +575,14 @@ GameObject:
   - component: {fileID: 5748472551392056871}
   - component: {fileID: 5748472551392056868}
   - component: {fileID: 5748472551392056869}
+  - component: {fileID: 2776490566870783622}
   m_Layer: 0
   m_Name: EditCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5748472551392056866
 RectTransform:
   m_ObjectHideFlags: 0
@@ -650,6 +665,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2776490566870783622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748472551392056867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8c3efde38a71241b747f5dd7ecf0b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputField: {fileID: 5748472551861603995}
+  _confirmButton: {fileID: 5748472551872566976}
 --- !u!1 &5748472551501114375
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +825,7 @@ GameObject:
   - component: {fileID: 5748472551505773439}
   - component: {fileID: 5748472551505773436}
   - component: {fileID: 5748472551505773437}
-  - component: {fileID: 5748472551505773434}
+  - component: {fileID: 4320267783481263189}
   m_Layer: 5
   m_Name: Rotate
   m_TagString: Untagged
@@ -906,7 +935,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5748472551505773434
+--- !u!114 &4320267783481263189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -915,10 +944,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5748472551505773432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b41ca50eb3349c143ba820ebd22be515, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentTransform: {fileID: 5748472551087484682}
+  m_Delegates: []
 --- !u!1 &5748472551507467888
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1267,7 @@ GameObject:
   - component: {fileID: 5748472551609707836}
   - component: {fileID: 5748472551609707837}
   - component: {fileID: 5748472551609707834}
-  - component: {fileID: 5748472551609707839}
+  - component: {fileID: 3001437292250253381}
   m_Layer: 5
   m_Name: Scale
   m_TagString: Untagged
@@ -1348,7 +1377,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5748472551609707839
+--- !u!114 &3001437292250253381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1357,10 +1386,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5748472551609707832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c8f691b8fb29d44bcb6d451b757851, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentTransform: {fileID: 5748472551087484682}
+  m_Delegates: []
 --- !u!1 &5748472551649437509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,7 +1562,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 545.75, y: 50}
+  m_SizeDelta: {x: 545.75, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5748472551861603997
 CanvasRenderer:
@@ -2412,6 +2441,7 @@ GameObject:
   - component: {fileID: 5748472552588205699}
   - component: {fileID: 5748472552588205696}
   - component: {fileID: 5748472552588205697}
+  - component: {fileID: 3153306111924448096}
   m_Layer: 5
   m_Name: ControllerCanvas
   m_TagString: Untagged
@@ -2512,39 +2542,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5748472551323812736}
-          m_TargetAssemblyTypeName: StickyNote, Assembly-CSharp
-          m_MethodName: OnPointerExitController
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5748472551323812736}
-          m_TargetAssemblyTypeName: StickyNote, Assembly-CSharp
-          m_MethodName: OnPointerEnterController
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  m_Delegates: []
+--- !u!114 &3153306111924448096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748472552588205711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8cd9947ffdf624cb4a2cc0fa0701cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _background: {fileID: 5748472551511896531}
+  _editButton: {fileID: 5748472550798148501}
+  _scaleButton: {fileID: 5748472551609707834}
+  _rotateButton: {fileID: 5748472551505773437}
+  _removeButton: {fileID: 5748472552664320338}
 --- !u!1 &5748472552644118331
 GameObject:
   m_ObjectHideFlags: 0
