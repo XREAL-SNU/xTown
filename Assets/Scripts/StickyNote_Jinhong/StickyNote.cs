@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public enum State
+public enum StickyNoteState
 {
     Edit,
     Move,
@@ -32,8 +32,8 @@ public class StickyNote : MonoBehaviour
     public event Action onLock;
     public event Action onUnlock;
 
-    private State _currentState;
-    public State CurrentState { get; set; }
+    private StickyNoteState _currentState;
+    public StickyNoteState CurrentState { get; set; }
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class StickyNote : MonoBehaviour
         _controllerCanvas.Initialize(this);
         _editCanvas.Initialize(this);
 
-        _currentState = State.Idle;
+        _currentState = StickyNoteState.Idle;
     }
 
     public void Lock()

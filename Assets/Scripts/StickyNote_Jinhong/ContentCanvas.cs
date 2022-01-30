@@ -182,7 +182,7 @@ public class ContentCanvas : MonoBehaviour
     {
         switch(_stickyNote.CurrentState)
         {
-            case (State.Edit):
+            case (StickyNoteState.Edit):
                 {
                     if (eventData.scrollDelta.y > 0)
                     {
