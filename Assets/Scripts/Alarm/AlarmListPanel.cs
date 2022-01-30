@@ -15,9 +15,11 @@ public class AlarmListPanel : MonoBehaviour
 
     [SerializeField]
     private GameObject _alarmUITemplate;
+    [SerializeField]
+    private GameObject _alarmEditorPanel;
 
     public delegate void OnChangedEvent();
-    // ¾Ë¶÷ ¸®½ºÆ®°¡ º¯°æ ¹× ¼öÁ¤µÇ¾úÀ» ¶§ ¹ß»ý½ÃÅ³ ÇÔ¼öµéÀ» ´ã´Â ÀÌº¥Æ®ÇÚµé·¯
+    // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å³ ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½Úµé·¯
     public static event OnChangedEvent OnChanged;
 
     public void Start()
@@ -32,7 +34,7 @@ public class AlarmListPanel : MonoBehaviour
         OnChanged();
     }
 
-    // ¾Ë¶÷ ¸®½ºÆ® UI¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÇÔ¼ö
+    // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® UIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     private void OnUpdateAlarmList()
     {
         foreach (Transform t in _alarmListTransform)
@@ -44,7 +46,7 @@ public class AlarmListPanel : MonoBehaviour
         DrawAlarmNumber();
     }
 
-    // ¾Ë¶÷ ¸®½ºÆ® ½ºÅ©·Ñ ºä¿¡¼­ ÀüÃ¼ ¾Ë¶÷ ¸ñ·ÏÀ» ±×¸®´Â ÇÔ¼ö
+    // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ä¿¡ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     private void DrawAlarmList()
     {
         foreach (Alarm alarm in AlarmManager.alarmList)
@@ -53,7 +55,7 @@ public class AlarmListPanel : MonoBehaviour
         }
     }
 
-    // ¾Ë¶÷ ¸®½ºÆ® ½ºÅ©·Ñ ºä¿¡¼­ ´ÜÀÏ ¾Ë¶÷ ¸ñ·ÏÀ» ±×¸®´Â ÇÔ¼ö
+    // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ä¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     private void DrawAlarm(Alarm alarm)
     {
         // Instantiate single alarm UI element.
@@ -81,14 +83,14 @@ public class AlarmListPanel : MonoBehaviour
         obj.transform.GetChild(2).GetComponent<TMP_Text>().text = time;
     }
 
-    // ÇÏ´Ü¿¡ ÀüÃ¼ ¾Ë¶÷ °¹¼ö¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÇÔ¼ö
+    // ï¿½Ï´Ü¿ï¿½ ï¿½ï¿½Ã¼ ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     private void DrawAlarmNumber()
     {
         _alarmNumberText.text = AlarmManager.alarmList.Count.ToString() + " / " + AlarmManager.maxNumber.ToString();
     }
 
     #region ButtonCallbacks
-    // Add alarm ¹öÆ°À» ´­·¶À» ¶§ 
+    // Add alarm ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
     public void OnClick_Add()
     {
         if (AlarmManager.alarmList != null)
@@ -101,7 +103,7 @@ public class AlarmListPanel : MonoBehaviour
         }
     }
     
-    // ¾Ë¶÷ ¸ñ·Ï¿¡¼­ ±âÁ¸ ¾Ë¶÷À» ´­·¶À» ¶§
+    // ï¿½Ë¶ï¿½ ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     public void OnClick_Edit()
     {
         GameObject obj = EventSystem.current.currentSelectedGameObject;
@@ -113,20 +115,16 @@ public class AlarmListPanel : MonoBehaviour
         AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Show();
     }
 
-    // Close ¹öÆ°À» ´­·¶À» ¶§
-    public void OnClick_Exit()
-    {
-        Hide();
-    }
+    // Close ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     #endregion
 
-    public void Show()
+    public void OnClcikShow()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(!this.gameObject.activeSelf);
+        if(_alarmEditorPanel.activeSelf)
+        {
+            _alarmEditorPanel.SetActive(false);
+        }
     }
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
 }
