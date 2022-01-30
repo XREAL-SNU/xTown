@@ -23,6 +23,8 @@ public class ControllerCanvas : MonoBehaviour
     private Button _rotateButton;
     [SerializeField]
     private Button _removeButton;
+    [SerializeField]
+    private RadialProgress _removeProgressBar;
 
     private bool _hovering;
 
@@ -47,13 +49,17 @@ public class ControllerCanvas : MonoBehaviour
         _editButton.onClick.AddListener(OnClick_Edit);
 
         // Remove 버튼에 스티키노트 제거 함수 바인딩
-        _removeButton.onClick.AddListener(OnClick_Remove);
+        // _removeButton.onClick.AddListener(OnClick_Remove);
 
         EventTrigger removeTrigger = _removeButton.GetComponent<EventTrigger>();
-        EventTrigger.Entry removeEntry = new EventTrigger.Entry();
-        removeEntry.eventID = EventTriggerType.PointerDown;
-        removeEntry.callback.AddListener((data) => { Test((PointerEventData)data); });
-        removeTrigger.triggers.Add(removeEntry);
+        EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry();
+        EventTrigger.Entry pointerUpEntry = new EventTrigger.Entry();
+        pointerDownEntry.eventID = EventTriggerType.PointerDown;
+        pointerUpEntry.eventID = EventTriggerType.PointerUp;
+        pointerDownEntry.callback.AddListener((data) => { OnPointerDown_Remove((PointerEventData)data); });
+        pointerUpEntry.callback.AddListener((data) => { OnPointerUp_Remove((PointerEventData)data); });
+        removeTrigger.triggers.Add(pointerDownEntry);
+        removeTrigger.triggers.Add(pointerUpEntry);
 
         // Scale 버튼 이벤트 트리거에 스케일 함수 바인딩
         EventTrigger scaleTrigger = _scaleButton.GetComponent<EventTrigger>();
@@ -128,23 +134,25 @@ public class ControllerCanvas : MonoBehaviour
         _stickyNote.ContentCanvas.Rotate(eventData.delta);
     }
 
-
     // 스티키노트 컨트롤러의 Edit 버튼을 눌렀을 때
     public void OnClick_Edit()
     {
         _stickyNote.EditCanvas.Show();
     }
 
-    // 스티키노트 컨트롤러의 Remove 버튼을 눌렀을 때
-    public void OnClick_Remove()
+    public void OnPointerDown_Remove(PointerEventData eventData)
     {
-        // Destroy(_stickyNote.gameObject);
-        Debug.Log("removing");
+        _removeProgressBar.Activate();
     }
 
-    public void Test(PointerEventData eventData)
+    public void OnPointerUp_Remove(PointerEventData eventData)
     {
-        Debug.Log("removing with pointerdown");
+        _removeProgressBar.Deactivate();
+
+        if (_removeProgressBar.done)
+        {
+            Destroy(_stickyNote.gameObject);
+        }
     }
 
     private void OnClick_Lock()
