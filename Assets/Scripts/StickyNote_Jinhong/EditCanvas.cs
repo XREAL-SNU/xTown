@@ -18,23 +18,41 @@ public class EditCanvas : MonoBehaviour
         _stickyNote = stickyNote;
 
         _inputField.onValueChanged.AddListener(_stickyNote.ContentCanvas.OnValueChanged);
+        _inputField.onSubmit.AddListener(FocusInputfield);
         _confirmButton.onClick.AddListener(OnClick_Confirm);
+
         Hide();
     }
 
     public void Show()
     {
         gameObject.SetActive(true);
+        _stickyNote.CurrentState = StickyNoteState.Edit;
         _inputField.text = _stickyNote.ContentCanvas.ContentText.text;
+        FocusInputfield(null);
+
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
+        _stickyNote.CurrentState = StickyNoteState.Idle;
     }
 
     public void OnClick_Confirm()
     {
         Hide();
+    }
+
+    public void FocusInputfield(string value)
+    {
+        _inputField.ActivateInputField();
+        StartCoroutine(MoveToEnd());
+    }
+
+    IEnumerator MoveToEnd()
+    {
+        yield return new WaitForEndOfFrame();
+        _inputField.MoveTextEnd(true);
     }
 }
