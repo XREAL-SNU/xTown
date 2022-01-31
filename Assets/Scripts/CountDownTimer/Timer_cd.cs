@@ -5,20 +5,23 @@ using UnityEngine.UI;
 
 public class Timer_cd : MonoBehaviour
 {
-    public float timeValue = 90;
+    //public float timeValue = 90;
     public Text TimerText;
     public InputField InputField_Sec;
     public InputField InputField_Sec_tmp;
-    //private bool timerisActive=true;
-    //public string time_tmp;
 
-    //InputField_Sec_tmp = InputField_Sec;
-    //timeValue = float.Parse(InputField_Sec.text);
+
     public void countdownstart()
     {
         //timeValue = float.Parse(InputField_Sec.text);
-        timeValue = float.Parse(InputField_Sec_tmp.text);
+       // (1) Staic varialbe case
+       //Panel2Opener.timeValue = float.Parse(InputField_Sec_tmp.text);
+       // (2) GetComponent ccase
+        Panel2Opener P2O = GameObject.Find("Panelopenbtn2").GetComponent<Panel2Opener>();
+        P2O.timeValue = float.Parse(InputField_Sec_tmp.text);
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -26,16 +29,11 @@ public class Timer_cd : MonoBehaviour
 
         InputField_Sec_tmp = InputField_Sec;
 
-        if (timeValue>0)
-        {
-            timeValue-=Time.deltaTime;
-        }
-
-        else
-        {
-            timeValue = 0;
-        }
-        DisplayTime(timeValue);
+        // (1) Staic varialbe case
+        //DisplayTime(Panel2Opener.timeValue);
+        // (2) GetComponent ccase
+        Panel2Opener P2O = GameObject.Find("Panelopenbtn2").GetComponent<Panel2Opener>();
+        DisplayTime(P2O.timeValue);
     }
     void DisplayTime(float timeToDisplay)
     {
@@ -43,7 +41,7 @@ public class Timer_cd : MonoBehaviour
         if(timeToDisplay < 0)
         {
             timeToDisplay=0;
-            //timerisActive=false;
+
         }
 
 
