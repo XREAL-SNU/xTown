@@ -47,6 +47,10 @@ public class ContentCanvas : MonoBehaviour
     // 스티키노트 색상 관련 변수
     private int _colorIndex = 0;
 
+    // 스티키노트 더블클릭 인식 관련 변수
+    private float _clickedTime;
+    private float _doubleClickTime = 0.25f;
+
     public void Initialize(StickyNote stickyNote)
     {
         _stickyNote = stickyNote;
@@ -68,6 +72,12 @@ public class ContentCanvas : MonoBehaviour
         trigger.triggers.Add(pointerEnterEntry);
         trigger.triggers.Add(pointerExitEntry);
 
+        // 이벤트 트리거에 마우스 클릭 함수 바인딩 (더블클릭 인식 위해서)
+        EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry();
+        pointerDownEntry.eventID = EventTriggerType.PointerDown;
+        pointerDownEntry.callback.AddListener((data) => { OnPointerDown((PointerEventData)data); });
+        trigger.triggers.Add(pointerDownEntry);
+        
         _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
         _colorChangerIcon.DOFade(0, 0);
         _collider.size = new Vector2(_rectTransform.rect.width, _rectTransform.rect.height);
@@ -166,6 +176,30 @@ public class ContentCanvas : MonoBehaviour
     {
         _hovering = false;
         StartCoroutine(_stickyNote.ControllerCanvas.HideController());
+    }
+
+    // 스티키노트에 마우스 클릭했을 때
+    private void OnPointerDown(PointerEventData eventData)
+    {
+        float timeClickedBefore = _clickedTime;
+        
+        if (Time.time - timeClickedBefore < _doubleClickTime)
+        {
+            // 더블클릭으로 인식
+            OnDoubleClick();
+        }
+        _clickedTime = Time.time;
+    }
+
+    private void OnDoubleClick()
+    {
+        ShowStickyNoteDetail(_contentText.text);
+    }
+
+    private void ShowStickyNoteDetail(string text)
+    {
+        GameObject go = Instantiate(Resources.Load("StickyNote/StickyNoteDetailCanvas") as GameObject, Vector3.zero, Quaternion.identity);
+        go.GetComponent<StickyNoteCanvas>().SetText(text);
     }
 
     // 스티키노트 편집하는 인풋필드 값이 바뀔 때마다 실제 스티키노트에 반영하는 함수

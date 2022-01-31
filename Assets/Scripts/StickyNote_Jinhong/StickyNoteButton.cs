@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class StickyNoteButton : MonoBehaviour
 {
-    public GameObject stickyNotePrefab;
-
     public void CreateStickyNote()
     {
-        Instantiate(stickyNotePrefab, Vector3.zero, Quaternion.identity);
+        Instantiate(Resources.Load("StickyNote/StickyNotePrefab"), Vector3.zero, Quaternion.identity);
     }
 }
