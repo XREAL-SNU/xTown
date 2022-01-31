@@ -12,6 +12,10 @@ public class TextureArray
 public class CustomizingPanelScript : MonoBehaviour
 {
     [SerializeField]
+    private string _customPartId;
+    [SerializeField]
+    private PlayerAvatar _avatar;
+    [SerializeField]
     private Material _avatarMaterial;
     [SerializeField]
     private List<CustomizingButtonScript> _customizingColorButtons;
@@ -25,14 +29,19 @@ public class CustomizingPanelScript : MonoBehaviour
     private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
     private int _selected = 0;
 
+    private static AvatarAppearance _avatarAppearance;
     private void Start()
     {
         ClickButton(_selected);
+        if(_avatarAppearance is null) _avatarAppearance = new AvatarAppearance();
     }
 
     private void Update()
     {
-        _avatarMaterial.color= Fcp.color;
+        _avatarAppearance[_customPartId].SetMaterialBaseColor(Fcp.color);
+        _avatarAppearance.ApplyAppearance(_avatar);
+
+        //_avatarMaterial.color= Fcp.color;
     }
 
     public void ClickButton(int id)

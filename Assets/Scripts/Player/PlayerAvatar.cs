@@ -7,6 +7,7 @@ public class PlayerAvatar: MonoBehaviour
 {
     static GameObject _localPlayerGo;
     static PlayerAvatar _localPlayerAvatar;
+
     public static GameObject LocalPlayerGo
     {
         get => _localPlayerGo;
@@ -16,7 +17,7 @@ public class PlayerAvatar: MonoBehaviour
             _localPlayerGo = value;
             if (LocalPlayerAvatar is null)
             {
-                LocalPlayerAvatar = new PlayerAvatar();
+                LocalPlayerAvatar = _localPlayerGo.AddComponent<PlayerAvatar>();
             }
         }
     }
@@ -29,11 +30,11 @@ public class PlayerAvatar: MonoBehaviour
         }
     }
 
-    PhotonView photonView;
+    public PhotonView PhotonView;
     private void Start()
     {
-        photonView = GetComponent<PhotonView>();
-        if (photonView.IsMine) LocalPlayerGo = gameObject;
+        PhotonView = GetComponent<PhotonView>();
+        if (PhotonView.IsMine) LocalPlayerGo = gameObject;
     }
 
     public void ChangeMaterialColor()
