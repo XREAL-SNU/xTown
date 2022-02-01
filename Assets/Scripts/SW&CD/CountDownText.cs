@@ -8,6 +8,7 @@ public class CountDownText : MonoBehaviour
     public Text _timer;
     public InputField _inputField_Sec;
     public CountDown _countdown;
+    public GameObject _startButton;
     float _min;
     float _sec;
     //public InputField InputField_Sec_tmp;
@@ -22,7 +23,10 @@ public class CountDownText : MonoBehaviour
         if(_inputField_Sec.text is null) return;
         _countdown.CountDownStart(float.Parse(_inputField_Sec.text));
     }
-
+    public void CountDownTextResume()
+    {
+        _countdown.CountDownResume();
+    }
     public void CountDownTextStop()
     {
         _countdown.CountDownStop();
@@ -31,7 +35,7 @@ public class CountDownText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DisplayTime(_countdown.time);
+        DisplayTime(_countdown._time);
     }
     void DisplayTime(float timeToDisplay)
     {

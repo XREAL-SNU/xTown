@@ -5,23 +5,27 @@ using UnityEngine.UI;
 
 public class CountDown : MonoBehaviour 
 {
-	public float time;
+	public float _time;
 
   	public void CountDownStart(float startTime)
   	{
-		time = startTime; 
-    	StartCoroutine("StopWatch");
+		_time = startTime; 
+    	StartCoroutine("CountDownCoroutine");
   	}
+	public void CountDownResume()
+	{
+		StartCoroutine("CountDownCoroutine");
+	}
 
   	public void CountDownStop()
   	{
-    	StopCoroutine("StopWatch");
+    	StopCoroutine("CountDownCoroutine");
   	}
-  	IEnumerator StopWatch()
+  	IEnumerator CountDownCoroutine()
   	{
-    	while(time>=0)
+    	while(_time>=0)
     	{
-      		time-= Time.deltaTime;
+      		_time-= Time.deltaTime;
       		yield return null;
     	}
   	}
