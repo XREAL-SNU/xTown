@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Countdown : MonoBehaviour {
-    public float timeStart = 60;
-    public Text textBox;
+public class CountDown : MonoBehaviour 
+{
+	public float time;
 
-	// Use this for initialization
-	void Start () {
-        textBox.text = timeStart.ToString();
-	}
+  	public void CountDownStart(float startTime)
+  	{
+		time = startTime; 
+    	StartCoroutine("StopWatch");
+  	}
 
-	// Update is called once per frame
-	void Update () {
-        timeStart -= Time.deltaTime;
-        textBox.text = Mathf.Round(timeStart).ToString();
-	}
+  	public void CountDownStop()
+  	{
+    	StopCoroutine("StopWatch");
+  	}
+  	IEnumerator StopWatch()
+  	{
+    	while(time>=0)
+    	{
+      		time-= Time.deltaTime;
+      		yield return null;
+    	}
+  	}
 }
