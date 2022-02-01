@@ -8,6 +8,7 @@ public class PlayerAvatar: MonoBehaviour
     static GameObject _localPlayerGo;
     static PlayerAvatar _localPlayerAvatar;
 
+
     public static GameObject LocalPlayerGo
     {
         get => _localPlayerGo;
@@ -37,10 +38,13 @@ public class PlayerAvatar: MonoBehaviour
         if (PhotonView.IsMine) LocalPlayerGo = gameObject;
     }
 
-    public void ChangeMaterialColor()
+
+    public void OnAvatarInstantiate()
     {
-        Debug.Log("PlayerAvatar/ Change Material");
-        var renderer = LocalPlayerGo.transform.Find("Space_Suit/Tpose_/Man_Suit/Body").GetComponent<SkinnedMeshRenderer>();
-        renderer.materials[0].SetColor("_Color", Color.red);
+        if (PhotonView.IsMine)
+        {
+            // apply the persistent appearance to the newly instantiated avatar.
+            AvatarAppearance.LocalAvatarAppearance.ApplyAppearance(this);
+        }
     }
 }

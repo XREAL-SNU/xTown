@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AvatarAppearance 
-{ 
+{
+    public static AvatarAppearance LocalAvatarAppearance;
+
 
     Dictionary<string, CustomizableElement> customizableElements = new Dictionary<string, CustomizableElement>();
     public AvatarAppearance()
     {
-        Debug.Log("AvatarAppearance/ constructor");
         string suffix = "_Material_Preset1";
         customizableElements.Add("Helmet", new CustomizableElement(Resources.Load<Material>("AvatarMaterials/Helmet" + suffix)));
         customizableElements.Add("Body", new CustomizableElement(Resources.Load<Material>("AvatarMaterials/Body" + suffix)));

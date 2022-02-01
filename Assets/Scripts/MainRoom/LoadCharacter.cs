@@ -96,15 +96,19 @@ public class LoadCharacter : MonoBehaviour
         if(!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
         {// instantiate locally
             Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+
         }
         else
         {
             // instantiate over the network
             Debug.Log("LoadCharacter/Instantiating player over the network");
             Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
-            PlayerAvatar.LocalPlayerGo = Player;
-        }
 
+        }
+        PlayerAvatar.LocalPlayerGo = Player;
+        Player.GetComponent<PlayerAvatar>().OnAvatarInstantiate();
+
+        //bind camera
         FollowTarget = Player.transform.Find("FollowTarget");
         FreeLookCam.Follow = Player.transform;
         FreeLookCam.LookAt = FollowTarget;

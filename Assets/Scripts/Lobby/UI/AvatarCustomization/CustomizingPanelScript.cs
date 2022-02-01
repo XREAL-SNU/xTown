@@ -29,11 +29,16 @@ public class CustomizingPanelScript : MonoBehaviour
     private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
     private int _selected = 0;
 
-    private static AvatarAppearance _avatarAppearance;
+    private AvatarAppearance _avatarAppearance;
     private void Start()
     {
         ClickButton(_selected);
-        if(_avatarAppearance is null) _avatarAppearance = new AvatarAppearance();
+        if (_avatarAppearance is null)
+        { // only once!
+            AvatarAppearance.LocalAvatarAppearance = new AvatarAppearance();
+            _avatarAppearance = AvatarAppearance.LocalAvatarAppearance;
+        }
+
     }
 
     private void Update()
