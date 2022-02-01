@@ -6038,6 +6038,7 @@ GameObject:
   - component: {fileID: 2144206268}
   - component: {fileID: 2144206272}
   - component: {fileID: 2144206273}
+  - component: {fileID: 2144206269}
   m_Layer: 0
   m_Name: Voice
   m_TagString: Untagged
@@ -6059,6 +6060,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144206269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144206267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb9f9281c8d387e4aaabcad061357518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2144206272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6085,7 +6098,7 @@ MonoBehaviour:
   transmitEnabled: 1
   samplingRate: 48000
   frameDuration: 20000
-  bitrate: 30000
+  bitrate: 50000
   sourceType: 0
   microphoneType: 0
   audioClip: {fileID: 0}
