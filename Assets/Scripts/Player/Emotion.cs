@@ -56,6 +56,8 @@ public class Emotion : MonoBehaviour
             } else if(Input.GetKeyDown(KeyCode.Alpha4)){
                 _currentMenu = 4;
             }
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x,transform.position.y+2f,transform.position.z));
+            EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,transform.position.z);
             if(_currentMenu!=-1){
                 EmoticonSelect(_currentMenu);
             }
