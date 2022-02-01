@@ -12,6 +12,11 @@ public class TextureArray
 public class CustomizingPanelScript : MonoBehaviour
 {
     [SerializeField]
+    private string _partID;
+
+    public static string PartID;
+
+    [SerializeField]
     private Material _avatarMaterial;
     [SerializeField]
     private List<CustomizingButtonScript> _customizingColorButtons;
@@ -20,19 +25,20 @@ public class CustomizingPanelScript : MonoBehaviour
     [SerializeField]
     private TextureArray[] _textures;
 
-    public FlexibleColorPicker Fcp;
+    //public FlexibleColorPicker Fcp;
 
     private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
     private int _selected = 0;
 
     private void Start()
     {
+        PartID = _partID;
         ClickButton(_selected);
     }
 
     private void Update()
     {
-        _avatarMaterial.color= Fcp.color;
+        //_avatarMaterial.color= Fcp.color;
     }
 
     public void ClickButton(int id)
@@ -57,9 +63,9 @@ public class CustomizingPanelScript : MonoBehaviour
 
     public void ColorReset()
     {
-        Fcp.color = Color.red;
-        Fcp.color = _normal;
-        Fcp.mode = FlexibleColorPicker.MainPickingMode.SV;
+        //Fcp.color = Color.red;
+        //Fcp.color = _normal;
+        //Fcp.mode = FlexibleColorPicker.MainPickingMode.SV;
         _avatarMaterial.color = _normal;
     }
 

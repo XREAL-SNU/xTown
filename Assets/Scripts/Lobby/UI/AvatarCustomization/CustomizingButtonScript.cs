@@ -5,18 +5,15 @@ using UnityEngine.UI;
 
 public class CustomizingButtonScript : MonoBehaviour
 {
-    private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
-    private Color _selected = new Color(255 / 255, 255 / 255, 255 / 255, 100 / 255f);
+    private ColorElement _btnColor = new ColorElement();
 
     public void Select()
     {
-        this.gameObject.tag = "Selected";
-        this.gameObject.GetComponent<Image>().color = _selected;
+        this.GetComponent<Image>().color = _btnColor.ButtonColorP["Select2"];
     }
 
     public void Deselect()
     {
-        this.gameObject.tag = "Unselected";
-        this.gameObject.GetComponent<Image>().color = _normal;
+        this.GetComponent<Image>().color = _btnColor.ButtonColorP["base"];
     }
 }
