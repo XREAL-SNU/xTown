@@ -34,15 +34,25 @@ public class CustomizableElement
     }
 
     // consider using byte array
+    /*
     [PunRPC]
-    public void SetMaterialBaseColor(float r, float g, float b, float a)
+    public void SetMaterialBaseColor(float r, float g, float b, float a, PhotonMessageInfo info)
     {
-        Debug.Log("CustomizableElement/ color networked");
+        Debug.Log("CustomizableElement/ color PunRPC");
         Color col = new Color();
         col.r = r; col.g = g; col.b = b; col.a = a;
         _material.SetColor("_Color", col);
-    }
 
+        //for each update, apply the result immediately.
+        PlayerAvatar avatar = info.photonView.gameObject.GetComponent<PlayerAvatar>();
+        if (avatar is null)
+        {
+            Debug.LogError("Customizable element/ couldn't find sender avatar");
+            return;
+        }
+        avatar.Appearance.ApplyAppearance(avatar);
+    }
+    */
 
     public void Apply(GameObject obj)
     {
@@ -52,13 +62,14 @@ public class CustomizableElement
         obj.GetComponent<Renderer>().material = _material;
     }
 
-    public void Sync(PlayerAvatar avatar)
+
+    public void Sync(PlayerAvatar avatar, string partId)
     {
         if (_material is null) return;
         Debug.Log("CustomizableElement/Sync");
         // 1. sync base color
         Color col = _material.GetColor("_Color");
-        avatar.PhotonView.RPC("SetMaterialBaseColor", RpcTarget.Others, col.r, col.g, col.b, col.a);
+        avatar.PhotonView.RPC("SetMaterialBaseColor", RpcTarget.Others, partId, col.r, col.g, col.b, col.a);
     }
 
 

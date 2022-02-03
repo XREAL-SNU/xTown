@@ -32,15 +32,18 @@ public class CustomizingPanelScript : MonoBehaviour
     // that static is needed! this script attached to many panels
     // but there's only one _avatarAppearance!
     private static AvatarAppearance _avatarAppearance;
-    private void Start()
+    private void Awake()
     {
-        ClickButton(_selected);
         if (_avatarAppearance is null)
         { // only once! create the local avatar appearance and store reference to it.
             AvatarAppearance.LocalAvatarAppearance = new AvatarAppearance();
             _avatarAppearance = AvatarAppearance.LocalAvatarAppearance;
         }
+    }
 
+    private void Start()
+    {
+        ClickButton(_selected);
     }
 
     private void Update()

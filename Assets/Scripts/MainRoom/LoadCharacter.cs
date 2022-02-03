@@ -106,7 +106,6 @@ public class LoadCharacter : MonoBehaviour
 
         }
         PlayerAvatar.LocalPlayerGo = Player;
-        Player.GetComponent<PlayerAvatar>().OnAvatarInstantiate();
 
         //bind camera
         FollowTarget = Player.transform.Find("FollowTarget");

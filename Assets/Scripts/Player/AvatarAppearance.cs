@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,9 +46,9 @@ public class AvatarAppearance
     public void SyncAppearance(PlayerAvatar avatar)
     {
         // sync data.
-        foreach(var part in customizableElements.Values)
+        foreach(var part in customizableElements)
         {
-            part.Sync(avatar);
+            part.Value.Sync(avatar, part.Key);
         }
 
         // apply data.

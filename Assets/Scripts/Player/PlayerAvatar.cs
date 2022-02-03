@@ -32,34 +32,53 @@ public class PlayerAvatar: MonoBehaviour
     }
 
     public PhotonView PhotonView;
+
+    [HideInInspector]
+    public AvatarAppearance Appearance;
+
     private void Start()
     {
-        if (!PhotonNetwork.InRoom)
-        {
-            LocalPlayerGo = gameObject;
-            return;
-        }
-        // photonView is meaningful only inside a room
         PhotonView = GetComponent<PhotonView>();
-        if (PhotonView.IsMine) LocalPlayerGo = gameObject;
-    }
+        LocalPlayerGo = gameObject;
 
-
-    public void OnAvatarInstantiate()
-    {
-        Debug.Log("PlayerAvatar/ OnAvatarInstantiate callback");
         if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
         {
-            // no room, no sync. just set.
-            AvatarAppearance.LocalAvatarAppearance.ApplyAppearance(this);
+            // LocalAvatarAppearance was set in AWAKE of customization tab.
+            // which means we are safe!
+            Appearance = AvatarAppearance.LocalAvatarAppearance;
+            Appearance.ApplyAppearance(this);
             return;
         }
+        
         if (PhotonView.IsMine)
         {
-            // apply the persistent appearance to the newly instantiated avatar.
-            AvatarAppearance.LocalAvatarAppearance.SyncAppearance(this);
+            Debug.Log($"<color=red> CustomizableElement/ setting my appearance: #{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
+
+            Appearance = AvatarAppearance.LocalAvatarAppearance;
+            Appearance.SyncAppearance(this);
         }
+        else
+        {   // if not mine, create blank appearance to be synced later.
+            if(Appearance is null) Appearance = new AvatarAppearance();
+        }
+        
+
     }
+
+
+    [PunRPC]
+    public void SetMaterialBaseColor(string partsId, float r, float g, float b, float a, PhotonMessageInfo info)
+    {
+        Debug.Log($"<color=blue> CustomizableElement/ color PunRPC from actor #{info.Sender.ActorNumber} </color>");
+        Color col = new Color();
+        col.r = r; col.g = g; col.b = b; col.a = a;
+
+        // before calling Appearance, make sure it exists!
+        if (Appearance is null) Appearance = new AvatarAppearance();
+        Appearance[partsId].SetMaterialBaseColor(col);
+        Appearance.ApplyAppearance(this);
+    }
+
     ~PlayerAvatar()
     {
         Debug.Log("PlayerAvatar/Destructor");
