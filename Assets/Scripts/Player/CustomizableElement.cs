@@ -23,7 +23,7 @@ public class CustomizableElement
         {
             // copy construct preset.
             _material = new Material(presetMaterial);
-            Debug.Log("Material Count: " + MaterialCount++);
+            Debug.Log("Material Count: " + ++MaterialCount);
         }
     }
 

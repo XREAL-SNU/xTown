@@ -34,6 +34,12 @@ public class PlayerAvatar: MonoBehaviour
     public PhotonView PhotonView;
     private void Start()
     {
+        if (!PhotonNetwork.InRoom)
+        {
+            LocalPlayerGo = gameObject;
+            return;
+        }
+        // photonView is meaningful only inside a room
         PhotonView = GetComponent<PhotonView>();
         if (PhotonView.IsMine) LocalPlayerGo = gameObject;
     }
@@ -41,10 +47,21 @@ public class PlayerAvatar: MonoBehaviour
 
     public void OnAvatarInstantiate()
     {
+        Debug.Log("PlayerAvatar/ OnAvatarInstantiate callback");
+        if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
+        {
+            // no room, no sync. just set.
+            AvatarAppearance.LocalAvatarAppearance.ApplyAppearance(this);
+            return;
+        }
         if (PhotonView.IsMine)
         {
             // apply the persistent appearance to the newly instantiated avatar.
-            AvatarAppearance.LocalAvatarAppearance.ApplyAppearance(this);
+            AvatarAppearance.LocalAvatarAppearance.SyncAppearance(this);
         }
+    }
+    ~PlayerAvatar()
+    {
+        Debug.Log("PlayerAvatar/Destructor");
     }
 }

@@ -92,9 +92,9 @@ public class LoadCharacter : MonoBehaviour
 
     void InitCharacter()
     {
-        Debug.Log("LoadCharacter/InitCharacter");
         if(!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
         {// instantiate locally
+            Debug.Log("LoadCharacter/Instantiating player locally");
             Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
 
         }

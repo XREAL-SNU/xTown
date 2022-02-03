@@ -29,12 +29,14 @@ public class CustomizingPanelScript : MonoBehaviour
     private Color _normal = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
     private int _selected = 0;
 
-    private AvatarAppearance _avatarAppearance;
+    // that static is needed! this script attached to many panels
+    // but there's only one _avatarAppearance!
+    private static AvatarAppearance _avatarAppearance;
     private void Start()
     {
         ClickButton(_selected);
         if (_avatarAppearance is null)
-        { // only once!
+        { // only once! create the local avatar appearance and store reference to it.
             AvatarAppearance.LocalAvatarAppearance = new AvatarAppearance();
             _avatarAppearance = AvatarAppearance.LocalAvatarAppearance;
         }
