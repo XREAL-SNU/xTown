@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using XReal.XTown.UI;
 public class MainCanvas : MonoBehaviour
 {
     [SerializeField]
@@ -21,7 +21,8 @@ public class MainCanvas : MonoBehaviour
 
     public void OnClick_Setting()
     {
-        _mainCanvases.SettingCanvas.Show();
+        //_mainCanvases.SettingCanvas.Show();
+        UIManager.UI.ShowPopupUI<SettingsPopup>("SettingsPopup");
     }
 
     public void OnClick_Exit()
