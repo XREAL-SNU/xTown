@@ -12,4 +12,9 @@ public static class CommonExtensions
     {
         XReal.XTown.UI.UIBase.BindEvent(go, action, eventType);
     }
+
+    public static void BindEvent(this GameObject go, Action<PlayerInfo> action, RoomManager.RoomEvent eventType)
+    {
+        RoomManager.BindEvent(go, action, eventType);
+    }
 }

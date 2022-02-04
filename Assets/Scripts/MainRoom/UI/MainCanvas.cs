@@ -16,7 +16,8 @@ public class MainCanvas : MonoBehaviour
 
     public void OnClick_PlayerInfo()
     {
-        _mainCanvases.PlayerInfoCanvas.Show();
+        //_mainCanvases.PlayerInfoCanvas.Show();
+        UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
     }
 
     public void OnClick_Setting()

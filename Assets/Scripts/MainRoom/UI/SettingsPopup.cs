@@ -13,10 +13,11 @@ public class SettingsPopup : UIPopup
         CloseButton
     }
 
+
+
     private void Start()
     {
-        Init(); 
-
+        Init();
     }
 
     // overriding Init is optional, but you want to do two things here.
@@ -28,7 +29,6 @@ public class SettingsPopup : UIPopup
         Bind<Button>(typeof(Buttons));
         // to get a bound gameObject, use GetUIComponent and provide it with UIElementType and UIElementId.
         GetUIComponent<Button>((int)Buttons.CloseButton).gameObject.BindEvent(OnClick_Close);
-
     }
 
     // all callbacks registered via BindEvent must receive PointerEventData as the parameter.

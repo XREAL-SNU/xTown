@@ -38,10 +38,12 @@ namespace XReal.XTown.VoiceChat
         {
             if (_recorder)
             {
+                Debug.Log("Recorder: " + _talkToggle.isOn);
                 _recorder.TransmitEnabled = _talkToggle.isOn;
             }
         }
 
+        // 
     }
 }
 

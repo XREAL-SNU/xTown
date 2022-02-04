@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace XReal.XTown.UI
 {
-    public class UIEvents : MonoBehaviour
+    public class UIEvents
     {
         public enum UIEvent
         {
