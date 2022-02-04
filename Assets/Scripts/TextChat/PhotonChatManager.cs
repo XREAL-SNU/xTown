@@ -18,7 +18,7 @@ namespace XReal.Xtown.PhotonChat
         //channels
         //list of channels currently subscribed to
         private readonly List<string> myChannels = new List<string>();
-        private string selectedChannelName; // mainly used for GUI/input
+        private string selectedChannelName = "Default"; // mainly used for GUI/input
         
 
         // in development
@@ -38,7 +38,7 @@ namespace XReal.Xtown.PhotonChat
         [Header("UI")]
         //the ui elements - buttons and texts -> set in inspector
         public InputField InputFieldChat; 
-        public InputField InputFieldSendTo;
+        //public InputField InputFieldSendTo;
         //public Button SendButton;
         public Button HideButton;
         //채팅방 관리 버튼을 만들어뒀는데 세부 채팅 씬 개발을 뒤로 미뤄서 일단 그냥 HideButton이랑 연결시켜둠
@@ -77,6 +77,11 @@ namespace XReal.Xtown.PhotonChat
                 //check for new messages: call every frame
                 this.chatClient.Service();
             }
+            if(myChannels.Contains("Default"))
+            {
+                GetUsersFromDefalut();
+            }
+            //update가 채널 가입보다 빠르게 시작되어 Default Channel에 가입한 이후부터 동작하도록 만듦
         }
 
         /* UI callbacks */
@@ -86,23 +91,12 @@ namespace XReal.Xtown.PhotonChat
         {
             if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
             {
-                SendChatMessage(InputFieldChat.text, InputFieldSendTo.text);
+                SendChatMessage(InputFieldChat.text, selectedChannelName);
                 InputFieldChat.text = "";
-                //InputFieldSendTo.text = ""; 채널을 선택했을 때 메시지를 보내도 input field는 초기화되지 않게 함
+                //InputFieldSendTo.text = "";
+                //InputFieldSendTo는 없애버렸지만 추후에 RoomChat이나 뭐 할 때 살려야 할 수도 있다고 생각해서 구조만 남겨둠
             }
         }
-
-        // onClicksend는 지워버렸지만 혹시 언젠가 쓸모가 있을까 싶어 주석으로 남겨둠...
-        //void OnClickSend()
-        //{
-        //    if (InputFieldChat != null)
-        //    {
-        //        SendChatMessage(InputFieldChat.text, InputFieldSendTo.text);
-        //        InputFieldChat.text = "";
-                //InputFieldSendTo.text = "";
-        //    }
-        //}
-
 
 
         // 현재 이 함수도 필요가 없고 '채팅방 관리'버튼을 누르면 OnClickHide가 실행됨
@@ -117,8 +111,7 @@ namespace XReal.Xtown.PhotonChat
             }
         }
 
-        // onClickShow에서 버튼 하나로 채팅방을 접었다 폈다 할 수 있게 만듦
-        public void OnClickShow()
+        /*public void OnClickShow()
         {
             if (ChatPanel != null)
             {
@@ -134,7 +127,9 @@ namespace XReal.Xtown.PhotonChat
                 }
             }
         }
-        
+
+        채팅방을 더블 클릭으로 접었다 폈다 하는건 외부에 추가로 구현해서 OnClickShow는 필요없어짐.
+        */
 
         /* Photon Connect */
 
@@ -152,7 +147,7 @@ namespace XReal.Xtown.PhotonChat
         /* main parsing function */
         // tooo large for a function. split!!!
         // parse the message(including command)
-        void SendChatMessage(string inputLine, string toUser)
+        void SendChatMessage(string inputLine, string channelName)
         {
             //nothing to send
             if (string.IsNullOrEmpty(inputLine))
@@ -160,12 +155,17 @@ namespace XReal.Xtown.PhotonChat
                 return;
             }
 
-            //is this message private?
-            bool doingPrivateChat = !string.IsNullOrEmpty(toUser);
+            //여기를 선택한 채널로 바꾸도록 해야함.
+            bool doingPrivateChat = false;
+            if(channelName!="Default")
+            {
+                doingPrivateChat = true;
+            }
             string privateChatTarget = string.Empty;
             if (doingPrivateChat)
             {
-                privateChatTarget = toUser;
+                string[] words = channelName.Split(':');
+                privateChatTarget = words[1];
             }
 
             if (inputLine[0].Equals('\\')) //commands begin with character '\'
@@ -261,11 +261,17 @@ namespace XReal.Xtown.PhotonChat
         //switch to channel selected on dropdown
         public void OnSwitchChannel()
         {
-            ShowChannel(ChannelDropdown.options[ChannelDropdown.value].text);
-            //
+            //ShowChannel(ChannelDropdown.options[ChannelDropdown.value].text);
+            selectedChannelName = ChannelDropdown.options[ChannelDropdown.value].text;
+            
+            //selectedChannelName을 여기에서 바꿔주도록 하고
         }
 
         //this updates and shows messages buffered on the channel
+
+
+
+
         public void ShowChannel(string channelName)
         {
 
@@ -291,12 +297,12 @@ namespace XReal.Xtown.PhotonChat
             string[] subtokens = channelName.Split(':');
             if(subtokens[0] == userID)
             {
-                InputFieldSendTo.text = subtokens[1];
+                //InputFieldSendTo.text = subtokens[1];
             }
             
             else
             {
-                InputFieldSendTo.text = "";
+                //InputFieldSendTo.text = "";
             }
             //display message
 
@@ -314,16 +320,17 @@ namespace XReal.Xtown.PhotonChat
             {
                 Debug.Log("This is Public Chat");
                 CurrentChannelText.text = channel.ToStringMessages();
-                //다른 채널을 들어갔다가 public channel로 돌아올 때
-                //대화 내용을 유지하면서 내 글씨 색과 상대방의 글씨 색을 구분해주는건 아직 구현하지 못함
-                //private message와 마찬가지로 channel안의 msg를 그대로 받아와 for문을 돌리면 될 것 같은데
-                //둘이 메시지 저장하는 방식이 약간 달라서 일단 이대로 함.
-                // 추후에 agora baseline 구현과 동시에 오류 수정하고 다시 업데이트함. 
+                //글씨 색 버그가 있다.
+                //TostringMessage를 아예 ChatChannel에서 바꾸면 수정 가능한데 지금으로썬 할필요 없어짐
             }
             
             Debug.Log("ShowChannel: " + selectedChannelName);
-
         }
+
+
+        //ShowChannel도 현재로썬 사용하지 않는 함수임. 구조만 남겨둠
+
+
 
 
         //get message callbacks
@@ -334,16 +341,30 @@ namespace XReal.Xtown.PhotonChat
             {
                 if(senders[i]==userID)
                 {
-                    newMessage+= "<#CB3A3A>"+senders[i]+":"+messages[i]+"</color>"+"\r\n";
+                    if(channelName=="Default")
+                    {
+                        newMessage+= "<#CB3A3A>"+"("+senders[i]+" to everyone)"+": "+messages[i]+"</color>"+"\r\n";
+                    }
+                    else
+                    {
+                        newMessage+= "<#CB3A3A>"+"("+senders[i]+" to"+channelName+")"+": "+messages[i]+"</color>"+"\r\n";
+                    }
                 }
                 else
                 {
-                    newMessage+= senders[i]+":"+messages[i]+"\r\n";
+                    if(channelName=="Default")
+                    {
+                        newMessage+= "("+senders[i]+" to everyone)"+":"+messages[i]+"\r\n";
+                    }
+                    else
+                    {
+                        newMessage+= "("+senders[i]+" to"+channelName+"):"+messages[i]+"\r\n"  ;
+                    }
                 }
                 CurrentChannelText.text += newMessage;
             }
-        }   //Sender로 구분해 senders와 userID가 동일하면 글자를 빨간 색으로 표시하도록 함
-            //이 방식을 통해 내 화면에서만 글자가 빨간색으로 나옴
+        }   //Sender따라 글자 색 구분
+            //2월 3일 텍스트 앞에 ChannelName이 나오도록 수정, 이렇게 하고 모든 텍스트는 미니 채팅창에서 보여줌
 
         public void OnPrivateMessage(string sender, object message, string channelName)
         {
@@ -371,23 +392,21 @@ namespace XReal.Xtown.PhotonChat
             //}
             ChatChannel ch = this.chatClient.PrivateChannels[channelName];
             string newMessage = "";
-            foreach (object msg in ch.Messages)
+
+            //foreach (object msg in ch.Messages)
+            //{
+            if(sender==userID)
             {
-                if(sender==userID)
-                {
-                    newMessage+= "<#CB3A3A>"+sender+":"+msg+"</color>"+"\r\n";
-                }
-                else
-                {
-                    newMessage+= sender+":"+msg+"\r\n";
-                }
-                //Sender로 구분해 내가 보낸 메시지일 경우 색을 바꿔주도록 함
-                //OnPrivateMessage가 실행될때마다 채널에서 메시지 전체를 다시 가져오는 형식으로 구현되어있는데
-                //사용자 색 구분하면서 어떤 오류가 발생해서 이렇게 짜 두었음.
-                //이 경우도 메시지가 많을수록 효율이 떨어지니 이유가 기억나면 다시 개선해보겠습니다.
-                //일단은 제대로 돌아가는지 위주로 확인해주세요...ㅎ
+                string[] words= channelName.Split(':');
+                newMessage+= "<#CB3A3A>"+"("+sender+" to "+words[1]+"):"+message+"</color>"+"\r\n";
             }
-            CurrentChannelText.text = newMessage;
+            else
+            {
+                newMessage += "("+sender+" to "+userID+"):"+message+"\r\n";
+            }
+            //}
+
+            CurrentChannelText.text += newMessage;
             foreach(string user in ch.Subscribers)
             {
                 Debug.Log(user);
@@ -414,11 +433,17 @@ namespace XReal.Xtown.PhotonChat
                     option.text = channel;
                     ChannelDropdown.options.Add(option);
                 }
+                //this.chatClient.TryGetChannel(channelName: channel, out ChatChannel newChannel);
+                //newChannel.AddSubscriber(userID);
+
+                //subscribe할 때 유저가 해당 채널의 Subscribers에 추가하는 형식으로 만들어버림. 이러면 되지 않을까?
+
             }
             Debug.Log("OnSubscribed: " + string.Join(", ", channels));
             
             // Switch to the first newly joined channel
-            ShowChannel(channels[0]);
+            // ShowChannel(channels[0]);
+            
             
         }
 
@@ -437,7 +462,7 @@ namespace XReal.Xtown.PhotonChat
                         IEnumerator<string> firstEntry = myChannels.GetEnumerator();
                         firstEntry.MoveNext();
                         //IEnumerator.Current gets the element pointed to by the enumerator in the collection
-                        ShowChannel(firstEntry.Current);
+                        //ShowChannel(firstEntry.Current);
                     }
 
                     //remove both from list and dropdown
@@ -500,6 +525,66 @@ namespace XReal.Xtown.PhotonChat
                 this.chatClient.Disconnect();
             }
         }
+
+        public void GetUsersFromDefalut()
+        {
+            this.chatClient.TryGetChannel(channelName: "Default", out ChatChannel defaultChannel);
+            foreach(string user in defaultChannel.Subscribers)
+            {
+                if(user == userID)
+                {
+                    string channelName = userID+":"+user;
+                }
+                else
+                {
+                    string channelName = userID+":"+user;
+                    if(!myChannels.Contains(channelName))
+                    {
+                        myChannels.Add(channelName);
+                        Dropdown.OptionData option = new Dropdown.OptionData();
+                        option.text = channelName;
+                        ChannelDropdown.options.Add(option);
+                    }
+                    else
+                    {
+                        Debug.Log(myChannels);
+                    }
+                }
+            }
+            Debug.Log("클릭되었음을 확인");
+        }
+
+        /*GetUsersFromDefault함수는 Public 채널에서 Subscribers를 가져와서 채널 리스트에 추가해주는 함수임
+        이걸 Update함수에 넣어 새 멤버가 들어오면 채널에 자동으로 추가가 됨
+        Public 채널에 Subscribers가 자동으로 추가되지는 않는데 특정 채널에 Subscribers를 외부에서 추가할 경우
+        버그가 발생함. 그래서 ChatChannel내부에서 메시지 들어올 때 senders를 확인해서 추가하도록 구현함.
+        (ChatChannel내 AddSubscriber, AddSubscribers 확인)
+        (현재 Public Chat의 경우 구독할 때 기본으로 메시지를 보내기 때문에 구독하자마자 Subscribers에 추가됨)
+
+        현재 privateChat, publicChat의 채널명을 어디에서 설정하는지 몰라서 아직 바꾸지 않았는데
+        그래서 모두에게 보내는 채널은 Default, private channel은 내 이름: 상대이름 으로 뜨게 되어있고
+        코드는 그걸 기반으로 동작함. 추후에 수정하겠음
+        
+
+        아직 상대방이 나갈 때 채널목록에서 자동으로 삭제되지는 않음.
+        이건 개개인이 채널하고 연결이 끊길 때 모든 채널의 구독을 해제하도록 만들어야 할 듯함
+        */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /*void CreateNewChannel(string channelName, int maxNumber, string[] users)
         {

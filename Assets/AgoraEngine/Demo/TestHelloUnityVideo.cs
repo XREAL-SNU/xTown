@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections;
 using agora_gaming_rtc;
 using agora_utilities;
-
+#if(UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
+using UnityEngine.Android;
+#endif
 
 // this is an example of using Agora Unity SDK
 // It demonstrates:
@@ -19,9 +21,22 @@ public class TestHelloUnityVideo
 
     // a token is a channel key that works with a AppID that requires it. 
     // Generate one by your token server or get a temporary token from the developer console
-    private string token = "";
-
+    private string token = "006843fdd1bdf6642bd98522333b340e4a1IABHZOysCTRoHEq0cAFGtb5/ebkBn965qxbjuthfHWptW15liXkAAAAAEAC7nPWL9Oj7YQEAAQDz6Pth";
+    //token이 만료가 되는걸 어떻게 방지하는지? 혹은 아예 token없이 통신해야 하는지
+    //token 없앴는데 통신 잘 됨.
     // load agora engine
+
+
+    void Awake()
+        {
+    #if (UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
+            permissionList.Add(Permission.Microphone);         
+            permissionList.Add(Permission.Camera);               
+    #endif
+        }
+
+
+    
     public void loadEngine(string appId)
     {
         // start sdk
@@ -110,10 +125,12 @@ public class TestHelloUnityVideo
             if (!pauseVideo)
             {
                 mRtcEngine.EnableVideo();
+                mRtcEngine.EnableVideoObserver();
             }
             else
             {
                 mRtcEngine.DisableVideo();
+                mRtcEngine.DisableVideoObserver();
             }
         }
     }
@@ -122,28 +139,19 @@ public class TestHelloUnityVideo
     // set video transform delegate for statically created GameObject
     public void onSceneHelloVideoLoaded()
     {
-        // Attach the SDK Script VideoSurface for video rendering
-        GameObject quad = GameObject.Find("Quad");
-        if (ReferenceEquals(quad, null))
+
+        GameObject screen = GameObject.Find("Screen");
+        if(ReferenceEquals(screen, null))
         {
-            Debug.Log("failed to find Quad");
+            Debug.Log("failed to find screen");
             return;
         }
         else
         {
-            quad.AddComponent<VideoSurface>();
+            screen.AddComponent<VideoSurface>();
         }
 
-        GameObject cube = GameObject.Find("Cube");
-        if (ReferenceEquals(cube, null))
-        {
-            Debug.Log("failed to find Cube");
-            return;
-        }
-        else
-        {
-            cube.AddComponent<VideoSurface>();
-        }
+
 
         GameObject text = GameObject.Find("MessageText");
         if (!ReferenceEquals(text, null))
@@ -177,8 +185,8 @@ public class TestHelloUnityVideo
     private void onJoinChannelSuccess(string channelName, uint uid, int elapsed)
     {
         Debug.Log("JoinChannelSuccessHandler: uid = " + uid);
-        GameObject textVersionGameObject = GameObject.Find("VersionText");
-        textVersionGameObject.GetComponent<Text>().text = "SDK Version : " + getSdkVersion();
+        //GameObject textVersionGameObject = GameObject.Find("VersionText");
+        //textVersionGameObject.GetComponent<Text>().text = "SDK Version : " + getSdkVersion();
     }
 
     // When a remote user joined, this delegate will be called. Typically
@@ -219,9 +227,12 @@ public class TestHelloUnityVideo
         go.transform.Rotate(-90.0f, 0.0f, 0.0f);
         float yPos = Random.Range(3.0f, 5.0f);
         float xPos = Random.Range(-2.0f, 2.0f);
+        //여기를 바꾸면 새로 뜨는 화면도 만들 수 있음
         go.transform.position = new Vector3(xPos, yPos, 0f);
         go.transform.localScale = new Vector3(0.25f, 0.5f, .5f);
-
+        RectTransform rectTran = go.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 140);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 180);
         // configure videoSurface
         VideoSurface videoSurface = go.AddComponent<VideoSurface>();
         return videoSurface;

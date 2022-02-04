@@ -8,9 +8,13 @@ public class ButtonHandler : MonoBehaviour
     ///   React to a button click event.  Used in the UI Button action definition.
     /// </summary>
     /// <param name="button"></param>
+
+    private bool isClicked=false;
+
     public void onButtonClicked(Button button)
     {
         // which GameObject?
+
         GameObject go = GameObject.Find("GameController");
         if (go != null)
         {
@@ -22,12 +26,26 @@ public class ButtonHandler : MonoBehaviour
             }
             if (button.name == "JoinButton")
             {
-                gameController.onJoinButtonClicked();
+                if(isClicked==false)
+                {
+                    gameController.onJoinButtonClicked();
+                    isClicked=true;
+                }
+                else
+                {
+                    gameController.onLeaveButtonClicked();
+                    isClicked=false;
+                }
             }
             else if (button.name == "LeaveButton")
             {
                 gameController.onLeaveButtonClicked();
             }
         }
+
+
+
+
+
     }
 }
