@@ -57,10 +57,8 @@ public class AvatarCameraScript : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (Input.GetMouseButton(1))
         {
             _mouseX += Input.GetAxis("Mouse X");
-            _mouseY += Input.GetAxis("Mouse Y") * -1;
 
-            CentralAxis.rotation = Quaternion.Euler(
-                new Vector3(CentralAxis.rotation.x + _mouseY, CentralAxis.rotation.y + _mouseX, 0) * CamSpeed);
+            CentralAxis.rotation = Quaternion.Euler(new Vector3(CentralAxis.rotation.x, CentralAxis.rotation.y + _mouseX, 0) * CamSpeed);
         }
     }
 
@@ -99,7 +97,7 @@ public class AvatarCameraScript : MonoBehaviour, IPointerEnterHandler, IPointerE
         StartCoroutine("_smoothMoving");
     }
 
-
+    /*
     IEnumerator _smoothMoving()
     {
         float avatarcurrAngle = Avatar.eulerAngles.y;
@@ -125,5 +123,5 @@ public class AvatarCameraScript : MonoBehaviour, IPointerEnterHandler, IPointerE
         CentralAxis.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         Cam.localPosition = new Vector3(0, 0, _wheel);
         _isMoving = false;
-    }
+    }*/
 }

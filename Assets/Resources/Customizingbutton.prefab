@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8239551939271443109}
   - component: {fileID: 7682718595807902688}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Customizingbutton
   m_TagString: Unselected
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,10 +122,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomizingPanelScript, Assembly-CSharp
-        m_MethodName: ClickButton
-        m_Mode: 3
+      - m_Target: {fileID: 7682718595807902688}
+        m_TargetAssemblyTypeName: CustomizingButtonScript, Assembly-CSharp
+        m_MethodName: IsClickButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7682718595807902688}
+        m_TargetAssemblyTypeName: CustomizingButtonScript, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -146,6 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2bbd528b56672469de0556e771a1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentName: 
+  ButtonID: 0
 --- !u!1 &5054287515576148737
 GameObject:
   m_ObjectHideFlags: 0

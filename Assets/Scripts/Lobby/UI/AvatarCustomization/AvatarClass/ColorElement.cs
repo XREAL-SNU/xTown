@@ -5,7 +5,7 @@ using UnityEngine;
 public class ColorElement
 {
     //private(property value)
-    private Dictionary<string,Color> _myAvatarColor;
+    private Dictionary<string, Color> _myAvatarColor;
     private Dictionary<string, Color> _myButtonColor;
 
     //property
@@ -14,22 +14,24 @@ public class ColorElement
 
     public ColorElement()
     {
-        if (_myAvatarColor == null)
+        if (_myAvatarColor is null)
         {
-            _myAvatarColor.Add("white", Color.white);
-            _myAvatarColor.Add("red", Color.red);
-            _myAvatarColor.Add("yellow", Color.yellow);
-            _myAvatarColor.Add("green", Color.green);
-            _myAvatarColor.Add("cyan", Color.cyan);
-            _myAvatarColor.Add("magenta", Color.magenta);
-            _myAvatarColor.Add("gray", Color.gray);
+            _myAvatarColor = new Dictionary<string, Color>();
+            _myAvatarColor.Add("White", Color.white);
+            _myAvatarColor.Add("Red", Color.red);
+            _myAvatarColor.Add("Yellow", Color.yellow);
+            _myAvatarColor.Add("Green", Color.green);
+            _myAvatarColor.Add("Cyan", Color.cyan);
+            _myAvatarColor.Add("Magenta", Color.magenta);
+            _myAvatarColor.Add("Gray", Color.gray);
         }
-        if (_myButtonColor == null)
+        if (_myButtonColor is null)
         {
-            _myButtonColor.Add("base", Color.white);
+            _myButtonColor = new Dictionary<string, Color>();
+            _myButtonColor.Add("Base", Color.white);
             _myButtonColor.Add("Enter", Color.cyan);
-            _myButtonColor.Add("Slect", Color.green);
-            _myButtonColor.Add("Slect2", new Color(255 / 255, 255 / 255, 255 / 255, 100 / 255f));
+            _myButtonColor.Add("Select", Color.green);
+            _myButtonColor.Add("Select2", new Color(255 / 255, 255 / 255, 255 / 255, 100 / 255f));
         }
     }
 }

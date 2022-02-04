@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
+    private ColorElement _btnColor = new ColorElement();
+
     public List<TabButton> Tabs;
     public TabButton SelectedTab;
     // UI sprites
@@ -39,7 +41,7 @@ public class TabGroup : MonoBehaviour
         if(SelectedTab == null || button != SelectedTab)
         {
             button.Background.sprite = TabHoverImage;
-            button.Background.color = Color.cyan;
+            button.Background.color = _btnColor.ButtonColorP["Enter"];
         }
     }
 
@@ -53,7 +55,7 @@ public class TabGroup : MonoBehaviour
         SelectedTab = button;
         ResetTabs();
         button.Background.sprite = TabSelectedImage;
-        button.Background.color = Color.green;
+        button.Background.color = _btnColor.ButtonColorP["Select"];
 
         // select page based on order in hierarchy.
         int index = button.transform.GetSiblingIndex();
@@ -70,7 +72,7 @@ public class TabGroup : MonoBehaviour
         {
             if (SelectedTab != null && button == SelectedTab) continue;
             button.Background.sprite = TabDefaultImage;
-            button.Background.color = Color.white;
+            button.Background.color = _btnColor.ButtonColorP["Base"];
         }
     }
 }

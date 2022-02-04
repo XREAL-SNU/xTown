@@ -7,15 +7,15 @@ public class TextureElement
     //private
     private string _basePath;
     private string[] _component;
-    
+
 
     //private(property value)
-    private List<List<Texture>> _myTexture;
+    private Dictionary<string, List<List<Texture>>> _myTexture = new Dictionary<string, List<List<Texture>>>();
     private string[] _mySetTexture;
     private Dictionary<string, int> _texNum;
 
     //property
-    public List<List<Texture>> TextureP { get { return _myTexture; } }
+    public Dictionary<string, List<List<Texture>>> TextureP { get { return _myTexture; } }
     public string[] SetTextureP { get { return _mySetTexture; } }
     public Dictionary<string,int> TextureNum { get { return _texNum; } }
 
@@ -30,18 +30,20 @@ public class TextureElement
 
     public TextureElement(string partID): this()
     {
-        if (_myTexture == null && _texNum.ContainsKey(partID))
+        if (!_myTexture.ContainsKey(partID) && _texNum.ContainsKey(partID))
         {
+            List<List<Texture>> tempTex = new List<List<Texture>>();
             for (int i = 1; i <= _texNum[partID]; i++)
             {
                 string path1 = _basePath + partID + "/" + i + "/" + partID;
-                _myTexture.Add(new List<Texture>());
+                tempTex.Add(new List<Texture>());
                 for (int j = 0; j < 4; j++)
                 {
                     string path2 = path1 + _component[j];
-                    _myTexture[j].Add(Resources.Load(path2) as Texture);
+                    tempTex[j].Add(Resources.Load(path2) as Texture);
                 }
             }
+            _myTexture.Add(partID, tempTex);
         }
     }
 
