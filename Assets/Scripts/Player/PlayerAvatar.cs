@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerAvatar: MonoBehaviour
 {
+
+    /*
     static GameObject _localPlayerGo;
     static PlayerAvatar _localPlayerAvatar;
 
@@ -30,55 +32,40 @@ public class PlayerAvatar: MonoBehaviour
             _localPlayerAvatar = value;
         }
     }
-
+    */
+    [HideInInspector]
     public PhotonView PhotonView;
 
     [HideInInspector]
-    public AvatarAppearance Appearance;
+    public AvatarAppearanceNew Appearance;
 
+    
     private void Start()
     {
         PhotonView = GetComponent<PhotonView>();
-        LocalPlayerGo = gameObject;
 
         if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
         {
-            // LocalAvatarAppearance was set in AWAKE of customization tab.
-            // which means we are safe!
-            Appearance = AvatarAppearance.LocalAvatarAppearance;
-            Appearance.ApplyAppearance(this);
+            Appearance = PlayerManager.Players.LocalAvatarAppearance;
             return;
         }
         
         if (PhotonView.IsMine)
         {
-            Debug.Log($"<color=red> CustomizableElement/ setting my appearance: #{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
 
-            Appearance = AvatarAppearance.LocalAvatarAppearance;
-            Appearance.SyncAppearance(this);
+            Appearance = PlayerManager.Players.LocalAvatarAppearance;
+            Debug.Log($"<color=red> CustomizableElement/ setting my appearance: #{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
+            
         }
         else
-        {   // if not mine, create blank appearance to be synced later.
-            if(Appearance is null) Appearance = new AvatarAppearance();
+        {   
+            // if not mine, create blank appearance to be synced later.
+            if(Appearance is null) Appearance = new AvatarAppearanceNew(AvatarAppearanceNew.XRealSpaceSuitAppearanceDescriptor, gameObject);
         }
-        
 
+        if (Appearance is null) Debug.LogError("PlayerAvatar/ could not fetch or create appearance for this avatar");
     }
-
-
-    [PunRPC]
-    public void SetMaterialBaseColor(string partsId, float r, float g, float b, float a, PhotonMessageInfo info)
-    {
-        Debug.Log($"<color=blue> CustomizableElement/ color PunRPC from actor #{info.Sender.ActorNumber} </color>");
-        Color col = new Color();
-        col.r = r; col.g = g; col.b = b; col.a = a;
-
-        // before calling Appearance, make sure it exists!
-        if (Appearance is null) Appearance = new AvatarAppearance();
-        Appearance[partsId].SetMaterialBaseColor(col);
-        Appearance.ApplyAppearance(this);
-    }
-
+    
     ~PlayerAvatar()
     {
         Debug.Log("PlayerAvatar/Destructor");

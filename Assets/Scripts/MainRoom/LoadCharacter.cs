@@ -73,7 +73,7 @@ public class LoadCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// Scene callbacks
+    /// Scene callbacks.
     /// </summary>
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -105,7 +105,7 @@ public class LoadCharacter : MonoBehaviour
             Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
 
         }
-        PlayerAvatar.LocalPlayerGo = Player;
+        PlayerManager.Players.LocalPlayerGo = Player;
 
         //bind camera
         FollowTarget = Player.transform.Find("FollowTarget");

@@ -32,13 +32,21 @@ public class CustomizingPanelScript : MonoBehaviour
     // that static is needed! this script attached to many panels
     // but there's only one _avatarAppearance!
     private static AvatarAppearance _avatarAppearance;
+    static GameObject _previewAvatarObject;
     private void Awake()
     {
+        if (_previewAvatarObject is null)
+        {
+            _previewAvatarObject = GameObject.FindWithTag("Player");
+            PlayerManager.Players.LocalPlayerGo = _previewAvatarObject;
+        }
+        /* OLD
         if (_avatarAppearance is null)
         { // only once! create the local avatar appearance and store reference to it.
             AvatarAppearance.LocalAvatarAppearance = new AvatarAppearance();
             _avatarAppearance = AvatarAppearance.LocalAvatarAppearance;
-        }
+        } 
+        */
     }
 
     private void Start()
@@ -48,9 +56,10 @@ public class CustomizingPanelScript : MonoBehaviour
 
     private void Update()
     {
+        /* OLD
         _avatarAppearance[_customPartId].SetMaterialBaseColor(Fcp.color);
         _avatarAppearance.ApplyAppearance(_avatar);
-
+        */
         //_avatarMaterial.color= Fcp.color;
     }
 
