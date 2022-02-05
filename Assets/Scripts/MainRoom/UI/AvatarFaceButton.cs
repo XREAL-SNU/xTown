@@ -16,6 +16,9 @@ public class AvatarFaceButton : MonoBehaviour
     { 
         Selected = false;
         _buttonBorder = GetComponent<Image>();
+
+        // Referencing this in Editor is more performant
+        //      => Remove HideInInspector for ButtonText and ButtonImage
         ButtonText = gameObject.transform.GetChild(0).GetComponent<Text>();
         ButtonImage = gameObject.transform.GetChild(1).GetComponent<Image>();
     }

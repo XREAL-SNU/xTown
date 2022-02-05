@@ -44,22 +44,22 @@ public class AvatarFaceManagement : MonoBehaviour
         {
             if (_isSelected) _currentlySelectedButton.DeselectButton();
             clickedButton.SelectButton();
-            Selected(clicked);
+            ChangeCurrentlySelected(clicked);
         }
         else
         {
-            Deselected();
+            DeselectCurrentlySelected();
         }
     }
 
-    void Selected(GameObject selected)
+    void ChangeCurrentlySelected(GameObject selected)
     {
         _currentlySelectedObject = selected;
         _currentlySelectedButton = _currentlySelectedObject.GetComponent<AvatarFaceButton>();
         _isSelected = true;
     }
 
-    void Deselected()
+    void DeselectCurrentlySelected()
     {
         _currentlySelectedButton.DeselectButton();
         _currentlySelectedObject = null;
@@ -67,6 +67,12 @@ public class AvatarFaceManagement : MonoBehaviour
         _isSelected = false;
     }
 
+
+    // Not Intuitive Approach (personal opinion)
+    //
+    // Setting AvatarFaceButton Script for each Favorites Button and
+    // Passing AvatarFaceButton Component as parameter in Button Invoke Function
+    // and merging ChangeFavoritesText() and ChangeFavoritesImage() seems better.
     public void ChangeFavoritesText(Text favText)
     {
         if(_isSelected) favText.text = _currentlySelectedButton.ButtonText.text;
@@ -76,7 +82,7 @@ public class AvatarFaceManagement : MonoBehaviour
         if (_isSelected)
         {
             favImage.sprite = _currentlySelectedButton.ButtonImage.sprite;
-            Deselected();
+            DeselectCurrentlySelected();
         }
     }
 }
