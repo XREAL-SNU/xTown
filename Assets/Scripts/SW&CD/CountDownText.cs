@@ -35,7 +35,9 @@ public class CountDownText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DisplayTime(_countdown._time);
+        if(!(_countdown is null)){
+            DisplayTime(_countdown._time);
+        }
     }
     void DisplayTime(float timeToDisplay)
     {

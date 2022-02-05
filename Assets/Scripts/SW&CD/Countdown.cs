@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CountDown : MonoBehaviour 
 {
-	public float _time;
+	public float _time = 0;
 
   	public void CountDownStart(float startTime)
   	{
@@ -14,6 +14,7 @@ public class CountDown : MonoBehaviour
   	}
 	public void CountDownResume()
 	{
+		StopCoroutine("CountDownCoroutine");
 		StartCoroutine("CountDownCoroutine");
 	}
 
