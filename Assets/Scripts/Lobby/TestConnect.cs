@@ -10,6 +10,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private Transform _content;
+
     [SerializeField]
     private RoomListing _roomListing;
 
@@ -70,6 +71,8 @@ public class TestConnect : MonoBehaviourPunCallbacks
         //MainCanvases.Instance.MainCanvas.Hide();
         RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
     }
+
+    
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         Debug.Log($"master client switched to : {newMasterClient.ActorNumber}");
