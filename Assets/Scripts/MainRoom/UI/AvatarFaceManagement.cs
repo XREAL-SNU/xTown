@@ -11,6 +11,9 @@ public class AvatarFaceManagement : MonoBehaviour
     [SerializeField] Transform EmojiFavorites;
     [SerializeField] Transform EmojiList;
 
+    bool _isSelected = false;
+    AvatarFaceButton _currentlySelected;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,27 +24,35 @@ public class AvatarFaceManagement : MonoBehaviour
             EmojiFavorites.GetChild(i).gameObject.GetComponent<Image>().sprite = userSprite[index];
         }*/
 
+        if (EmojiList.childCount != _avatarFaceList.Count) Debug.Log("Number of Child does not match number of Images");
+
         Transform childImage;
         for(int i = 0; i < EmojiList.childCount; i++)
         {
             childImage = EmojiList.GetChild(i);
-            childImage.GetComponent<Image>().sprite = _avatarFaceList[i];
-            childImage.GetChild(0).GetComponent<Text>().text = _avatarFaceList[i].name;
+            childImage.GetChild(1).GetComponent<Image>().sprite = _avatarFaceList[i];
+            childImage.GetComponentInChildren<Text>().text      = _avatarFaceList[i].name;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Select(AvatarFaceButton clickedButton)
     {
-        
+        if(_currentlySelected != clickedButton)
+        {
+            if (_isSelected) _currentlySelected.DeselectButton();
+            clickedButton.SelectButton();
+            _currentlySelected = clickedButton;
+            _isSelected = true;
+        }
+        else
+        {
+            _currentlySelected.DeselectButton();
+            _currentlySelected = null;
+            _isSelected = false;
+        }
     }
 
-    void ChooseFace()
-    {
-
-    }
-
-    void ChangeSlot()
+    void ChangeFavorites()
     {
 
     }
