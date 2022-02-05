@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class AvatarFaceButton : MonoBehaviour
 {
+    [HideInInspector] public Text  ButtonText;
+    [HideInInspector] public Image ButtonImage;
     Image _buttonBorder;
 
     public bool Selected { get; set; }
@@ -13,7 +15,9 @@ public class AvatarFaceButton : MonoBehaviour
     void Start() 
     { 
         Selected = false;
-        _buttonBorder = GetComponent<Image>(); 
+        _buttonBorder = GetComponent<Image>();
+        ButtonText = gameObject.transform.GetChild(0).GetComponent<Text>();
+        ButtonImage = gameObject.transform.GetChild(1).GetComponent<Image>();
     }
 
     public void SelectButton()

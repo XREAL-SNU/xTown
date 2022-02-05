@@ -12,7 +12,8 @@ public class AvatarFaceManagement : MonoBehaviour
     [SerializeField] Transform EmojiList;
 
     bool _isSelected = false;
-    AvatarFaceButton _currentlySelected;
+    GameObject _currentlySelectedObject;
+    AvatarFaceButton _currentlySelectedButton;
 
     // Start is called before the first frame update
     void Start()
@@ -35,25 +36,47 @@ public class AvatarFaceManagement : MonoBehaviour
         }
     }
 
-    public void Select(AvatarFaceButton clickedButton)
+    public void SelectEmoji(GameObject clicked)
     {
-        if(_currentlySelected != clickedButton)
+        AvatarFaceButton clickedButton = clicked.GetComponent<AvatarFaceButton>();
+
+        if(_currentlySelectedButton != clickedButton)
         {
-            if (_isSelected) _currentlySelected.DeselectButton();
+            if (_isSelected) _currentlySelectedButton.DeselectButton();
             clickedButton.SelectButton();
-            _currentlySelected = clickedButton;
-            _isSelected = true;
+            Selected(clicked);
         }
         else
         {
-            _currentlySelected.DeselectButton();
-            _currentlySelected = null;
-            _isSelected = false;
+            Deselected();
         }
     }
 
-    void ChangeFavorites()
+    void Selected(GameObject selected)
     {
+        _currentlySelectedObject = selected;
+        _currentlySelectedButton = _currentlySelectedObject.GetComponent<AvatarFaceButton>();
+        _isSelected = true;
+    }
 
+    void Deselected()
+    {
+        _currentlySelectedButton.DeselectButton();
+        _currentlySelectedObject = null;
+        _currentlySelectedButton = null;
+        _isSelected = false;
+    }
+
+    public void ChangeFavoritesText(Text favText)
+    {
+        if(_isSelected) favText.text = _currentlySelectedButton.ButtonText.text;
+    }
+    public void ChangeFavoritesImage(Image favImage)
+    {
+        if (_isSelected)
+        {
+            favImage.sprite = _currentlySelectedButton.ButtonImage.sprite;
+            Deselected();
+        }
     }
 }
