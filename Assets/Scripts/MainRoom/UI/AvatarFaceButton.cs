@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class AvatarFaceButton : MonoBehaviour
 {
-    [HideInInspector] public Text  ButtonText;
-    [HideInInspector] public Image ButtonImage;
+    // Reference in Editor
+    public Text  ButtonText;
+    public Image ButtonImage;
+
     Image _buttonBorder;
 
     public bool Selected { get; set; }
@@ -16,9 +18,14 @@ public class AvatarFaceButton : MonoBehaviour
     { 
         Selected = false;
         _buttonBorder = GetComponent<Image>();
-        ButtonText = gameObject.transform.GetChild(0).GetComponent<Text>();
-        ButtonImage = gameObject.transform.GetChild(1).GetComponent<Image>();
     }
+
+    public Text GetButtonText() { return ButtonText; }
+    public Image GetButtonImage() { return ButtonImage; }
+    public void SetButtonText(Text buttonText)    { ButtonText.text = buttonText.text; }
+    public void SetButtonText(string buttonText)  { ButtonText.text = buttonText; }                 // Overloaded Method
+    public void SetButtonImage(Image buttonImage) { ButtonImage.sprite = buttonImage.sprite; }
+    public void SetButtonImage(Sprite buttonImage) { ButtonImage.sprite = buttonImage; }            // Overloaded Method
 
     public void SelectButton()
     {
