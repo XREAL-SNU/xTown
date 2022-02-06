@@ -19,7 +19,6 @@ public class AlarmListPanel : MonoBehaviour
     private GameObject _alarmEditorPanel;
 
     public delegate void OnChangedEvent();
-    // �˶� ����Ʈ�� ���� �� �����Ǿ��� �� �߻���ų �Լ����� ��� �̺�Ʈ�ڵ鷯
     public static event OnChangedEvent OnChanged;
 
     public void Start()
@@ -34,7 +33,6 @@ public class AlarmListPanel : MonoBehaviour
         OnChanged();
     }
 
-    // �˶� ����Ʈ UI�� ������Ʈ�ϴ� �Լ�
     private void OnUpdateAlarmList()
     {
         foreach (Transform t in _alarmListTransform)
@@ -46,7 +44,6 @@ public class AlarmListPanel : MonoBehaviour
         DrawAlarmNumber();
     }
 
-    // �˶� ����Ʈ ��ũ�� �信�� ��ü �˶� ����� �׸��� �Լ�
     private void DrawAlarmList()
     {
         foreach (Alarm alarm in AlarmManager.alarmList)
@@ -55,24 +52,19 @@ public class AlarmListPanel : MonoBehaviour
         }
     }
 
-    // �˶� ����Ʈ ��ũ�� �信�� ���� �˶� ����� �׸��� �Լ�
     private void DrawAlarm(Alarm alarm)
     {
-        // Instantiate single alarm UI element.
         GameObject obj = Instantiate(_alarmUITemplate);
         obj.transform.SetParent(_alarmListTransform, false);
         obj.SetActive(true);
 
-        // Set alarm type image color.
         Color typeColor;
         if (alarm.isPrivate) typeColor = Color.red;
         else typeColor = Color.green;
         obj.transform.GetChild(0).GetComponent<Image>().color = typeColor;
 
-        // Set alarm name.
         obj.transform.GetChild(1).GetComponent<TMP_Text>().text = alarm.name;
 
-        // Set alarm time.
         string time;
 
         string amOrPm;
@@ -83,14 +75,12 @@ public class AlarmListPanel : MonoBehaviour
         obj.transform.GetChild(2).GetComponent<TMP_Text>().text = time;
     }
 
-    // �ϴܿ� ��ü �˶� ������ ������Ʈ�ϴ� �Լ�
     private void DrawAlarmNumber()
     {
         _alarmNumberText.text = AlarmManager.alarmList.Count.ToString() + " / " + AlarmManager.maxNumber.ToString();
     }
 
     #region ButtonCallbacks
-    // Add alarm ��ư�� ������ �� 
     public void OnClick_Add()
     {
         if (AlarmManager.alarmList != null)
@@ -102,8 +92,6 @@ public class AlarmListPanel : MonoBehaviour
             }
         }
     }
-    
-    // �˶� ��Ͽ��� ���� �˶��� ������ ��
     public void OnClick_Edit()
     {
         GameObject obj = EventSystem.current.currentSelectedGameObject;
@@ -114,8 +102,6 @@ public class AlarmListPanel : MonoBehaviour
         AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Initialize(alarmIndex, selectedAlarm);
         AlarmScript.Instance.AlarmCanvas.AlarmEditorPanel.Show();
     }
-
-    // Close ��ư�� ������ ��
     #endregion
 
     public void OnClcikShow()
