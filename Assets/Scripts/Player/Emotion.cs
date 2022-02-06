@@ -7,20 +7,23 @@ using UnityEngine.UI;
 [RequireComponent(typeof(PhotonView))]
 public class Emotion : MonoBehaviour
 {
+    private Transform Player;
     private Camera _camera;
     public RectTransform EmoticonMenu;
     [Header("MenuUI")]
     public Image[] MenuSlice;
     public static int _currentMenu=-1;
     private bool _isMenuActive = false;
-
+    public GameObject _face;
+    private List<AvatarFaceButton> _faceList;
     private PhotonView _view;
 
 
     private void Start()
     {
-        EmoticonMenu = GameObject.Find("EmoticonMenu").GetComponent<RectTransform>();
+        // EmoticonMenu = GameObject.Find("EmoticonMenu").GetComponent<RectTransform>();
         EmoticonMenu.gameObject.SetActive(false);
+        Player = GameObject.FindWithTag("Player").transform;
         _camera = Camera.main;
         // for (int i = 0; i < EmoticonItems.Length; i++)
         // {
@@ -30,12 +33,7 @@ public class Emotion : MonoBehaviour
 
         // netcode
         _view = GetComponent<PhotonView>();
-
-    }
-    private void OnEnable() {
-        for(int i = 0;i<4;i++){
-            // MenuSlice[i].transform.GetChild(0).GetComponent<Image>().sprite = PlayerAvatar.localPlayer.emoticon[i];
-        }
+        _faceList = _face.GetComponent<AvatarFaceManagement>()._favList;
     }
 
     private void Update()
@@ -43,6 +41,12 @@ public class Emotion : MonoBehaviour
         if (_view is null || !_view.IsMine) return;
         if (Input.GetKeyDown(KeyCode.T))
         {
+            // Debug.Log(MenuSlice[0].transform.GetChild(0));
+            for(int i = 0;i<4;i++){
+                
+                MenuSlice[i].transform.GetChild(1).GetComponent<Image>().sprite = _faceList[i].GetButtonImage().sprite;
+                Debug.Log( _faceList[i].GetButtonText().text);
+            }
             if(!_isMenuActive){
                 EmoticonMenu.gameObject.SetActive(true);
                 _isMenuActive = true;
@@ -61,8 +65,8 @@ public class Emotion : MonoBehaviour
             } else if(Input.GetKeyDown(KeyCode.Alpha4)){
                 _currentMenu = 4;
             }
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x,transform.position.y+2f,transform.position.z));
-            EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,transform.position.z);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(Player.position.x,Player.position.y+2f,Player.position.z));
+            EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,Player.position.z);
             if(_currentMenu!=-1){
                 EmoticonSelect(_currentMenu);
             }
@@ -89,6 +93,7 @@ public class Emotion : MonoBehaviour
     }
     private void EmoticonSelect(int num){
         Debug.Log(num);
+
         StartCoroutine(ChangeFace(num));
         EmoticonMenu.gameObject.SetActive(false);
         _isMenuActive = false;

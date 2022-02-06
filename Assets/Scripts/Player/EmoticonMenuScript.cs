@@ -10,14 +10,13 @@ public class EmoticonMenuScript : MonoBehaviour, IPointerEnterHandler, IPointerD
         gameObject.GetComponent<Image>().color = Color.gray;
     }
     public void OnPointerDown(PointerEventData eventData){
-        gameObject.GetComponent<Image>().color = Color.black;
+        gameObject.GetComponent<Image>().color = Color.white;
     }
     public void OnPointerUp(PointerEventData eventData){
-        gameObject.GetComponent<Image>().color = Color.white;
+        gameObject.GetComponent<Image>().color = Color.black;
         Emotion._currentMenu = int.Parse(gameObject.name.Substring(17,1));
-        // Emotion.EmoticonSelect();
     }
     public void OnPointerExit(PointerEventData eventData){
-        gameObject.GetComponent<Image>().color = Color.white;
+        gameObject.GetComponent<Image>().color = Color.black;
     }
 }

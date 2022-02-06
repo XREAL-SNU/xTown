@@ -8,7 +8,7 @@ public class AvatarFaceManagement : MonoBehaviour
 {
     // This needs to be setup in Editor
     [SerializeField] List<Sprite> _avatarFaceList;
-    [SerializeField] List<AvatarFaceButton> _favList;
+    [SerializeField] public List<AvatarFaceButton> _favList;
 
     [SerializeField] Transform EmojiFavorites;
     [SerializeField] Transform EmojiList;
