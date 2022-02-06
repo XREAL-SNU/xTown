@@ -32,6 +32,11 @@ public class Emotion : MonoBehaviour
         _view = GetComponent<PhotonView>();
 
     }
+    private void OnEnable() {
+        for(int i = 0;i<4;i++){
+            // MenuSlice[i].transform.GetChild(0).GetComponent<Image>().sprite = PlayerAvatar.localPlayer.emoticon[i];
+        }
+    }
 
     private void Update()
     {
@@ -83,7 +88,8 @@ public class Emotion : MonoBehaviour
         // }
     }
     private void EmoticonSelect(int num){
-        Debug.Log(_currentMenu);
+        Debug.Log(num);
+        StartCoroutine(ChangeFace(num));
         EmoticonMenu.gameObject.SetActive(false);
         _isMenuActive = false;
         _currentMenu = -1;
@@ -98,16 +104,16 @@ public class Emotion : MonoBehaviour
 
 
 
-    // IEnumerator EmoticonShow(int num)
-    // {
+    IEnumerator ChangeFace(int num)
+    {
         // for (int i = 0; i < EmoticonItems.Length; i++)
         // {
         //     EmoticonItems[i].gameObject.SetActive(false);
         // }
         // EmoticonItems[num].gameObject.SetActive(true);
-        // yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(10f);
         // EmoticonItems[num].gameObject.SetActive(false);
-    // }
+    }
 
     // private void checkCurrentMenu()
     // {
