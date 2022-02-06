@@ -12,7 +12,6 @@ public class AvatarFaceManagement : MonoBehaviour
     [SerializeField] Transform EmojiList;
 
     bool _isSelected = false;
-    GameObject _currentlySelectedObject;
     AvatarFaceButton _currentlySelectedButton;
 
     // Start is called before the first frame update
@@ -44,7 +43,7 @@ public class AvatarFaceManagement : MonoBehaviour
         {
             if (_isSelected) _currentlySelectedButton.DeselectButton();
             clickedButton.SelectButton();
-            ChangeCurrentlySelected(clicked);
+            ChangeCurrentlySelected(clickedButton);
         }
         else
         {
@@ -52,36 +51,26 @@ public class AvatarFaceManagement : MonoBehaviour
         }
     }
 
-    void ChangeCurrentlySelected(GameObject selected)
+    void ChangeCurrentlySelected(AvatarFaceButton selected)
     {
-        _currentlySelectedObject = selected;
-        _currentlySelectedButton = _currentlySelectedObject.GetComponent<AvatarFaceButton>();
+        _currentlySelectedButton = selected;
         _isSelected = true;
     }
 
     void DeselectCurrentlySelected()
     {
         _currentlySelectedButton.DeselectButton();
-        _currentlySelectedObject = null;
         _currentlySelectedButton = null;
         _isSelected = false;
     }
 
-
-    // Not Intuitive Approach (personal opinion)
-    //
-    // Setting AvatarFaceButton Script for each Favorites Button and
-    // Passing AvatarFaceButton Component as parameter in Button Invoke Function
-    // and merging ChangeFavoritesText() and ChangeFavoritesImage() seems better.
-    public void ChangeFavoritesText(Text favText)
+    // Invoke this Function when a FaceButton is Currently Selected & Favorites Face Button is Clicked
+    public void AddToFavorites(AvatarFaceButton avatarFaceButton)
     {
-        if(_isSelected) favText.text = _currentlySelectedButton.ButtonText.text;
-    }
-    public void ChangeFavoritesImage(Image favImage)
-    {
-        if (_isSelected)
+        if(_isSelected)
         {
-            favImage.sprite = _currentlySelectedButton.ButtonImage.sprite;
+            avatarFaceButton.SetButtonText(_currentlySelectedButton.ButtonText);
+            avatarFaceButton.SetButtonImage(_currentlySelectedButton.ButtonImage);
             DeselectCurrentlySelected();
         }
     }
