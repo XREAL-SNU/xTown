@@ -7,6 +7,9 @@ namespace JK
     public class HoleScript : MonoBehaviour
     {
         // Start is called before the first frame update
+        public GameObject ColorPanel;
+        public GameObject A_Line;
+        public GameObject A_Color;
         void Start()
         {
             
@@ -32,9 +35,13 @@ namespace JK
                 }
             }
 
+            //isBallStop에 영향 안가도록 1로 설정
+
             GameManager.isBallStop[BallNum]=1;
+            
             //구멍에 들어가면 공 없어짐
             ball.gameObject.SetActive(false);
+            
             //첫번째 공이 들어간 경우
             if(GameManager.ballChoice==0)
             {
@@ -43,6 +50,13 @@ namespace JK
                     if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.CorL=false;
+                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                        StartCoroutine(SetActiveObjInSecond(A_Line, 2f));
+                    }
+                    else if(BallNum>=1 && BallNum<=7)
+                    {
+                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                        StartCoroutine(SetActiveObjInSecond(A_Color, 2f));
                     }
                 }
                 else
@@ -50,6 +64,13 @@ namespace JK
                     if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.CorL=false;
+                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                        StartCoroutine(SetActiveObjInSecond(A_Line, 2f));
+                    }
+                    else if(BallNum>=9 && BallNum<=15)
+                    {
+                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                        StartCoroutine(SetActiveObjInSecond(A_Color, 2f));
                     }
                 }
                 //Debug.Log(GameManager.CorL.ToString());
@@ -67,18 +88,21 @@ namespace JK
                     if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.countA=GameManager.countA-1;
+                        GameManager.NothingBool = false;
                     }
                     //다른 팀 것 넣었을 때
                     else if(BallNum>=9 && BallNum<=15)
                     {
-
+                        GameManager.countB=GameManager.countB-1;
                         GameManager.AorB=false;
+                        GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
 
                         GameManager.AorB=false;
+                        GameManager.OtherBool = true;
                     }
                 }
                 else
@@ -87,18 +111,21 @@ namespace JK
                     if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.countA=GameManager.countA-1;
+                        GameManager.NothingBool = false;
                     }
                     //다른 팀 것 넣었을 때
                     else if(BallNum>=1 && BallNum<=7)
                     {
-
+                        GameManager.countB=GameManager.countB-1;
                         GameManager.AorB=false;
+                        GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
 
                         GameManager.AorB=false;
+                        GameManager.OtherBool = true;
                     }
                 }
             }
@@ -112,18 +139,21 @@ namespace JK
                     if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.countB=GameManager.countB-1;
+                        GameManager.NothingBool = false;
                     }
                     //다른 팀 것 넣었을 때
                     else if(BallNum>=1 && BallNum<=7)
                     {
-
+                        GameManager.countA=GameManager.countA-1;
                         GameManager.AorB=true;
+                        GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
 
                         GameManager.AorB=true;
+                        GameManager.OtherBool = true;
                     }
                 }
                 else
@@ -132,18 +162,21 @@ namespace JK
                     if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.countB=GameManager.countB-1;
+                        GameManager.NothingBool = false;
                     }
                     //다른 팀 것 넣었을 때
                     else if(BallNum>=9 && BallNum<=15)
                     {
-
+                        GameManager.countA=GameManager.countA-1;
                         GameManager.AorB=true;
+                        GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
 
                         GameManager.AorB=true;
+                        GameManager.OtherBool = true;
                     }
                 }
             }
@@ -154,6 +187,15 @@ namespace JK
 
             
         }
+
+        IEnumerator SetActiveObjInSecond(GameObject obj, float second)
+        {
+            obj.SetActive(true);
+
+            yield return new WaitForSeconds(second);
+            obj.SetActive(false);
+        }
+
 
 
 

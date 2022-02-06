@@ -37,7 +37,7 @@ namespace JK
         void Update()
         {
             ballVelocity=rb.velocity;
-            if(Mathf.Abs(ballVelocity.x) <= 0.005 && Mathf.Abs(ballVelocity.y)<= 0.005 && Mathf.Abs(ballVelocity.z) <= 0.005) // 공이 멈췄을 때
+            if(Mathf.Abs(ballVelocity.x) <= 0.001 && Mathf.Abs(ballVelocity.z) <= 0.001) // 공이 멈췄을 때
             {
                 //Debug.Log("hi"+BallNum.ToString());
                 GameManager.isBallStop[BallNum]=1;
@@ -85,7 +85,7 @@ namespace JK
             //Debug.Log(GameManager.isBallStop[0]); // 공이 없어지면서 뭔가 문제가 생긴듯
             if(GameManager.isBallStop.Sum()==16) // 모든 공이 완전히 멈췄을 때
             {
-                Debug.Log(GameManager.isBallStop.Sum());
+                //Debug.Log(GameManager.isBallStop.Sum());
                 if(BallNum==0)
                 {
                     //지우기
@@ -115,15 +115,29 @@ namespace JK
                     {
                         Debug.Log(human);
                     }*/
-                    
+
                     //큐대 reset
                     CueScript.PressTime = 0;
                     
+
+                    StartCoroutine(Wait(1f));
+                    
+                    //아무것도 들어가지 않았을 때 거르기 위함 or 다른 팀 or 흰공
+                    GameManager.NothingBool = true;
+
+                    //CamBool
+                    GameManager.CamBool = false;
                 }
             }
         }
 
-
-
+        IEnumerator Wait(float value)
+        {
+            yield return new WaitForSeconds(value);
+            GameManager.currentGameState = GameManager.GameState.Rolling;
+        }
     }
+
+
+    
 }

@@ -19,7 +19,7 @@ namespace JK
         public void Update()
         {
             //Debug.Log(GameManager.Arraytrigger[0]);
-            if(GameManager.isBallStop.Sum()==16)
+            if(GameManager.CamBool)
             {
                 virCam.Priority = 9;
             }
