@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
-
+using XReal.Xtown.PhotonChat;
 public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 {
     [SerializeField]
@@ -17,6 +17,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
 
     private List<PlayerListing> _listings = new List<PlayerListing>();
     private RoomsCanvases _roomsCanvases;
+    public PhotonChatManager _photonChatManager;
     private bool _ready = false;
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //unity
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 //photon chat
 using Photon.Chat;
 using Photon.Realtime;
@@ -58,7 +59,6 @@ namespace XReal.Xtown.PhotonChat
             DontDestroyOnLoad(this.gameObject);
 
             userID = PhotonNetwork.LocalPlayer.NickName;
-            //이걸 PhotonNetWork.Nickname으로 바꾸니까 채팅이 두번씩 쳐짐... 뭐지?
             InputFieldChat.onEndEdit.AddListener(delegate { OnEnterSend(); });
             //SendButton.onClick.AddListener(delegate { OnClickSend(); });
             ChannelDropdown.ClearOptions();
@@ -80,6 +80,7 @@ namespace XReal.Xtown.PhotonChat
             if(myChannels.Contains("Default"))
             {
                 GetUsersFromDefalut();
+                JoinRoomChannel();
             }
             //update가 채널 가입보다 빠르게 시작되어 Default Channel에 가입한 이후부터 동작하도록 만듦
         }
@@ -155,9 +156,9 @@ namespace XReal.Xtown.PhotonChat
                 return;
             }
 
-            //여기를 선택한 채널로 바꾸도록 해야함.
+            //RoomChat구현을 위해선 이 로직을 바꿔야 함.
             bool doingPrivateChat = false;
-            if(channelName!="Default")
+            if(channelName.Contains(userID))
             {
                 doingPrivateChat = true;
             }
@@ -247,7 +248,6 @@ namespace XReal.Xtown.PhotonChat
             {
                 this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
             }
-            
             Debug.Log( "Connected as " + this.userID );
             //this.ChatPanel.gameObject.SetActive(true);
             //이거 주석 풀면 들어가자마자 채팅방이 활성화 되는데 접혀있는게 낫겠다 생각해서 없애버림
@@ -436,7 +436,6 @@ namespace XReal.Xtown.PhotonChat
                 //this.chatClient.TryGetChannel(channelName: channel, out ChatChannel newChannel);
                 //newChannel.AddSubscriber(userID);
 
-                //subscribe할 때 유저가 해당 채널의 Subscribers에 추가하는 형식으로 만들어버림. 이러면 되지 않을까?
 
             }
             Debug.Log("OnSubscribed: " + string.Join(", ", channels));
@@ -572,8 +571,44 @@ namespace XReal.Xtown.PhotonChat
 
 
 
+        public void JoinRoomChannel()
+        {
+            Dropdown.OptionData option;
+            Scene scene = SceneManager.GetActiveScene();
+            if(scene.name!="MainRoom" && scene.name!="Lobby")
+            {
+                if(PhotonNetwork.InRoom)
+                {
+                    string[] channelName = {PhotonNetwork.CurrentRoom.Name};
+                    if(!myChannels.Contains(channelName[0]))
+                    {
+                        this.chatClient.Subscribe(channelName,0);
+                        myChannels.Add(channelName[0]);
+                        option = new Dropdown.OptionData();
+                        option.text = channelName[0];
+                        ChannelDropdown.options.Add(option);
+                        //뒤에 숫자 0으로 그냥 써놔도 무방한지 확실히하기
+                    }
+                }
+                else
+                {
+                    string[] channelName = {scene.name};
+                    if(!myChannels.Contains(channelName[0]))
+                    {
+                        this.chatClient.Subscribe(channelName,0);
+                        myChannels.Add(channelName[0]);
+                        option = new Dropdown.OptionData();
+                        option.text = channelName[0];
+                        ChannelDropdown.options.Add(option);
+                        //뒤에 숫자 0으로 그냥 써놔도 무방한지 확실히하기
+                    }
+                }
+            }
+        }
+        //UnSubscribe하는 부분을 구현하지 않았는데 그냥 방 나오면 자동으로 채널 사라짐. 씬이 바뀌면서 채널 연결을 다시 해서 그렇게 되는 것인듯?
+        //당장은 괜찮지만 버그가 없는지 찾아봐야 할 것 같다.
 
-
+        
 
 
 

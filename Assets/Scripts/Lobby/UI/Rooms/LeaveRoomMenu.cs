@@ -1,11 +1,12 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using XReal.Xtown.PhotonChat;
 
 public class LeaveRoomMenu : MonoBehaviour
 {
     private RoomsCanvases _roomsCanvas;
-
+    private PhotonChatManager _photonChatManager;
     public void FirstInitialize(RoomsCanvases canvases)
     {
         _roomsCanvas = canvases;
