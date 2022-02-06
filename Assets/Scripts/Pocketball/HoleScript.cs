@@ -27,6 +27,7 @@ namespace JK
                 if(i==BallNum)
                 {
                     GameManager.isBall[i]=1;
+                    GameManager.isBallStop[i]=1;
                     Debug.Log(i.ToString());
                 }
             }
@@ -34,7 +35,6 @@ namespace JK
             GameManager.isBallStop[BallNum]=1;
             //구멍에 들어가면 공 없어짐
             ball.gameObject.SetActive(false);
-
             //첫번째 공이 들어간 경우
             if(GameManager.ballChoice==0)
             {
