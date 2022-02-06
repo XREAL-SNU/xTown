@@ -279,7 +279,6 @@ GameObject:
   - component: {fileID: 2097060665358294583}
   - component: {fileID: 2097060665358294582}
   - component: {fileID: 5593843630043860114}
-  - component: {fileID: 5916283472314007674}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -361,7 +360,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097060665358294537}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -379,25 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 292e423332a09bd4f974a6259e99c3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &5916283472314007674
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097060665358294537}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f270f19498975c0458f60c17d6611054, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5655059080168524457
 GameObject:
   m_ObjectHideFlags: 0

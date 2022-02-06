@@ -53,9 +53,10 @@
     <UnityVersion>2020.3.23f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_BlockMoveVertical.cs" />
-    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_PlayerOnMovingBlock.cs" />
-    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_CoinRotation.cs" />
+    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_BlockTransparency.cs" />
+    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_BlockMovement.cs" />
+    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_BlockResize.cs" />
+    <Compile Include="Assets\Scripts\BlockJump\Seoyeon\SY_CoinScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -672,14 +673,14 @@
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
