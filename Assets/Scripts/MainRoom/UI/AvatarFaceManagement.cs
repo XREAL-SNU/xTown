@@ -52,7 +52,7 @@ public class AvatarFaceManagement : MonoBehaviour
         else DeselectCurrentlySelected();
     }
 
-    // Update Buffer of _currentlySelectedBut
+    // Update Buffer of _currentlySelectedButton
     void ChangeCurrentlySelected(AvatarFaceButton selected)
     {
         _currentlySelectedButton = selected;
