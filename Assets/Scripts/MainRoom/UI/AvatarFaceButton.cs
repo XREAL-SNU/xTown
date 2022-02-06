@@ -20,10 +20,12 @@ public class AvatarFaceButton : MonoBehaviour
         _buttonBorder = GetComponent<Image>();
     }
 
-    public void SetButtonText(Text buttonText)    { ButtonText.text = buttonText.text; }
-    public void SetButtonImage(Image buttonImage) { ButtonImage.sprite = buttonImage.sprite; }
-    public Text  GetButtonText()  { return ButtonText; }
+    public Text GetButtonText() { return ButtonText; }
     public Image GetButtonImage() { return ButtonImage; }
+    public void SetButtonText(Text buttonText)    { ButtonText.text = buttonText.text; }
+    public void SetButtonText(string buttonText)  { ButtonText.text = buttonText; }                 // Overloaded Method
+    public void SetButtonImage(Image buttonImage) { ButtonImage.sprite = buttonImage.sprite; }
+    public void SetButtonImage(Sprite buttonImage) { ButtonImage.sprite = buttonImage; }            // Overloaded Method
 
     public void SelectButton()
     {
