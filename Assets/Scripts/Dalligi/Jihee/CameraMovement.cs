@@ -44,8 +44,8 @@ public class CameraMovement : MonoBehaviour
     private void CharacterFollow()
     {
         Vector3 CameraPosition = player.transform.position + offset;
-        Vector3 lerp_pos = Vector3.Lerp(transform.position, CameraPosition, FollowSpeed);
-        transform.position = lerp_pos;
+        Vector3 Pos = Vector3.Lerp(transform.position, CameraPosition, FollowSpeed);
+        transform.position = Pos;
         transform.LookAt(player.transform);
     }
 }
