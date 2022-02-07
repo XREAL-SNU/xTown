@@ -37,7 +37,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
         {
             PlayerInfo playerInfo = new PlayerInfo();
-            playerInfo.PlayerName = (string)player.CustomProperties[PlayerInfo.PlayerInfoField.PlayerName.ToString()];
+            playerInfo.PlayerName = PhotonNetwork.LocalPlayer.NickName;
+            //playerInfo.PlayerName = (string)player.CustomProperties[PlayerInfo.PlayerInfoField.PlayerName.ToString()];
             playerInfos.Add(playerInfo);
         }
         Debug.Log($"GetPlayerInfoList returning {playerInfos.Count} players");

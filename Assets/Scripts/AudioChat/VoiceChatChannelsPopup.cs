@@ -14,6 +14,8 @@ public class VoiceChatChannelsPopup : UIPopup
         CloseButton
     }
 
+    [SerializeField]
+    Transform _content;
 
 
     private void Start()
@@ -27,12 +29,32 @@ public class VoiceChatChannelsPopup : UIPopup
         Bind<Button>(typeof(Buttons));
         // to get a bound gameObject, use GetUIComponent and provide it with UIElementType and UIElementId.
         GetUIComponent<Button>((int)Buttons.CloseButton).gameObject.BindEvent(OnClick_Close);
-        gameObject.BindEvent(OnPlayerJoined_AddItem, RoomManager.RoomEvent.PlayerJoined);
-        gameObject.BindEvent(OnPlayerLeft_RemoveItem, RoomManager.RoomEvent.PlayerLeft);
         _playerInfos = RoomManager.Room.GetPlayerInfoList();
         foreach(PlayerInfo info in _playerInfos)
         {
             Debug.Log($"player: {info.PlayerName}");
+        }
+
+        _playerInfos.ForEach((info) => {
+            Debug.Log($"adding to list: {info.PlayerName}");
+            AddItem(info.PlayerName); 
+        
+        });
+    }
+
+    void AddItem(string name)
+    {
+        AudioChatUserListing listing = Instantiate(Resources.Load<AudioChatUserListing>("UI/Popup/VoiceChatRoom/PlayerListItem"), _content);
+        listing.PlayerNameText = name;
+    }
+
+
+    void ClearList()
+    {
+        while(_content.childCount > 0)
+        {
+            AudioChatUserListing listing = GetComponentInChildren<AudioChatUserListing>(_content);
+            listing.Remove();
         }
     }
 
@@ -48,6 +70,7 @@ public class VoiceChatChannelsPopup : UIPopup
 
     public void OnClick_Close(PointerEventData data)
     {
+        ClearList();
         ClosePopup();
     }
 }

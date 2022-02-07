@@ -70,26 +70,33 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     // properties
     public PlayerInfo _playerInfo;
-    
 
+    // event handler
 
-    // events
-    public Action OnJoinedRoomHandler = null;
-    public Action OnLeftRoomHandler = null;
-
-    public override void OnJoinedRoom()
+    public enum PlayerEvent
     {
-        if(OnJoinedRoomHandler!= null)
+        JoinedRoom,
+        LeftRoom
+    }
+    public static void BindEvent(GameObject go, Action action, PlayerEvent evtype)
+    {
+        PlayerEventHandler evt = go.GetComponent<PlayerEventHandler>();
+        if (evt is null)
         {
-            OnJoinedRoomHandler.Invoke();
+            evt = go.AddComponent<PlayerEventHandler>();
+        }
+
+        switch (evtype)
+        {
+            case PlayerEvent.JoinedRoom:
+                evt.OnJoinedRoomHandler += action;
+                break;
+            case PlayerEvent.LeftRoom:
+                evt.OnLeftRoomHandler += action;
+                break;
         }
     }
 
-    public override void OnLeftRoom()
-    {
-        if (OnLeftRoomHandler != null)
-        {
-            OnLeftRoomHandler.Invoke();
-        }
-    }
+
+
 }
