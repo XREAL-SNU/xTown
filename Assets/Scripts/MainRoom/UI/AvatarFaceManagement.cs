@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class AvatarFaceManagement : MonoBehaviour
 {
     // This needs to be setup in Editor
-    // To get favorites data, access it by:
-    //      _favList[*index of favorites*].GetButtonImageAsSprite();
-    //      _favList[*index of favorites*].GetButtonTextAsString();
+    // To get favorites data, access it by first referencing this script and:
+    //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetButtonImageAsSprite();
+    //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetButtonTextAsString();
+    //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetImageIndex();
     [SerializeField] List<Sprite> _avatarFaceList;
     [SerializeField] List<AvatarFaceButton> _favList;
 
@@ -18,6 +19,8 @@ public class AvatarFaceManagement : MonoBehaviour
 
     bool _isSelected = false;
     AvatarFaceButton _currentlySelectedButton;
+
+    public AvatarFaceButton GetFavButton(int index) { return _favList[index]; }
 
     // Start is called before the first frame update
     void Start()
@@ -78,8 +81,12 @@ public class AvatarFaceManagement : MonoBehaviour
         // If a button is selected and is NOT added to favorites
         if(_isSelected && index == -1)
         {
-            avatarFaceButton.SetButtonText(_currentlySelectedButton.ButtonText);
-            avatarFaceButton.SetButtonImage(_currentlySelectedButton.ButtonImage);
+            avatarFaceButton.SetButtonText(_currentlySelectedButton.GetButtonText());
+            avatarFaceButton.SetButtonImage(_currentlySelectedButton.GetButtonImage());
+
+            // Replace Index
+            for(int i = 0; i < _avatarFaceList.Count; i++) { if (_currentlySelectedButton.GetButtonText().text.Equals(_avatarFaceList[i].name)) avatarFaceButton.SetImageIndex(i); }
+            
             DeselectCurrentlySelected();
         }
         // If a button is selected and is added to favorites

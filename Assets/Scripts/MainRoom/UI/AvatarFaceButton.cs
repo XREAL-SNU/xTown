@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class AvatarFaceButton : MonoBehaviour
 {
     // Reference in Editor
-    public Text  ButtonText;
-    public Image ButtonImage;
+    [SerializeField] Text  ButtonText;
+    [SerializeField] Image ButtonImage;
 
     Image _buttonBorder;
+    int _imageIndex;
 
     public bool Selected { get; set; }
 
@@ -28,6 +29,8 @@ public class AvatarFaceButton : MonoBehaviour
     public void SetButtonText(string buttonText)  { ButtonText.text = buttonText; }                 // Overloaded Method (SetButtonText)
     public void SetButtonImage(Image buttonImage) { ButtonImage.sprite = buttonImage.sprite; }
     public void SetButtonImage(Sprite buttonImage) { ButtonImage.sprite = buttonImage; }            // Overloaded Method (SetButtonImage)
+    public int GetImageIndex() { return _imageIndex; }
+    public void SetImageIndex(int index) { _imageIndex = index; }
 
     public void SelectButton()
     {
