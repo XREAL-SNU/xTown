@@ -67,7 +67,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld"))
         {
             Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name + ", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
-            //LoadCharacter.Instance.PlayerControl.enabled = false;
+            SpawnCharacter.Instance.PlayerControl.enabled = false;
             // activate the current room canvases
             RoomsCanvases.Instance.CurrentRoomCanvas.Show();
             RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
