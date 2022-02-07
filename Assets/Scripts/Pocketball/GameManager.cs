@@ -22,6 +22,7 @@ namespace JK
         public GameObject GameOver_Panel;
         public GameObject GameOver_A_Win;
         public GameObject GameOver_B_Win;
+        public GameObject WhiteBall;
         
 
         public static Vector3 whitePosition;
@@ -40,6 +41,7 @@ namespace JK
         public static int countA=8;
         public static int countB=8;
 
+        public static LineRenderer line;
         int i=0;
         // Start is called before the first frame update
         void Start()
@@ -50,21 +52,18 @@ namespace JK
             Physics.sleepThreshold = 0.015f;
             CamBool = true;
             NothingBool = true;
+            line = WhiteBall.GetComponent<LineRenderer>();
             StartCoroutine(SetActiveObjInSecond(Turn_Panel, 2f));
             
             //지금은 무조건 A부터인데, 가위바위보(?)를 넣어서 순서 정하게 하기. 여기에 적용.
             StartCoroutine(SetActiveObjInSecond(A_Text, 2f));
-            
+            line.enabled = true;
+            BallMovement.CueBool = true;
         }
 
         // Update is called once per frame
         void Update()
         {
-            //Ball 속도 모두 0일때
-            if(isBallStop.Sum() == 16)
-            {
-                
-            }
             //Debug.Log(isBallStop.Sum());
 
             //GameOver 8번이 충돌 bool=true;
@@ -109,7 +108,11 @@ namespace JK
                         AorB = !AorB;
                     }
                 }
-                Debug.Log(AorB.ToString());
+                //Debug.Log(AorB.ToString());
+                //라인 렌더러 & 큐 활성화
+                line.enabled = true;
+                BallMovement.CueBool = true;
+                BallMovement.press_time = 0;
                 StartCoroutine(SetActiveObjInSecond(Turn_Panel, 2f));
                 if(AorB)
                 {

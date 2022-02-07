@@ -17,11 +17,10 @@ namespace JK
         private float power;
         private float start_time;
         private float bar_time;
-        private float press_time;
+        public static float press_time;
         private float end_time;
 
         int BallNum;
-        
         //private bool trigger = true;
 
         // Start is called before the first frame update
@@ -122,6 +121,7 @@ namespace JK
 
                     StartCoroutine(Wait(1f));
                     
+                    GameManager.line.enabled = false;
                     //아무것도 들어가지 않았을 때 거르기 위함 or 다른 팀 or 흰공
                     GameManager.NothingBool = true;
 

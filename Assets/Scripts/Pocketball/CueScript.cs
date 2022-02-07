@@ -7,6 +7,7 @@ namespace JK
     {
         public GameObject Cue;
         public GameObject Whiteball;
+        public GameObject Player;
 
         public static float PressTime;
         // Start is called before the first frame update
@@ -18,9 +19,10 @@ namespace JK
         // Update is called once per frame
         void Update()
         {
-            PressTime = BallMovement.TimePress;
+            PressTime = BallMovement.press_time;
+            //Debug.Log(PressTime);
             Cue.transform.LookAt(Whiteball.transform);
-            Cue.transform.position = new Vector3(GameManager.whitePosition.x*(float)(1.2-0.4*PressTime) + PlayerScript.playerPosition.x*(float)(0.8+0.4*PressTime)/2,GameManager.whitePosition.y+0.4f, (float)(GameManager.whitePosition.z*(float)(1.2-0.4*PressTime) + PlayerScript.playerPosition.z*(0.8+0.4*PressTime))/2);
+            Cue.transform.position = new Vector3((Whiteball.transform.position.x*(float)(1.2-0.4*PressTime) + Player.transform.position.x*(float)(0.8+0.4*PressTime))/2,Whiteball.transform.position.y+0.2f, (float)(Whiteball.transform.position.z*(float)(1.2-0.4*PressTime) + Player.transform.position.z*(0.8+0.4*PressTime))/2);
             
             //Debug.Log(BallMovement.CueBool);
             if(BallMovement.CueBool)
