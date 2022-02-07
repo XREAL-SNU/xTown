@@ -5,7 +5,14 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    public static int score;
 
+    public static Action OnGoal;
+
+    private void Awake()
+    {
+        Initialize();
+    }
 
     // Update is called once per frame
     void Update()
@@ -17,6 +24,16 @@ public class GameManager : MonoBehaviour
                 Spawner.Instance.SpawnBall();
             }
         }
+    }
+
+    private void Initialize()
+    {
+        score = 0;
+    }
+
+    public static void UpdateScore(int i)
+    {
+        score += i;
     }
 
 }

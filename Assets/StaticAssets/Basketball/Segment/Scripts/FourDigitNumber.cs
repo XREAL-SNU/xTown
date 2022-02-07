@@ -8,10 +8,11 @@ public class FourDigitNumber : MonoBehaviour {
 
     private void Awake() {
         displays = GetComponentsInChildren<SevenSegmentDisplay>();
+        GameManager.OnGoal += UpdateScoreDisplay;
         SetNumber(0);
     }
 
-    public void SetNumber(int digits) {
+    private void SetNumber(int digits) {
         foreach (var i in Range(0, displays.Length)) {
             var display = displays[i];
             if (i > 0 && digits == 0)
@@ -22,5 +23,10 @@ public class FourDigitNumber : MonoBehaviour {
                 digits /= 10;
             }
         }
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        SetNumber(GameManager.score);
     }
 }

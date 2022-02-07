@@ -21,12 +21,13 @@ public class DragAndShoot : MonoBehaviour
 
     private bool _isShoot;
 
+    private bool _triggeredFirst;
+    private bool _triggeredSecond;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Image image = GetComponent<Image>();
-
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -73,6 +74,29 @@ public class DragAndShoot : MonoBehaviour
         Shoot(_mouseReleasePos - _mousePressDownPos);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Floor")
+        {
+            StartCoroutine(DestroyAfterSeconds(1f));
+            return;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "First")
+        {
+            _triggeredFirst = true;
+            return;
+        }
+        if (other.gameObject.name == "Second" && _triggeredFirst)
+        {
+            GameManager.UpdateScore(30);
+            GameManager.OnGoal();
+        }
+    }
+
     private void Shoot(Vector3 force)
     {
         if (_isShoot)
@@ -84,12 +108,12 @@ public class DragAndShoot : MonoBehaviour
 
         _rb.isKinematic = false;
         _rb.AddForce(forceV);
-        StartCoroutine(DestroyAfterSeconds());
+        StartCoroutine(DestroyAfterSeconds(5));
     }
 
-    IEnumerator DestroyAfterSeconds()
+    IEnumerator DestroyAfterSeconds(float i)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(i);
 
         Destroy(gameObject);
     }
