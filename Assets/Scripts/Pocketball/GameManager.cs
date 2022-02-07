@@ -23,6 +23,9 @@ namespace JK
         public GameObject GameOver_A_Win;
         public GameObject GameOver_B_Win;
         public GameObject WhiteBall;
+        public GameObject A_Turn;
+        public GameObject B_Turn;
+        
         
 
         public static Vector3 whitePosition;
@@ -117,10 +120,14 @@ namespace JK
                 if(AorB)
                 {
                     StartCoroutine(SetActiveObjInSecond(A_Text, 2f));
+                    A_Turn.SetActive(true);
+                    B_Turn.SetActive(false);
                 }
                 else
                 {
-                    StartCoroutine(SetActiveObjInSecond(B_Text, 2f));;
+                    StartCoroutine(SetActiveObjInSecond(B_Text, 2f));
+                    A_Turn.SetActive(false);
+                    B_Turn.SetActive(true);
                 }
                 CamBool = true;
                   
