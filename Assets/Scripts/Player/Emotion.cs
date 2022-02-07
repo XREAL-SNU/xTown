@@ -17,21 +17,14 @@ public class Emotion : MonoBehaviour
     public GameObject _face;
     private List<AvatarFaceButton> _faceList;
     private PhotonView _view;
+    private bool _isSelect;
 
 
     private void Start()
     {
-        // EmoticonMenu = GameObject.Find("EmoticonMenu").GetComponent<RectTransform>();
         EmoticonMenu.gameObject.SetActive(false);
         Player = GameObject.FindWithTag("Player").transform;
         _camera = Camera.main;
-        // for (int i = 0; i < EmoticonItems.Length; i++)
-        // {
-        //     Debug.Log(EmoticonItems[i].name);
-        //     EmoticonItems[i].gameObject.SetActive(false);
-        // }
-
-        // netcode
         _view = GetComponent<PhotonView>();
         _faceList = _face.GetComponent<AvatarFaceManagement>()._favList;
     }
@@ -41,11 +34,8 @@ public class Emotion : MonoBehaviour
         if (_view is null || !_view.IsMine) return;
         if (Input.GetKeyDown(KeyCode.T))
         {
-            // Debug.Log(MenuSlice[0].transform.GetChild(0));
             for(int i = 0;i<4;i++){
-                
-                MenuSlice[i].transform.GetChild(1).GetComponent<Image>().sprite = _faceList[i].GetButtonImage().sprite;
-                Debug.Log( _faceList[i].GetButtonText().text);
+                MenuSlice[i].transform.GetChild(1).GetComponent<Text>().text = _faceList[i].GetButtonText().text;
             }
             if(!_isMenuActive){
                 EmoticonMenu.gameObject.SetActive(true);
@@ -56,7 +46,11 @@ public class Emotion : MonoBehaviour
             }
         }
         if(_isMenuActive){
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(Player.position.x,Player.position.y+2f,Player.position.z));
+            EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,Player.position.z);
+            
             if(Input.GetKeyDown(KeyCode.Alpha1)){
+                MenuSlice[1].color = Color.black;
                 _currentMenu = 1;
             } else if(Input.GetKeyDown(KeyCode.Alpha2)){
                 _currentMenu = 2;
@@ -65,34 +59,13 @@ public class Emotion : MonoBehaviour
             } else if(Input.GetKeyDown(KeyCode.Alpha4)){
                 _currentMenu = 4;
             }
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(Player.position.x,Player.position.y+2f,Player.position.z));
-            EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,Player.position.z);
             if(_currentMenu!=-1){
                 EmoticonSelect(_currentMenu);
             }
         }
-
-        // // t를 누르고 있을 경우 이모티콘메뉴 활성화
-        // if(Input.GetKey(KeyCode.T)){
-        //     EmoticonMenu.gameObject.SetActive(true);
-        //     checkCurrentMenu();
-        //     if(_currentMenu != _previousMenu){
-        //         MenuSlice[_currentMenu].color = Color.gray;
-        //         MenuSlice[_previousMenu].color = Color.white;
-        //         _previousMenu = _currentMenu;
-        //     }
-        // }
-        // t를 떼면 이모티콘메뉴를 비활성화시키고 이모티콘 띄우기
-        // if(Input.GetKeyUp(KeyCode.T)){
-            // EmoticonMenu.gameObject.SetActive(false);
-            // if(_currentMenu != EmoticonItems.Length){
-            //     MenuSlice[_currentMenu].color = Color.white;
-            //     _view.RPC("DisplayEmoticon", RpcTarget.All, _currentMenu);
-            // }
-        // }
     }
     private void EmoticonSelect(int num){
-        Debug.Log(num);
+        Debug.Log("FACE :: "+_faceList[num].GetButtonImage().sprite);
 
         StartCoroutine(ChangeFace(num));
         EmoticonMenu.gameObject.SetActive(false);
@@ -119,17 +92,4 @@ public class Emotion : MonoBehaviour
         yield return new WaitForSeconds(10f);
         // EmoticonItems[num].gameObject.SetActive(false);
     }
-
-    // private void checkCurrentMenu()
-    // {
-    //     _currentMousePosition = new Vector2(Input.mousePosition.x - _emoticonCenterPosition.x, Input.mousePosition.y - _emoticonCenterPosition.y);
-    //     // 마우스의 현재위치가 많이 안 움직였다면 취소합니다.
-    //     if(Mathf.Pow(_currentMousePosition.x,2) + Mathf.Pow(_currentMousePosition.y,2)>1000f){
-    //         _currentAngle = Mathf.Atan2(_currentMousePosition.y, _currentMousePosition.x) * Mathf.Rad2Deg;
-    //         _currentAngle = (_currentAngle + 360) % 360;
-    //         _currentMenu = (int)_currentAngle / (360/(MenuSlice.Length-1));
-    //     } else {
-    //         _currentMenu = EmoticonItems.Length;
-    //     }
-    // }
 } 
