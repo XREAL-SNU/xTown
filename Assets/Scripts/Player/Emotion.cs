@@ -12,28 +12,29 @@ public class Emotion : MonoBehaviour
     public RectTransform EmoticonMenu;
     [Header("MenuUI")]
     public Image[] MenuSlice;
-    public static int _currentMenu=-1;
+    private int _currentMenu=0;
     private bool _isMenuActive = false;
     public GameObject _face;
     private List<AvatarFaceButton> _faceList;
     private PhotonView _view;
-    private bool _isSelect;
-
+    private bool _isSelected;
+    private AvatarFaceControl _avatarFaceControl;
 
     private void Start()
     {
         EmoticonMenu.gameObject.SetActive(false);
         Player = GameObject.FindWithTag("Player").transform;
+        _avatarFaceControl = Player.GetChild(1).GetChild(0).GetChild(1).GetComponent<AvatarFaceControl>();
         _camera = Camera.main;
         _view = GetComponent<PhotonView>();
-        _faceList = _face.GetComponent<AvatarFaceManagement>()._favList;
     }
 
     private void Update()
     {
-        if (_view is null || !_view.IsMine) return;
+        // if (_view is null || !_view.IsMine) return;
         if (Input.GetKeyDown(KeyCode.T))
         {
+            _faceList = _face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
                 MenuSlice[i].transform.GetChild(1).GetComponent<Text>().text = _faceList[i].GetButtonText().text;
             }
@@ -50,27 +51,34 @@ public class Emotion : MonoBehaviour
             EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,Player.position.z);
             
             if(Input.GetKeyDown(KeyCode.Alpha1)){
+                MenuSlice[0].color = Color.black;
+                _currentMenu = 0;
+            } else if(Input.GetKeyDown(KeyCode.Alpha2)){
                 MenuSlice[1].color = Color.black;
                 _currentMenu = 1;
-            } else if(Input.GetKeyDown(KeyCode.Alpha2)){
-                _currentMenu = 2;
             } else if(Input.GetKeyDown(KeyCode.Alpha3)){
-                _currentMenu = 3;
+                MenuSlice[2].color = Color.black;
+                _currentMenu = 2;
             } else if(Input.GetKeyDown(KeyCode.Alpha4)){
-                _currentMenu = 4;
+                MenuSlice[3].color = Color.black;
+                _currentMenu = 3;
             }
-            if(_currentMenu!=-1){
+            if(Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3) || Input.GetKeyUp(KeyCode.Alpha4)){
+                MenuSlice[_currentMenu].color = Color.white;
+                _isSelected = true;
+            }
+
+            if(_isSelected){
                 EmoticonSelect(_currentMenu);
             }
         }
     }
-    private void EmoticonSelect(int num){
-        Debug.Log("FACE :: "+_faceList[num].GetButtonImage().sprite);
-
-        StartCoroutine(ChangeFace(num));
+    public void EmoticonSelect(int num){
+        StartCoroutine(ChangeFace(_faceList[num].GetImageIndex()));
         EmoticonMenu.gameObject.SetActive(false);
         _isMenuActive = false;
-        _currentMenu = -1;
+        _isSelected = false;
+        _currentMenu = 0;
     }
 
 
@@ -82,14 +90,10 @@ public class Emotion : MonoBehaviour
 
 
 
-    IEnumerator ChangeFace(int num)
+    IEnumerator ChangeFace(int faceIndex)
     {
-        // for (int i = 0; i < EmoticonItems.Length; i++)
-        // {
-        //     EmoticonItems[i].gameObject.SetActive(false);
-        // }
-        // EmoticonItems[num].gameObject.SetActive(true);
+        _avatarFaceControl.ChangeFace(faceIndex);
         yield return new WaitForSeconds(10f);
-        // EmoticonItems[num].gameObject.SetActive(false);
+        _avatarFaceControl.ChangeFace(11);
     }
 } 

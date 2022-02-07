@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;
 
 public class EmoticonMenuScript : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
+    private GameObject EmotionCanvas;
+    private void Start() {
+        EmotionCanvas = GameObject.Find("EmoticonMenuCanvas");
+    }
     public void OnPointerEnter(PointerEventData eventData){
         gameObject.GetComponent<Image>().color = Color.gray;
     }
@@ -14,7 +18,7 @@ public class EmoticonMenuScript : MonoBehaviour, IPointerEnterHandler, IPointerD
     }
     public void OnPointerUp(PointerEventData eventData){
         gameObject.GetComponent<Image>().color = Color.white;
-        Emotion._currentMenu = int.Parse(gameObject.name.Substring(17,1));
+        EmotionCanvas.GetComponent<Emotion>().EmoticonSelect(int.Parse(gameObject.name.Substring(17,1))-1);
     }
     public void OnPointerExit(PointerEventData eventData){
         gameObject.GetComponent<Image>().color = Color.white;
