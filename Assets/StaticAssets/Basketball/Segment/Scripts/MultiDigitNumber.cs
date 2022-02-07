@@ -4,7 +4,7 @@ using static System.Linq.Enumerable;
 
 public class MultiDigitNumber : MonoBehaviour {
     public Transform segmentDisplayPrefab;
-    private int maxDigits = 4;
+    private int maxDigits = 2;
     private SevenSegmentDisplay[] displays;
 
     private void Awake() {

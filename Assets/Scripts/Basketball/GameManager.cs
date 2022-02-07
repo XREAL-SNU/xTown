@@ -5,12 +5,29 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static int score;
+    [SerializeField]
+    private NDigitNumber _scoreDisplay;
+    [SerializeField]
+    private NDigitNumber _leftTimeDisplay;
 
-    public static Action OnGoal;
+
+    private static int _scorePerGoal = 30;
+
+    public static int _totalScore;
+
+    public static GameManager Instance;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         Initialize();
     }
 
@@ -28,12 +45,14 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        score = 0;
+        _totalScore = 0;
+        _scoreDisplay.SetNumber(0);
+        _leftTimeDisplay.SetNumber(0);
     }
 
-    public static void UpdateScore(int i)
+    public void OnGoal()
     {
-        score += i;
+        _totalScore += _scorePerGoal;
+        _scoreDisplay.SetNumber(_totalScore);
     }
-
 }

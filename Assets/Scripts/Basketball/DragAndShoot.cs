@@ -92,8 +92,7 @@ public class DragAndShoot : MonoBehaviour
         }
         if (other.gameObject.name == "Second" && _triggeredFirst)
         {
-            GameManager.UpdateScore(30);
-            GameManager.OnGoal();
+            GameManager.Instance.OnGoal();
         }
     }
 

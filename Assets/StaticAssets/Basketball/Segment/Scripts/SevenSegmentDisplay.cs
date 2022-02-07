@@ -31,7 +31,7 @@ public class SevenSegmentDisplay : MonoBehaviour {
         new Shape(0, 1, 2, 3,    5, 6),    //   |    0    | 
         new Shape(      2,    4,    6),    //       ---     
         new Shape(0, 1, 2, 3, 4, 5, 6),
-        new Shape(   1, 2, 3, 4, 6   )
+        new Shape(0, 1, 2, 3, 4, 6   )
     };
 
     private int digitShowing;
