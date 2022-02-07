@@ -95,6 +95,7 @@ namespace StarterAssets
 
 		protected virtual void Update()
 		{
+			if (_input is null) return;
 			_hasAnimator = TryGetComponent(out _animator);
 
 			if (!_sitting)
@@ -250,6 +251,7 @@ namespace StarterAssets
 
 		private void JumpAndGravity()
 		{
+
 			if (Grounded)
 			{
 				// reset the fall timeout timer

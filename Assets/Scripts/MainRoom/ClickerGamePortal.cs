@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class ClickerGamePortal : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            PhotonNetwork.LeaveRoom();
             PlayerPrefs.SetString("PastScene", "MainRoom");
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Show();
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName = "GameScene";
