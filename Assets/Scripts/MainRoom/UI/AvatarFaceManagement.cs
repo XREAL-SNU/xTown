@@ -52,7 +52,7 @@ public class AvatarFaceManagement : MonoBehaviour
         else DeselectCurrentlySelected();
     }
 
-    // Update Buffer of _currentlySelectedBut
+    // Update Buffer of _currentlySelectedButton
     void ChangeCurrentlySelected(AvatarFaceButton selected)
     {
         _currentlySelectedButton = selected;
@@ -100,7 +100,6 @@ public class AvatarFaceManagement : MonoBehaviour
     }
 
     // Swap Location of Buttons. Should be called ONLY in AddToFavorites().
-    // button1 is the button clicked by user, and button2 is a button in _favList
     void SwapButtons(AvatarFaceButton button1, AvatarFaceButton button2)
     {
         button2.SetButtonText(button1.GetButtonText());
