@@ -15,6 +15,9 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
     private Text _playerName;
     [SerializeField]
     private Text _playerPassword;
+    [SerializeField]
+    private InputField _playerPasswordInputField;
+
     string url = "http://localhost:3000/enter";
 
     private RoomsCanvases _roomCanvases;
@@ -55,7 +58,7 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
     IEnumerator SendRequest() {
         WWWForm form = new WWWForm();
         form.AddField("name", _playerName.text);
-        form.AddField("pw", _playerPassword.text);
+        form.AddField("pw", _playerPasswordInputField.text);
 
         UnityWebRequest uwr = UnityWebRequest.Post(url, form);
         yield return uwr.SendWebRequest();
@@ -67,14 +70,19 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("Received: " + uwr.downloadHandler.text);
+            JObject json = JObject.Parse(uwr.downloadHandler.text);
+            Debug.Log("Result: " + json["result"]);
+            if((bool) json["result"] == false) {
+                Debug.Log("Username Already Exists" + json["message"]);
+            } else {
+                PhotonNetwork.NickName = _playerName.text;
+                Debug.Log("Player Name is "+ _playerName.text, this);
 
-            PhotonNetwork.NickName = _playerName.text;
-            Debug.Log("Player Name is "+ _playerName.text, this);
+                PlayerPrefs.SetString(playerNamePrefKey, _playerName.text);
 
-            PlayerPrefs.SetString(playerNamePrefKey, _playerName.text);
-
-            _roomCanvases.AvatarSelectionCanvas.Show();
-            _roomCanvases.PlayerNameInputCanvas.Hide();
+                _roomCanvases.AvatarSelectionCanvas.Show();
+                _roomCanvases.PlayerNameInputCanvas.Hide();
+            }
         }
 
 
