@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class AvatarFaceManagement : MonoBehaviour
 {
     // This needs to be setup in Editor
+    // To get favorites data, access it by:
+    //      _favList[*index of favorites*].GetButtonImageAsSprite();
+    //      _favList[*index of favorites*].GetButtonTextAsString();
     [SerializeField] List<Sprite> _avatarFaceList;
     [SerializeField] List<AvatarFaceButton> _favList;
 

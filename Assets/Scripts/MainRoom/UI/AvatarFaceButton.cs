@@ -21,7 +21,9 @@ public class AvatarFaceButton : MonoBehaviour
     }
 
     public Text GetButtonText() { return ButtonText; }
+    public string GetButtonTextAsString() { return ButtonText.text; }
     public Image GetButtonImage() { return ButtonImage; }
+    public Sprite GetButtonImageAsSprite() { return ButtonImage.sprite; }
     public void SetButtonText(Text buttonText)    { ButtonText.text = buttonText.text; }
     public void SetButtonText(string buttonText)  { ButtonText.text = buttonText; }                 // Overloaded Method (SetButtonText)
     public void SetButtonImage(Image buttonImage) { ButtonImage.sprite = buttonImage.sprite; }
