@@ -8,6 +8,10 @@ using UnityEngine.UI;
 public class DragAndShoot : MonoBehaviour
 {
     [SerializeField]
+    private AudioClip _bounceSound;
+    [SerializeField]
+    private AudioClip _rimSound;
+    [SerializeField]
     private float _forceMultiplier = 2f;
 
     private float _minForceMultiplier = 1f;
@@ -24,11 +28,14 @@ public class DragAndShoot : MonoBehaviour
     private bool _triggeredFirst;
     private bool _triggeredSecond;
 
+    private AudioSource _audioSource;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -76,11 +83,18 @@ public class DragAndShoot : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Floor")
+        StartCoroutine(DestroyAfterSeconds(5f));
+
+        if (collision.gameObject.CompareTag("Rim"))
         {
-            StartCoroutine(DestroyAfterSeconds(1f));
-            return;
+            Debug.Log(collision.relativeVelocity.magnitude);
+            _audioSource.PlayOneShot(_rimSound, Mathf.Clamp(collision.relativeVelocity.magnitude / 4, 0, 1));
         }
+        else
+        {
+            _audioSource.PlayOneShot(_bounceSound, Mathf.Clamp(collision.relativeVelocity.y / 6, 0, 1));
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)

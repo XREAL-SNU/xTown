@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
     {
         if (!_ballExisting)
         {
-            GameObject obj = Instantiate(_ballPrefab as GameObject, _spawnPosition, Quaternion.identity);
+            GameObject obj = Instantiate(_ballPrefab as GameObject, _spawnPosition, Random.rotation);
             obj.SetActive(true);
             _ballExisting = true;
         }
