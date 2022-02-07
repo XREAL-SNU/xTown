@@ -10,8 +10,7 @@ public class AvatarFaceControl : MonoBehaviour
 
     [SerializeField] List<Texture> _emojiTextures;
 
-    public void ChangeFace(AvatarFaceButton faceButton)
-    {
-        AvatarFace.SetTexture("_MainTex", _emojiTextures[faceButton.GetImageIndex()]);
-    }
+    private void Start() { AvatarFace.SetTexture("_MainTex", _emojiTextures[11]); }
+
+    public void ChangeFace(AvatarFaceButton faceButton) { AvatarFace.SetTexture("_MainTex", _emojiTextures[faceButton.GetImageIndex()]); }
 }
