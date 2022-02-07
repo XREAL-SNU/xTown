@@ -15,7 +15,7 @@ public class AvatarAppearanceNew
     }
 
     // private fields
-    Dictionary<string, GameObject> _customParts = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> _customParts = new Dictionary<string, GameObject>();
     ObjectPartsInfo _descriptor;
 
     // static default descriptor
@@ -43,6 +43,7 @@ public class AvatarAppearanceNew
                 partBackpack.Properties = new ObjectPartProperty[2];
                 partBackpack.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
                 partBackpack.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+
 
                 ObjectPart partBody = new ObjectPart();
                 partBody.PartName = "Body";
@@ -126,7 +127,7 @@ public class AvatarAppearanceNew
         }
     }
 
-
+    // getter
 
     // applier (provide the avatar to apply)
     public void Apply(GameObject target)

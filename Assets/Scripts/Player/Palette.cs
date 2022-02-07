@@ -92,7 +92,7 @@ public class LinearPalette
     }
 
     public LinearPalette() { }
-
+    
     public float this[int index]
     {
         get
@@ -117,7 +117,7 @@ public class XTownColor
 
     public static XTownColor XTownRed = new XTownColor("XTownRed", new Color(0.7f, 0.2f, 0.3f, 1.0f));
     public static XTownColor XTownBlue = new XTownColor("XTownBlue", new Color(0.2f, 0.3f, 0.7f, 1.0f));
-    public static XTownColor XTownGreen = new XTownColor("XTownBlue", new Color(0.2f, 0.7f, 0.3f, 1.0f));
+    public static XTownColor XTownGreen = new XTownColor("XTownGreen", new Color(0.2f, 0.7f, 0.3f, 1.0f));
 
     public XTownColor(string name, float r, float g, float b, float a)
     {
