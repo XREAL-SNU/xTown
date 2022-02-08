@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private NDigitNumber _scoreDisplay;
     [SerializeField]
     private NDigitNumber _leftTimeDisplay;
+    [SerializeField]
+    private ParticleSystem _confettiParticle;
 
 
     private static int _scorePerGoal = 30;
@@ -79,9 +81,12 @@ public class GameManager : MonoBehaviour
     {
         _totalScore += _scorePerGoal;
         _scoreDisplay.SetNumber(_totalScore);
+        SoundManager.PlaySound(SoundManager.Sound.Goal, 0.5f);
+        _confettiParticle.Play();
     }
 
-    public void OnTimerFinished()
+
+public void OnTimerFinished()
     {
         _gameStarted = false;
     }

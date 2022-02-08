@@ -87,12 +87,13 @@ public class DragAndShoot : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Rim"))
         {
-            Debug.Log(collision.relativeVelocity.magnitude);
-            _audioSource.PlayOneShot(_rimSound, Mathf.Clamp(collision.relativeVelocity.magnitude / 4, 0, 1));
+            float soundVolume = Mathf.Clamp(collision.relativeVelocity.magnitude / 4, 0, 1);
+            SoundManager.PlaySound(SoundManager.Sound.RimHit, transform.position, soundVolume);
         }
         else
         {
-            _audioSource.PlayOneShot(_bounceSound, Mathf.Clamp(collision.relativeVelocity.y / 6, 0, 1));
+            float soundVolume = Mathf.Clamp(collision.relativeVelocity.y / 6, 0, 1);
+            SoundManager.PlaySound(SoundManager.Sound.BallBounce, transform.position, soundVolume);
         }
 
     }
