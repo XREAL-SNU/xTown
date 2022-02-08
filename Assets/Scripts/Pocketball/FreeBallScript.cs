@@ -19,7 +19,7 @@ namespace JK
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             float moveX = 0;
             float moveZ = 0;
@@ -52,8 +52,8 @@ namespace JK
                 {
                     moveX -= 0.015f;
                 }
-                WhiteBall.transform.Translate(new Vector3(moveX, 0f, moveZ) * 0.1f);
-                Debug.Log(GameManager.currentGameState);
+                WhiteBall.transform.Translate(new Vector3(moveX, 0f, moveZ));
+                //Debug.Log(GameManager.currentGameState);
                 if(!ColliderBool)
                 {
                     if(Input.GetMouseButtonDown(1))
