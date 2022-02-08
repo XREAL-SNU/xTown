@@ -17,7 +17,7 @@ namespace JK
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             PressTime = BallMovement.press_time;
             //Debug.Log(PressTime);

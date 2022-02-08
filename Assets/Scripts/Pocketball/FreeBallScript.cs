@@ -19,7 +19,7 @@ namespace JK
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             float moveX = 0;
             float moveZ = 0;
@@ -32,7 +32,7 @@ namespace JK
                 if(i==0)
                 {
                     WhiteBall.GetComponent<Transform>().rotation = new Quaternion(0,0,0,0);
-                    WhiteBall.transform.position = new Vector3(0, 0.357f,  0.96f);
+                    WhiteBall.transform.position = new Vector3(0, 0.357f, 0.96f);
                     i=1;
                 }
 
@@ -52,8 +52,8 @@ namespace JK
                 {
                     moveX -= 0.015f;
                 }
-                WhiteBall.transform.Translate(new Vector3(moveX, 0f, moveZ) * 0.1f);
-                Debug.Log(GameManager.currentGameState);
+                WhiteBall.transform.Translate(new Vector3(moveX, 0f, moveZ));
+                //Debug.Log(GameManager.currentGameState);
                 if(!ColliderBool)
                 {
                     if(Input.GetMouseButtonDown(1))
@@ -66,6 +66,7 @@ namespace JK
                         FreeBallBool = false;
                         GameManager.CamBool = true;
                         GameManager.currentGameState = GameManager.GameState.Rolling;
+                        i=0;
                     }
                 }
                 
