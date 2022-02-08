@@ -114,11 +114,12 @@ public class AvatarFaceManagement : MonoBehaviour
     {
         button2.SetButtonText(button1.GetButtonText());
         button2.SetButtonImage(button1.GetButtonImage());
+
         int _buttonIndex = button2.GetImageIndex();
         button2.SetImageIndex(button1.GetImageIndex());
-
+        button1.SetImageIndex(_buttonIndex);
+        
         button1.SetButtonText(_currentlySelectedButton.GetButtonText());
         button1.SetButtonImage(_currentlySelectedButton.GetButtonImage());
-        button1.SetImageIndex(_buttonIndex);
     }
 }

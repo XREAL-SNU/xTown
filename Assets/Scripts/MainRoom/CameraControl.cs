@@ -24,6 +24,7 @@ public class CameraControl : MonoBehaviour
     private float _cinemachineTargetPitch;
     private float _cinemachineTargetYaw;
     private float _defaultY = 0.0f;
+    private bool _alreadyFront;
 
     private void Start()
     {
@@ -127,5 +128,22 @@ public class CameraControl : MonoBehaviour
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
+
+    public void SetFront(){
+        if(_alreadyFront){
+            _alreadyFront = false;
+            return;
+        }
+        FreeLookCam.gameObject.SetActive(false);
+        _useMouseToRotate = false;
+        Vector3 _playerPos = _camTarget.gameObject.transform.position;
+        Vector3 _playerForward = _camTarget.gameObject.transform.forward;
+        FreeLookCam.VirtualCameraGameObject.transform.position = _playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius);
+        _cinemachineTargetYaw = 0f;
+        _cinemachineTargetPitch = 0f;
+        FreeLookCam.gameObject.SetActive(true);
+        _alreadyFront = true;
+        _useMouseToRotate = true;
     }
 }

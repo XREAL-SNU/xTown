@@ -19,6 +19,7 @@ public class Emotion : MonoBehaviour
     private PhotonView _view;
     private bool _isSelected;
     private AvatarFaceControl _avatarFaceControl;
+    private CameraControl _characterCam;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class Emotion : MonoBehaviour
         _avatarFaceControl = Player.GetChild(1).GetChild(0).GetChild(1).GetComponent<AvatarFaceControl>();
         _camera = Camera.main;
         _view = GetComponent<PhotonView>();
+        _characterCam = GameObject.Find("CharacterCam").GetComponent<CameraControl>();
     }
 
     private void Update()
@@ -34,6 +36,7 @@ public class Emotion : MonoBehaviour
         // if (_view is null || !_view.IsMine) return;
         if (Input.GetKeyDown(KeyCode.T))
         {
+            _characterCam.SetFront();
             _faceList = _face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
                 MenuSlice[i].transform.GetChild(1).GetComponent<Text>().text = _faceList[i].GetButtonText().text;
@@ -63,12 +66,15 @@ public class Emotion : MonoBehaviour
                 MenuSlice[3].color = Color.black;
                 _currentMenu = 3;
             }
-            if(Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3) || Input.GetKeyUp(KeyCode.Alpha4)){
-                MenuSlice[_currentMenu].color = Color.white;
+            if(Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3) || Input.GetKeyUp(KeyCode.Alpha4)){       
                 _isSelected = true;
             }
 
             if(_isSelected){
+                for(int i=0;i<4;i++){
+                    MenuSlice[i].color = Color.white;
+                }
+                _characterCam.SetFront();
                 EmoticonSelect(_currentMenu);
             }
         }
