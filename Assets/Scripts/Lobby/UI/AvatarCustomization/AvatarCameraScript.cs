@@ -21,6 +21,11 @@ public class AvatarCameraScript : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     private void Start()
     {
+        if(Avatar is null)
+        {
+            Avatar = GameObject.FindGameObjectWithTag("Player").transform;
+            if (!Avatar) Debug.LogError("AvatarCameraScript/ make sure to assign Avatar");
+        }
         ResetCam();
     }
 

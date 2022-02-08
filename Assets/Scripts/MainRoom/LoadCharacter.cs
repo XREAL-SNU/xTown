@@ -15,7 +15,12 @@ public class LoadCharacter : MonoBehaviour
     private GameObject Player;
     public ThirdPersonControllerMulti PlayerControl
     {
-        get => Player.GetComponent<ThirdPersonControllerMulti>();
+        get
+        {
+            Player = GameObject.FindWithTag("Player");
+            if (Player == null) Debug.LogError("Player is null");
+            return Player.GetComponent<ThirdPersonControllerMulti>();
+        }
         private set
         {
             return;
@@ -38,6 +43,14 @@ public class LoadCharacter : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+
+        Debug.Log("LoadCharacter/Start");
+        SpawnPoint = GameObject.Find("SpawnPoint").transform;
+        FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
+
+        // disable currentRoomCanvas
+        RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+        InitCharacter();
     }
 
     /// <summary>
@@ -47,13 +60,13 @@ public class LoadCharacter : MonoBehaviour
     {
         int selectedCharacter = PlayerPrefs.GetInt("selectedCharacter");
         _prefab = CharacterPrefabs[selectedCharacter];
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         Debug.Log("Load Character disabled");
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
 
@@ -75,6 +88,7 @@ public class LoadCharacter : MonoBehaviour
     /// <summary>
     /// Scene callbacks.
     /// </summary>
+    /*
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("LoadCharacter/OnSceneLoaded: " + scene.name);
@@ -84,7 +98,7 @@ public class LoadCharacter : MonoBehaviour
         // disable currentRoomCanvas
         RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
         InitCharacter();
-    }
+    }*/
 
     /// <summary>
     /// Private members

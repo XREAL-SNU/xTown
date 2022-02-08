@@ -13,14 +13,12 @@ public class CustomizingPanelScript : MonoBehaviour
 {
     [SerializeField]
     private string _customPartId;
-    [SerializeField]
-    private PlayerAvatar _avatar;
-    [SerializeField]
-    private Material _avatarMaterial;
+
     [SerializeField]
     private List<CustomizingButtonScript> _customizingColorButtons;
     [SerializeField]
     private List<CustomizingButtonScript> _customizingTextureButtons;
+
     [SerializeField]
     private TextureArray[] _textures;
 
@@ -47,14 +45,7 @@ public class CustomizingPanelScript : MonoBehaviour
         ClickButton(_selected);
     }
 
-    private void Update()
-    {
-        /* OLD
-        _avatarAppearance[_customPartId].SetMaterialBaseColor(Fcp.color);
-        _avatarAppearance.ApplyAppearance(_avatar);
-        */
-        //_avatarMaterial.color= Fcp.color;
-    }
+
 
     public void ClickButton(int id)
     {
@@ -63,10 +54,7 @@ public class CustomizingPanelScript : MonoBehaviour
             _selected = id;
             if (i == id)
             {
-                _avatarMaterial.SetTexture("_MainTex", _textures[i].Textures[0]);
-                _avatarMaterial.SetTexture("_MetallicGlossMap", _textures[i].Textures[1]);
-                _avatarMaterial.SetTexture("_BumpMap", _textures[i].Textures[2]);
-                _avatarMaterial.SetTexture("_OcclusionMap", _textures[i].Textures[3]);
+
                 _customizingTextureButtons[i].Select();
             }
             else
@@ -81,7 +69,7 @@ public class CustomizingPanelScript : MonoBehaviour
         Fcp.color = Color.red;
         Fcp.color = _normal;
         Fcp.mode = FlexibleColorPicker.MainPickingMode.SV;
-        _avatarMaterial.color = _normal;
+        //_avatarMaterial.color = _normal;
     }
 
     public void ResetSelected()

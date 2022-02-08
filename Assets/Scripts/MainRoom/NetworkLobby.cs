@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon;
+using Photon.Realtime;
+using Cinemachine;
+using StarterAssets;
 
 public class NetworkLobby : MonoBehaviourPunCallbacks
 {
+    public static NetworkLobby Instance = null;
+
     // Start is called before the first frame update
     void Awake()
     {
-        if (!PhotonNetwork.IsConnected)
-            PhotonNetwork.ConnectUsingSettings();
-
-        
-
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        if (!PhotonNetwork.InLobby)
+        // singleton
+        if (Instance == null)
         {
-            Debug.Log("NetworkLobby/Joining lobby");
-            PhotonNetwork.JoinLobby();
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this.gameObject);
         }
     }
+
 }
