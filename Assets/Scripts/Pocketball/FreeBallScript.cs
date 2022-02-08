@@ -32,7 +32,7 @@ namespace JK
                 if(i==0)
                 {
                     WhiteBall.GetComponent<Transform>().rotation = new Quaternion(0,0,0,0);
-                    WhiteBall.transform.position = new Vector3(0, 0.357f,  0.96f);
+                    WhiteBall.transform.position = new Vector3(0, 0.357f, 0.96f);
                     i=1;
                 }
 
@@ -66,6 +66,7 @@ namespace JK
                         FreeBallBool = false;
                         GameManager.CamBool = true;
                         GameManager.currentGameState = GameManager.GameState.Rolling;
+                        i=0;
                     }
                 }
                 

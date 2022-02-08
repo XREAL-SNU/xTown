@@ -32,51 +32,54 @@ namespace JK
             int BallNum= int.Parse(ball.gameObject.name.Substring(5));
 
             //첫번째 공이 들어간 경우
-            if(GameManager.ballChoice==0)
+            if(BallNum != 0)
             {
-                if(GameManager.AorB)
+                if(GameManager.ballChoice==0)
                 {
-                    if(BallNum>=9 && BallNum<=15)
+                    if(GameManager.AorB)
                     {
-                        GameManager.CorL=false;
-                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
-                        StartCoroutine(SetActiveObjInSecond(A_Line, 2f));
-                        Color_Balls.SetActive(true);
-                        Color_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -80, 0);
-                        Line_Balls.SetActive(true);
-                        Line_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 80, 0);
+                        if(BallNum>=9 && BallNum<=15)
+                        {
+                            GameManager.CorL=false;
+                            StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                            StartCoroutine(SetActiveObjInSecond(A_Line, 2f));
+                            Color_Balls.SetActive(true);
+                            Color_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -80, 0);
+                            Line_Balls.SetActive(true);
+                            Line_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 80, 0);
 
+                        }
+                        else if(BallNum>=1 && BallNum<=7)
+                        {
+                            StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                            StartCoroutine(SetActiveObjInSecond(A_Color, 2f));
+                            Color_Balls.SetActive(true);
+                            Line_Balls.SetActive(true);
+                        }
                     }
-                    else if(BallNum>=1 && BallNum<=7)
+                    else
                     {
-                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
-                        StartCoroutine(SetActiveObjInSecond(A_Color, 2f));
-                        Color_Balls.SetActive(true);
-                        Line_Balls.SetActive(true);
+                        if(BallNum>=1 && BallNum<=7)
+                        {
+                            GameManager.CorL=false;
+                            StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                            StartCoroutine(SetActiveObjInSecond(A_Line, 2f));
+                            Color_Balls.SetActive(true);
+                            Color_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -80, 0);
+                            Line_Balls.SetActive(true);
+                            Line_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 80, 0);
+                        }
+                        else if(BallNum>=9 && BallNum<=15)
+                        {
+                            StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
+                            StartCoroutine(SetActiveObjInSecond(A_Color, 2f));
+                            Color_Balls.SetActive(true);
+                            Line_Balls.SetActive(true);
+                        }
                     }
+                    //Debug.Log(GameManager.CorL.ToString());
+                    GameManager.ballChoice=1;
                 }
-                else
-                {
-                    if(BallNum>=1 && BallNum<=7)
-                    {
-                        GameManager.CorL=false;
-                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
-                        StartCoroutine(SetActiveObjInSecond(A_Line, 2f));
-                        Color_Balls.SetActive(true);
-                        Color_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -80, 0);
-                        Line_Balls.SetActive(true);
-                        Line_Balls.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 80, 0);
-                    }
-                    else if(BallNum>=9 && BallNum<=15)
-                    {
-                        StartCoroutine(SetActiveObjInSecond(ColorPanel, 2f));
-                        StartCoroutine(SetActiveObjInSecond(A_Color, 2f));
-                        Color_Balls.SetActive(true);
-                        Line_Balls.SetActive(true);
-                    }
-                }
-                //Debug.Log(GameManager.CorL.ToString());
-                GameManager.ballChoice=1;
             }
 
 

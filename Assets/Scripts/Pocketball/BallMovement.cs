@@ -36,7 +36,7 @@ namespace JK
         void FixedUpdate()
         {
             ballVelocity=rb.velocity;
-            if(Mathf.Abs(ballVelocity.x) <= 0.001 && Mathf.Abs(ballVelocity.z) <= 0.001) // 공이 멈췄을 때
+            if(Mathf.Abs(ballVelocity.x) <= 0.0015 && Mathf.Abs(ballVelocity.z) <= 0.0015) // 공이 멈췄을 때
             {
                 //Debug.Log("hi"+BallNum.ToString());
                 GameManager.isBallStop[BallNum]=1;
