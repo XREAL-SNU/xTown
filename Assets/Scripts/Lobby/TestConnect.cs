@@ -33,17 +33,18 @@ public class TestConnect : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-
-            Debug.Log("Connecting to Photon...", this);
-            PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
-            PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
-            PhotonNetwork.ConnectUsingSettings();
+        Debug.Log("Connecting to Photon...", this);
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
+        PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("TestConnect/Connected to Master.", this);
+
+        PhotonNetwork.JoinLobby(); // �����ϰ� �ٷ� �κ� join 
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -63,11 +64,14 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name +", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
-        LoadCharacter.Instance.PlayerControl.enabled = false;
-        // activate the current room canvases
-        RoomsCanvases.Instance.CurrentRoomCanvas.Show();
-        RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld"))
+        {
+            Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name + ", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
+            //SpawnCharacter.Instance.PlayerControl.enabled = false;
+            // activate the current room canvases
+            RoomsCanvases.Instance.CurrentRoomCanvas.Show();
+            RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        }
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
@@ -76,8 +80,9 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("Player Left Room");
+        PhotonNetwork.JoinLobby();
         // loading the default scene.
-        PhotonNetwork.LoadLevel("MainRoom");
+        // PhotonNetwork.LoadLevel("MainRoom");
 
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -91,6 +96,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log("TestConnect/Room List Updated!!!!");
         foreach (RoomInfo info in roomList)
         {
             //Removed from rooms list.
@@ -99,6 +105,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
                 int index = _listings.FindIndex(x => x.RoomInfo.Name == info.Name);
                 if (index != -1)
                 {
+                    Debug.Log("TestConnect/RoomListRemoved " + _listings[index].RoomInfo.Name);
                     Destroy(_listings[index].gameObject);
                     _listings.RemoveAt(index);
                 }
@@ -114,6 +121,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
                     {
                         listing.SetRoomInfo(info);
                         _listings.Add(listing);
+                        Debug.Log("Room Added " + listing.RoomInfo.Name);
                     }
                 }
                 else

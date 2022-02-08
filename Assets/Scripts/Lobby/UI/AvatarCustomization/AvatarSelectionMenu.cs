@@ -18,21 +18,45 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
     }
 
 
-    public void OnClick_JoinLobby()
+    public void OnClick_JoinWorld()
     {
         if (!PhotonNetwork.IsConnected)
             return;
 
         Debug.Log(PhotonNetwork.LocalPlayer.NickName, this);
         PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
-        if (!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
+
+        RoomOptions options = new RoomOptions();
+        options.BroadcastPropsChangeToAll = true;
+        options.MaxPlayers = 20;
+        PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
     }
 
-    public override void OnJoinedLobby()
+    public override void OnJoinedRoom()
     {
-        SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
+        Debug.Log("AvatarSelectionMenu/Joined MainWorld!!!");
+        //SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
         gameObject.SetActive(false);
     }
 
+    public void OnClick_BackPlayerNameInputMenu()
+    {
+        _roomCanvases.AvatarSelectionCanvas.Hide();
+        _roomCanvases.PlayerNameInputCanvas.Show();
+    }
+
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("AvatarSelectionMenu/Created MainWorld!!!");
+        PhotonNetwork.LoadLevel("MainRoom");
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Join Room Failed.. because " + message);
+    }
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Create Room Failed.. because " + message);
+    }
 }
