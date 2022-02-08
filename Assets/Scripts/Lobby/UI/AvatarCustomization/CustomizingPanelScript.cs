@@ -40,13 +40,6 @@ public class CustomizingPanelScript : MonoBehaviour
             _previewAvatarObject = GameObject.FindWithTag("Player");
             PlayerManager.Players.LocalPlayerGo = _previewAvatarObject;
         }
-        /* OLD
-        if (_avatarAppearance is null)
-        { // only once! create the local avatar appearance and store reference to it.
-            AvatarAppearance.LocalAvatarAppearance = new AvatarAppearance();
-            _avatarAppearance = AvatarAppearance.LocalAvatarAppearance;
-        } 
-        */
     }
 
     private void Start()

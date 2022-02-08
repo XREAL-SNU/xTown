@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChannelManager : MonoBehaviour
 {
-    static List<>
+
     [PunRPC]
     void AddUser()
     {
@@ -13,5 +13,5 @@ public class ChannelManager : MonoBehaviour
     }
 
     PhotonView view;
-    view.RPC()
+    
 }
