@@ -72,6 +72,7 @@ namespace Photon.Chat
         {
             this.Name = name;
         }
+
         
         /// <summary>Used internally to add messages to this channel.</summary>
         public void Add(string sender, object message, int msgId)
@@ -80,6 +81,10 @@ namespace Photon.Chat
             this.Messages.Add(message);
             this.LastMsgId = msgId;
             this.TruncateMessages();
+            if(!Subscribers.Contains(sender))
+            {
+                AddSubscriber(sender);
+            }
         }
 
         /// <summary>Used internally to add messages to this channel.</summary>
@@ -89,6 +94,7 @@ namespace Photon.Chat
             this.Messages.AddRange(messages);
             this.LastMsgId = lastMsgId;
             this.TruncateMessages();
+            AddSubscribers(senders);
         }
 
         /// <summary>Reduces the number of locally cached messages in this channel to the MessageLimit (if set).</summary>
@@ -113,6 +119,8 @@ namespace Photon.Chat
 
         /// <summary>Provides a string-representation of all messages in this channel.</summary>
         /// <returns>All known messages in format "Sender: Message", line by line.</returns>
+
+        //이거 수정하면 사용자 색깔 분류 만들 수 있겠다.
         public string ToStringMessages()
         {
             StringBuilder txt = new StringBuilder();
@@ -164,6 +172,17 @@ namespace Photon.Chat
             {
                 this.Subscribers.Add(users[i]);
             }
+        }
+
+        public void AddSubscriber(string user)
+        {
+            if (user == null)
+            {
+                return;
+            }
+            
+            this.Subscribers.Add(user);
+            
         }
 
         #if CHAT_EXTENDED
