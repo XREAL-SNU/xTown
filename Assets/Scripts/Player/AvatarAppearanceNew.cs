@@ -15,9 +15,12 @@ public class AvatarAppearanceNew
     }
 
     // private fields
-    public Dictionary<string, GameObject> _customParts = new Dictionary<string, GameObject>();
+    Dictionary<string, GameObject> _customParts = new Dictionary<string, GameObject>();
     ObjectPartsInfo _descriptor;
-
+    public ObjectPartsInfo Descriptor
+    {
+        get => _descriptor;
+    }
     // static default descriptor
     static ObjectPartsInfo _XRealSpaceSuitAppreanceDescriptor;
     public static ObjectPartsInfo XRealSpaceSuitAppearanceDescriptor
@@ -128,7 +131,30 @@ public class AvatarAppearanceNew
     }
 
     // getter
+    public GameObject GetCustomPartGo(string partName)
+    {
+        GameObject value;
+        _customParts.TryGetValue(partName, out value);
+        if(value is null)
+        {
+            Debug.LogError($"AvatarAppearanceNew/ Cannot fetch part name: {partName}");
+        }
+        return value;
+    }
 
+    public ObjectPart GetCustomPart(string partName)
+    {
+        foreach(ObjectPart part in _descriptor.Parts)
+        {
+            if (part.PartName.Equals(partName))
+            {
+                return part;
+            }
+        }
+
+        Debug.LogError($"AvatarAppearanceNew/ cannot fetch part {partName}");
+        return null;
+    }
     // applier (provide the avatar to apply)
     public void Apply(GameObject target)
     {
@@ -145,7 +171,7 @@ public class AvatarAppearanceNew
         }
     }
 
-    void ApplyProperty(GameObject go, ObjectPartProperty prop)
+    public void ApplyProperty(GameObject go, ObjectPartProperty prop)
     {
         AppearancePropertyTypes type = (AppearancePropertyTypes)Enum.Parse(typeof(AppearancePropertyTypes), prop.PropertyType, true);
         string paletteName = prop.PaletteName;
@@ -160,6 +186,8 @@ public class AvatarAppearanceNew
                 break;
         }
     }
+
+
     void ApplyProperties(GameObject go, ObjectPartProperty[] properties)
     {
         for(int i = 0; i<properties.Length; ++i)
@@ -225,6 +253,28 @@ public class ObjectPart
 
     public ObjectPart() { }
 
+    // getters and setters
+
+    public ObjectPartProperty this[string name]
+    {
+        get
+        {
+            ObjectPartProperty prop = null;
+            for (int i = 0; i < Properties.Length; ++i)
+            {
+                if (Properties[i].PropertyName.Equals(name))
+                {
+                    prop = Properties[i];
+                }
+            }
+            if (prop is null)
+            {
+                Debug.LogError($"AvatarAppearanceNew/ property with name {name} does not exist");
+            }
+            return prop;
+        }
+
+    }
     public ObjectPartProperty SetProperty(string name, AvatarAppearanceNew.AppearancePropertyTypes type, string paletteName, int pick)
     {
         ObjectPartProperty prop = null;
@@ -285,4 +335,14 @@ public class ObjectPartProperty
         Pick = defaultPick;
     }
     public ObjectPartProperty() { }
+
+    // setter
+    public ObjectPartProperty SetProperty(string paletteName, int pick)
+    {
+        // maybe we should check existence of palette
+        // and range validness of pick?
+        PaletteName = paletteName;
+        Pick = pick;
+        return this;
+    }
 }

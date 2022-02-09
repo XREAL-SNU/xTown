@@ -25,7 +25,7 @@ public class ColorPalette
     }
 
     public static XTownColor[] DefaultColorsSet = new XTownColor[] {
-        XTownColor.XTownRed, XTownColor.XTownBlue
+        XTownColor.XTownRed, XTownColor.XTownBlue, XTownColor.XTownGreen
     };
 
     public static XTownColor[] DarkColorsSet = new XTownColor[] {

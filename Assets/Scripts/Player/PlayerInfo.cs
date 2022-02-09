@@ -8,9 +8,9 @@ public class PlayerInfo
 {
     public enum PlayerInfoField
     {
-        PlayerName
+        PlayerName, ActorNr
     }
 
     public string PlayerName;
-
+    public int ActorNr;
 }

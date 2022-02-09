@@ -19,8 +19,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (_playerManager == null)
         {
             _playerManager = this;
-            _playerInfo = new PlayerInfo();
-
+            PlayerInfo = new PlayerInfo();
+            
         }
         else if (_playerManager != this)
         {
@@ -30,10 +30,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(gameObject);
     }
 
-    // local avatar gameObject and its appreanance bind on set.
+    // local avatar gameObject and its properties
 
     GameObject _localPlayerGo;
     AvatarAppearanceNew _appearance;
+    public PlayerInfo PlayerInfo;
+
     public GameObject LocalPlayerGo
     {
         get => _localPlayerGo;
@@ -68,8 +70,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // properties
-    public PlayerInfo _playerInfo;
+
 
     // event handler
 
@@ -97,6 +98,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnJoinedRoom()
+    {
+        PlayerInfo.ActorNr = PhotonNetwork.LocalPlayer.ActorNumber;
+        PlayerInfo.PlayerName = PhotonNetwork.LocalPlayer.NickName;
+    }
 
 
 }
