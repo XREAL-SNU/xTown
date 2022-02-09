@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class BlockResize : MonoBehaviour
 {
-    public float resizeDuration = 2f;
-    private Vector3 originalScale;
-    private Vector3 targetScale;
-    float t;
-    private bool isPlayerOnBlock=false;
+    /* 플레이어가 블록에 접촉 시, 블록이 절반 크기로 줄어들게 합니다 */
 
-    // Start is called before the first frame update
+    public float resizeDuration = 2f; //블록 크기 축소 소요 시간
+    private float t; //축소 시간 제어를 위한 보조 변수
+
+    private bool isPlayerOnBlock = false; //플레이어의 블록 접촉 여부
+    private Vector3 originalScale; //블록의 초기 크기
+    private Vector3 targetScale; //블록의 축소된 크기
+
+
     void Start()
     {
         originalScale = transform.localScale;
@@ -22,14 +25,14 @@ public class BlockResize : MonoBehaviour
         isPlayerOnBlock = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isPlayerOnBlock)
+        if (isPlayerOnBlock) //플레이어가 블록에 접촉한 경우
         {
-            ShrinkObject();
+            ShrinkObject(); //블록 크기 축소
             if(transform.localScale == targetScale)
             {
+                //블록이 절반 크기가 되면 축소 중단
                 isPlayerOnBlock = false;
             }
         }
@@ -37,10 +40,10 @@ public class BlockResize : MonoBehaviour
 
     void ShrinkObject()
     {
+        /* 블록 크기를 축소시키는 함수 */
         t += Time.deltaTime / resizeDuration;
         Vector3 newScale = Vector3.Lerp(originalScale, targetScale, t);
         transform.localScale = newScale;
     }
-
 }
 
