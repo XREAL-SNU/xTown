@@ -5,6 +5,15 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    public enum GameState
+    {
+        GameReady,
+        RoundWaiting,
+        RoundOngoing,
+        RoundFinished,
+        GameFinished,
+    }
+
     [SerializeField]
     private NDigitNumber _scoreDisplay;
     [SerializeField]
@@ -12,11 +21,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private ParticleSystem _confettiParticle;
 
-
     private static int _scorePerGoal = 30;
     private bool _gameStarted;
+    private static bool _ballEquipped;
+    public static bool ballEquipped { get; set; }
 
-    public static int _totalScore;
+    private static int _round;
+    public static int round { get { return _round; } }
+
+    private static int _totalScore;
+    public static int totalScore { get { return _totalScore; } }
+    private static int _roundTime = 30;
+    public static int roundTime { get { return _roundTime; } }
+    public static Action OnGameStateChanged;
+    private static GameState _currentGameState;
+    public static GameState CurrentGameState { get { return _currentGameState; } }
 
     public static GameManager Instance;
 
@@ -32,46 +51,30 @@ public class GameManager : MonoBehaviour
         }
 
         Physics.bounceThreshold = 1;
-
     }
 
     private void Start()
     {
+        OnGameStateChanged += GameStateChanged;
         Initialize();
+        SetGameState(GameState.GameReady);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (_gameStarted)
-            {
-                return;
-            }
-            _gameStarted = true;
-            Initialize();
-            TimerController.Instance.SetTimer(30);
-            TimerController.Instance.StartTimer();
-        }
-
         if (!TimerController.Instance.timerOn){
             return;
         }
-        else
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (!Spawner.Instance.ballExisting)
-                {
-                    Spawner.Instance.SpawnBall();
-                }
-            }
+            Spawner.Instance.SpawnBall();
         }
     }
 
     private void Initialize()
     {
+        _round = 1;
         _totalScore = 0;
         _scoreDisplay.SetNumber(0);
         _leftTimeDisplay.SetNumber(0);
@@ -86,8 +89,78 @@ public class GameManager : MonoBehaviour
     }
 
 
-public void OnTimerFinished()
+    public void OnTimerFinished()
     {
         _gameStarted = false;
+    }
+
+    public static void SetGameState(GameState gameState)
+    {
+        if (Enum.IsDefined(typeof(GameState), gameState))
+        {
+            _currentGameState = gameState;
+        }
+        OnGameStateChanged();
+    }
+
+    private void GameStateChanged()
+    {
+        switch (CurrentGameState)
+        {
+            case (GameState.RoundWaiting):
+                {
+                    StartCoroutine(CountDownForStart());
+                    // remove all balls;
+                    _ballEquipped = false;
+
+                    if (round == 1)
+                    {
+                        _totalScore = 0;
+                        _scoreDisplay.SetNumber(0);
+                    }
+                    break;
+                }
+            case (GameState.RoundFinished):
+                {
+                    StartCoroutine(CountDownForNextRound());
+                    break;
+                }
+            case (GameState.GameFinished):
+                {
+                    StartCoroutine(CountDownForGameEnd());
+
+                    _round = 1;
+                    break;
+                }
+        }
+    }
+
+    IEnumerator CountDownForStart()
+    {
+        yield return new WaitForSeconds(3);
+
+        SetGameState(GameState.RoundOngoing);
+    }
+
+    IEnumerator CountDownForNextRound()
+    {
+        yield return new WaitForSeconds(3);
+
+        if (round <= 2)
+        {
+            _round += 1;
+            SetGameState(GameState.RoundWaiting);
+        }
+        else
+        {
+            SetGameState(GameState.GameFinished);
+        }
+    }
+
+    IEnumerator CountDownForGameEnd()
+    {
+        yield return new WaitForSeconds(3);
+
+        SetGameState(GameState.GameReady);
     }
 }

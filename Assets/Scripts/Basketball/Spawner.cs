@@ -9,9 +9,8 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private Vector3 _spawnPosition = new Vector3(0, 1f, 0.5f);
 
-    private bool _ballExisting;
-    public bool ballExisting { get { return _ballExisting; } }
-
+    private bool _canSpawnBall;
+    private bool _spawnTimer;
 
     public static Spawner Instance;
 
@@ -25,22 +24,47 @@ public class Spawner : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
-        _ballExisting = false;
+    private void Start()
+    {
+        GameManager.OnGameStateChanged += Initialize;
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    private void Initialize()
+    {
+        if (GameManager.CurrentGameState == GameManager.GameState.GameReady)
+        {
+            _canSpawnBall = true;
+        }
     }
 
     public void SpawnBall()
     {
-        if (!_ballExisting)
+        if (!_canSpawnBall)
         {
-            GameObject obj = Instantiate(_ballPrefab as GameObject, _spawnPosition, Random.rotation);
-            obj.SetActive(true);
-            _ballExisting = true;
+            return;
         }
+        if (GameManager.ballEquipped)
+        {
+            return;
+        }
+
+        GameObject obj = Instantiate(_ballPrefab as GameObject, _spawnPosition, Random.rotation);
+        obj.SetActive(true);
+        _canSpawnBall = false;
+        GameManager.ballEquipped = true;
+        StartCoroutine(WaitBallSpawnTimer());
     }
 
-    public void OnShootFinished()
+    IEnumerator WaitBallSpawnTimer()
     {
-        _ballExisting = false;
+        yield return new WaitForSeconds(1);
+        _canSpawnBall = true;
     }
 }

@@ -35,6 +35,12 @@ public class TimerController : MonoBehaviour
         _timerOn = false;
     }
 
+    private void Start()
+    {
+        GameManager.OnGameStateChanged += InitializeTimer;
+        GameManager.OnGameStateChanged += StartTimer;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -54,7 +60,7 @@ public class TimerController : MonoBehaviour
                 if (_timer < 1)
                 {
                     _timerOn = false;
-                    GameManager.Instance.OnTimerFinished();
+                    GameManager.SetGameState(GameManager.GameState.RoundFinished);
                     // 타이머 끝났다는 이벤트 날려
                 }
             }
@@ -66,8 +72,20 @@ public class TimerController : MonoBehaviour
         _timer = i;
     }
 
+    private void InitializeTimer()
+    {
+        if (GameManager.CurrentGameState == GameManager.GameState.RoundWaiting)
+        {
+            SetTimer(GameManager.roundTime);
+            OnTick(this, new OnTickEventArgs { second = (int)Mathf.Floor(_timer) });
+        }
+    }
+
     public void StartTimer()
     {
-        _timerOn = true;
+        if (GameManager.CurrentGameState == GameManager.GameState.RoundOngoing)
+        {
+            _timerOn = true;
+        }
     }
 }

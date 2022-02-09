@@ -11,6 +11,7 @@ public class LeftTimeDisplay : MonoBehaviour
         _leftTimeDisplay = GetComponent<NDigitNumber>();
         TimerController.OnTick += OnTickHandler;
     }
+
     private void OnTickHandler(object sender, TimerController.OnTickEventArgs e)
     {
         _leftTimeDisplay.SetNumber(e.second);

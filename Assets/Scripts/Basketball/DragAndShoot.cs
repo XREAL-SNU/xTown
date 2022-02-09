@@ -53,11 +53,6 @@ public class DragAndShoot : MonoBehaviour
         
     }
 
-    private void OnDestroy()
-    {
-        Spawner.Instance.OnShootFinished();
-    }
-
     private void OnMouseDown()
     {
         _mousePressDownPos = Input.mousePosition;
@@ -122,6 +117,7 @@ public class DragAndShoot : MonoBehaviour
 
         _rb.isKinematic = false;
         _rb.AddForce(forceV);
+        GameManager.ballEquipped = false;
         StartCoroutine(DestroyAfterSeconds(5));
     }
 
