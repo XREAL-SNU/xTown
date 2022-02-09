@@ -3,89 +3,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimerController : MonoBehaviour
+namespace XReal.XTown.Basketball
 {
-    public class OnTickEventArgs : EventArgs
+    public class TimerController : MonoBehaviour
     {
-        public int second;
-    }
-
-    public static event EventHandler<OnTickEventArgs> OnTick;
-
-    [SerializeField]
-    private float _timer;
-
-    private float _prevRemTime;
-    private bool _timerOn;
-    public bool timerOn { get { return _timerOn; } }
-
-    public static TimerController Instance;
-
-    private void Awake()
-    {
-        if (Instance == null)
+        public class OnTickEventArgs : EventArgs
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            public int second;
         }
 
-        _timerOn = false;
-    }
+        public static event EventHandler<OnTickEventArgs> OnTick;
 
-    private void Start()
-    {
-        GameManager.OnGameStateChanged += InitializeTimer;
-        GameManager.OnGameStateChanged += StartTimer;
-    }
+        [SerializeField]
+        private float _timer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_timerOn)
+        private float _prevRemTime;
+        private bool _timerOn;
+        public bool timerOn { get { return _timerOn; } }
+
+        public static TimerController Instance;
+
+        private void Awake()
         {
-            return;
-        }
-        else
-        {
-            _prevRemTime = Mathf.Floor(_timer);
-            _timer -= Time.deltaTime;
-
-            if (_prevRemTime != Mathf.Floor(_timer))
+            if (Instance == null)
             {
-                OnTick(this, new OnTickEventArgs { second = (int)Mathf.Floor(_timer) });
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
 
-                if (_timer < 1)
+            _timerOn = false;
+        }
+
+        private void Start()
+        {
+            GameManager.OnGameStateChanged += InitializeTimer;
+            GameManager.OnGameStateChanged += StartTimer;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!_timerOn)
+            {
+                return;
+            }
+            else
+            {
+                _prevRemTime = Mathf.Floor(_timer);
+                _timer -= Time.deltaTime;
+
+                if (_prevRemTime != Mathf.Floor(_timer))
                 {
-                    _timerOn = false;
-                    GameManager.SetGameState(GameManager.GameState.RoundFinished);
-                    // 타이머 끝났다는 이벤트 날려
+                    OnTick(this, new OnTickEventArgs { second = (int)Mathf.Floor(_timer) });
+
+                    if (_timer < 1)
+                    {
+                        _timerOn = false;
+                        GameManager.SetGameState(GameManager.GameState.RoundFinished);
+                        // 타이머 끝났다는 이벤트 날려
+                    }
                 }
             }
         }
-    }
 
-    public  void SetTimer(int i)
-    {
-        _timer = i;
-    }
-
-    private void InitializeTimer()
-    {
-        if (GameManager.CurrentGameState == GameManager.GameState.RoundWaiting)
+        public void SetTimer(int i)
         {
-            SetTimer(GameManager.roundTime);
-            OnTick(this, new OnTickEventArgs { second = (int)Mathf.Floor(_timer) });
+            _timer = i;
         }
-    }
 
-    public void StartTimer()
-    {
-        if (GameManager.CurrentGameState == GameManager.GameState.RoundOngoing)
+        private void InitializeTimer()
         {
-            _timerOn = true;
+            if (GameManager.CurrentGameState == GameManager.GameState.RoundWaiting)
+            {
+                SetTimer(GameManager.roundTime);
+                OnTick(this, new OnTickEventArgs { second = (int)Mathf.Floor(_timer) });
+            }
+        }
+
+        public void StartTimer()
+        {
+            if (GameManager.CurrentGameState == GameManager.GameState.RoundOngoing)
+            {
+                _timerOn = true;
+            }
         }
     }
 }

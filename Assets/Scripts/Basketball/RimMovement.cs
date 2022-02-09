@@ -3,38 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class RimMovement : MonoBehaviour
+namespace XReal.XTown.Basketball
 {
-    [SerializeField]
-    private Transform _rimTransform;
-
-    private Sequence _rimSequence;
-    private bool _shaking;
-
-    // Start is called before the first frame update
-    void Start()
+    public class RimMovement : MonoBehaviour
     {
-        _shaking = false;
-    }
+        [SerializeField]
+        private Transform _rimTransform;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!_shaking)
+        private Sequence _rimSequence;
+        private bool _shaking;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            Shake();
+            _shaking = false;
         }
-    }
 
-    private void Shake()
-    {
-        _rimSequence = DOTween.Sequence()
-            .OnStart(() => {
-                _shaking = true;
-            })
-            .Append(_rimTransform.DOShakeRotation(0.7f, new Vector3(10, 0, 0), 10, 10).SetEase(Ease.OutElastic))
-            .OnComplete(() =>
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (!_shaking)
             {
-                _shaking = false;
-            });
+                Shake();
+            }
+        }
+
+        private void Shake()
+        {
+            _rimSequence = DOTween.Sequence()
+                .OnStart(() =>
+                {
+                    _shaking = true;
+                })
+                .Append(_rimTransform.DOShakeRotation(0.7f, new Vector3(10, 0, 0), 10, 10).SetEase(Ease.OutElastic))
+                .OnComplete(() =>
+                {
+                    _shaking = false;
+                });
+        }
     }
 }

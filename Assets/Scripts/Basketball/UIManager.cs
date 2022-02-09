@@ -4,94 +4,96 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
-public class UIManager : MonoBehaviour
+namespace XReal.XTown.Basketball
 {
-
-    [SerializeField]
-    private GameObject _playButtonGO;
-    [SerializeField]
-    private TMP_Text _roundText;
-    [SerializeField]
-    private TMP_Text _instructionText;
-
-    private Button _playButton;
-
-    // Start is called before the first frame update
-    void Start()
+    public class UIManager : MonoBehaviour
     {
-        _playButton = _playButtonGO.GetComponent<Button>();
-        _playButton.onClick.AddListener(OnClick_Play);
 
-        _roundText.text = "";
-        _instructionText.text = "";
+        [SerializeField]
+        private GameObject _playButtonGO;
+        [SerializeField]
+        private TMP_Text _roundText;
+        [SerializeField]
+        private TMP_Text _instructionText;
 
-        GameManager.OnGameStateChanged += EnablePlayButton;
-        GameManager.OnGameStateChanged += UpdateInstructionText;
-        GameManager.OnGameStateChanged += UpdateRoundText;
-    }
+        private Button _playButton;
 
-    private void OnClick_Play()
-    {
-        GameManager.SetGameState(GameManager.GameState.RoundWaiting);
-        _playButtonGO.SetActive(false);
-        GameManager.OnGameStateChanged();
-    }
-
-    private void EnablePlayButton()
-    {
-        if (GameManager.CurrentGameState == GameManager.GameState.GameReady)
+        // Start is called before the first frame update
+        void Start()
         {
-            _playButtonGO.SetActive(true);
+            _playButton = _playButtonGO.GetComponent<Button>();
+            _playButton.onClick.AddListener(OnClick_Play);
+
+            _roundText.text = "";
+            _instructionText.text = "";
+
+            GameManager.OnGameStateChanged += EnablePlayButton;
+            GameManager.OnGameStateChanged += UpdateInstructionText;
+            GameManager.OnGameStateChanged += UpdateRoundText;
         }
-    }
 
-    private void UpdateInstructionText()
-    {
-        switch (GameManager.CurrentGameState)
+        private void OnClick_Play()
         {
-            case GameManager.GameState.GameReady:
-                {
-                    _instructionText.text = "Press play button to start game";
-                    break;
-                }
-            case GameManager.GameState.RoundWaiting:
-                {
-                    _instructionText.text = "Get Ready for Round " + GameManager.round.ToString();
-                    break;
-                }
-            case GameManager.GameState.RoundOngoing:
-                {
-                    _instructionText.text = "";
-                    break;
-                }
-            case GameManager.GameState.RoundFinished:
-                {
-                    _instructionText.text = "Round " + GameManager.round.ToString() + " Finish!";
-                    break;
-                }
-            case GameManager.GameState.GameFinished:
-                {
-                    _instructionText.text = "Score : " + GameManager.totalScore.ToString();
-                    break;
-                }
+            GameManager.SetGameState(GameManager.GameState.RoundWaiting);
+            _playButtonGO.SetActive(false);
+            GameManager.OnGameStateChanged();
         }
-    }
 
-    private void UpdateRoundText()
-    {
-        switch (GameManager.CurrentGameState)
+        private void EnablePlayButton()
         {
-            case GameManager.GameState.GameReady:
-                {
-                    _instructionText.text = "";
-                    break;
-                }
-            case GameManager.GameState.RoundWaiting:
-                {
-                    _instructionText.text = "Round " + GameManager.round.ToString();
-                    break;
-                }
+            if (GameManager.CurrentGameState == GameManager.GameState.GameReady)
+            {
+                _playButtonGO.SetActive(true);
+            }
+        }
+
+        private void UpdateInstructionText()
+        {
+            switch (GameManager.CurrentGameState)
+            {
+                case GameManager.GameState.GameReady:
+                    {
+                        _instructionText.text = "Press play button to start game";
+                        break;
+                    }
+                case GameManager.GameState.RoundWaiting:
+                    {
+                        _instructionText.text = "Get Ready for Round " + GameManager.round.ToString();
+                        break;
+                    }
+                case GameManager.GameState.RoundOngoing:
+                    {
+                        _instructionText.text = "";
+                        break;
+                    }
+                case GameManager.GameState.RoundFinished:
+                    {
+                        _instructionText.text = "Round " + GameManager.round.ToString() + " Finish!";
+                        break;
+                    }
+                case GameManager.GameState.GameFinished:
+                    {
+                        _instructionText.text = "Score : " + GameManager.totalScore.ToString();
+                        break;
+                    }
+            }
+        }
+
+        private void UpdateRoundText()
+        {
+            switch (GameManager.CurrentGameState)
+            {
+                case GameManager.GameState.GameReady:
+                    {
+                        _instructionText.text = "";
+                        break;
+                    }
+                case GameManager.GameState.RoundWaiting:
+                    {
+                        _instructionText.text = "Round " + GameManager.round.ToString();
+                        break;
+                    }
+            }
         }
     }
 }
