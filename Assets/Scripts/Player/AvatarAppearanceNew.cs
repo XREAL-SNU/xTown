@@ -14,9 +14,8 @@ public class AvatarAppearanceNew
         Transparency
     }
 
-    // private fields
-    Dictionary<string, GameObject> _customParts = new Dictionary<string, GameObject>();
-    ObjectPartsInfo _descriptor;
+    public static Dictionary<string, GameObject> CustomParts = new Dictionary<string, GameObject>();
+    public static ObjectPartsInfo Descriptor;
 
     // static default descriptor
     static ObjectPartsInfo _XRealSpaceSuitAppreanceDescriptor;
@@ -29,13 +28,6 @@ public class AvatarAppearanceNew
                 ObjectPartsInfo objectPartsInfo = new ObjectPartsInfo();
                 objectPartsInfo.ObjectType = "Avatar";
                 objectPartsInfo.ObjectName = "SpaceSuitAvatar";
-
-                ObjectPart partHelmet = new ObjectPart();
-                partHelmet.PartName = "Helmet";
-                partHelmet.PartPath = "Space_Suit/Tpose_/Man_Suit/Helmet";
-                partHelmet.Properties = new ObjectPartProperty[2];
-                partHelmet.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
-                partHelmet.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
 
                 ObjectPart partBackpack = new ObjectPart();
                 partBackpack.PartName = "Backpack";
@@ -51,7 +43,12 @@ public class AvatarAppearanceNew
                 partBody.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
                 partBody.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
 
-
+                ObjectPart partBoots = new ObjectPart();
+                partBoots.PartName = "Boot";
+                partBoots.PartPath = "Space_Suit/Tpose_/Man_Suit/Boot";
+                partBoots.Properties = new ObjectPartProperty[2];
+                partBoots.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
+                partBoots.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
 
                 ObjectPart partGloves = new ObjectPart();
                 partGloves.PartName = "Glove";
@@ -60,7 +57,15 @@ public class AvatarAppearanceNew
                 partGloves.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
                 partGloves.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
 
-                objectPartsInfo.Parts = new ObjectPart[] { partHelmet, partBackpack, partBody, partGloves };
+                ObjectPart partHelmet = new ObjectPart();
+                partHelmet.PartName = "Helmet";
+                partHelmet.PartPath = "Space_Suit/Tpose_/Man_Suit/Helmet";
+                partHelmet.Properties = new ObjectPartProperty[2];
+                partHelmet.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
+                partHelmet.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+
+
+                objectPartsInfo.Parts = new ObjectPart[] { partBackpack, partBody, partBoots, partGloves, partHelmet};
                 _XRealSpaceSuitAppreanceDescriptor = objectPartsInfo;
 
                 string json = JsonUtility.ToJson(objectPartsInfo);
@@ -75,7 +80,7 @@ public class AvatarAppearanceNew
     public AvatarAppearanceNew(ObjectPartsInfo info, GameObject target)
     {
         Debug.Log("AvatarApperanceNew/ ctor binding info to target");
-        _descriptor = info;
+        Descriptor = info;
         foreach(ObjectPart part in info.Parts)
         {
             GameObject go = target.transform.Find(part.PartPath).gameObject;
@@ -97,7 +102,7 @@ public class AvatarAppearanceNew
 
     public void AddCustomPart(GameObject go, string PartName)
     {
-        _customParts.Add(PartName, go);
+        CustomParts.Add(PartName, go);
         Material mat = go.GetComponent<Renderer>().material;
         mat = new Material(mat);
 
@@ -116,7 +121,7 @@ public class AvatarAppearanceNew
         }
 
         // set descriptor and apply property
-        foreach(ObjectPart part in _descriptor.Parts)
+        foreach(ObjectPart part in Descriptor.Parts)
         {
             if (part.PartName.Equals(go.name))
             {
@@ -132,7 +137,7 @@ public class AvatarAppearanceNew
     public void Apply(GameObject target)
     {
         Debug.Log("AvatarAppearanceNew/ Applying Apperance");
-        foreach (ObjectPart part in _descriptor.Parts)
+        foreach (ObjectPart part in Descriptor.Parts)
         {
             GameObject go = target.transform.Find(part.PartPath).gameObject;
             if (go is null)
@@ -161,7 +166,7 @@ public class AvatarAppearanceNew
     }
     void ApplyProperties(GameObject go, ObjectPartProperty[] properties)
     {
-        for(int i = 0; i<properties.Length; ++i)
+        for (int i = 0; i < properties.Length; i++)
         {
             AppearancePropertyTypes type = (AppearancePropertyTypes)Enum.Parse(typeof(AppearancePropertyTypes), properties[i].PropertyType, true);
             string paletteName = properties[i].PaletteName;
@@ -227,7 +232,7 @@ public class ObjectPart
     public ObjectPartProperty SetProperty(string name, AvatarAppearanceNew.AppearancePropertyTypes type, string paletteName, int pick)
     {
         ObjectPartProperty prop = null;
-        for(int i = 0; i < Properties.Length; ++i)
+        for(int i = 0; i < Properties.Length; i++)
         {
             if (Properties[i].PropertyName.Equals(name))
             {

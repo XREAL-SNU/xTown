@@ -107,6 +107,21 @@ namespace XReal.XTown.UI {
             return popup;
         }
 
+        public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UIBase
+        {
+            if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
+
+            GameObject go = Instantiate(Resources.Load<GameObject>(UIPathPrefix + $"SubItem/{name}"));
+            
+            if (parent is null)
+            {
+                Debug.LogError("UIManager/ failed to open subitem: check if script is attached.");
+                return null;
+            }
+            if (parent != null) go.transform.SetParent(parent);
+
+            return UIUtils.GetOrAddComponent<T>(go);
+        }
 
         public void ClosePopupUI()
         {
@@ -136,4 +151,6 @@ namespace XReal.XTown.UI {
             while (_popupStack.Count > 0) ClosePopupUI();
         }
     }
+
+    
 }
