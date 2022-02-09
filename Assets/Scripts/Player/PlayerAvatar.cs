@@ -46,13 +46,16 @@ public class PlayerAvatar: MonoBehaviour
     {
         
         PhotonView = GetComponent<PhotonView>();
-
+        
         if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
         {
             Appearance = PlayerManager.Players.LocalAvatarAppearance;
             return;
         }
-        
+
+        // add gameObject to managed list
+        RoomManager.Room.AddPlayerGameObject(PhotonView.OwnerActorNr, gameObject);
+
         if (PhotonView.IsMine)
         {
             PlayerManager.Players.LocalPlayerGo = gameObject;

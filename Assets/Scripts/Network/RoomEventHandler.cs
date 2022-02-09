@@ -27,7 +27,8 @@ public class RoomEventHandler : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         PlayerInfo playerInfo = new PlayerInfo();
-        playerInfo.PlayerName = (string)otherPlayer.CustomProperties[PlayerInfo.PlayerInfoField.PlayerName.ToString()];
+        playerInfo.PlayerName = otherPlayer.NickName;
+        playerInfo.ActorNr = otherPlayer.ActorNumber;
         Debug.Log("RoomManager/ player left, name: " + playerInfo.PlayerName);
 
         if (OnPlayerLeftHandler != null)

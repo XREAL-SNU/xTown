@@ -37,7 +37,7 @@ public class VoiceChatChannelsPopup : UIPopup
 
         _playerInfos.ForEach((info) => {
             Debug.Log($"adding to list: {info.PlayerName}");
-            AddItem(info.PlayerName); 
+            AddItem(info); 
         
         });
     }
@@ -45,17 +45,26 @@ public class VoiceChatChannelsPopup : UIPopup
     void AddItem(string name)
     {
         AudioChatUserListing listing = Instantiate(Resources.Load<AudioChatUserListing>("UI/Popup/VoiceChatRoom/PlayerListItem"), _content);
+        listing.Init();
         listing.PlayerNameText = name;
     }
 
+    void AddItem(PlayerInfo info)
+    {
+        AudioChatUserListing listing = Instantiate(Resources.Load<AudioChatUserListing>("UI/Popup/VoiceChatRoom/PlayerListItem"), _content);
+        listing.Init();
+        listing.PlayerNameText = info.PlayerName;
+        listing.ActorNr = info.ActorNr;
+    }
 
     void ClearList()
     {
-        while(_content.childCount > 0)
+        AudioChatUserListing[] listings = GetComponentsInChildren<AudioChatUserListing>(_content);
+        foreach(AudioChatUserListing listing in listings)
         {
-            AudioChatUserListing listing = GetComponentInChildren<AudioChatUserListing>(_content);
             listing.Remove();
         }
+
     }
 
     public void OnPlayerJoined_AddItem(PlayerInfo info)

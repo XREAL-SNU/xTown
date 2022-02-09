@@ -36,6 +36,7 @@ namespace XReal.XTown.UI
                 }
             }
 
+            Debug.Log($"UIUtils/ FindUIChild failed : {UIname}");
             return null;
         }
 

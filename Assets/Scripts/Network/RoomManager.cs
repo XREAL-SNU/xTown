@@ -26,6 +26,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (_room is null) _room = this;
     }
 
+    // getters utility
     public List<PlayerInfo> GetPlayerInfoList()
     {
 
@@ -46,7 +47,57 @@ public class RoomManager : MonoBehaviourPunCallbacks
         return playerInfos;
     }
 
-    // event binding
+    // key is photonView Id in room, which may be reused.
+    Dictionary<int, GameObject> _playerObjects = new Dictionary<int, GameObject>();
+    public T GetComponentInPlayerById<T>(int id) where T : UnityEngine.Object
+    {
+        GameObject playerGo;
+        if (!PhotonNetwork.InRoom) return null;
+
+        if(!_playerObjects.TryGetValue(id, out playerGo))
+        {
+            Debug.LogError("RoomManager/ could not fetch player gameobject with Actor Id:" + id);
+            return null;
+        }
+
+        if(typeof(T) == typeof(GameObject))
+        {
+            // return the player gameObject
+            return playerGo as T;
+        }
+        else
+        {
+            // return a specific component
+            T component = playerGo.GetComponentInChildren<T>();
+            if(component is null)
+            {
+                Debug.LogError("RoomManager/ could not fetch component in player: " + typeof(T));
+            }
+            return component;
+
+        }
+    }
+
+    public void AddPlayerGameObject(int id, GameObject go)
+    {
+        if (!PhotonNetwork.InRoom)
+        {
+            return;
+        }
+        
+        if (_playerObjects.ContainsKey(id))
+        {
+            // overrides existing element
+            _playerObjects[id] = go;
+        }
+        else
+        {
+            _playerObjects.Add(id, go);
+            Debug.Log("RoomManager/ Added PlayerGO to dict: #" + _playerObjects.Count);
+        }
+    }
+
+    // Room scale event binders
     public static void BindEvent(GameObject go, Action<PlayerInfo> action, RoomEvent evtype)
     {
         RoomEventHandler evt = go.GetComponent<RoomEventHandler>();
