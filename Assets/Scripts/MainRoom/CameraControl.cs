@@ -18,7 +18,7 @@ public class CameraControl : MonoBehaviour
     private bool _useMouseToRotate;
 
     // camera settings
-    private GameObject _camTarget;
+    //private GameObject _camTarget;
     public float TopClamp = 0.6f;
     public float BottomClamp = 0.1f;
     private float _cinemachineTargetPitch;
@@ -27,7 +27,7 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        _camTarget = SpawnCharacter.Instance.PlayerControl.CinemachineCameraTarget;
+        //_camTarget = PlayerManager.Players.LocalPlayerGo.GetComponent<ThirdPersonControllerMulti>().CinemachineCameraTarget;
         _input = SpawnCharacter.Instance.PlayerControl.GetComponent<StarterAssetsInputs>();
         _useMouseToRotate = false;
     }
