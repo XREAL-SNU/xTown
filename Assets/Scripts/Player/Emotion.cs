@@ -8,13 +8,12 @@ using UnityEngine.UI;
 public class Emotion : MonoBehaviour
 {
     private Transform Player;
-    private Camera _camera;
     public RectTransform EmoticonMenu;
     [Header("MenuUI")]
     public Image[] MenuSlice;
     private int _currentMenu=0;
     private bool _isMenuActive = false;
-    public GameObject _face;
+    public GameObject Face;
     private List<AvatarFaceButton> _faceList;
     private PhotonView _view;
     private bool _isSelected;
@@ -25,19 +24,20 @@ public class Emotion : MonoBehaviour
     {
         EmoticonMenu.gameObject.SetActive(false);
         Player = GameObject.FindWithTag("Player").transform;
-        _avatarFaceControl = Player.GetChild(1).GetChild(0).GetChild(1).GetComponent<AvatarFaceControl>();
-        _camera = Camera.main;
+        _avatarFaceControl = Player.GetChild(2).GetChild(0).GetChild(1).GetComponent<AvatarFaceControl>();
         _view = GetComponent<PhotonView>();
         _characterCam = GameObject.Find("CharacterCam").GetComponent<CameraControl>();
     }
 
     private void Update()
     {
+        Debug.Log(_avatarFaceControl);
+        Debug.Log(_characterCam);
         // if (_view is null || !_view.IsMine) return;
         if (Input.GetKeyDown(KeyCode.T))
         {
             _characterCam.SetFront();
-            _faceList = _face.GetComponent<AvatarFaceManagement>()._favList;
+            _faceList = Face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
                 MenuSlice[i].transform.GetChild(1).GetComponent<Text>().text = _faceList[i].GetButtonText().text;
             }
