@@ -11,16 +11,15 @@ public class Emotion : MonoBehaviour
     public RectTransform EmoticonMenu;
     [Header("MenuUI")]
     public Image[] MenuSlice;
-    public GameObject Face;
+    public GameObject Face; //Scroll view from AvatarInteractionCanvas to find fav list
     private int _currentMenu=0;
     private bool _isMenuActive = false;
-    private List<AvatarFaceButton> _faceList;
+    private List<AvatarFaceButton> _faceList; // fav list
     private bool _isSelected;
-    private AvatarFaceControl _avatarFaceControl;
-    private GameObject _camManager;
-    private CameraControl _characterCam;
-    private bool _isCurrentFp;
-    public Transform _faceCam;
+    private AvatarFaceControl _avatarFaceControl; //from player suit prefab change face
+    private GameObject _camManager; // to get whether first-person view or third-person view
+    private CameraControl _characterCam; // main camera when third-person view
+    private Transform _faceCam; // face camera when first-person view
     private bool _crRunning;
     private IEnumerator _coroutine;
     private PhotonView _view;
@@ -38,7 +37,8 @@ public class Emotion : MonoBehaviour
 
     private void Update()
     {
-        // if (_view is null || !_view.IsMine) return;
+        if (_view is null || !_view.IsMine) return;
+
         if (Input.GetKeyDown(KeyCode.T))
         {
             _faceList = Face.GetComponent<AvatarFaceManagement>()._favList;
@@ -56,12 +56,16 @@ public class Emotion : MonoBehaviour
             }else{
                 if(_camManager.GetComponent<CamManager>().IsCurrentFp){
                     _faceCam.gameObject.SetActive(false);
+                }else{
+                    _characterCam.SetFront();
                 }
                 EmoticonMenu.gameObject.SetActive(false);
                 _isMenuActive = false;
             }
         }
+
         if(_isMenuActive){
+            // when menu on, calculate menu position
             if(!_camManager.GetComponent<CamManager>().IsCurrentFp){
                 Vector3 screenPos = Camera.main.WorldToScreenPoint(new Vector3(Player.position.x,Player.position.y+2f,Player.position.z));
                 EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(screenPos.x,screenPos.y,Player.position.z);
@@ -98,6 +102,7 @@ public class Emotion : MonoBehaviour
         // }
     }
     public void EmoticonSelect(int num){
+        // if coroutine exists stop it and run new coroutine
         if(_crRunning){
             StopCoroutine(_coroutine);
         }
