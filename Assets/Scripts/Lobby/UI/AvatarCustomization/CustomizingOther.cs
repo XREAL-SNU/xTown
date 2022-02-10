@@ -24,11 +24,12 @@ public class CustomizingOther : UIScene
     private GameObject _cam;
     private GameObject _avatar;
 
+    [SerializeField]
     private float _camSpeed = 10;
 
     private float _mouseX;
+    [SerializeField]
     private float _wheel;
-    private bool _isMoving;
     private bool _isEnter;
     private bool _isExit;
 
@@ -49,7 +50,7 @@ public class CustomizingOther : UIScene
 
     private void Update()
     {
-        if (!_isMoving && _isEnter)
+        if (_isEnter)
         {
            CameraMove();
            CameraZoom();
@@ -74,32 +75,26 @@ public class CustomizingOther : UIScene
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraExit, UIEvents.UIEvent.Exit);
 
         GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
-        /*
-        for (int i = 0; i < AvatarAppearanceNew.MaterialsCount; i++)
-        {
-            GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(this.transform.parent.Find("CustomizingTabGroup").GetChild(0).GetChild(i).GetComponent<CustomizingTab>().InitiallizeButton);
-        }
-        */
-        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnClick_JoinWorld, UIEvents.UIEvent.Click);
+
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnClick_JoinWorld);
     }
 
     public void OnClick_JoinWorld(PointerEventData data)
     {
         Debug.Log("Onclick joinworld!~");
+        /*
         if (!PhotonNetwork.IsConnected)
             return;
-        
+
 
         RoomOptions options = new RoomOptions();
         options.BroadcastPropsChangeToAll = true;
         options.MaxPlayers = 20;
         PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
+        */
     }
-
     public void CameraEnter(PointerEventData data)
-        
     {
-        Debug.Log("camera enter");
         _isEnter = true;
         _isExit = false;
     }
@@ -141,7 +136,6 @@ public class CustomizingOther : UIScene
     {
         _wheel = -6;
         _mouseX = 0;
-        _isMoving = false;
         _isEnter = false;
         _avatar.transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
         _centralAxis.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));

@@ -203,7 +203,7 @@ public class AvatarAppearanceNew
 
     void ApplyProperties(GameObject go, ObjectPartProperty[] properties)
     {
-        for (int i = 0; i < properties.Length; i++)
+        for (int i = 0; i < properties.Length; ++i)
         {
             AppearancePropertyTypes type = (AppearancePropertyTypes)Enum.Parse(typeof(AppearancePropertyTypes), properties[i].PropertyType, true);
             string paletteName = properties[i].PaletteName;
@@ -291,7 +291,7 @@ public class ObjectPart
     public ObjectPartProperty SetProperty(string name, AvatarAppearanceNew.AppearancePropertyTypes type, string paletteName, int pick)
     {
         ObjectPartProperty prop = null;
-        for(int i = 0; i < Properties.Length; i++)
+        for(int i = 0; i < Properties.Length; ++i)
         {
             if (Properties[i].PropertyName.Equals(name))
             {

@@ -20,6 +20,7 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
 
     public void OnClick_JoinWorld()
     {
+
         if (!PhotonNetwork.IsConnected)
             return;
 
