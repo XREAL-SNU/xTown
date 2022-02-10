@@ -76,23 +76,10 @@ public class CustomizingOther : UIScene
 
         GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
 
-        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnClick_JoinWorld);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(DoneButton);
     }
 
-    public void OnClick_JoinWorld(PointerEventData data)
-    {
-        Debug.Log("Onclick joinworld!~");
-        /*
-        if (!PhotonNetwork.IsConnected)
-            return;
 
-
-        RoomOptions options = new RoomOptions();
-        options.BroadcastPropsChangeToAll = true;
-        options.MaxPlayers = 20;
-        PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
-        */
-    }
     public void CameraEnter(PointerEventData data)
     {
         _isEnter = true;
@@ -145,5 +132,17 @@ public class CustomizingOther : UIScene
     public void CameraResetButton(PointerEventData data)
     {
         CameraReset();
+    }
+
+    public void DoneButton(PointerEventData data)
+    {
+        Debug.Log("Done");
+        AvatarSelectionMenu menu = GetComponentInParent<AvatarSelectionMenu>();
+        if(menu is null)
+        {
+            Debug.LogError("AvatarSelectionMenu is null");
+            return;
+        }
+        menu.OnClick_JoinWorld();
     }
 }
