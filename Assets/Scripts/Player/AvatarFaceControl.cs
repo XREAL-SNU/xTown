@@ -12,5 +12,5 @@ public class AvatarFaceControl : MonoBehaviour
 
     private void Start() { AvatarFace.SetTexture("_MainTex", _emojiTextures[11]); }
 
-    public void ChangeFace(AvatarFaceButton faceButton) { AvatarFace.SetTexture("_MainTex", _emojiTextures[faceButton.GetImageIndex()]); }
+    public void ChangeFace(int faceIndex) { AvatarFace.SetTexture("_MainTex", _emojiTextures[faceIndex]); }
 }
