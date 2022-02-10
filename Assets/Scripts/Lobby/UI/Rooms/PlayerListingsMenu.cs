@@ -132,11 +132,13 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
             if (SceneManager.GetActiveScene().name.Equals(linkedSceneName))
             { // already in that level
                 RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+                photonView.RPC("HideRoomCanvases", RpcTarget.Others);
                 return;
             }
             else
             { // not in level
                 PhotonNetwork.LoadLevel(RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName);
+                photonView.RPC("HideRoomCanvases", RpcTarget.Others);
                 RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
             }
 
@@ -163,6 +165,11 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
         {
             _listings[index].Ready = ready;
         }
+    }
+    [PunRPC]
+    private void HideRoomCanvases()
+    {
+        RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
     }
 
     

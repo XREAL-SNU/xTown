@@ -34,11 +34,11 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
             return;
 
         RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Hide();
-        if (PhotonNetwork.InRoom)
+        /*if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
             Debug.Log("CreateRoomMenu/back to lobby, reload scene Mainroom");
-        } 
+        }*/ 
 
 
     }
