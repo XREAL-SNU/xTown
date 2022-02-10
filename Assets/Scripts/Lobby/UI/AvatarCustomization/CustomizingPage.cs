@@ -22,25 +22,21 @@ public class CustomizingPage : UIBase
     private string _partName;
     private int _partsIndex = 0;
 
-    private VerticalLayoutGroup _verticalLayout;
 
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-        GetUIComponent<GameObject>((int)GameObjects.ResetButton).gameObject.BindEvent(ResetCustomizing);
-        GetUIComponent<GameObject>((int)GameObjects.RandomButton).gameObject.BindEvent(RandomCustomizing);
+        //GetUIComponent<GameObject>((int)GameObjects.ResetButton).gameObject.BindEvent(ResetCustomizing);
 
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
-        _verticalLayout = contentPanel.GetComponent<VerticalLayoutGroup>();
         Debug.Log(AvatarAppearanceNew.Descriptor.Parts[0].Properties[0].PropertyName);
         if (AvatarAppearanceNew.CustomParts.ContainsKey(_partName))
         {
             foreach(ObjectPart parts in AvatarAppearanceNew.Descriptor.Parts)
             {
-                _partsIndex++;
                 if (parts.PartName == _partName)
                 {
-                    for (int i = 0; i < parts.Properties.Length; i++)
+                    for (int i = 0; i < parts.Properties.Length; ++i)
                     {
                         GameObject buttons = UIManager.UI.MakeSubItem<CustomizingButtonGroup>(contentPanel.transform).gameObject;
                         CustomizingButtonGroup button = buttons.GetOrAddComponent<CustomizingButtonGroup>();
@@ -48,6 +44,7 @@ public class CustomizingPage : UIBase
                     }
                     break;
                 }
+                _partsIndex++;
             }
         }
     }
@@ -59,14 +56,12 @@ public class CustomizingPage : UIBase
     }
 
 
-
-    public void ResetCustomizing(PointerEventData data)
-    {
-
-    }
-
     public void RandomCustomizing(PointerEventData data)
     {
-
+        GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
+        foreach (Transform props in contentPanel.transform.GetComponentsInChildren<Transform>())
+        {
+            GetUIComponent<GameObject>((int)GameObjects.RandomButton).gameObject.BindEvent(props.GetComponent<CustomizingButtonGroup>().RandomCustomizing);
+        }
     }
 }

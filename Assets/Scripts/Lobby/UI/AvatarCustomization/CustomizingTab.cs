@@ -14,37 +14,49 @@ public class CustomizingTab : UIBase
         CustomizingTabText,
     }
 
-    private string _name;
-    private CustomizingTabGroup TabGroup;
+    private string _partName;
+    private CustomizingTabGroup _tabGroup;
 
     void Start()
     {
         Init();
-        TabGroup = this.transform.parent.parent.GetComponent<CustomizingTabGroup>();
         Initiallize();
     }
 
     public override void Init()
     {
+        if (_tabGroup is null) _tabGroup = this.transform.parent.parent.GetComponent<CustomizingTabGroup>();
+
         Bind<GameObject>(typeof(GameObjects));
-        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().text = _name;
+
+        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().text = _partName;
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().fontSize = 25;
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).gameObject.BindEvent(OnTabSelect);
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).gameObject.BindEvent(OnTabEnter, UIEvents.UIEvent.Enter);
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).gameObject.BindEvent(OnTabExit, UIEvents.UIEvent.Exit);
 
-        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).BindEvent((PointerEventData) => { Debug.Log($"Click! {_name}"); });
+        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).BindEvent((PointerEventData) => { Debug.Log($"Click! {_partName}"); });
+
+        foreach(Transform parent in this.transform.GetComponentsInParent<Transform>())
+        {
+            if (parent.name.Equals("CustomizeAvatarCanvas"))
+            {
+                Transform backbtn = parent.transform.Find("CustomizingOther").Find("BackButton").GetComponent<Transform>();
+                backbtn.gameObject.BindEvent(InitiallizeButton);
+                break;
+            }
+        }
     }
 
     public void SetInfo(string name)
     {
-        _name = name;
+        _partName = name;
         this.name = name;
     }
 
     public void OnTabEnter(PointerEventData data)
     {   
-        if (_name != TabGroup.SelectedTab)
+        if (_partName != _tabGroup.SelectedTab)
         {
             GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).GetComponent<Image>().color = XTownColor.XTownBlue.ToColor();
         }
@@ -62,9 +74,9 @@ public class CustomizingTab : UIBase
 
     public void Select()
     {
-        TabGroup.SelectedTab = _name;
+        _tabGroup.SelectedTab = _partName;
         ResetTabs();
-        TabGroup.OpenPage();
+        _tabGroup.OpenPage();
     }
 
     public void ResetTabs()
@@ -72,48 +84,20 @@ public class CustomizingTab : UIBase
         for (int i = 0; i < this.transform.parent.childCount; i++)
         {
             GameObject btn = this.transform.parent.GetChild(i).gameObject;
-            btn.transform.GetChild(0).GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
-            if (btn.GetComponent<CustomizingTab>()._name == TabGroup.SelectedTab) btn.transform.GetChild(0).GetComponent<Image>().color = XTownColor.XTownGreen.ToColor();
+            btn.transform.Find("CustomizingTabImage").GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
+            if (btn.GetComponent<CustomizingTab>()._partName.Equals(_tabGroup.SelectedTab)) btn.transform.Find("CustomizingTabImage").GetComponent<Image>().color = XTownColor.XTownGreen.ToColor();
         }
     }
 
     public void Initiallize()
     {
-        TabGroup.SelectedTab = this.transform.parent.GetChild(0).name;
+        _tabGroup.SelectedTab = this.transform.parent.GetChild(0).name;
         ResetTabs();
-        TabGroup.OpenPage();
+        _tabGroup.OpenPage();
     }
 
     public void InitiallizeButton(PointerEventData data)
     {
         Initiallize();
     }
-
-    /*
-    public TabGroup TabGroup;
-    public Image Background;
-
-
-
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        TabGroup.OnTabSelect(this);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        TabGroup.OnTabEnter(this);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        TabGroup.OnTabExit(this);
-    }
-
-    private void Start()
-    {
-        Background = GetComponent<Image>();
-        TabGroup.Subscribe(this);
-    }*/
 }

@@ -121,6 +121,7 @@ public class XTownColor
     public static XTownColor XTownYellow = new XTownColor("XTownYellow", Color.yellow);
     public static XTownColor XTownGrey = new XTownColor("XTownGrey", Color.grey);
     public static XTownColor XTownMagenta = new XTownColor("XTownMagenta", Color.magenta);
+    public static XTownColor XTownBlack = new XTownColor("XTownBalck", Color.black);
 
     public XTownColor(string name, float r, float g, float b, float a)
     {
@@ -130,6 +131,15 @@ public class XTownColor
         this.b = b;
         this.a = a;
     }
+
+    public XTownColor(float com)
+    {
+        this.r = com;
+        this.g = com;
+        this.b = com;
+        this.a = 1f;
+    }
+
     public XTownColor(string name, Color col)
     {
         colorName = name;
@@ -146,6 +156,12 @@ public class XTownColor
     {
         return new Color(r, g, b, a);
     }
+    public Color ToColor(float a)
+    {
+        this.a = a;
+        return new Color(r, g, b, a);
+    }
+
     public string colorName;
     public float r;
     public float g;
