@@ -33,6 +33,7 @@ public class AvatarFaceControl : MonoBehaviour
             _isDefault = false;
     }
 
+    // Overload
     public void ChangeFace(Texture faceTexture)
     {
         AvatarFace.SetTexture("_MainTex", faceTexture);

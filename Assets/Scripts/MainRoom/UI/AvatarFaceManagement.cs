@@ -89,9 +89,6 @@ public class AvatarFaceManagement : MonoBehaviour
             avatarFaceButton.SetButtonText(_currentlySelectedButton.GetButtonText());
             avatarFaceButton.SetButtonImage(_currentlySelectedButton.GetButtonImage());
             avatarFaceButton.SetImageIndex(_currentlySelectedButton.GetImageIndex());
-
-            // Replace Index
-            for(int i = 0; i < _avatarFaceList.Count; i++) { if (_currentlySelectedButton.GetButtonText().text.Equals(_avatarFaceList[i].name)) avatarFaceButton.SetImageIndex(i); }
             
             DeselectCurrentlySelected();
         }
