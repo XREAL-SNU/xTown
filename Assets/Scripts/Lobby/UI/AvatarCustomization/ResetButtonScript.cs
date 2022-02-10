@@ -9,9 +9,9 @@ public class ResetButtonScript : MonoBehaviour
         CustomizingButtonScript cbtn = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<CustomizingButtonScript>();
         CustomizingButtonScript tbtn = this.transform.parent.GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<CustomizingButtonScript>();
 
-        //cbtn.IsClickButton();
+        cbtn.IsClickButton();
         cbtn.Select();
-        //tbtn.IsClickButton();
+        tbtn.IsClickButton();
         tbtn.Select();
         if (cbtn.transform.parent.GetChild(7).GetComponent<fcpButtonScript>().IsEnter)
         {

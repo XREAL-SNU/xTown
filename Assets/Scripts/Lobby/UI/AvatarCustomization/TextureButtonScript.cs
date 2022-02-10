@@ -8,7 +8,7 @@ public class TextureButtonScript : MonoBehaviour
     private TextureElement _txt = new TextureElement();
     private ColorElement _btnColor = new ColorElement();
     private GridLayoutGroup _gridLayout;
-    /*
+
     private void Start()
     {
         _gridLayout = this.GetComponent<GridLayoutGroup>();
@@ -20,7 +20,7 @@ public class TextureButtonScript : MonoBehaviour
     {
         for (int i = 0; i < _txt.TextureNum[CustomizingPanelScript.PartID]; i++)
         {
-            GameObject button = Instantiate(Resources.Load<GameObject>("CustomizingButton"));
+            GameObject button = Instantiate(Resources.Load<GameObject>("UI/SubItem/CustomizingButton"));
             button.transform.SetParent(this.transform);
             button.GetComponentInChildren<Text>().text = CustomizingPanelScript.PartID + (i + 1);
             button.GetComponentInChildren<Text>().fontSize = 25;
@@ -30,7 +30,7 @@ public class TextureButtonScript : MonoBehaviour
             else button.GetComponent<Image>().color = _btnColor.ButtonColorP["Base"];
         }
     }
-    */
+
     private void _panelSize()
     {
         int d = (int)_gridLayout.cellSize.y + (int)_gridLayout.spacing.y;

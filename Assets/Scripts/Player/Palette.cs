@@ -25,7 +25,7 @@ public class ColorPalette
     }
 
     public static XTownColor[] DefaultColorsSet = new XTownColor[] {
-        XTownColor.XTownRed, XTownColor.XTownBlue, XTownColor.XTownGreen
+        XTownColor.XTownWhite, XTownColor.XTownRed, XTownColor.XTownBlue, XTownColor.XTownGreen, XTownColor.XTownMagenta, XTownColor.XTownYellow, XTownColor.XTownGrey
     };
 
     public static XTownColor[] DarkColorsSet = new XTownColor[] {
@@ -92,7 +92,7 @@ public class LinearPalette
     }
 
     public LinearPalette() { }
-    
+
     public float this[int index]
     {
         get
@@ -114,10 +114,13 @@ public class LinearPalette
 [Serializable]
 public class XTownColor
 {
-
+    public static XTownColor XTownWhite = new XTownColor("XTownWhite", Color.white);
     public static XTownColor XTownRed = new XTownColor("XTownRed", new Color(0.7f, 0.2f, 0.3f, 1.0f));
     public static XTownColor XTownBlue = new XTownColor("XTownBlue", new Color(0.2f, 0.3f, 0.7f, 1.0f));
     public static XTownColor XTownGreen = new XTownColor("XTownGreen", new Color(0.2f, 0.7f, 0.3f, 1.0f));
+    public static XTownColor XTownYellow = new XTownColor("XTownYellow", Color.yellow);
+    public static XTownColor XTownGrey = new XTownColor("XTownGrey", Color.grey);
+    public static XTownColor XTownMagenta = new XTownColor("XTownMagenta", Color.magenta);
 
     public XTownColor(string name, float r, float g, float b, float a)
     {

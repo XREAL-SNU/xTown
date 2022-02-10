@@ -61,10 +61,20 @@ namespace XReal.XTown.UI
 
             switch (type)
             {
+                case UIEvents.UIEvent.Enter:
+                    evt.OnEnterHandler -= action;
+                    evt.OnEnterHandler += action;
+                    break;
                 case UIEvents.UIEvent.Click:
+                    evt.OnClickHandler -= action;
                     evt.OnClickHandler += action;
                     break;
+                case UIEvents.UIEvent.Exit:
+                    evt.OnExitHandler -= action;
+                    evt.OnExitHandler += action;
+                    break;
                 case UIEvents.UIEvent.Drag:
+                    evt.OnDragHandler -= action;
                     evt.OnDragHandler += action;
                     break;
             }
