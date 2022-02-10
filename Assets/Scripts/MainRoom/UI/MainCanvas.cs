@@ -16,14 +16,14 @@ public class MainCanvas : MonoBehaviour
 
     public void OnClick_PlayerInfo()
     {
-        //_mainCanvases.PlayerInfoCanvas.Show();
-        UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
+        _mainCanvases.PlayerInfoCanvas.Show();
+        //UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
     }
 
     public void OnClick_Setting()
     {
-        //_mainCanvases.SettingCanvas.Show();
-        UIManager.UI.ShowPopupUI<SettingsPopup>("SettingsPopup");
+        _mainCanvases.SettingCanvas.Show();
+        //UIManager.UI.ShowPopupUI<SettingsPopup>("SettingsPopup");
     }
 
     public void OnClick_Exit()
