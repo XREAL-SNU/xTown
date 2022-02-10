@@ -34,12 +34,12 @@ public class CalendarController : MonoBehaviour
             item.transform.SetParent(_item.transform.parent);
             item.transform.localScale = Vector3.one;
             item.transform.localRotation = Quaternion.identity;
-            item.transform.localPosition = new Vector3((i % 7) * 36  + startPos.x, startPos.y - (i / 7) * 30, startPos.z);
+            item.transform.localPosition = new Vector3((i % 7) * 39  + startPos.x, startPos.y - (i / 7) * 30, startPos.z);
 
             _dateItems.Add(item);
         }
 
-        _dateTime = DateTime.Now;
+        _dateTime = DateTime.Now.AddDays(-1);
 
         CreateCalendar();
 
