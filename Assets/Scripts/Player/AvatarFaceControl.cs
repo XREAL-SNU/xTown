@@ -11,13 +11,9 @@ public class AvatarFaceControl : MonoBehaviour
     [SerializeField] List<Texture> _emojiTextures;
     [SerializeField] Texture _defaultTexture;
 
-    [SerializeField] List<int> _tempList;
     bool _isDefault = true;
 
-    private void Start() 
-    {
-        ChangeFace(_defaultTexture);
-    }
+    private void Start() { ChangeFace(_defaultTexture); }
 
     private void Update()
     {
@@ -49,7 +45,7 @@ public class AvatarFaceControl : MonoBehaviour
 
     IEnumerator ShowFaceForSeconds(int index)
     {
-        if (!_isDefault) yield break;
+        if (!_isDefault || _emojiTextures[index].name.Equals("happy")) yield break;
 
         ChangeFace(_emojiTextures[index]);
 

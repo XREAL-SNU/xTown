@@ -88,6 +88,7 @@ public class AvatarFaceManagement : MonoBehaviour
         {
             avatarFaceButton.SetButtonText(_currentlySelectedButton.GetButtonText());
             avatarFaceButton.SetButtonImage(_currentlySelectedButton.GetButtonImage());
+            avatarFaceButton.SetImageIndex(_currentlySelectedButton.GetImageIndex());
 
             // Replace Index
             for(int i = 0; i < _avatarFaceList.Count; i++) { if (_currentlySelectedButton.GetButtonText().text.Equals(_avatarFaceList[i].name)) avatarFaceButton.SetImageIndex(i); }
@@ -100,6 +101,8 @@ public class AvatarFaceManagement : MonoBehaviour
             SwapButtons(avatarFaceButton, _favList[index]);
             DeselectCurrentlySelected();
         }
+
+        s_favList = _favList;
     }
 
     // Checks whether input parameter is added to Favorites List.
@@ -119,8 +122,10 @@ public class AvatarFaceManagement : MonoBehaviour
     {
         button2.SetButtonText(button1.GetButtonText());
         button2.SetButtonImage(button1.GetButtonImage());
+        button2.SetImageIndex(button1.GetImageIndex());
 
         button1.SetButtonText(_currentlySelectedButton.GetButtonText());
         button1.SetButtonImage(_currentlySelectedButton.GetButtonImage());
+        button1.SetImageIndex(_currentlySelectedButton.GetImageIndex());
     }
 }
