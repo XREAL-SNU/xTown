@@ -34,7 +34,7 @@ public class CustomizingButtonGroup : UIBase
         gridPanel.GetComponent<Text>().fontSize = 45;
         _gridLayout = gridPanel.GetComponent<GridLayoutGroup>();
 
-        foreach(ObjectPartProperty props in AvatarAppearanceNew.Descriptor.Parts[_partsIndex].Properties)
+        foreach(ObjectPartProperty props in PlayerManager.Players.LocalAvatarAppearance.Descriptor.Parts[_partsIndex].Properties)
         {
             if (props.PropertyName == _propertyName)
             {

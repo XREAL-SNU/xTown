@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd76d088a11ec7044950c2e32d18ec33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInfo:
+  PlayerInfo:
     PlayerName: 
+    ActorNr: 0
 --- !u!4 &44944719
 Transform:
   m_ObjectHideFlags: 0
@@ -359,6 +360,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1300850120512892196, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -46.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1428822727065637971, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -446,6 +451,10 @@ PrefabInstance:
     - target: {fileID: 4068373833991463239, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117911813727779989, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.78
       objectReference: {fileID: 0}
     - target: {fileID: 4304890079153023341, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
       propertyPath: m_AnchorMax.y
@@ -602,6 +611,14 @@ PrefabInstance:
     - target: {fileID: 8849180613802213247, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193177354054508339, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193177354054508339, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.52
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5657753671861467518, guid: b712ad3eb20716b4c909bc9bcc9ebe85, type: 3}

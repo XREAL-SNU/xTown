@@ -77,6 +77,13 @@ public class CustomizingOther : UIScene
             GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(this.transform.parent.Find("CustomizingTabGroup").GetChild(0).GetChild(i).GetComponent<CustomizingTab>().InitiallizeButton);
         }
 
+        GetUIComponent<Button>((int)GameObjects.DoneButton).gameObject.BindEvent(OnCustomizeDone);
+
+    }
+
+    public void OnCustomizeDone(PointerEventData data)
+    {
+
     }
 
     public void CameraEnter(PointerEventData data)

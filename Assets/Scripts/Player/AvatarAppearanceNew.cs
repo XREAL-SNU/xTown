@@ -16,22 +16,15 @@ public class AvatarAppearanceNew
 
 
     // private fields
-    Dictionary<string, GameObject> _customParts = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> CustomParts = new Dictionary<string, GameObject>();
     ObjectPartsInfo _descriptor;
     public ObjectPartsInfo Descriptor
     {
         get => _descriptor;
     }
 
-    public static Dictionary<string, GameObject> CustomParts
-    {
-        get => _customParts;
-    }
 
-    public static ObjectPartsInfo Descriptor
-    {
-        get => _descriptor;
-    }
+
 
 
 
@@ -99,7 +92,7 @@ public class AvatarAppearanceNew
     public AvatarAppearanceNew(ObjectPartsInfo info, GameObject target)
     {
         Debug.Log("AvatarApperanceNew/ ctor binding info to target");
-        Descriptor = info;
+        _descriptor = info;
         foreach(ObjectPart part in info.Parts)
         {
             GameObject go = target.transform.Find(part.PartPath).gameObject;
@@ -154,7 +147,7 @@ public class AvatarAppearanceNew
     public GameObject GetCustomPartGo(string partName)
     {
         GameObject value;
-        _customParts.TryGetValue(partName, out value);
+        CustomParts.TryGetValue(partName, out value);
         if(value is null)
         {
             Debug.LogError($"AvatarAppearanceNew/ Cannot fetch part name: {partName}");

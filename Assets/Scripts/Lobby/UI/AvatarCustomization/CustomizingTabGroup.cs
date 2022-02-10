@@ -32,7 +32,7 @@ public class CustomizingTabGroup : UIScene
 
         Debug.Log(AvatarAppearanceNew.MaterialsCount);
 
-        foreach (string partName in AvatarAppearanceNew.CustomParts.Keys)
+        foreach (string partName in PlayerManager.Players.LocalAvatarAppearance.CustomParts.Keys)
         {
             Debug.Log(partName);
             GameObject tabs = UIManager.UI.MakeSubItem<CustomizingTab>(tabPanel.transform).gameObject;

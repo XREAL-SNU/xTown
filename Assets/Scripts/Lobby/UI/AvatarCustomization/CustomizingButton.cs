@@ -49,8 +49,9 @@ public class CustomizingButton : UIBase
 
     public void SetProperty(PointerEventData data)
     {
-        AvatarAppearanceNew _appearance = new AvatarAppearanceNew();
-        GameObject go = AvatarAppearanceNew.CustomParts[_partName];
+        //AvatarAppearanceNew _appearance = new AvatarAppearanceNew();
+        AvatarAppearanceNew _appearance = PlayerManager.Players.LocalAvatarAppearance;
+        GameObject go = _appearance.CustomParts[_partName];
         _appearance.SetProperty(go, _propertyName, _type, _paletteName, _pick);
         Debug.Log("propertyName: " + _propertyName + ", paletteName: " + _paletteName + ", pick: " + _pick);
     }

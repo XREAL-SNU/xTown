@@ -24,18 +24,22 @@ public class CustomizingPage : UIBase
 
     private VerticalLayoutGroup _verticalLayout;
 
+    
+    
     public override void Init()
     {
+
+        AvatarAppearanceNew localAvatarAppearance = PlayerManager.Players.LocalAvatarAppearance;
         Bind<GameObject>(typeof(GameObjects));
         GetUIComponent<GameObject>((int)GameObjects.ResetButton).gameObject.BindEvent(ResetCustomizing);
         GetUIComponent<GameObject>((int)GameObjects.RandomButton).gameObject.BindEvent(RandomCustomizing);
 
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
         _verticalLayout = contentPanel.GetComponent<VerticalLayoutGroup>();
-        Debug.Log(AvatarAppearanceNew.Descriptor.Parts[0].Properties[0].PropertyName);
-        if (AvatarAppearanceNew.CustomParts.ContainsKey(_partName))
+        Debug.Log(PlayerManager.Players.LocalAvatarAppearance.Descriptor.Parts[0].Properties[0].PropertyName);
+        if (localAvatarAppearance.CustomParts.ContainsKey(_partName))
         {
-            foreach(ObjectPart parts in AvatarAppearanceNew.Descriptor.Parts)
+            foreach(ObjectPart parts in localAvatarAppearance.Descriptor.Parts)
             {
                 _partsIndex++;
                 if (parts.PartName == _partName)
