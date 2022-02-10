@@ -71,8 +71,8 @@ public class CustomizingOther : UIScene
 
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraEnter, UIEvents.UIEvent.Enter);
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraExit, UIEvents.UIEvent.Exit);
-
         GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(DoneButton);
     }
 
     public void CameraEnter(PointerEventData data)
@@ -127,5 +127,10 @@ public class CustomizingOther : UIScene
     public void CameraResetButton(PointerEventData data)
     {
         CameraReset();
+    }
+
+    public void DoneButton(PointerEventData data)
+    {
+        Debug.Log("Done");
     }
 }

@@ -16,7 +16,6 @@ public class CustomizingButtonGroup : UIBase
     private string _partName;
     private string _propertyName;
     private int _partsIndex;
-    private int _componentCount;
 
     private GridLayoutGroup _gridLayout;
     private Vector2 _cellSize;
@@ -44,36 +43,39 @@ public class CustomizingButtonGroup : UIBase
             {
                 AvatarAppearanceNew.AppearancePropertyTypes type = (AvatarAppearanceNew.AppearancePropertyTypes)Enum.Parse(typeof(AvatarAppearanceNew.AppearancePropertyTypes), props.PropertyType, true);
                 string paletteName = props.PaletteName;
+                int componentCount;
                 int pick = 0;
                 switch (type)
                 {
                     case AvatarAppearanceNew.AppearancePropertyTypes.BaseColor:
                         SetColGrid();
+                        componentCount = ColorPalette.GetXrealPalette(paletteName).ColorsSet.Length;
                         foreach (XTownColor col in ColorPalette.GetXrealPalette(paletteName).ColorsSet)
                         {
                             GameObject buttons = UIManager.UI.MakeSubItem<CustomizingButton>(gridPanel.transform).gameObject;
                             CustomizingButton button = buttons.GetOrAddComponent<CustomizingButton>();
-                            button.SetInfo(_partName, _propertyName, col.colorName, paletteName, pick, _partsIndex, type, _cellSize);
+                            button.SetInfo(_partName, _propertyName, col.colorName, paletteName, pick, _partsIndex, componentCount, type, _cellSize);
                             pick++;
                         }
+                        /*
                         GameObject fcps = UIManager.UI.MakeSubItem<FCPButton>(gridPanel.transform).gameObject;
                         FCPButton fcp = fcps.GetOrAddComponent<FCPButton>();
-                        fcp.SetInfo(_partName, _propertyName, pick, type, _cellSize);
+                        fcp.SetInfo(_partName, _propertyName, pick, type, _cellSize);*/
                         break;
                     case AvatarAppearanceNew.AppearancePropertyTypes.Metallic:
                     case AvatarAppearanceNew.AppearancePropertyTypes.Emission:
                     case AvatarAppearanceNew.AppearancePropertyTypes.Transparency:
                         SetColGrid();
+                        componentCount = LinearPalette.GetXrealPalette(paletteName).ValuesSet.Length;
                         foreach (float val in LinearPalette.GetXrealPalette(paletteName).ValuesSet)
                         {
                             GameObject buttons = UIManager.UI.MakeSubItem<CustomizingButton>(gridPanel.transform).gameObject;
                             CustomizingButton button = buttons.GetOrAddComponent<CustomizingButton>();
-                            button.SetInfo(_partName, _propertyName, val.ToString(), paletteName, pick, _partsIndex, type, _cellSize);
+                            button.SetInfo(_partName, _propertyName, val.ToString(), paletteName, pick, _partsIndex, componentCount, type, _cellSize);
                             pick++;
                         }
                         break;
                 }
-                _componentCount = pick - 1;
                 break;
             }
         }
@@ -126,10 +128,4 @@ public class CustomizingButtonGroup : UIBase
         this.transform.parent.GetComponent<VerticalLayoutGroup>().enabled = true;
     }
 
-    public void RandomCustomizing(PointerEventData data)
-    {
-        int rand = UnityEngine.Random.Range(0, _componentCount);
-        GetUIComponent<GameObject>((int)GameObjects.GridPanel).transform.GetChild(rand).GetComponent<CustomizingButton>().Select();
-        GetUIComponent<GameObject>((int)GameObjects.GridPanel).transform.GetChild(rand).GetComponent<CustomizingButton>().SetProperty();
-    }
 }
