@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +16,7 @@ public class CustomizingOther : UIScene
         DoneButton,
         CentralAxis,
         AvatarViewCam,
-        CartoonSpaceSuitPrefab
+        CharacterPrefabPreview
     }
 
     private static GameObject _previewAvatarObject;
@@ -66,28 +68,38 @@ public class CustomizingOther : UIScene
 
         _centralAxis = GetUIComponent<GameObject>((int)GameObjects.CentralAxis);
         _cam = GetUIComponent<GameObject>((int)GameObjects.AvatarViewCam);
-        _avatar = GetUIComponent<GameObject>((int)GameObjects.CartoonSpaceSuitPrefab);
+        _avatar = GetUIComponent<GameObject>((int)GameObjects.CharacterPrefabPreview);
 
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraEnter, UIEvents.UIEvent.Enter);
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraExit, UIEvents.UIEvent.Exit);
 
         GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
+        /*
         for (int i = 0; i < AvatarAppearanceNew.MaterialsCount; i++)
         {
             GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(this.transform.parent.Find("CustomizingTabGroup").GetChild(0).GetChild(i).GetComponent<CustomizingTab>().InitiallizeButton);
         }
-
-        GetUIComponent<Button>((int)GameObjects.DoneButton).gameObject.BindEvent(OnCustomizeDone);
-
+        */
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnClick_JoinWorld, UIEvents.UIEvent.Click);
     }
 
-    public void OnCustomizeDone(PointerEventData data)
+    public void OnClick_JoinWorld(PointerEventData data)
     {
+        Debug.Log("Onclick joinworld!~");
+        if (!PhotonNetwork.IsConnected)
+            return;
+        
 
+        RoomOptions options = new RoomOptions();
+        options.BroadcastPropsChangeToAll = true;
+        options.MaxPlayers = 20;
+        PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
     }
 
     public void CameraEnter(PointerEventData data)
+        
     {
+        Debug.Log("camera enter");
         _isEnter = true;
         _isExit = false;
     }
