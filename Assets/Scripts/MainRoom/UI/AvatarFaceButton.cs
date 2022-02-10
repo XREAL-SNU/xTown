@@ -10,7 +10,7 @@ public class AvatarFaceButton : MonoBehaviour
     [SerializeField] Image ButtonImage;
 
     Image _buttonBorder;
-    int _imageIndex;
+    [SerializeField] int _imageIndex;
 
     public bool Selected { get; set; }
 

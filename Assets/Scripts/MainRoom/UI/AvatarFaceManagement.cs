@@ -22,6 +22,8 @@ public class AvatarFaceManagement : MonoBehaviour
 
     public AvatarFaceButton GetFavButton(int index) { return _favList[index]; }
 
+    public static List<AvatarFaceButton> s_favList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +43,10 @@ public class AvatarFaceManagement : MonoBehaviour
             childButton = EmojiList.GetChild(i).GetComponent<AvatarFaceButton>();
             childButton.SetButtonImage(_avatarFaceList[i]);
             childButton.SetButtonText(_avatarFaceList[i].name);
+            childButton.SetImageIndex(i);
         }
+
+        s_favList = _favList;
     }
 
     // Invoke this Function when Button in Viewport is Clicked
