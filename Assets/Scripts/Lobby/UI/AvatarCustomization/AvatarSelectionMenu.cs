@@ -20,9 +20,13 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
 
     public void OnClick_JoinWorld()
     {
+
         if (!PhotonNetwork.IsConnected)
             return;
+        _roomCanvases.AvatarSelectionCanvas.Hide();
+        _roomCanvases.AvatarConfirmCanvas.Show();
 
+        /*
         Debug.Log(PhotonNetwork.LocalPlayer.NickName, this);
         PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
 
@@ -30,6 +34,7 @@ public class AvatarSelectionMenu : MonoBehaviourPunCallbacks
         options.BroadcastPropsChangeToAll = true;
         options.MaxPlayers = 20;
         PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
+        */
     }
 
     public override void OnJoinedRoom()
