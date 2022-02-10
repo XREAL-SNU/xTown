@@ -46,6 +46,7 @@ public class CameraControl : MonoBehaviour
         if (_firstPersonCam == null)
         {
             _firstPersonCam = CameraManager.FirstPersonCamObj;
+            return;
         }
 
         if (Input.GetKey(KeyCode.KeypadMinus) || Input.GetKey(KeyCode.Minus) || Input.GetKey(KeyCode.Equals))

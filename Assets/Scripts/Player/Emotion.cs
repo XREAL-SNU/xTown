@@ -41,21 +41,11 @@ public class Emotion : MonoBehaviour
         if (_view is null || !_view.IsMine)
         {
             Debug.Log("View Error");
-            //return;
-        }
-
-        if (_camManager == null)
-        {
-            _camManager = GameObject.Find("CamManager");
-            _characterCam = GameObject.Find("CharacterCam").GetComponent<CameraControl>();
-            _faceCam = GameObject.Find("MainCanvases").transform.GetChild(4).GetChild(1);
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log("Press T");
-            Debug.Log(_camManager);
-            Debug.Log(_characterCam);
             _faceList = Face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
                 MenuSlice[i].transform.GetChild(1).GetComponent<Text>().text = _faceList[i].GetButtonText().text;
