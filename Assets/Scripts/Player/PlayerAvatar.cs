@@ -62,8 +62,6 @@ public class PlayerAvatar: MonoBehaviour
             Appearance = PlayerManager.Players.LocalAvatarAppearance;
 
             // Test code
-            Appearance.SetProperty(Appearance.GetCustomPartGo("Helmet"), "Color" ,AvatarAppearanceNew.AppearancePropertyTypes.BaseColor,
-                ColorPalette.DefaultColorPalette.PaletteName, PhotonNetwork.LocalPlayer.ActorNumber % 3);
             Appearance.Apply(gameObject);
 
             Debug.Log($"<color=red> PlayerAvatar/ setting my appearance: actor#{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
