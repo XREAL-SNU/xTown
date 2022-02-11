@@ -55,14 +55,4 @@ public class CustomizingPage : UIBase
         _partName = name;
         this.name = name;
     }
-
-
-    public void RandomCustomizing(PointerEventData data)
-    {
-        GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
-        foreach (Transform props in contentPanel.transform.GetComponentsInChildren<Transform>())
-        {
-            GetUIComponent<GameObject>((int)GameObjects.RandomButton).gameObject.BindEvent(props.GetComponent<CustomizingButtonGroup>().RandomCustomizing);
-        }
-    }
 }
