@@ -26,11 +26,16 @@ public class CustomizingPage : UIBase
     public override void Init()
     {
         Bind<GameObject>(typeof(GameObjects));
-        //GetUIComponent<GameObject>((int)GameObjects.ResetButton).gameObject.BindEvent(ResetCustomizing);
+
+        GetUIComponent<GameObject>((int)GameObjects.ResetButton).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+        GetUIComponent<GameObject>((int)GameObjects.RandomButton).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+        GetUIComponent<GameObject>((int)GameObjects.ResetButton).gameObject.BindEvent(OnButtonExit, UIEvents.UIEvent.Exit);
+        GetUIComponent<GameObject>((int)GameObjects.RandomButton).gameObject.BindEvent(OnButtonExit, UIEvents.UIEvent.Exit);
 
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
         AvatarAppearanceNew appearance = PlayerManager.Players.LocalAvatarAppearance;
         Debug.Log(appearance.Descriptor.Parts[0].Properties[0].PropertyName);
+
         if (appearance.CustomParts.ContainsKey(_partName))
         {
             foreach(ObjectPart parts in appearance.Descriptor.Parts)
@@ -41,7 +46,7 @@ public class CustomizingPage : UIBase
                     {
                         GameObject buttons = UIManager.UI.MakeSubItem<CustomizingButtonGroup>(contentPanel.transform).gameObject;
                         CustomizingButtonGroup button = buttons.GetOrAddComponent<CustomizingButtonGroup>();
-                        button.SetInfo(_partName, parts.Properties[i].PropertyName, _partsIndex);
+                        button.SetInfo(_partName, parts.Properties[i].PropertyName, _partsIndex, parts.Properties[i].TextColor);
                     }
                     break;
                 }
@@ -54,5 +59,17 @@ public class CustomizingPage : UIBase
     {
         _partName = name;
         this.name = name;
+    }
+
+    public void OnButtonEnter(PointerEventData data)
+    {
+        GameObject btn = data.pointerEnter.transform.parent.gameObject;
+        btn.GetComponent<Image>().color = XTownColor.XTownGrey.ToColor();
+    }
+
+    public void OnButtonExit(PointerEventData data)
+    {
+        GameObject btn = data.pointerEnter.transform.parent.gameObject;
+        btn.GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
     }
 }

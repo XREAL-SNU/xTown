@@ -74,10 +74,17 @@ public class CustomizingOther : UIScene
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraEnter, UIEvents.UIEvent.Enter);
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraExit, UIEvents.UIEvent.Exit);
 
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(DoneButton);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnButtonExit);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnButtonExit, UIEvents.UIEvent.Exit);
+        
         GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
         GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(BackButton);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(OnButtonExit);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(OnButtonExit, UIEvents.UIEvent.Exit);
 
-        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(DoneButton);
     }
 
 
@@ -157,5 +164,17 @@ public class CustomizingOther : UIScene
             return;
         }
         menu.OnClick_BackPlayerNameInputMenu();
+    }
+
+    public void OnButtonEnter(PointerEventData data)
+    {
+        GameObject btn = data.pointerEnter.transform.parent.gameObject;
+        btn.GetComponent<Image>().color = XTownColor.XTownGrey.ToColor();
+    }
+
+    public void OnButtonExit(PointerEventData data)
+    {
+        GameObject btn = data.pointerEnter.transform.parent.gameObject;
+        btn.GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
     }
 }

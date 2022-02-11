@@ -16,6 +16,7 @@ public class CustomizingButtonGroup : UIBase
     private string _partName;
     private string _propertyName;
     private int _partsIndex;
+    private XTownColor _textColor;
 
     private GridLayoutGroup _gridLayout;
     private Vector2 _cellSize;
@@ -35,6 +36,7 @@ public class CustomizingButtonGroup : UIBase
         GameObject gridPanel = GetUIComponent<GameObject>((int)GameObjects.GridPanel);
         gridPanel.GetComponent<Text>().text = _propertyName;
         gridPanel.GetComponent<Text>().fontSize = 45;
+        gridPanel.GetComponent<Text>().color = _textColor.ToColor();
         _gridLayout = gridPanel.GetComponent<GridLayoutGroup>();
 
         foreach(ObjectPartProperty props in PlayerManager.Players.LocalAvatarAppearance.Descriptor.Parts[_partsIndex].Properties)
@@ -83,12 +85,13 @@ public class CustomizingButtonGroup : UIBase
 
     }
 
-    public void SetInfo(string part, string property, int index)
+    public void SetInfo(string part, string property, int index, XTownColor col)
     {
         _partName = part;
         _propertyName = property;
         this.name = property;
         _partsIndex = index;
+        _textColor = col;
     }
 
     public void SetColGrid()
