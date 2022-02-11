@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -427,7 +427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1402005855899756439, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402005855899756439, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 1577937888637359791, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: m_FontData.m_MinSize
@@ -483,7 +487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2794768154597946710, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2794768154827489504, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -728,7 +732,7 @@ PrefabInstance:
     - target: {fileID: 7803649970594797631, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: WorldField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1049262169}
     - target: {fileID: 8158650694664202005, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: m_text
       value: 'User
