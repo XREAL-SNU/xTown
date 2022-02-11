@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -428,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c715ed8f51e864da1f375f2c573c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stickyNote: {fileID: 0}
 --- !u!61 &5748472551087484687
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -537,20 +538,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9c5e1a25fea7e4b985619525593973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controllerTarget: {fileID: 5748472551318418790}
-  _controllerImage: {fileID: 5748472551511896531}
-  _contentTransform: {fileID: 5748472551087484682}
-  _contentCollider: {fileID: 5748472551087484687}
-  _contentImage: {fileID: 5748472552644118333}
-  _contentText: {fileID: 5748472551919658679}
+  _contentCanvas: {fileID: 0}
+  _controllerCanvas: {fileID: 0}
   _editCanvas: {fileID: 5748472551392056867}
-  _editInputField: {fileID: 5748472551861603995}
-  _backgroundColors:
-  - {r: 1, g: 0.85882354, b: 0.015686275, a: 1}
-  - {r: 0.41037738, g: 0.6352511, b: 1, a: 1}
-  - {r: 0.47585443, g: 0.8679245, b: 0.45443216, a: 1}
-  - {r: 1, g: 0.4009434, b: 0.4009434, a: 1}
-  _colorChangerIcon: {fileID: 2851423142316090800}
+  _view: {fileID: 0}
 --- !u!114 &3999546461865984035
 MonoBehaviour:
   m_ObjectHideFlags: 0
