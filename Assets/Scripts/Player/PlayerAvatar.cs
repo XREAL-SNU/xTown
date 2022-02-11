@@ -58,12 +58,12 @@ public class PlayerAvatar: MonoBehaviour
 
         if (PhotonView.IsMine)
         {
-            PlayerManager.Players.LocalPlayerGo = gameObject;
+            //PlayerManager.Players.LocalPlayerGo = gameObject; moved to spawnCharacter Init line.
             Appearance = PlayerManager.Players.LocalAvatarAppearance;
 
-            // Test code
+            /* Test code
             Appearance.Apply(gameObject);
-
+            */ 
             Debug.Log($"<color=red> PlayerAvatar/ setting my appearance: actor#{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
             // automatic application? Appearance.Apply(PlayerManager.Players.LocalPlayerGo);
 
@@ -94,7 +94,7 @@ public class PlayerAvatar: MonoBehaviour
     // Photon Avatar Sync
     public void SyncAvatarProperties(PlayerInfo playerInfo)
     {
-        Debug.Log($"<color = blue> PlayerAvatar/Begin Sync {playerInfo.PlayerName}'s avatar properties </blue>");
+        Debug.Log($"<color=blue> PlayerAvatar/Sending my avatar to {playerInfo.PlayerName} </color>");
         SyncAvatarProperties(playerInfo.ActorNr);
     }
 
@@ -104,7 +104,9 @@ public class PlayerAvatar: MonoBehaviour
         foreach (ObjectPart part in info.Parts)
         {
             GameObject go = Appearance.GetCustomPartGo(part.PartName);
-            foreach(ObjectPartProperty prop in part.Properties)
+            Debug.Log($"<color=green> Sync apperance part {part.PartName} of player {PhotonView.OwnerActorNr} </color>");
+
+            foreach (ObjectPartProperty prop in part.Properties)
             {
                 PhotonView.RPC("SetAndApplyObjectPartPropertyRPC", RpcTarget.Others, part.PartName, prop.PropertyName,
                     prop.PaletteName, prop.Pick, actorNr);
@@ -128,7 +130,6 @@ public class PlayerAvatar: MonoBehaviour
             Debug.LogWarning("Appearance null at sync stage, creating new");
             Appearance = new AvatarAppearanceNew(AvatarAppearanceNew.XRealSpaceSuitAppearanceDescriptor, gameObject);
         }
-        Debug.Log($"<color=green> PlayerAvatar/ setting other's appearance: actor#{info.Sender.ActorNumber} </color>");
 
 
         GameObject partGO = Appearance.GetCustomPartGo(partName);
