@@ -109,9 +109,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
         switch (evtype)
         {
             case RoomEvent.PlayerJoined:
+                evt.OnPlayerJoinedHandler -= action;
                 evt.OnPlayerJoinedHandler += action;
                 break;
             case RoomEvent.PlayerLeft:
+                evt.OnPlayerLeftHandler -= action;
                 evt.OnPlayerLeftHandler += action;
                 break;
         }
