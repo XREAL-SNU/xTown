@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class RoomsCanvases : MonoBehaviour
 {
-
+    [SerializeField]
+    private LoadingCanvas _loadingCanvas;
+    public LoadingCanvas LoadingCanvas { get { return _loadingCanvas; } }
 
     [SerializeField]
     private CreateOrJoinRoomCanvas _createOrJoinRoomCanvas;
@@ -53,6 +55,7 @@ public class RoomsCanvases : MonoBehaviour
 
     private void FirstInitialize()
     {
+        LoadingCanvas.FirstInitialize(this);
         CreateOrJoinRoomCanvas.FirstInitialize(this);
         CurrentRoomCanvas.FirstInitialize(this);
         PlayerNameInputCanvas.FirstInitialize(this);
