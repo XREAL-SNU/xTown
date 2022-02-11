@@ -98,8 +98,6 @@ public class ContentCanvas : MonoBehaviour
         _hovering = false;
         _view = GetComponent<PhotonView>();
         _transformView = GetComponent<PhotonTransformView>();
-
-        GetComponent<GraphicRaycaster>().ignoreReversedGraphics = false;
     }
 
     [PunRPC]
