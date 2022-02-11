@@ -17,8 +17,15 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
     private Text _playerPassword;
     [SerializeField]
     private InputField _playerPasswordInputField;
+    [SerializeField]
+    private GameObject _playerPasswordConfirm;
+    [SerializeField]
+    private GameObject _playerEmail;
 
-    string url = "http://localhost:3000/enter";
+    // string url = "http://localhost:3000/enter";
+    static string url = "http://ec2-54-92-242-20.compute-1.amazonaws.com:3000/enter";
+    static string access_type= "login";
+    static string final_url = url + "?type=" + access_type;
 
     private RoomsCanvases _roomCanvases;
     public void FirstInitialize(RoomsCanvases canvases)
@@ -33,14 +40,27 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         if (PlayerPrefs.HasKey(playerNamePrefKey))
             {
             PhotonNetwork.NickName = PlayerPrefs.GetString(playerNamePrefKey);
-        }       
+        }
+        if(access_type == "login") {
+            OnClick_SetLogin();
+        } else {
+            OnClick_SetSignup();
+        }
     }
 
     public void OnClick_SetPlayerName()
     {
-        if (string.IsNullOrEmpty(_playerName.text) || string.IsNullOrEmpty(_playerPassword.text))
+        if (string.IsNullOrEmpty(_playerName.text) || string.IsNullOrEmpty(_playerPasswordInputField.text))
         {
             Debug.LogError("Player Name or Password is null or empty");
+            return;
+        }
+
+        Debug.Log(_playerEmail.GetComponent<Text>().text);
+        Debug.Log(_playerPasswordConfirm.GetComponent<Text>().text);
+
+        if(access_type == "signup" && _playerPasswordInputField.text != _playerPasswordConfirm.GetComponent<Text>().text) {
+            Debug.LogError("Password does not match");
             return;
         }
 
@@ -55,12 +75,28 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         // _roomCanvases.PlayerNameInputCanvas.Hide();
     }
 
+    public void OnClick_SetLogin() {
+        access_type = "login";
+        _playerPasswordConfirm.SetActive(false);
+        _playerEmail.SetActive(false);
+    }
+
+    public void OnClick_SetSignup() {
+        access_type = "signup";
+        _playerPasswordConfirm.SetActive(true);
+        _playerEmail.SetActive(true);
+    }
+
     IEnumerator SendRequest() {
         WWWForm form = new WWWForm();
         form.AddField("name", _playerName.text);
         form.AddField("pw", _playerPasswordInputField.text);
+        form.AddField("pw_confirm", _playerPasswordConfirm.GetComponent<Text>().text);
+        form.AddField("email", _playerEmail.GetComponent<Text>().text);
 
-        UnityWebRequest uwr = UnityWebRequest.Post(url, form);
+        final_url = url + "?type=" + access_type;
+
+        UnityWebRequest uwr = UnityWebRequest.Post(final_url, form);
         yield return uwr.SendWebRequest();
 
         if (uwr.isNetworkError)
