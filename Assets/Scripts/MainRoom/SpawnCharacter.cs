@@ -35,6 +35,7 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
 
         // disable currentRoomCanvas
         RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+        // this ensures that LocalPlayerGo is always set at Start time.
         InitCharacter();
     }
 
@@ -100,6 +101,8 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
             // instantiate over the network
             Debug.Log("SpawnCharacter/Instantiating player over the network");
             Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+            PhotonView view = Player.GetComponent<PhotonView>();
+            if (view.IsMine) PlayerManager.Players.LocalPlayerGo = Player;
         }
 
         FollowTarget = Player.transform.Find("FollowTarget");

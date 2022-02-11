@@ -14,7 +14,6 @@ namespace StarterAssets
 			
 			if (!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
             {
-				Debug.Log("No Network: Awake called on Character");
 				base.Awake();
 				return;
 			}
@@ -22,7 +21,6 @@ namespace StarterAssets
 			_view = GetComponent<PhotonView>();
             if (_view.IsMine)
             {
-				Debug.Log("Networked: Awake called on Character");
 				base.Awake();
 			}
 		}
@@ -31,13 +29,11 @@ namespace StarterAssets
 		{
 			if (!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
 			{
-				Debug.Log("No Network: Start called on Character");
 				base.Start();
 				return;
 			}
 			if (_view.IsMine)
 			{
-				Debug.Log("Networked: Start called on Character");
 				base.Start();
 			}
 		}
