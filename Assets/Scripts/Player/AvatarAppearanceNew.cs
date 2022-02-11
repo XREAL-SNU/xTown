@@ -318,6 +318,7 @@ public class ObjectPartProperty
     public string PropertyType;
     public string PaletteName;
     public int Pick;
+    public XTownColor TextColor;
 
     public ObjectPartProperty(string name, AvatarAppearanceNew.AppearancePropertyTypes type)
     {
@@ -329,12 +330,14 @@ public class ObjectPartProperty
             case AvatarAppearanceNew.AppearancePropertyTypes.BaseColor:
                 PaletteName = ColorPalette.DefaultColorPalette.PaletteName;
                 Pick = 0;
+                TextColor = XTownColor.XTownRed;
                 break;
             case AvatarAppearanceNew.AppearancePropertyTypes.Metallic:
             case AvatarAppearanceNew.AppearancePropertyTypes.Emission:
             case AvatarAppearanceNew.AppearancePropertyTypes.Transparency:
                 PaletteName = LinearPalette.DefaultLinearPalette.PaletteName;
                 Pick = 0;
+                TextColor = XTownColor.XTownBlue;
                 break;
         }
     }

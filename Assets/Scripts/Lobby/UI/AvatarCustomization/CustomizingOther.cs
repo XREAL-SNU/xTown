@@ -74,9 +74,17 @@ public class CustomizingOther : UIScene
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraEnter, UIEvents.UIEvent.Enter);
         GetUIComponent<GameObject>((int)GameObjects.CameraController).gameObject.BindEvent(CameraExit, UIEvents.UIEvent.Exit);
 
-        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
-
         GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(DoneButton);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnButtonExit);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+        GetUIComponent<GameObject>((int)GameObjects.DoneButton).gameObject.BindEvent(OnButtonExit, UIEvents.UIEvent.Exit);
+        
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(CameraResetButton);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(BackButton);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(OnButtonExit);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+        GetUIComponent<GameObject>((int)GameObjects.BackButton).gameObject.BindEvent(OnButtonExit, UIEvents.UIEvent.Exit);
+
     }
 
 
@@ -108,20 +116,20 @@ public class CustomizingOther : UIScene
     public void CameraZoom()
     {
         _wheel += Input.GetAxis("Mouse ScrollWheel");
-        if (_wheel >= -1)
+        if (_wheel >= -0.8f)
         {
-            _wheel = -1;
+            _wheel = -0.8f;
         }
-        if (_wheel <= -9)
+        if (_wheel <= -3.5f)
         {
-            _wheel = -9;
+            _wheel = -3.5f;
         }
         _cam.transform.localPosition = new Vector3(0, 0, _wheel);
     }
 
     public void CameraReset()
     {
-        _wheel = -6;
+        _wheel = -2;
         _mouseX = 0;
         _isEnter = false;
         _avatar.transform.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
@@ -144,5 +152,29 @@ public class CustomizingOther : UIScene
             return;
         }
         menu.OnClick_JoinWorld();
+    }
+
+    public void BackButton(PointerEventData data)
+    {
+        Debug.Log("Back");
+        AvatarSelectionMenu menu = GetComponentInParent<AvatarSelectionMenu>();
+        if (menu is null)
+        {
+            Debug.LogError("AvatarSelectionMenu is null");
+            return;
+        }
+        menu.OnClick_BackPlayerNameInputMenu();
+    }
+
+    public void OnButtonEnter(PointerEventData data)
+    {
+        GameObject btn = data.pointerEnter.transform.parent.gameObject;
+        btn.GetComponent<Image>().color = XTownColor.XTownGrey.ToColor();
+    }
+
+    public void OnButtonExit(PointerEventData data)
+    {
+        GameObject btn = data.pointerEnter.transform.parent.gameObject;
+        btn.GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
     }
 }

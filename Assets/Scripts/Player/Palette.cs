@@ -25,7 +25,7 @@ public class ColorPalette
     }
 
     public static XTownColor[] DefaultColorsSet = new XTownColor[] {
-        XTownColor.XTownWhite, XTownColor.XTownRed, XTownColor.XTownBlue, XTownColor.XTownGreen, XTownColor.XTownMagenta, XTownColor.XTownYellow, XTownColor.XTownGrey
+        XTownColor.XTownWhite, XTownColor.XTownGrey, XTownColor.XTownRed, XTownColor.XTownMagenta, XTownColor.XTownYellow, XTownColor.XTownGreen, XTownColor.XTownCyan, XTownColor.XTownBlue
     };
 
     public static XTownColor[] DarkColorsSet = new XTownColor[] {
@@ -121,7 +121,12 @@ public class XTownColor
     public static XTownColor XTownYellow = new XTownColor("XTownYellow", Color.yellow);
     public static XTownColor XTownGrey = new XTownColor("XTownGrey", Color.grey);
     public static XTownColor XTownMagenta = new XTownColor("XTownMagenta", Color.magenta);
-    public static XTownColor XTownBlack = new XTownColor("XTownBalck", Color.black);
+    public static XTownColor XTownBlack = new XTownColor("XTownBlack", Color.black);
+    public static XTownColor XTownCyan = new XTownColor("XTownCyan", Color.cyan);
+
+    public static XTownColor ButtonOutlineDefault = new XTownColor("ButtonOutlineDefault", Color.black);
+    public static XTownColor ButtonOutlineEnter = new XTownColor("ButtonOutlineEnter", new Color(0.2f, 0.3f, 0.7f, 1.0f));
+    public static XTownColor ButtonOutlineClick = new XTownColor("ButtonOutlineClick", new Color(0.2f, 0.7f, 0.3f, 1.0f));
 
     public XTownColor(string name, float r, float g, float b, float a)
     {
