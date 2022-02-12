@@ -29,6 +29,14 @@ public class ContentCanvas : MonoBehaviour
     private Button _colorChangerButton;
     [SerializeField]
     private Image _colorChangerIcon;
+    [SerializeField]
+    private Button _copyToClipboardButton;
+    [SerializeField]
+    private Image _copyToClipboardIcon;
+    [SerializeField]
+    private Button _exportToTxtButton;
+    [SerializeField]
+    private Image _exportToTxtIcon;
 
     private StickyNote _stickyNote;
 
@@ -69,6 +77,8 @@ public class ContentCanvas : MonoBehaviour
     {
         // ��ƼŰ��Ʈ ���� ��ȭ ��ư�� ���� ��ȭ �Լ� ���ε�
         _colorChangerButton.onClick.AddListener(OnClick_Color);
+        _copyToClipboardButton.onClick.AddListener(OnClick_Copy);
+        _exportToTxtButton.onClick.AddListener(OnClick_Export);
 
         // �̺�Ʈ Ʈ���ſ� ���콺 ������ Enter/Exit �Լ� ���ε�
         EventTrigger trigger = GetComponent<EventTrigger>();
@@ -94,6 +104,11 @@ public class ContentCanvas : MonoBehaviour
         
         _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
         _colorChangerIcon.DOFade(0, 0);
+        _copyToClipboardIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        _copyToClipboardIcon.DOFade(0, 0);
+        _exportToTxtIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        _exportToTxtIcon.DOFade(0, 0);
+
         _collider.size = new Vector2(_rectTransform.rect.width, _rectTransform.rect.height);
         _hovering = false;
         _view = GetComponent<PhotonView>();
@@ -167,6 +182,20 @@ public class ContentCanvas : MonoBehaviour
         }
     }
 
+    public void OnClick_Copy()
+    {
+        TextEditor textEditor = new TextEditor();
+        textEditor.text = _contentText.text;
+        textEditor.SelectAll();
+        textEditor.Copy();
+    }
+
+    public void OnClick_Export()
+    {
+        Debug.Log("clicked export button");
+    }
+
+
     private int GetNextColorIndex(int i)
     {
         if (i + 1 > _backgroundColors.Length - 1)
@@ -180,9 +209,18 @@ public class ContentCanvas : MonoBehaviour
     }
 
     // ��ƼŰ��Ʈ�� ���� ��ȭ �������� �Ⱥ��̰� �ϴ� �Լ�
-    public void HideColorIcon()
+    public void HideIcons()
     {
         _colorChangerIcon.DOFade(0, 0.4f);
+        _copyToClipboardIcon.DOFade(0, 0.4f);
+        _exportToTxtIcon.DOFade(0, 0.4f);
+    }
+
+    public void ShowIcons()
+    {
+        _colorChangerIcon.DOFade(1, 0.4f);
+        _copyToClipboardIcon.DOFade(1, 0.4f);
+        _exportToTxtIcon.DOFade(1, 0.4f);
     }
 
     // ��ƼŰ��Ʈ�� ���콺 �����Ͱ� ������ ��
@@ -190,7 +228,7 @@ public class ContentCanvas : MonoBehaviour
     {
         _hovering = true;
         _stickyNote.ControllerCanvas.ShowController();
-        _colorChangerIcon.DOFade(1, 0.4f);
+        ShowIcons();
     }
 
     // ��ƼŰ��Ʈ�κ��� ���콺 �����Ͱ� ������ ��
@@ -265,7 +303,10 @@ public class ContentCanvas : MonoBehaviour
         _colorIndex = GetNextColorIndex(_colorIndex);
         _contentImage.color = _backgroundColors[_colorIndex];            
         _colorChangerIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        _copyToClipboardIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
+        _exportToTxtIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
     }
+
     [PunRPC]
     public void ChangeText(string value)
     {
