@@ -30,10 +30,12 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
 
     // string url = "http://localhost:3000/enter";
     static string url = "http://ec2-54-92-242-20.compute-1.amazonaws.com:3000/enter";
+    static string local_url = "http://localhost:3000/enter";
     static string access_type= "login";
     static string final_url = url + "?type=" + access_type;
     static bool errorMessageExists = false;
     static string errorMessage;
+    static bool localTest = false;
 
     private RoomsCanvases _roomCanvases;
     public void FirstInitialize(RoomsCanvases canvases)
@@ -125,6 +127,7 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         form.AddField("email", _playerEmailInputField.text);
 
         final_url = url + "?type=" + access_type;
+        if(localTest) final_url = local_url + "?type=" + access_type;
 
         UnityWebRequest uwr = UnityWebRequest.Post(final_url, form);
         yield return uwr.SendWebRequest();
