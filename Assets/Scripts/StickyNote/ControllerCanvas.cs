@@ -107,7 +107,7 @@ public class ControllerCanvas : MonoBehaviour
         else
         {
             _background.transform.DOScale(0, 0.4f);
-            _stickyNote.ContentCanvas.HideColorIcon();
+            _stickyNote.ContentCanvas.HideIcons();
         }
     }
 
