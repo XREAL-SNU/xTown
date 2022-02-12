@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
+using Photon.Realtime;
 namespace JK
 {
     public class GameManager : MonoBehaviour
@@ -25,6 +26,11 @@ namespace JK
         public GameObject WhiteBall;
         public GameObject A_Turn;
         public GameObject B_Turn;
+        public CueScript _cueScript;
+        public HoleScript[] _holeScript;
+        public WhiteBallMovement _whiteBallMovement;
+        public DrawTrajectory _trajectory;
+        public CameraLocation _cameraLocation;
         public PhotonView _view;
         public static Vector3 whitePosition;
         public static int[] isBall= new int[16];
@@ -112,25 +118,17 @@ namespace JK
                 if(NothingBool||OtherBool)
                 {
                     AorB = !AorB;
+                    if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
+                    {
+                        _view.RPC("SwitchOwnerShip",RpcTarget.Others);
+                        //Debug.Log("SwitchOwnership");
+                    }
                 }
-                NothingBool = true;
-                OtherBool = false;
-                //라인 렌더러 & 큐 활성화
-                line.enabled = true;
-                WhiteBallMovement.CueBool = true;
-                WhiteBallMovement.press_time = 0;
-                StartCoroutine(SetActiveObjInSecond(Turn_Panel, 2f));
-                if(AorB)
-                {
-                    StartCoroutine(SetActiveObjInSecond(A_Text, 2f));
-                    A_Turn.SetActive(true);
-                    B_Turn.SetActive(false);
-                }
+                if(!PocketDyeNetworkManager.Instance.networked)
+                AfterOwnerShip();
                 else
                 {
-                    StartCoroutine(SetActiveObjInSecond(B_Text, 2f));
-                    A_Turn.SetActive(false);
-                    B_Turn.SetActive(true);
+                    _view.RPC("AfterOwnerShip",RpcTarget.All);
                 }
                 //CamBool = true;                
                 //Debug.Log("A: "+countA+", B: "+countB);            
@@ -150,6 +148,46 @@ namespace JK
         {
             _cameraScript.SetCameraCue();   
         }
-        
+
+        [PunRPC]
+        void SwitchOwnerShip()
+        {
+            AorB = !AorB;
+            _cueScript._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _holeScript[0]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _holeScript[1]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _holeScript[2]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _holeScript[3]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _holeScript[4]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _holeScript[5]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);            
+            _whiteBallMovement._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _cameraLocation._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _trajectory._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            _view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+
+        [PunRPC]
+        void AfterOwnerShip()
+        {
+            NothingBool = true;
+            OtherBool = false;
+                //라인 렌더러 & 큐 활성화
+            line.enabled = true;
+            WhiteBallMovement.CueBool = true;
+            WhiteBallMovement.press_time = 0;
+            StartCoroutine(SetActiveObjInSecond(Turn_Panel, 2f));
+            if(AorB)
+            {
+                StartCoroutine(SetActiveObjInSecond(A_Text, 2f));
+                A_Turn.SetActive(true);
+                B_Turn.SetActive(false);
+            }
+            else
+            {
+                StartCoroutine(SetActiveObjInSecond(B_Text, 2f));
+                A_Turn.SetActive(false);
+                B_Turn.SetActive(true);
+            }        
+        }    
     }
 }

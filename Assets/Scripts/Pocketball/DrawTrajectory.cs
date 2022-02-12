@@ -10,7 +10,7 @@ namespace JK
         public Vector3 ballDirection;
         public GameObject WhiteBall;
         public GameObject CameraLocation;
-        PhotonView _view;
+        public PhotonView _view;
         
         // Use this for initialization
         void Start ()
@@ -27,15 +27,8 @@ namespace JK
         // Update is called once per frame
         void FixedUpdate ()
         {
-            if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
-            {
-                RenderTrajectory();
-            }
-            else if(!PocketDyeNetworkManager.Instance.networked)
-            {
-                RenderTrajectory();
-            }
- 
+            if(GameManager.currentGameState==GameManager.GameState.Stopped)
+            RenderTrajectory(); 
         }
         [PunRPC]
         void RenderTrajectory()

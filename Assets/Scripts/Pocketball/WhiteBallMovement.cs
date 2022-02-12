@@ -68,7 +68,14 @@ namespace JK
             {
                 press_time=1;
             }
-            PowerBarScript.bar_width = (float)478*(press_time);
+            if(!PocketDyeNetworkManager.Instance.networked)
+            {
+                SetBarWidth(press_time);
+            }
+            else if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
+            {
+                _view.RPC("SetBarWidth",RpcTarget.All,press_time);
+            }
         }
 
 
@@ -102,10 +109,7 @@ namespace JK
                         WaitCamera();
                     }
                     StartCoroutine(Wait(1f)); 
-                    GameManager.line.enabled = false;
                     //아무것도 들어가지 않았을 때 거르기 위함 or 다른 팀 or 흰공
-                    GameManager.NothingBool = true;
-                    press_time = 0;
                 }
             }
         }
@@ -117,12 +121,20 @@ namespace JK
         [PunRPC]
         void WaitCamera()
         {
-            _cameraScript.SetCameraWhole();   
+            _cameraScript.SetCameraWhole();
+            GameManager.NothingBool = true;
+            press_time = 0;
+            GameManager.line.enabled = false;
         }
         [PunRPC]
         void BallForce(Vector3 ballDirection,float ballPower)
         {
             rb.AddForce(ballDirection*ballPower);
         }
+        [PunRPC]
+        void SetBarWidth(float pressTime)
+        {
+            PowerBarScript.bar_width = (float)478*(pressTime);
+        }    
     }
 }
