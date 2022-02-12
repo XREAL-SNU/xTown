@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 namespace JK
 {
     public class GameManager : MonoBehaviour
@@ -24,9 +25,7 @@ namespace JK
         public GameObject WhiteBall;
         public GameObject A_Turn;
         public GameObject B_Turn;
-        
-        
-
+        public PhotonView _view;
         public static Vector3 whitePosition;
         public static int[] isBall= new int[16];
         public static int[] isBallStop = new int[16];
@@ -64,6 +63,7 @@ namespace JK
             StartCoroutine(SetActiveObjInSecond(A_Text, 2f));
             line.enabled = true;
             WhiteBallMovement.CueBool = true;
+            _view = GetComponent<PhotonView>();
         }
 
         // Update is called once per frame
@@ -104,7 +104,10 @@ namespace JK
             if(isBallStop.Sum() == 16 && currentGameState == GameState.Rolling && !FreeBallScript.FreeBallBool)
             {
                 currentGameState = GameState.Stopped;
-                _cameraScript.SetCameraCue();            
+                if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
+                _view.RPC("CueCameraSetting",RpcTarget.All);
+                else if(!PocketDyeNetworkManager.Instance.networked)
+                CueCameraSetting();
                 //아무것도 안 들어갔을 때 턴 넘겨짐 or 다른 팀(넣더라도 자기거 먼저넣으면 okay) or 흰공
                 if(NothingBool||OtherBool)
                 {
@@ -140,6 +143,12 @@ namespace JK
 
             yield return new WaitForSeconds(second);
             obj.SetActive(false);
+        }
+
+        [PunRPC]
+        void CueCameraSetting()
+        {
+            _cameraScript.SetCameraCue();   
         }
         
     }

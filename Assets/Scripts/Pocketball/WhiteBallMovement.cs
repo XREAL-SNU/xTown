@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 namespace JK
 {
     public class WhiteBallMovement : MonoBehaviour
@@ -13,10 +14,10 @@ namespace JK
         public Vector3 whiteBallDirection;
         public Vector3 powerPosition;
         public CameraScript _cameraScript;
+        public CameraLocation _cameraLocation;
         public static float TimePress;
         public static bool CueBool;
         public PhotonView _view;
-        public PhotonTransformView _transformView;
         private float power;
         private float start_time;
         private float bar_time;
@@ -31,7 +32,6 @@ namespace JK
         {
             rb=GetComponent<Rigidbody>();
             _view = GetComponent<PhotonView>();
-            _transformView = GetComponent<PhotonTransformView>();
             BallNum=0;
             power=0;
             CueBool = true;
@@ -80,38 +80,49 @@ namespace JK
                 if(GameManager.isBallStop.Sum()==16) // 모든 공이 완전히 멈췄을 때
                 {
                     CueBool = false;
-                    whiteBallDirection=transform.position-PlayerScript.playerPosition;
-                    whiteBallDirection.y=0;                
+                    whiteBallDirection=transform.position-_cameraLocation.transform.position;
+                    whiteBallDirection.y=0;
+                    whiteBallDirection.x=Mathf.Round(whiteBallDirection.x);
+                    whiteBallDirection.z=Mathf.Round(whiteBallDirection.z);                
                     end_time = Time.time;
                     power=500*(end_time - start_time);
+                    power=Mathf.Round(power);
                     if(power>500)
                     {
                         power=500;
                     }
-                    moveBall(whiteBallDirection,power);
-                    CueScript.PressTime = 0;
-                    StartCoroutine(Wait(1f));      
+                    if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
+                    {
+                        BallForce(whiteBallDirection,power);
+                        _view.RPC("WaitCamera",RpcTarget.All);
+                    }
+                    else if(!PocketDyeNetworkManager.Instance.networked)
+                    {
+                        BallForce(whiteBallDirection,power);
+                        WaitCamera();
+                    }
+                    StartCoroutine(Wait(1f)); 
                     GameManager.line.enabled = false;
                     //아무것도 들어가지 않았을 때 거르기 위함 or 다른 팀 or 흰공
                     GameManager.NothingBool = true;
-                    _cameraScript.SetCameraWhole();
+                    press_time = 0;
                 }
             }
         }
-
         IEnumerator Wait(float value)
         {
             yield return new WaitForSeconds(value);
             GameManager.currentGameState = GameManager.GameState.Rolling;
         }
-
         [PunRPC]
-        void moveBall(Vector3 ballDirection,float power)
+        void WaitCamera()
         {
-            rb.AddForce(ballDirection*power);
+            _cameraScript.SetCameraWhole();   
+        }
+        [PunRPC]
+        void BallForce(Vector3 ballDirection,float ballPower)
+        {
+            rb.AddForce(ballDirection*ballPower);
         }
     }
-
-
-    
 }

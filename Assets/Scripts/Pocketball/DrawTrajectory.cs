@@ -9,7 +9,7 @@ namespace JK
         private LineRenderer lineRenderer;
         public Vector3 ballDirection;
         public GameObject WhiteBall;
-        public GameObject WhiteCam;
+        public GameObject CameraLocation;
         PhotonView _view;
         
         // Use this for initialization
@@ -27,11 +27,11 @@ namespace JK
         // Update is called once per frame
         void FixedUpdate ()
         {
-            if(PocketDyeNetworkManager.Instance.networked)
+            if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
             {
-                _view.RPC("RenderTrajectory",RpcTarget.All);
+                RenderTrajectory();
             }
-            else
+            else if(!PocketDyeNetworkManager.Instance.networked)
             {
                 RenderTrajectory();
             }
@@ -40,7 +40,7 @@ namespace JK
         [PunRPC]
         void RenderTrajectory()
         {
-            ballDirection = WhiteBall.transform.position - WhiteCam.transform.position;
+            ballDirection = WhiteBall.transform.position - CameraLocation.transform.position;
             ballDirection.y = 0; 
             lineRenderer.SetPosition(0, WhiteBall.transform.position);
             lineRenderer.SetPosition(1, WhiteBall.transform.position+ ballDirection*2); 

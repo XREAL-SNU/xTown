@@ -249,49 +249,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2364291}
   m_Mesh: {fileID: -1492337233814287927, guid: f71457898b010d843b035966d7d39b78, type: 3}
---- !u!1 &5019623
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5019624}
-  - component: {fileID: 5019625}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5019624
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5019623}
-  m_LocalRotation: {x: -0.16174886, y: -0.05171481, z: 0.024803871, w: 0.9851638}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1959569177}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5019625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5019623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6363fbc925a73f94c9de59a15643a46c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &18974183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,6 +1155,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &111508893
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1504,6 +1463,7 @@ GameObject:
   - component: {fileID: 152934957}
   - component: {fileID: 152934956}
   - component: {fileID: 152934959}
+  - component: {fileID: 152934960}
   m_Layer: 2
   m_Name: Cylinder_2
   m_TagString: Untagged
@@ -1605,6 +1565,46 @@ MonoBehaviour:
   A_Color: {fileID: 1985397099}
   Color_Balls: {fileID: 662932656}
   Line_Balls: {fileID: 32777480}
+  Balls:
+  - {fileID: 430815036}
+  - {fileID: 5215618935627929337}
+  - {fileID: 5397404592420418191}
+  - {fileID: 4137984775838120900}
+  - {fileID: 7243962226475537369}
+  - {fileID: 258953606710660551}
+  - {fileID: 2198270926543284796}
+  - {fileID: 3449247726545373511}
+  - {fileID: 1641266248601869583}
+  - {fileID: 6544452304374655626}
+  - {fileID: 613971601431975656}
+  - {fileID: 8138580280167030484}
+  - {fileID: 1354683210719498134}
+  - {fileID: 1453561757961604996}
+  - {fileID: 6613854342792760296}
+  - {fileID: 3802945734881086217}
+  _view: {fileID: 152934960}
+--- !u!114 &152934960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152934954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 452
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &184231820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1618,7 @@ GameObject:
   - component: {fileID: 184231823}
   - component: {fileID: 184231822}
   - component: {fileID: 184231825}
+  - component: {fileID: 184231826}
   m_Layer: 2
   m_Name: Cylinder_4
   m_TagString: Untagged
@@ -1719,6 +1720,46 @@ MonoBehaviour:
   A_Color: {fileID: 1985397099}
   Color_Balls: {fileID: 662932656}
   Line_Balls: {fileID: 32777480}
+  Balls:
+  - {fileID: 430815036}
+  - {fileID: 5215618935627929337}
+  - {fileID: 5397404592420418191}
+  - {fileID: 4137984775838120900}
+  - {fileID: 7243962226475537369}
+  - {fileID: 258953606710660551}
+  - {fileID: 2198270926543284796}
+  - {fileID: 3449247726545373511}
+  - {fileID: 1641266248601869583}
+  - {fileID: 6544452304374655626}
+  - {fileID: 613971601431975656}
+  - {fileID: 8138580280167030484}
+  - {fileID: 1354683210719498134}
+  - {fileID: 1453561757961604996}
+  - {fileID: 6613854342792760296}
+  - {fileID: 3802945734881086217}
+  _view: {fileID: 184231826}
+--- !u!114 &184231826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184231820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 454
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &202195163
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,6 +2127,7 @@ GameObject:
   - component: {fileID: 243980618}
   - component: {fileID: 243980620}
   - component: {fileID: 243980621}
+  - component: {fileID: 243980622}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2114,6 +2156,7 @@ MonoBehaviour:
   WhiteBall: {fileID: 430815036}
   A_Turn: {fileID: 430750607}
   B_Turn: {fileID: 1713430314}
+  _view: {fileID: 243980622}
 --- !u!4 &243980619
 Transform:
   m_ObjectHideFlags: 0
@@ -2154,6 +2197,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WhiteBall: {fileID: 430815036}
+--- !u!114 &243980622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243980617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 477
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &271301328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2205,6 +2270,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &271301331
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2281,6 +2348,7 @@ GameObject:
   - component: {fileID: 278843546}
   - component: {fileID: 278843545}
   - component: {fileID: 278843548}
+  - component: {fileID: 278843549}
   m_Layer: 2
   m_Name: Cylinder_1
   m_TagString: Untagged
@@ -2382,6 +2450,46 @@ MonoBehaviour:
   A_Color: {fileID: 1985397099}
   Color_Balls: {fileID: 662932656}
   Line_Balls: {fileID: 32777480}
+  Balls:
+  - {fileID: 430815036}
+  - {fileID: 5215618935627929337}
+  - {fileID: 5397404592420418191}
+  - {fileID: 4137984775838120900}
+  - {fileID: 7243962226475537369}
+  - {fileID: 258953606710660551}
+  - {fileID: 2198270926543284796}
+  - {fileID: 3449247726545373511}
+  - {fileID: 1641266248601869583}
+  - {fileID: 6544452304374655626}
+  - {fileID: 613971601431975656}
+  - {fileID: 8138580280167030484}
+  - {fileID: 1354683210719498134}
+  - {fileID: 1453561757961604996}
+  - {fileID: 6613854342792760296}
+  - {fileID: 3802945734881086217}
+  _view: {fileID: 278843549}
+--- !u!114 &278843549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278843543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 451
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &313223594
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,6 +3000,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &403151838
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3184,9 +3294,9 @@ GameObject:
   - component: {fileID: 430815038}
   - component: {fileID: 430815041}
   - component: {fileID: 430815044}
-  - component: {fileID: 430815043}
   - component: {fileID: 430815045}
   - component: {fileID: 430815042}
+  - component: {fileID: 430815043}
   - component: {fileID: 430815046}
   - component: {fileID: 430815047}
   m_Layer: 0
@@ -3305,8 +3415,8 @@ MonoBehaviour:
   whiteBallDirection: {x: 0, y: 0, z: 0}
   powerPosition: {x: 0, y: 0, z: 0}
   _cameraScript: {fileID: 243980620}
+  _cameraLocation: {fileID: 1901323670}
   _view: {fileID: 430815046}
-  _transformView: {fileID: 430815047}
 --- !u!114 &430815043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3321,7 +3431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballDirection: {x: 0, y: 0, z: 0}
   WhiteBall: {fileID: 1448341368}
-  WhiteCam: {fileID: 1959569175}
+  CameraLocation: {fileID: 1901323668}
 --- !u!120 &430815044
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -3597,6 +3707,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &433031884
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3918,6 +4030,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &456150012
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5247,6 +5361,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &609355236
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7922,6 +8038,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &795054588
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8462,6 +8580,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &867125831
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8622,6 +8742,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &886403782
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8943,6 +9065,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &915046886
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9286,8 +9410,6 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194230}
-  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9394,45 +9516,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 963194231}
-  sceneViewId: 493
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &963194231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &970344212
 GameObject:
   m_ObjectHideFlags: 0
@@ -9896,6 +9979,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1039125734
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10476,7 +10561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cue: {fileID: 2094655234}
   Whiteball: {fileID: 1448341368}
-  Player: {fileID: 1959569175}
+  Player: {fileID: 1901323668}
   _view: {fileID: 1111076443}
 --- !u!4 &1111076441
 Transform:
@@ -10602,6 +10687,7 @@ GameObject:
   - component: {fileID: 1165313055}
   - component: {fileID: 1165313054}
   - component: {fileID: 1165313057}
+  - component: {fileID: 1165313058}
   m_Layer: 2
   m_Name: Cylinder_3
   m_TagString: Untagged
@@ -10703,6 +10789,46 @@ MonoBehaviour:
   A_Color: {fileID: 1985397099}
   Color_Balls: {fileID: 662932656}
   Line_Balls: {fileID: 32777480}
+  Balls:
+  - {fileID: 430815036}
+  - {fileID: 5215618935627929337}
+  - {fileID: 5397404592420418191}
+  - {fileID: 4137984775838120900}
+  - {fileID: 7243962226475537369}
+  - {fileID: 258953606710660551}
+  - {fileID: 2198270926543284796}
+  - {fileID: 3449247726545373511}
+  - {fileID: 1641266248601869583}
+  - {fileID: 6544452304374655626}
+  - {fileID: 613971601431975656}
+  - {fileID: 8138580280167030484}
+  - {fileID: 1354683210719498134}
+  - {fileID: 1453561757961604996}
+  - {fileID: 6613854342792760296}
+  - {fileID: 3802945734881086217}
+  _view: {fileID: 1165313058}
+--- !u!114 &1165313058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165313052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 453
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1169823458
 GameObject:
   m_ObjectHideFlags: 0
@@ -11758,6 +11884,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1266813255
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12255,6 +12383,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1376408805
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12531,6 +12661,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1407060613
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -14226,6 +14358,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1549665845
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -14770,6 +14904,7 @@ GameObject:
   - component: {fileID: 1602160295}
   - component: {fileID: 1602160294}
   - component: {fileID: 1602160297}
+  - component: {fileID: 1602160298}
   m_Layer: 2
   m_Name: Cylinder_6
   m_TagString: Untagged
@@ -14871,6 +15006,46 @@ MonoBehaviour:
   A_Color: {fileID: 1985397099}
   Color_Balls: {fileID: 662932656}
   Line_Balls: {fileID: 32777480}
+  Balls:
+  - {fileID: 430815036}
+  - {fileID: 5215618935627929337}
+  - {fileID: 5397404592420418191}
+  - {fileID: 4137984775838120900}
+  - {fileID: 7243962226475537369}
+  - {fileID: 258953606710660551}
+  - {fileID: 2198270926543284796}
+  - {fileID: 3449247726545373511}
+  - {fileID: 1641266248601869583}
+  - {fileID: 6544452304374655626}
+  - {fileID: 613971601431975656}
+  - {fileID: 8138580280167030484}
+  - {fileID: 1354683210719498134}
+  - {fileID: 1453561757961604996}
+  - {fileID: 6613854342792760296}
+  - {fileID: 3802945734881086217}
+  _view: {fileID: 1602160298}
+--- !u!114 &1602160298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602160292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 456
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1621491778
 GameObject:
   m_ObjectHideFlags: 0
@@ -15048,6 +15223,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1626520118
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15288,6 +15465,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1668690660
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -16024,6 +16203,7 @@ GameObject:
   - component: {fileID: 1813366675}
   - component: {fileID: 1813366674}
   - component: {fileID: 1813366677}
+  - component: {fileID: 1813366678}
   m_Layer: 2
   m_Name: Cylinder_5
   m_TagString: Untagged
@@ -16125,6 +16305,46 @@ MonoBehaviour:
   A_Color: {fileID: 1985397099}
   Color_Balls: {fileID: 662932656}
   Line_Balls: {fileID: 32777480}
+  Balls:
+  - {fileID: 430815036}
+  - {fileID: 5215618935627929337}
+  - {fileID: 5397404592420418191}
+  - {fileID: 4137984775838120900}
+  - {fileID: 7243962226475537369}
+  - {fileID: 258953606710660551}
+  - {fileID: 2198270926543284796}
+  - {fileID: 3449247726545373511}
+  - {fileID: 1641266248601869583}
+  - {fileID: 6544452304374655626}
+  - {fileID: 613971601431975656}
+  - {fileID: 8138580280167030484}
+  - {fileID: 1354683210719498134}
+  - {fileID: 1453561757961604996}
+  - {fileID: 6613854342792760296}
+  - {fileID: 3802945734881086217}
+  _view: {fileID: 1813366678}
+--- !u!114 &1813366678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813366672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 455
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1819618717
 GameObject:
   m_ObjectHideFlags: 0
@@ -16390,6 +16610,92 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878173838}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1901323668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1901323669}
+  - component: {fileID: 1901323670}
+  - component: {fileID: 1901323672}
+  - component: {fileID: 1901323671}
+  m_Layer: 0
+  m_Name: CameraLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1901323669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901323668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.733519, y: 1, z: 28.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1901323670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901323668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5a107c7ea9c5c458308f231404a849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whiteCamTransform: {fileID: 1959569177}
+  _whiteBall: {fileID: 430815042}
+--- !u!114 &1901323671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901323668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1901323672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901323668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1901323671}
+  sceneViewId: 495
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1911611264
 GameObject:
   m_ObjectHideFlags: 0
@@ -16497,8 +16803,6 @@ GameObject:
   - component: {fileID: 1912291715}
   - component: {fileID: 1912291714}
   - component: {fileID: 1912291716}
-  - component: {fileID: 1912291717}
-  - component: {fileID: 1912291718}
   m_Layer: 0
   m_Name: Default Cam
   m_TagString: Untagged
@@ -16586,45 +16890,6 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
---- !u!114 &1912291717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912291713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1912291718}
-  sceneViewId: 492
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &1912291718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912291713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &1915478409
 GameObject:
   m_ObjectHideFlags: 0
@@ -16860,6 +17125,8 @@ MonoBehaviour:
   A_Color: {fileID: 0}
   Color_Balls: {fileID: 0}
   Line_Balls: {fileID: 0}
+  Balls: []
+  _view: {fileID: 0}
 --- !u!136 &1929604778
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17236,8 +17503,6 @@ GameObject:
   - component: {fileID: 1959569177}
   - component: {fileID: 1959569176}
   - component: {fileID: 1959569178}
-  - component: {fileID: 1959569179}
-  - component: {fileID: 1959569180}
   m_Layer: 0
   m_Name: WhiteBall Cam
   m_TagString: Untagged
@@ -17292,7 +17557,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1007510719}
-  - {fileID: 5019624}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 16.909, y: -0.259, z: -0.896}
@@ -17326,45 +17590,6 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
---- !u!114 &1959569179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959569175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1959569180}
-  sceneViewId: 490
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &1959569180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959569175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &1963831210
 GameObject:
   m_ObjectHideFlags: 0
@@ -18535,8 +18760,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2094655235}
-  - component: {fileID: 2094655236}
-  - component: {fileID: 2094655237}
   m_Layer: 0
   m_Name: Cue
   m_TagString: Untagged
@@ -18559,45 +18782,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &2094655236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094655234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2094655237}
-  sceneViewId: 481
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2094655237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094655234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!33 &52253397488035509
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20351,8 +20535,6 @@ GameObject:
   - component: {fileID: 8772948881592820331}
   - component: {fileID: 6741418044361553846}
   - component: {fileID: 813093062105099599}
-  - component: {fileID: 3935078159608150022}
-  - component: {fileID: 3935078159608150023}
   m_Layer: 0
   m_Name: CueStick
   m_TagString: Untagged
@@ -20360,45 +20542,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3935078159608150022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3935078159608150021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 3935078159608150023}
-  sceneViewId: 488
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &3935078159608150023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3935078159608150021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!23 &4003937531239737179
 MeshRenderer:
   m_ObjectHideFlags: 0

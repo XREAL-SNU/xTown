@@ -12,33 +12,31 @@ namespace JK
         public GameObject Player;
         public PhotonView _view;
 
-        public static float PressTime;
         void Start()
         {
            _view = GetComponent<PhotonView>();
         }
         void FixedUpdate()
         {
-            PressTime = WhiteBallMovement.press_time;
             //Debug.Log(PressTime);
-            if(PocketDyeNetworkManager.Instance.networked)
+            if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
             {
-                _view.RPC("CueSetting",RpcTarget.All);
+                _view.RPC("CueSetting",RpcTarget.All,WhiteBallMovement.press_time,WhiteBallMovement.CueBool);
             }
-            else
+            else if(!PocketDyeNetworkManager.Instance.networked)
             {
-                CueSetting();
+                CueSetting(WhiteBallMovement.press_time,WhiteBallMovement.CueBool);
             }
 
         }
         [PunRPC]
-        void CueSetting()
+        void CueSetting(float pressTime,bool cueBool)
         {
             Cue.transform.LookAt(Whiteball.transform);
-            Cue.transform.position = new Vector3((Whiteball.transform.position.x*(float)(1.2-0.4*PressTime) + Player.transform.position.x*(float)(0.8+0.4*PressTime))/2,Whiteball.transform.position.y+0.2f, (float)(Whiteball.transform.position.z*(float)(1.2-0.4*PressTime) + Player.transform.position.z*(0.8+0.4*PressTime))/2);
+            Cue.transform.position = new Vector3((Whiteball.transform.position.x*(float)(1.2-0.4*pressTime) + Player.transform.position.x*(float)(0.8+0.4*pressTime))/2,Whiteball.transform.position.y+0.2f, (float)(Whiteball.transform.position.z*(float)(1.2-0.4*pressTime) + Player.transform.position.z*(0.8+0.4*pressTime))/2);
             
             //Debug.Log(BallMovement.CueBool);
-            if(WhiteBallMovement.CueBool)
+            if(cueBool)
             {
                 Cue.SetActive(true);
             }

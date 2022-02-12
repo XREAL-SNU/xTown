@@ -11,16 +11,16 @@ namespace JK
         Rigidbody rb;
         public Vector3 ballVelocity;
         int BallNum;
-        PhotonView _view;
-        PhotonTransformView _transformView;
+        //PhotonView _view;
+        //PhotonTransformView _transformView;
         //private bool trigger = true;
 
         // Start is called before the first frame update
         void Start()
         {
             rb=GetComponent<Rigidbody>();
-            _view = GetComponent<PhotonView>();
-            _transformView = GetComponent<PhotonTransformView>();
+            //_view = GetComponent<PhotonView>();
+            //_transformView = GetComponent<PhotonTransformView>();
             BallNum=int.Parse(gameObject.name.Substring(5));
         }
 
