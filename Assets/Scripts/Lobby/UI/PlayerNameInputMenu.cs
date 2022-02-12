@@ -21,11 +21,19 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
     private GameObject _playerPasswordConfirm;
     [SerializeField]
     private GameObject _playerEmail;
+    [SerializeField]
+    private InputField _playerPasswordConfirmInputField;
+    [SerializeField]
+    private InputField _playerEmailInputField;
+    [SerializeField]
+    private GameObject _errorMessageGameObject;
 
     // string url = "http://localhost:3000/enter";
     static string url = "http://ec2-54-92-242-20.compute-1.amazonaws.com:3000/enter";
     static string access_type= "login";
     static string final_url = url + "?type=" + access_type;
+    static bool errorMessageExists = false;
+    static string errorMessage;
 
     private RoomsCanvases _roomCanvases;
     public void FirstInitialize(RoomsCanvases canvases)
@@ -46,21 +54,29 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         } else {
             OnClick_SetSignup();
         }
+
+        if(errorMessageExists) {
+            setErrorMessage("");
+        } else {
+            disableErrorMessage();
+        };
     }
 
     public void OnClick_SetPlayerName()
     {
         if (string.IsNullOrEmpty(_playerName.text) || string.IsNullOrEmpty(_playerPasswordInputField.text))
         {
+            setErrorMessage("Please enter a name and password");
             Debug.LogError("Player Name or Password is null or empty");
             return;
         }
 
-        Debug.Log(_playerEmail.GetComponent<Text>().text);
-        Debug.Log(_playerPasswordConfirm.GetComponent<Text>().text);
+        Debug.Log(_playerEmailInputField.text);
+        Debug.Log(_playerPasswordConfirmInputField.text);
 
-        if(access_type == "signup" && _playerPasswordInputField.text != _playerPasswordConfirm.GetComponent<Text>().text) {
-            Debug.LogError("Password does not match");
+        if(access_type == "signup" && _playerPasswordInputField.text != _playerPasswordConfirmInputField.text) {
+            setErrorMessage("Passwords do not match");
+            // Debug.LogError("Passwords do not match");
             return;
         }
 
@@ -77,22 +93,36 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
 
     public void OnClick_SetLogin() {
         access_type = "login";
+        // _playerPasswordConfirmInputField.enabled = false;
+        // _playerEmailInputField.enabled = false;
         _playerPasswordConfirm.SetActive(false);
         _playerEmail.SetActive(false);
     }
 
     public void OnClick_SetSignup() {
         access_type = "signup";
+        // _playerPasswordConfirmInputField.enabled = true;
+        // _playerEmailInputField.enabled = true;
         _playerPasswordConfirm.SetActive(true);
         _playerEmail.SetActive(true);
+    }
+
+    public void setErrorMessage(string msg) {
+        _errorMessageGameObject.SetActive(true);
+        _errorMessageGameObject.GetComponentInChildren<Text>().text = msg;
+        _errorMessageGameObject.GetComponentInChildren<Text>().color = Color.red;
+    }
+
+    public void disableErrorMessage() {
+        _errorMessageGameObject.SetActive(false);
     }
 
     IEnumerator SendRequest() {
         WWWForm form = new WWWForm();
         form.AddField("name", _playerName.text);
         form.AddField("pw", _playerPasswordInputField.text);
-        form.AddField("pw_confirm", _playerPasswordConfirm.GetComponent<Text>().text);
-        form.AddField("email", _playerEmail.GetComponent<Text>().text);
+        form.AddField("pw_confirm", _playerPasswordConfirmInputField.text);
+        form.AddField("email", _playerEmailInputField.text);
 
         final_url = url + "?type=" + access_type;
 
@@ -109,6 +139,7 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
             JObject json = JObject.Parse(uwr.downloadHandler.text);
             Debug.Log("Result: " + json["result"]);
             if((bool) json["result"] == false) {
+                setErrorMessage(json["message"].ToString());
                 Debug.Log("Username Already Exists" + json["message"]);
             } else {
                 PhotonNetwork.NickName = _playerName.text;
