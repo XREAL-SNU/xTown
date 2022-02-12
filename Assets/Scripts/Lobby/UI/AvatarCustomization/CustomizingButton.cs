@@ -18,6 +18,7 @@ public class CustomizingButton : UIBase
     private string _propertyName;
     private string _paletteName;
     private string _colorName;
+    private string _colorRename;
     private int _partsIndex;
     public int Pick;
     private int _componentCount;
@@ -37,10 +38,9 @@ public class CustomizingButton : UIBase
     public override void Init()
     {
         if (_cbtnGroup is null) _cbtnGroup = this.transform.parent.parent.GetComponent<CustomizingButtonGroup>();
-        _componentCount = this.transform.parent.childCount;
         Bind<GameObject>(typeof(GameObjects));
 
-        GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().text = _colorName;
+        GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().text = Rename(_colorName);
         GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().fontSize = 20;
 
         GetUIComponent<GameObject>((int)GameObjects.ButtonImage).gameObject.BindEvent(OnButtonSelect);
@@ -72,15 +72,13 @@ public class CustomizingButton : UIBase
 
                 Transform page = parent.transform.Find("CustomizingTabGroup").Find("PagePanel").GetChild(_partsIndex).GetComponent<Transform>();
                 page.GetChild(0).Find("ResetButton").gameObject.BindEvent(InitiallizeButton);
-                if (this.Pick.Equals(0)) page.GetChild(0).Find("ResetButton").gameObject.BindEvent(SetPropertyButton);
-
-                page.GetChild(0).Find("RandomButton").gameObject.BindEvent(RandomCustomizingButton);
+                if (this.Pick.Equals(0)) page.GetChild(0).Find("RandomButton").gameObject.BindEvent(RandomCustomizingButton);
                 break;
             }
         }
     }
 
-    public void SetInfo(string part, string property, string name, string palette, int pick, int index, AvatarAppearanceNew.AppearancePropertyTypes type, Vector2 size)
+    public void SetInfo(string part, string property, string name, string palette, int pick, int index, int count, AvatarAppearanceNew.AppearancePropertyTypes type, Vector2 size)
     {
         _partName = part;
         _propertyName = property;
@@ -89,9 +87,11 @@ public class CustomizingButton : UIBase
         _paletteName = palette;
         Pick = pick;
         _partsIndex = index;
+        _componentCount = count;
         _type = type;
         _cellSize = size;
     }
+
 
     public void ButtonSize()
     {
@@ -112,14 +112,13 @@ public class CustomizingButton : UIBase
         GameObject go = _appearance.CustomParts[_partName];
         _appearance.SetProperty(go, _propertyName, _type, _paletteName, Pick);
         //Debug.Log("propertyName: " + _propertyName + ", paletteName: " + _paletteName + ", pick: " + Pick);
-
     }
 
     public void OnButtonEnter(PointerEventData data)
     {
         if (Pick != _cbtnGroup.SelectedPick)
         {
-            GetUIComponent<GameObject>((int)GameObjects.ButtonImage).GetComponent<Outline>().effectColor = XTownColor.XTownBlue.ToColor();
+            GetUIComponent<GameObject>((int)GameObjects.ButtonImage).GetComponent<Outline>().effectColor = XTownColor.ButtonOutlineEnter.ToColor();
             GetUIComponent<GameObject>((int)GameObjects.ButtonImage).GetComponent<Outline>().effectDistance = new Vector2(4.5f, -4.5f);
         }
     }
@@ -146,18 +145,19 @@ public class CustomizingButton : UIBase
         for (int i = 0; i < _componentCount; i++)
         {
             GameObject btn = this.transform.parent.GetChild(i).gameObject;
-            btn.transform.Find("ButtonImage").GetComponent<Outline>().effectColor = XTownColor.XTownBlack.ToColor();
+            btn.transform.Find("ButtonImage").GetComponent<Outline>().effectColor = XTownColor.ButtonOutlineDefault.ToColor();
             btn.transform.Find("ButtonImage").GetComponent<Outline>().effectDistance = new Vector2(3, -3);
             if (btn.GetComponent<CustomizingButton>() != null && btn.GetComponent<CustomizingButton>().Pick.Equals(_cbtnGroup.SelectedPick))
             {
-                btn.transform.Find("ButtonImage").GetComponent<Outline>().effectColor = XTownColor.XTownGreen.ToColor();
+                btn.transform.Find("ButtonImage").GetComponent<Outline>().effectColor = XTownColor.ButtonOutlineClick.ToColor();
                 btn.transform.Find("ButtonImage").GetComponent<Outline>().effectDistance = new Vector2(4.5f, -4.5f);
             }
+            /*
             if (btn.GetComponent<FCPButton>() != null && btn.GetComponent<FCPButton>().Pick.Equals(_cbtnGroup.SelectedPick))
             {
                 btn.transform.Find("ButtonImage").GetComponent<Outline>().effectColor = XTownColor.XTownGreen.ToColor();
                 btn.transform.Find("ButtonImage").GetComponent<Outline>().effectDistance = new Vector2(4.5f, -4.5f);
-            }
+            }*/
         }
     }
 
@@ -170,11 +170,57 @@ public class CustomizingButton : UIBase
     public void InitiallizeButton(PointerEventData data)
     {
         Initiallize();
+        if (this.Pick.Equals(0)) SetProperty();
     }
 
     public void RandomCustomizingButton(PointerEventData data)
     {
         int rand = UnityEngine.Random.Range(0, _componentCount);
-        //this.transform.parent.parent.GetComponent<CustomizingButtonGroup>().SelectedPick = rand;
+        _cbtnGroup.SelectedPick = rand;
+        foreach (Transform btn in this.transform.parent.GetComponentsInChildren<Transform>())
+        {
+            CustomizingButton script = btn.GetComponent<CustomizingButton>();
+            if (script != null && script.Pick.Equals(_cbtnGroup.SelectedPick))
+            {
+                script.ResetCustomizing();
+                script.SetProperty();
+            }
+        }
+    }
+
+    public string Rename(string name)
+    {
+        if (_propertyName.Equals("Color") && name.Length != 1)
+        {
+            string upper = name.ToUpper();
+            List<string> rename = new List<string>();
+            int flag = 0;
+            int len = 1;
+            for (int i = 1; i < name.Length - 1; i++)
+            {
+                len++;
+                if (!name[i].Equals(upper[i]) && name[i + 1].Equals(upper[i + 1]))
+                {
+                    rename.Add(name.Substring(flag, len));
+                    rename.Add("\n");
+                    flag = i + 1;
+                    len = 0;
+                }
+                if (i.Equals(name.Length - 2))
+                {
+                    rename.Add(name.Substring(flag, len + 1));
+                }
+            }
+            if (rename.Count != 0)
+            {
+                foreach (string sub in rename)
+                {
+                    _colorRename += sub;
+                }
+                return _colorRename;
+            }
+            else return _colorName;
+        }
+        else return _colorName;
     }
 }
