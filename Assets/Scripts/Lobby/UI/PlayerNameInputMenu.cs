@@ -73,9 +73,6 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
             return;
         }
 
-        Debug.Log(_playerEmailInputField.text);
-        Debug.Log(_playerPasswordConfirmInputField.text);
-
         if(access_type == "signup" && _playerPasswordInputField.text != _playerPasswordConfirmInputField.text) {
             setErrorMessage("Passwords do not match");
             // Debug.LogError("Passwords do not match");
@@ -123,7 +120,7 @@ public class PlayerNameInputMenu : MonoBehaviourPunCallbacks
         WWWForm form = new WWWForm();
         form.AddField("name", _playerName.text);
         form.AddField("pw", _playerPasswordInputField.text);
-        form.AddField("pw_confirm", _playerPasswordConfirmInputField.text);
+        // form.AddField("pw_confirm", _playerPasswordConfirmInputField.text);
         form.AddField("email", _playerEmailInputField.text);
 
         final_url = url + "?type=" + access_type;
