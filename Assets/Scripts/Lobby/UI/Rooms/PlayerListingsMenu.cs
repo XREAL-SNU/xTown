@@ -170,6 +170,7 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
     private void HideRoomCanvases()
     {
         RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+        RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Hide();
     }
 
     

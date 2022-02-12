@@ -15,7 +15,6 @@ namespace JK
         }
 
         public static GameState currentGameState;
-
         public GameObject A_Text;
         public GameObject B_Text;
         public GameObject Turn_Panel;
@@ -46,6 +45,7 @@ namespace JK
 
         public static LineRenderer line;
         int i=0;
+        CameraScript _cameraScript;
         // Start is called before the first frame update
         void Start()
         {
@@ -53,15 +53,17 @@ namespace JK
             isBallStop = new int[16];
             Physics.bounceThreshold = 0.2f;
             Physics.sleepThreshold = 0.015f;
-            CamBool = true;
+            _cameraScript = GetComponent<CameraScript>();
+            _cameraScript.SetCameraCue();
+            //CamBool = true;
             NothingBool = true;
+            OtherBool = false;
             line = WhiteBall.GetComponent<LineRenderer>();
             StartCoroutine(SetActiveObjInSecond(Turn_Panel, 2f));
-            
             //지금은 무조건 A부터인데, 가위바위보(?)를 넣어서 순서 정하게 하기. 여기에 적용.
             StartCoroutine(SetActiveObjInSecond(A_Text, 2f));
             line.enabled = true;
-            BallMovement.CueBool = true;
+            WhiteBallMovement.CueBool = true;
         }
 
         // Update is called once per frame
@@ -99,23 +101,21 @@ namespace JK
         void FixedUpdate()
         {
             //UI
-            if(isBallStop.Sum() == 16 && currentGameState == GameState.Rolling)
+            if(isBallStop.Sum() == 16 && currentGameState == GameState.Rolling && !FreeBallScript.FreeBallBool)
             {
                 currentGameState = GameState.Stopped;
-            
-                //아무것도 안 들어갔을 때 턴 넘겨짐 or 다른 팀 or 흰공
-                if(NothingBool)
+                _cameraScript.SetCameraCue();            
+                //아무것도 안 들어갔을 때 턴 넘겨짐 or 다른 팀(넣더라도 자기거 먼저넣으면 okay) or 흰공
+                if(NothingBool||OtherBool)
                 {
-                    if(!OtherBool)
-                    {
-                        AorB = !AorB;
-                    }
+                    AorB = !AorB;
                 }
-                //Debug.Log(AorB.ToString());
+                NothingBool = true;
+                OtherBool = false;
                 //라인 렌더러 & 큐 활성화
                 line.enabled = true;
-                BallMovement.CueBool = true;
-                BallMovement.press_time = 0;
+                WhiteBallMovement.CueBool = true;
+                WhiteBallMovement.press_time = 0;
                 StartCoroutine(SetActiveObjInSecond(Turn_Panel, 2f));
                 if(AorB)
                 {
@@ -129,10 +129,8 @@ namespace JK
                     A_Turn.SetActive(false);
                     B_Turn.SetActive(true);
                 }
-                CamBool = true;
-                  
-                //Debug.Log("A: "+countA+", B: "+countB);
-            
+                //CamBool = true;                
+                //Debug.Log("A: "+countA+", B: "+countB);            
             }
         }
 

@@ -11,9 +11,11 @@ namespace JK
         public GameObject WhiteBall;
         Rigidbody rb;
         int i=0;
+        CameraScript _cameraScript;
         void Start()
         {
             FreeBallBool = false;
+            _cameraScript = GetComponent<CameraScript>();
             rb = WhiteBall.GetComponent<Rigidbody>();
             ColliderBool = false;
         }
@@ -58,13 +60,13 @@ namespace JK
                 {
                     if(Input.GetMouseButtonDown(1))
                     {
-                        
                         WhiteBall.GetComponent<SphereCollider>().isTrigger = false;
                         rb.constraints = RigidbodyConstraints.None;
                         rb.constraints = RigidbodyConstraints.FreezePositionY;
                         GameManager.isBallStop[0] = 1;
                         FreeBallBool = false;
-                        GameManager.CamBool = true;
+                        _cameraScript.SetCameraCue();
+                        //GameManager.CamBool = true;
                         GameManager.currentGameState = GameManager.GameState.Rolling;
                         i=0;
                     }

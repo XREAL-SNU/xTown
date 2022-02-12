@@ -171,8 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &2364294
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -342,8 +340,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &18974186
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -551,8 +547,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &28825294
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2436,8 +2430,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &313223597
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2564,8 +2556,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &334543923
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2773,8 +2763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &388665335
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3195,10 +3183,12 @@ GameObject:
   - component: {fileID: 430815039}
   - component: {fileID: 430815038}
   - component: {fileID: 430815041}
-  - component: {fileID: 430815042}
   - component: {fileID: 430815044}
   - component: {fileID: 430815043}
   - component: {fileID: 430815045}
+  - component: {fileID: 430815042}
+  - component: {fileID: 430815046}
+  - component: {fileID: 430815047}
   m_Layer: 0
   m_Name: Ball_0
   m_TagString: Untagged
@@ -3214,7 +3204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430815036}
   m_LocalRotation: {x: 0, y: 0, z: -0.0010210933, w: 0.9999995}
-  m_LocalPosition: {x: 35, y: 357.00006, z: -526}
+  m_LocalPosition: {x: -102, y: 357, z: -102}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1448341369}
@@ -3308,12 +3298,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 430815036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24af4c4a25a1d834693d0cbef84f05d2, type: 3}
+  m_Script: {fileID: 11500000, guid: e032e1dd6e648aa4295ff14c6c53fb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
+  whiteBallVelocity: {x: 0, y: 0, z: 0}
+  whiteBallDirection: {x: 0, y: 0, z: 0}
   powerPosition: {x: 0, y: 0, z: 0}
+  _cameraScript: {fileID: 243980620}
+  _view: {fileID: 430815046}
+  _transformView: {fileID: 430815047}
 --- !u!114 &430815043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3439,6 +3432,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a75b60361a9bc13439f70a48bf9ac287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &430815046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430815036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 430815047}
+  sceneViewId: 460
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &430815047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430815036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &432606725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3757,8 +3789,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &455553312
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4076,8 +4106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &478378794
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5090,8 +5118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &609231730
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5362,8 +5388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &626828381
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5682,8 +5706,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &649832667
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5810,8 +5832,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &660679217
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6170,8 +6190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &681417977
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6541,8 +6559,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &727309546
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6669,8 +6685,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &739697844
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6797,8 +6811,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &743258515
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7277,8 +7289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &766116246
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7405,8 +7415,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &770022750
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7629,8 +7637,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &781111088
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8027,8 +8033,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &805030471
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8234,8 +8238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &823500637
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8731,8 +8733,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &896420959
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9054,8 +9054,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &931681184
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9288,6 +9286,8 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9394,6 +9394,45 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 963194231}
+  sceneViewId: 493
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &970344212
 GameObject:
   m_ObjectHideFlags: 0
@@ -9521,8 +9560,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &997593352
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10417,6 +10454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1111076441}
   - component: {fileID: 1111076440}
+  - component: {fileID: 1111076443}
   m_Layer: 0
   m_Name: CueManager
   m_TagString: Untagged
@@ -10439,6 +10477,7 @@ MonoBehaviour:
   Cue: {fileID: 2094655234}
   Whiteball: {fileID: 1448341368}
   Player: {fileID: 1959569175}
+  _view: {fileID: 1111076443}
 --- !u!4 &1111076441
 Transform:
   m_ObjectHideFlags: 0
@@ -10453,6 +10492,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1111076443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111076439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 480
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1153798577
 GameObject:
   m_ObjectHideFlags: 0
@@ -11197,8 +11258,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1194629954
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11325,8 +11384,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1195449029
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11812,8 +11869,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1282407335
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11982,8 +12037,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1345028836
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12589,8 +12642,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1410511524
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12953,8 +13004,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1448419585
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13081,8 +13130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1461183887
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13209,8 +13256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1471322741
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13721,8 +13766,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1523726071
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13849,8 +13892,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1525737450
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13977,8 +14018,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1532576266
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14419,8 +14458,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1593451697
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14642,8 +14679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1597818929
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14884,8 +14919,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1621491781
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15126,8 +15159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1657874235
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15368,8 +15399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1686708021
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15496,8 +15525,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1699167113
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16470,6 +16497,8 @@ GameObject:
   - component: {fileID: 1912291715}
   - component: {fileID: 1912291714}
   - component: {fileID: 1912291716}
+  - component: {fileID: 1912291717}
+  - component: {fileID: 1912291718}
   m_Layer: 0
   m_Name: Default Cam
   m_TagString: Untagged
@@ -16557,6 +16586,45 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!114 &1912291717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912291713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1912291718}
+  sceneViewId: 492
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1912291718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912291713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1915478409
 GameObject:
   m_ObjectHideFlags: 0
@@ -16984,8 +17052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1940352414
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17170,6 +17236,8 @@ GameObject:
   - component: {fileID: 1959569177}
   - component: {fileID: 1959569176}
   - component: {fileID: 1959569178}
+  - component: {fileID: 1959569179}
+  - component: {fileID: 1959569180}
   m_Layer: 0
   m_Name: WhiteBall Cam
   m_TagString: Untagged
@@ -17219,8 +17287,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959569175}
-  m_LocalRotation: {x: 0.22975291, y: -1e-45, z: -0, w: 0.973249}
-  m_LocalPosition: {x: 0.035, y: 1.8570001, z: -3.526}
+  m_LocalRotation: {x: 0.22975291, y: 1e-45, z: 0, w: 0.973249}
+  m_LocalPosition: {x: -0.102000006, y: 1.857, z: -3.102}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1007510719}
@@ -17258,6 +17326,45 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!114 &1959569179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959569175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1959569180}
+  sceneViewId: 490
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1959569180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959569175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1963831210
 GameObject:
   m_ObjectHideFlags: 0
@@ -17387,8 +17494,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1968826288
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17596,8 +17701,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1997798207
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17724,8 +17827,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &1998304546
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18014,8 +18115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &2037584529
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18142,8 +18241,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &2040052972
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18351,8 +18448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &2058445367
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18440,9 +18535,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2094655235}
-  - component: {fileID: 2094655238}
-  - component: {fileID: 2094655237}
   - component: {fileID: 2094655236}
+  - component: {fileID: 2094655237}
   m_Layer: 0
   m_Name: Cue
   m_TagString: Untagged
@@ -18474,13 +18568,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2094655234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2094655237}
+  sceneViewId: 481
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &2094655237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18490,34 +18591,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2094655234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 1
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2094655236}
-  sceneViewId: 1
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2094655238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094655234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 093bccf0a43cee34f81e0a6149631803, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _view: {fileID: 2094655237}
-  _transformView: {fileID: 2094655236}
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!33 &52253397488035509
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -18540,6 +18620,8 @@ GameObject:
   - component: {fileID: 258953606710660552}
   - component: {fileID: 258953606710660553}
   - component: {fileID: 258953606710660554}
+  - component: {fileID: 258953606710660556}
+  - component: {fileID: 258953606710660555}
   m_Layer: 0
   m_Name: Ball_5
   m_TagString: Untagged
@@ -18589,8 +18671,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &258953606710660555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258953606710660551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &258953606710660556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258953606710660551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 258953606710660555}
+  sceneViewId: 465
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &320881787795832931
 Transform:
   m_ObjectHideFlags: 0
@@ -18599,7 +18718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8138580280167030484}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: -15.698974, y: 364.2927, z: 1927.5297}
+  m_LocalPosition: {x: -24, y: 364, z: 1875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -18766,6 +18885,8 @@ GameObject:
   - component: {fileID: 613971601431975657}
   - component: {fileID: 613971601431975658}
   - component: {fileID: 613971601431975659}
+  - component: {fileID: 613971601431975661}
+  - component: {fileID: 613971601431975660}
   m_Layer: 0
   m_Name: Ball_10
   m_TagString: Untagged
@@ -18815,8 +18936,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &613971601431975660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613971601431975656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &613971601431975661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613971601431975656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 613971601431975660}
+  sceneViewId: 470
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &632270299997527398
 Transform:
   m_ObjectHideFlags: 0
@@ -18853,7 +19011,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354683210719498134}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 31.528198, y: 364.2927, z: 1765.3625}
+  m_LocalPosition: {x: -180, y: 364, z: 1875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -18992,7 +19150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7243962226475537369}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 699.27344, y: 364.2927, z: 2994.7173}
+  m_LocalPosition: {x: 54, y: 364, z: 1750}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -19012,6 +19170,8 @@ GameObject:
   - component: {fileID: 1354683210719498135}
   - component: {fileID: 1354683210719498136}
   - component: {fileID: 1354683210719498137}
+  - component: {fileID: 1354683210719498139}
+  - component: {fileID: 1354683210719498138}
   m_Layer: 0
   m_Name: Ball_12
   m_TagString: Untagged
@@ -19061,8 +19221,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1354683210719498138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354683210719498134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1354683210719498139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354683210719498134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1354683210719498138}
+  sceneViewId: 472
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &1356398940407388205
 Transform:
   m_ObjectHideFlags: 0
@@ -19140,6 +19337,8 @@ GameObject:
   - component: {fileID: 1453561757961604997}
   - component: {fileID: 1453561757961604998}
   - component: {fileID: 1453561757961604999}
+  - component: {fileID: 1453561757961605001}
+  - component: {fileID: 1453561757961605000}
   m_Layer: 0
   m_Name: Ball_13
   m_TagString: Untagged
@@ -19189,8 +19388,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1453561757961605000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453561757961604996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1453561757961605001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453561757961604996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1453561757961605000}
+  sceneViewId: 473
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &1531656502790924489
 Transform:
   m_ObjectHideFlags: 0
@@ -19199,7 +19435,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3802945734881086217}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 410, y: 364.2927, z: -1167}
+  m_LocalPosition: {x: -414, y: 364, z: 2000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -19219,6 +19455,8 @@ GameObject:
   - component: {fileID: 1641266248601869584}
   - component: {fileID: 1641266248601869585}
   - component: {fileID: 1641266248601869586}
+  - component: {fileID: 1641266248601869588}
+  - component: {fileID: 1641266248601869587}
   m_Layer: 0
   m_Name: Ball_8
   m_TagString: Untagged
@@ -19268,8 +19506,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1641266248601869587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641266248601869583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1641266248601869588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641266248601869583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1641266248601869587}
+  sceneViewId: 468
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &1726304314957837540
 Transform:
   m_ObjectHideFlags: 0
@@ -19278,7 +19553,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613971601431975656}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 152.43066, y: 364.2927, z: 1867.9155}
+  m_LocalPosition: {x: -24, y: 364, z: 1625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -19365,6 +19640,8 @@ GameObject:
   - component: {fileID: 2198270926543284797}
   - component: {fileID: 2198270926543284798}
   - component: {fileID: 2198270926543284799}
+  - component: {fileID: 2198270926543284801}
+  - component: {fileID: 2198270926543284800}
   m_Layer: 0
   m_Name: Ball_6
   m_TagString: Untagged
@@ -19414,8 +19691,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &2198270926543284800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198270926543284796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &2198270926543284801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198270926543284796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2198270926543284800}
+  sceneViewId: 466
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &2236971951167793961
 Transform:
   m_ObjectHideFlags: 0
@@ -19745,6 +20059,8 @@ GameObject:
   - component: {fileID: 3449247726545373512}
   - component: {fileID: 3449247726545373513}
   - component: {fileID: 3449247726545373514}
+  - component: {fileID: 3449247726545373516}
+  - component: {fileID: 3449247726545373515}
   m_Layer: 0
   m_Name: Ball_7
   m_TagString: Untagged
@@ -19794,8 +20110,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &3449247726545373515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449247726545373511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &3449247726545373516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449247726545373511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3449247726545373515}
+  sceneViewId: 467
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3512319667757159013
 GameObject:
   m_ObjectHideFlags: 0
@@ -19822,7 +20175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641266248601869583}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 130.21765, y: 364.2927, z: 2036.0562}
+  m_LocalPosition: {x: -102, y: 364, z: 1750}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -19897,6 +20250,8 @@ GameObject:
   - component: {fileID: 3802945734881086218}
   - component: {fileID: 3802945734881086219}
   - component: {fileID: 3802945734881086220}
+  - component: {fileID: 3802945734881086222}
+  - component: {fileID: 3802945734881086221}
   m_Layer: 0
   m_Name: Ball_15
   m_TagString: Untagged
@@ -19946,8 +20301,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &3802945734881086221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802945734881086217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &3802945734881086222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802945734881086217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3802945734881086221}
+  sceneViewId: 475
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3935078159608150021
 GameObject:
   m_ObjectHideFlags: 0
@@ -19959,6 +20351,8 @@ GameObject:
   - component: {fileID: 8772948881592820331}
   - component: {fileID: 6741418044361553846}
   - component: {fileID: 813093062105099599}
+  - component: {fileID: 3935078159608150022}
+  - component: {fileID: 3935078159608150023}
   m_Layer: 0
   m_Name: CueStick
   m_TagString: Untagged
@@ -19966,6 +20360,45 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3935078159608150022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935078159608150021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3935078159608150023}
+  sceneViewId: 488
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3935078159608150023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935078159608150021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!23 &4003937531239737179
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20021,6 +20454,8 @@ GameObject:
   - component: {fileID: 4137984775838120901}
   - component: {fileID: 4137984775838120902}
   - component: {fileID: 4137984775838120903}
+  - component: {fileID: 4137984775838120905}
+  - component: {fileID: 4137984775838120904}
   m_Layer: 0
   m_Name: Ball_3
   m_TagString: Untagged
@@ -20070,8 +20505,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &4137984775838120904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137984775838120900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &4137984775838120905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137984775838120900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4137984775838120904}
+  sceneViewId: 463
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &4188057826354162004
 Transform:
   m_ObjectHideFlags: 0
@@ -20094,7 +20566,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2198270926543284796}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 296.88635, y: 364.2927, z: 2237.9895}
+  m_LocalPosition: {x: -336, y: 364, z: 1875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20166,7 +20638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6613854342792760296}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: -335.3755, y: 364.2927, z: 664.6372}
+  m_LocalPosition: {x: -258, y: 364, z: 2000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20180,7 +20652,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5215618935627929337}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: -804.6994, y: 364.2927, z: 1808}
+  m_LocalPosition: {x: -102, y: 364, z: 1500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20235,7 +20707,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6544452304374655626}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 275.0681, y: 364.2927, z: 1978.0137}
+  m_LocalPosition: {x: -180, y: 364, z: 1625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20255,6 +20727,8 @@ GameObject:
   - component: {fileID: 5215618935627929338}
   - component: {fileID: 5215618935627929339}
   - component: {fileID: 5215618935627929340}
+  - component: {fileID: 5215618935627929342}
+  - component: {fileID: 5215618935627929341}
   m_Layer: 0
   m_Name: Ball_1
   m_TagString: Untagged
@@ -20304,8 +20778,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &5215618935627929341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5215618935627929337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &5215618935627929342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5215618935627929337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5215618935627929341}
+  sceneViewId: 461
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!33 &5303295326500365453
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20365,6 +20876,8 @@ GameObject:
   - component: {fileID: 5397404592420418192}
   - component: {fileID: 5397404592420418193}
   - component: {fileID: 5397404592420418194}
+  - component: {fileID: 5397404592420418196}
+  - component: {fileID: 5397404592420418195}
   m_Layer: 0
   m_Name: Ball_2
   m_TagString: Untagged
@@ -20414,8 +20927,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &5397404592420418195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5397404592420418191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &5397404592420418196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5397404592420418191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5397404592420418195}
+  sceneViewId: 462
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &5405323690697907131
 Transform:
   m_ObjectHideFlags: 0
@@ -20424,7 +20974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258953606710660551}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 138.14539, y: 364.2927, z: 2200.7253}
+  m_LocalPosition: {x: 132, y: 364, z: 1875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20533,7 +21083,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5397404592420418191}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: -967.5476, y: 364.2927, z: 2997.49}
+  m_LocalPosition: {x: 210, y: 364, z: 2000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20732,6 +21282,8 @@ GameObject:
   - component: {fileID: 6544452304374655627}
   - component: {fileID: 6544452304374655628}
   - component: {fileID: 6544452304374655629}
+  - component: {fileID: 6544452304374655631}
+  - component: {fileID: 6544452304374655630}
   m_Layer: 0
   m_Name: Ball_9
   m_TagString: Untagged
@@ -20781,8 +21333,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &6544452304374655630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544452304374655626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &6544452304374655631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6544452304374655626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6544452304374655630}
+  sceneViewId: 469
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!23 &6592847554004460390
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20833,7 +21422,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4137984775838120900}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: 180.98485, y: 364.2927, z: 2903.3801}
+  m_LocalPosition: {x: -258, y: 364, z: 1750}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -20853,6 +21442,8 @@ GameObject:
   - component: {fileID: 6613854342792760297}
   - component: {fileID: 6613854342792760298}
   - component: {fileID: 6613854342792760299}
+  - component: {fileID: 6613854342792760301}
+  - component: {fileID: 6613854342792760300}
   m_Layer: 0
   m_Name: Ball_14
   m_TagString: Untagged
@@ -20902,8 +21493,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &6613854342792760300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613854342792760296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &6613854342792760301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613854342792760296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6613854342792760300}
+  sceneViewId: 474
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!33 &6658370607324138132
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -21235,6 +21863,8 @@ GameObject:
   - component: {fileID: 7243962226475537370}
   - component: {fileID: 7243962226475537371}
   - component: {fileID: 7243962226475537372}
+  - component: {fileID: 7243962226475537374}
+  - component: {fileID: 7243962226475537373}
   m_Layer: 0
   m_Name: Ball_4
   m_TagString: Untagged
@@ -21284,8 +21914,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &7243962226475537373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243962226475537369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &7243962226475537374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7243962226475537369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 7243962226475537373}
+  sceneViewId: 464
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &7364079839826745392
 Transform:
   m_ObjectHideFlags: 0
@@ -21294,7 +21961,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3449247726545373511}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: -53.972168, y: 364.2927, z: 2446.9023}
+  m_LocalPosition: {x: -102, y: 364, z: 2000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -21349,7 +22016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453561757961604996}
   m_LocalRotation: {x: -0.0017952905, y: 0.0000018276912, z: -0.0010180459, w: 0.9999979}
-  m_LocalPosition: {x: -136.45703, y: 364.2927, z: 1792.5598}
+  m_LocalPosition: {x: 54, y: 364, z: 2000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948229778}
@@ -21459,6 +22126,8 @@ GameObject:
   - component: {fileID: 8138580280167030485}
   - component: {fileID: 8138580280167030486}
   - component: {fileID: 8138580280167030487}
+  - component: {fileID: 8138580280167030489}
+  - component: {fileID: 8138580280167030488}
   m_Layer: 0
   m_Name: Ball_11
   m_TagString: Untagged
@@ -21508,8 +22177,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballVelocity: {x: 0, y: 0, z: 0}
-  ballDirection: {x: 0, y: 0, z: 0}
-  powerPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &8138580280167030488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138580280167030484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &8138580280167030489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138580280167030484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8138580280167030488}
+  sceneViewId: 471
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!33 &8195331381122554771
 MeshFilter:
   m_ObjectHideFlags: 0

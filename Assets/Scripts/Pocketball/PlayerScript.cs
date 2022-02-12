@@ -17,8 +17,6 @@ namespace JK
         void FixedUpdate()
         {
             playerPosition = transform.position;
-
-            
         }
     }
 }

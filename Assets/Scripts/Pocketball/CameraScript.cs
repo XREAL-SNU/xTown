@@ -8,25 +8,13 @@ namespace JK
     public class CameraScript : MonoBehaviour
     {
         public CinemachineVirtualCamera virCam = null;
-        // Start is called before the first frame update
-        void Start()
+        public void SetCameraWhole()
         {
-
+            virCam.Priority = 11;
         }
-
-        // Update is called once per frame
-        public void Update()
+        public void SetCameraCue()
         {
-            //Debug.Log(GameManager.Arraytrigger[0]);
-            if(GameManager.CamBool)
-            {
-                virCam.Priority = 9;
-            }
-            else
-            {
-                virCam.Priority = 11;
-            }
-        
+            virCam.Priority = 9;
         }
     }
 }

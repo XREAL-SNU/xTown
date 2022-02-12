@@ -13,16 +13,6 @@ namespace JK
         public GameObject A_Color;
         public GameObject Color_Balls;
         public GameObject Line_Balls;
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
         
         void OnTriggerEnter(Collider ball)
         {
@@ -136,14 +126,12 @@ namespace JK
                     else if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.countB=GameManager.countB-1;
-                        GameManager.AorB=false;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=false;
                         GameManager.OtherBool = true;
                     }
                 }
@@ -159,14 +147,12 @@ namespace JK
                     else if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.countB=GameManager.countB-1;
-                        GameManager.AorB=false;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=false;
                         GameManager.OtherBool = true;
                     }
                 }
@@ -187,14 +173,12 @@ namespace JK
                     else if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.countA=GameManager.countA-1;
-                        GameManager.AorB=true;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=true;
                         GameManager.OtherBool = true;
                     }
                 }
@@ -210,14 +194,12 @@ namespace JK
                     else if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.countA=GameManager.countA-1;
-                        GameManager.AorB=true;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=true;
                         GameManager.OtherBool = true;
                     }
                 }

@@ -7,16 +7,12 @@ namespace JK
     {
         public static float bar_width;
         RectTransform rectTran;
-        // Start is called before the first frame update
         void Start()
         {
-            
+            rectTran = gameObject.GetComponent<RectTransform>();
         }
-
-        // Update is called once per frame
         void Update()
         {
-            rectTran = gameObject.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, bar_width);
         }
     }
