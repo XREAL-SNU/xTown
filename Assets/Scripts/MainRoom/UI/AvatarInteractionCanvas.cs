@@ -6,6 +6,7 @@ public class AvatarInteractionCanvas : MonoBehaviour
 {
     private MainCanvases _mainCanvases;
 
+    private void Start() { Hide(); }
     public void FirstInitialize(MainCanvases canvases)
     {
         _mainCanvases = canvases;

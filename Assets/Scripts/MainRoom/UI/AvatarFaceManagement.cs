@@ -11,6 +11,7 @@ public class AvatarFaceManagement : MonoBehaviour
     //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetButtonImageAsSprite();
     //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetButtonTextAsString();
     //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetImageIndex();
+    [SerializeField] List<Texture> _avatarTextureList;
     [SerializeField] List<Sprite> _avatarFaceList;
     [SerializeField] public List<AvatarFaceButton> _favList;
 
@@ -19,6 +20,10 @@ public class AvatarFaceManagement : MonoBehaviour
 
     bool _isSelected = false;
     AvatarFaceButton _currentlySelectedButton;
+
+    public static int DefaultIndex;
+    public static List<Texture> s_avatarTextureList;
+    public static List<AvatarFaceButton> s_favList;
 
     public AvatarFaceButton GetFavButton(int index) { return _favList[index]; }
 
@@ -41,7 +46,13 @@ public class AvatarFaceManagement : MonoBehaviour
             childButton = EmojiList.GetChild(i).GetComponent<AvatarFaceButton>();
             childButton.SetButtonImage(_avatarFaceList[i]);
             childButton.SetButtonText(_avatarFaceList[i].name);
+            childButton.SetImageIndex(i);
+
+            if (_avatarFaceList[i].name.Equals("happy")) DefaultIndex = i;
         }
+
+        s_avatarTextureList = _avatarTextureList;
+        s_favList = _favList;
     }
 
     // Invoke this Function when Button in Viewport is Clicked
@@ -83,9 +94,7 @@ public class AvatarFaceManagement : MonoBehaviour
         {
             avatarFaceButton.SetButtonText(_currentlySelectedButton.GetButtonText());
             avatarFaceButton.SetButtonImage(_currentlySelectedButton.GetButtonImage());
-
-            // Replace Index
-            for(int i = 0; i < _avatarFaceList.Count; i++) { if (_currentlySelectedButton.GetButtonText().text.Equals(_avatarFaceList[i].name)) avatarFaceButton.SetImageIndex(i); }
+            avatarFaceButton.SetImageIndex(_currentlySelectedButton.GetImageIndex());
             
             DeselectCurrentlySelected();
         }
@@ -95,6 +104,8 @@ public class AvatarFaceManagement : MonoBehaviour
             SwapButtons(avatarFaceButton, _favList[index]);
             DeselectCurrentlySelected();
         }
+
+        s_favList = _favList;
     }
 
     // Checks whether input parameter is added to Favorites List.
