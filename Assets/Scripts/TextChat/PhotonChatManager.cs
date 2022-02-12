@@ -604,7 +604,7 @@ namespace XReal.Xtown.PhotonChat
                     }
                     else
                     {
-                        Debug.Log(myChannels);
+                        // Debug.Log(myChannels);
                     }
                 }
             }
