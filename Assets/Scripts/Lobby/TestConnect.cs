@@ -61,6 +61,8 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("TestConnect/Player Joined Lobby");
+        RoomsCanvases.Instance.LoadingCanvas.Hide();
+        RoomsCanvases.Instance.PlayerNameInputCanvas.Show();
     }
 
     public override void OnJoinedRoom()
