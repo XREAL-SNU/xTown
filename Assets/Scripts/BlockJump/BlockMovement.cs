@@ -27,13 +27,13 @@ public class BlockMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         isPlayerOnBlock = true;
-        Player.transform.parent = transform; //플레이어가 이동하는 블록 위에서 블록과 함께 움직이게 함
+        other.transform.parent = transform; //플레이어가 이동하는 블록 위에서 블록과 함께 움직이게 함
     }
 
     private void OnTriggerExit(Collider other)
     {
         isPlayerOnBlock = false;
-        Player.transform.parent = null; //플레이어가 블록과 상관없이 움직이게 함
+        other.transform.parent = null; //플레이어가 블록과 상관없이 움직이게 함
     }
 
     void FixedUpdate()
