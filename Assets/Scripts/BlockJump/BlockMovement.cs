@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockMovement : MonoBehaviour   
+public class BlockMovement : MonoBehaviour
 {
-    /* ÇÃ·¹ÀÌ¾î°¡ ºí·Ï¿¡ Á¢ÃË ½Ã, ºí·ÏÀÌ ÁÂ¿ì(zÃà ¹æÇâ) ¶Ç´Â »óÇÏ(xÃà ¹æÇâ)·Î ¹İº¹ÇÏ¿© ¿òÁ÷ÀÌ°Ô ÇÕ´Ï´Ù. */
-    /* ºí·ÏÀÌ ÀÌµ¿ÇÒ ¶§, ÇÃ·¹ÀÌ¾î°¡ ºí·Ï À§¿¡¼­ ºí·ÏÀ» µû¶ó ÇÔ²² ¿òÁ÷ÀÌµµ·Ï ÇÕ´Ï´Ù. */
-    
-    public GameObject EndPosition; //ºí·Ï ¹æÇâ ÀüÈ¯ ÁöÁ¡
-    private Vector3 startPosition; //ºí·Ï ÀÌµ¿ ½ÃÀÛ ÁöÁ¡
+    /* í”Œë ˆì´ì–´ê°€ ë¸”ë¡ì— ì ‘ì´‰ ì‹œ, ë¸”ë¡ì´ ì¢Œìš°(zì¶• ë°©í–¥) ë˜ëŠ” ìƒí•˜(xì¶• ë°©í–¥)ë¡œ ë°˜ë³µí•˜ì—¬ ì›€ì§ì´ê²Œ í•©ë‹ˆë‹¤. */
+    /* ë¸”ë¡ì´ ì´ë™í•  ë•Œ, í”Œë ˆì´ì–´ê°€ ë¸”ë¡ ìœ„ì—ì„œ ë¸”ë¡ì„ ë”°ë¼ í•¨ê»˜ ì›€ì§ì´ë„ë¡ í•©ë‹ˆë‹¤. */
+
+    public GameObject EndPosition; //ë¸”ë¡ ë°©í–¥ ì „í™˜ ì§€ì 
+    private Vector3 startPosition; //ë¸”ë¡ ì´ë™ ì‹œì‘ ì§€ì 
     private GameObject Player;
 
-    public float speed; //ºí·Ï ÀÌµ¿ ¼Óµµ
-    private bool isInitDir = true; //ºí·ÏÀÌ ÀÌµ¿ ÁßÀÎ ¹æÇâ (ÃÊ±â ¹æÇâÀÌ¸é true, ÀüÈ¯µÈ ¹æÇâÀÌ¸é false)
-    private bool isPlayerOnBlock; //ÇÃ·¹ÀÌ¾îÀÇ ºí·Ï Á¢ÃË ¿©ºÎ
+    public float speed; //ë¸”ë¡ ì´ë™ ì†ë„
+    private bool isInitDir = true; //ë¸”ë¡ì´ ì´ë™ ì¤‘ì¸ ë°©í–¥ (ì´ˆê¸° ë°©í–¥ì´ë©´ true, ì „í™˜ëœ ë°©í–¥ì´ë©´ false)
+    private bool isPlayerOnBlock; //í”Œë ˆì´ì–´ì˜ ë¸”ë¡ ì ‘ì´‰ ì—¬ë¶€
 
     void Start()
     {
@@ -21,31 +21,31 @@ public class BlockMovement : MonoBehaviour
         {
             Player = GameObject.FindGameObjectWithTag("Player");
         }
-        startPosition = transform.position; //ºí·ÏÀÇ ÃÊ±â À§Ä¡
+        startPosition = transform.position; //ë¸”ë¡ì˜ ì´ˆê¸° ìœ„ì¹˜
     }
 
     private void OnTriggerEnter(Collider other)
     {
         isPlayerOnBlock = true;
-        Player.transform.parent = transform; //ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ÇÏ´Â ºí·Ï À§¿¡¼­ ºí·Ï°ú ÇÔ²² ¿òÁ÷ÀÌ°Ô ÇÔ
+        other.transform.parent = transform; //í”Œë ˆì´ì–´ê°€ ì´ë™í•˜ëŠ” ë¸”ë¡ ìœ„ì—ì„œ ë¸”ë¡ê³¼ í•¨ê»˜ ì›€ì§ì´ê²Œ í•¨
     }
 
     private void OnTriggerExit(Collider other)
     {
         isPlayerOnBlock = false;
-        Player.transform.parent = null; //ÇÃ·¹ÀÌ¾î°¡ ºí·Ï°ú »ó°ü¾øÀÌ ¿òÁ÷ÀÌ°Ô ÇÔ
+        other.transform.parent = null; //í”Œë ˆì´ì–´ê°€ ë¸”ë¡ê³¼ ìƒê´€ì—†ì´ ì›€ì§ì´ê²Œ í•¨
     }
 
     void FixedUpdate()
     {
-        /* ºí·ÏÀÌ ÀÌµ¿ÇÏ°Ô ÇÏ´Â ºÎºĞ */
-        if(isPlayerOnBlock == true) //ÇÃ·¹ÀÌ¾î°¡ ºí·Ï À§¿¡ ÀÖ´Â °æ¿ì¿¡¸¸ µ¿ÀÛ
+        /* ë¸”ë¡ì´ ì´ë™í•˜ê²Œ í•˜ëŠ” ë¶€ë¶„ */
+        if (isPlayerOnBlock == true) //í”Œë ˆì´ì–´ê°€ ë¸”ë¡ ìœ„ì— ìˆëŠ” ê²½ìš°ì—ë§Œ ë™ì‘
         {
-            if (isInitDir) //ºí·ÏÀÌ ÃÊ±â ¹æÇâÀ¸·Î ÀÌµ¿ÇØ¾ß ÇÏ´Â °æ¿ì
+            if (isInitDir) //ë¸”ë¡ì´ ì´ˆê¸° ë°©í–¥ìœ¼ë¡œ ì´ë™í•´ì•¼ í•˜ëŠ” ê²½ìš°
             {
                 MoveInitialDirection();
             }
-            else //ºí·ÏÀÌ ¹æÇâÀ» ÀüÈ¯ÇÏ¿© ÀÌµ¿ÇØ¾ß ÇÏ´Â °æ¿ì
+            else //ë¸”ë¡ì´ ë°©í–¥ì„ ì „í™˜í•˜ì—¬ ì´ë™í•´ì•¼ í•˜ëŠ” ê²½ìš°
             {
                 MoveOppositeDirection();
             }
@@ -54,30 +54,30 @@ public class BlockMovement : MonoBehaviour
 
     void MoveInitialDirection()
     {
-        /* ºí·ÏÀÌ ÃÊ±â ¹æÇâÀ¸·Î ¿òÁ÷ÀÌµµ·Ï ÇÏ´Â ÇÔ¼ö */
-        if (Mathf.Abs(transform.position.x - EndPosition.transform.position.x) > 0.1f //xÃàÀ» µû¶ó ¿òÁ÷ÀÌ´Â ºí·ÏÀÌ, ÃÊ±â ¹æÇâ ÀÌµ¿ ÁßÀÎ °æ¿ì
-            || Mathf.Abs(transform.position.z - EndPosition.transform.position.z) > 0.1f) //zÃàÀ» µû¶ó ¿òÁ÷ÀÌ´Â ºí·ÏÀÌ, ÃÊ±â ¹æÇâ ÀÌµ¿ ÁßÀÎ °æ¿ì
+        /* ë¸”ë¡ì´ ì´ˆê¸° ë°©í–¥ìœ¼ë¡œ ì›€ì§ì´ë„ë¡ í•˜ëŠ” í•¨ìˆ˜ */
+        if (Mathf.Abs(transform.position.x - EndPosition.transform.position.x) > 0.1f //xì¶•ì„ ë”°ë¼ ì›€ì§ì´ëŠ” ë¸”ë¡ì´, ì´ˆê¸° ë°©í–¥ ì´ë™ ì¤‘ì¸ ê²½ìš°
+            || Mathf.Abs(transform.position.z - EndPosition.transform.position.z) > 0.1f) //zì¶•ì„ ë”°ë¼ ì›€ì§ì´ëŠ” ë¸”ë¡ì´, ì´ˆê¸° ë°©í–¥ ì´ë™ ì¤‘ì¸ ê²½ìš°
         {
-            //EndPosition±îÁö ºí·Ï ÀÌµ¿
+            //EndPositionê¹Œì§€ ë¸”ë¡ ì´ë™
             transform.position = Vector3.MoveTowards(transform.position, EndPosition.transform.position, Time.deltaTime * speed);
         }
         else
         {
-            isInitDir = false; //EndPosition¿¡ µµ´ŞÇÏ¸é ¹æÇâ ÀüÈ¯
+            isInitDir = false; //EndPositionì— ë„ë‹¬í•˜ë©´ ë°©í–¥ ì „í™˜
         }
     }
     void MoveOppositeDirection()
     {
-        /* ºí·ÏÀÌ ÀüÈ¯µÈ ¹æÇâÀ¸·Î ¿òÁ÷ÀÌµµ·Ï ÇÏ´Â ÇÔ¼ö */
-        if (Mathf.Abs(transform.position.x - startPosition.x) > 0.1f //xÃàÀ» µû¶ó ¿òÁ÷ÀÌ´Â ºí·ÏÀÌ, ÀüÈ¯µÈ ¹æÇâÀ¸·Î ÀÌµ¿ Áß
-            || Mathf.Abs(transform.position.z - startPosition.z) > 0.1f) //zÃàÀ» µû¶ó ¿òÁ÷ÀÌ´Â ºí·ÏÀÌ, ÀüÈ¯µÈ ¹æÇâÀ¸·Î ÀÌµ¿ Áß
+        /* ë¸”ë¡ì´ ì „í™˜ëœ ë°©í–¥ìœ¼ë¡œ ì›€ì§ì´ë„ë¡ í•˜ëŠ” í•¨ìˆ˜ */
+        if (Mathf.Abs(transform.position.x - startPosition.x) > 0.1f //xì¶•ì„ ë”°ë¼ ì›€ì§ì´ëŠ” ë¸”ë¡ì´, ì „í™˜ëœ ë°©í–¥ìœ¼ë¡œ ì´ë™ ì¤‘
+            || Mathf.Abs(transform.position.z - startPosition.z) > 0.1f) //zì¶•ì„ ë”°ë¼ ì›€ì§ì´ëŠ” ë¸”ë¡ì´, ì „í™˜ëœ ë°©í–¥ìœ¼ë¡œ ì´ë™ ì¤‘
         {
-            //startPosition±îÁö ºí·Ï ÀÌµ¿
+            //startPositionê¹Œì§€ ë¸”ë¡ ì´ë™
             transform.position = Vector3.MoveTowards(transform.position, startPosition, Time.deltaTime * speed);
         }
         else
         {
-            isInitDir = true; //startPosition¿¡ µµ´ŞÇÏ¸é ¹æÇâ ÀüÈ¯
+            isInitDir = true; //startPositionì— ë„ë‹¬í•˜ë©´ ë°©í–¥ ì „í™˜
         }
     }
 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BlockResize : MonoBehaviour
 {
-    /* ÇÃ·¹ÀÌ¾î°¡ ºí·Ï¿¡ Á¢ÃË ½Ã, ºí·ÏÀÌ Àı¹İ Å©±â·Î ÁÙ¾îµé°Ô ÇÕ´Ï´Ù */
+    /* í”Œë ˆì´ì–´ê°€ ë¸”ë¡ì— ì ‘ì´‰ ì‹œ, ë¸”ë¡ì´ ì ˆë°˜ í¬ê¸°ë¡œ ì¤„ì–´ë“¤ê²Œ í•©ë‹ˆë‹¤ */
 
-    public float resizeDuration = 2f; //ºí·Ï Å©±â Ãà¼Ò ¼Ò¿ä ½Ã°£
-    private float t; //Ãà¼Ò ½Ã°£ Á¦¾î¸¦ À§ÇÑ º¸Á¶ º¯¼ö
+    public float resizeDuration = 2f; //ë¸”ë¡ í¬ê¸° ì¶•ì†Œ ì†Œìš” ì‹œê°„
+    private float t; //ì¶•ì†Œ ì‹œê°„ ì œì–´ë¥¼ ìœ„í•œ ë³´ì¡° ë³€ìˆ˜
 
-    private bool isPlayerOnBlock = false; //ÇÃ·¹ÀÌ¾îÀÇ ºí·Ï Á¢ÃË ¿©ºÎ
-    private Vector3 originalScale; //ºí·ÏÀÇ ÃÊ±â Å©±â
-    private Vector3 targetScale; //ºí·ÏÀÇ Ãà¼ÒµÈ Å©±â
+    private bool isPlayerOnBlock = false; //í”Œë ˆì´ì–´ì˜ ë¸”ë¡ ì ‘ì´‰ ì—¬ë¶€
+    private Vector3 originalScale; //ë¸”ë¡ì˜ ì´ˆê¸° í¬ê¸°
+    private Vector3 targetScale; //ë¸”ë¡ì˜ ì¶•ì†Œëœ í¬ê¸°
 
 
     void Start()
@@ -27,12 +27,12 @@ public class BlockResize : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerOnBlock) //ÇÃ·¹ÀÌ¾î°¡ ºí·Ï¿¡ Á¢ÃËÇÑ °æ¿ì
+        if (isPlayerOnBlock) //í”Œë ˆì´ì–´ê°€ ë¸”ë¡ì— ì ‘ì´‰í•œ ê²½ìš°
         {
-            ShrinkObject(); //ºí·Ï Å©±â Ãà¼Ò
-            if(transform.localScale == targetScale)
+            ShrinkObject(); //ë¸”ë¡ í¬ê¸° ì¶•ì†Œ
+            if (transform.localScale == targetScale)
             {
-                //ºí·ÏÀÌ Àı¹İ Å©±â°¡ µÇ¸é Ãà¼Ò Áß´Ü
+                //ë¸”ë¡ì´ ì ˆë°˜ í¬ê¸°ê°€ ë˜ë©´ ì¶•ì†Œ ì¤‘ë‹¨
                 isPlayerOnBlock = false;
             }
         }
@@ -40,7 +40,7 @@ public class BlockResize : MonoBehaviour
 
     void ShrinkObject()
     {
-        /* ºí·Ï Å©±â¸¦ Ãà¼Ò½ÃÅ°´Â ÇÔ¼ö */
+        /* ë¸”ë¡ í¬ê¸°ë¥¼ ì¶•ì†Œì‹œí‚¤ëŠ” í•¨ìˆ˜ */
         t += Time.deltaTime / resizeDuration;
         Vector3 newScale = Vector3.Lerp(originalScale, targetScale, t);
         transform.localScale = newScale;

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinScript : MonoBehaviour
-{    
-    /* ÄÚÀÎÀÌ È¸ÀüÇÏµµ·Ï ÇÕ´Ï´Ù. */
-    /* ÇÃ·¹ÀÌ¾î°¡ È¹µæÇÏ¸é »ç¶óÁöµµ·Ï ÇÕ´Ï´Ù. */
+{
+    /* ì½”ì¸ì´ íšŒì „í•˜ë„ë¡ í•©ë‹ˆë‹¤. */
+    /* í”Œë ˆì´ì–´ê°€ íšë“í•˜ë©´ ì‚¬ë¼ì§€ë„ë¡ í•©ë‹ˆë‹¤. */
 
     void FixedUpdate()
     {
-        transform.Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime); //ÄÚÀÎÀÌ È¸ÀüÇÏµµ·Ï ÇÔ
+        transform.Rotate(new Vector3(200f, 0f, 0f) * Time.deltaTime); //ì½”ì¸ì´ íšŒì „í•˜ë„ë¡ í•¨
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        gameObject.SetActive(false); //ÇÃ·¹ÀÌ¾î°¡ Á¢ÃË(È¹µæ) ½Ã »ç¶óÁü
+        gameObject.SetActive(false); //í”Œë ˆì´ì–´ê°€ ì ‘ì´‰(íšë“) ì‹œ ì‚¬ë¼ì§
     }
 
 }

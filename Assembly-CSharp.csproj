@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\</OutputPath>
-    <DefineConstants>UNITY_2020_3_23;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2020_3_23;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_INPUT_SYSTEM;ENABLE_LEGACY_INPUT_MANAGER;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;STARTER_ASSETS_PACKAGES_CHECKED;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -47,69 +47,157 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.11</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.23f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
-    <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
-    <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
+    <Compile Include="Assets\Scripts\Yacht\DiceScript.cs" />
+    <Compile Include="Assets\Scripts\WhiteBoard\WhiteboardMarker\WhiteboardMarker.cs" />
+    <Compile Include="Assets\Prefabs\UI\Lobby\FlexibleColorPicker\Scripts\FCP_Persistence.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\MaterialResetScript.cs" />
+    <Compile Include="Assets\Scripts\Yacht\DisplayBestRank.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\CameraControl.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\RoomListingsMenu.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\MainCanvases.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerNameTag.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\CueScript.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\LocalMinimap.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\CurrentRoomCanvas.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\RoomControls.cs" />
+    <Compile Include="Assets\Scripts\Yacht\ShownSlotController.cs" />
+    <Compile Include="Assets\Scripts\Yacht\ScoreTable.cs" />
+    <Compile Include="Assets\StaticAssets\StarterAssets\InputSystem\StarterAssetsInputs.cs" />
+    <Compile Include="Assets\Scripts\Lobby\Managers\GameSettings.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\AvatarCameraScript.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\AvatarInteractionCanvas.cs" />
     <Compile Include="Assets\Scripts\BlockJump\BlockTransparency.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\MainCanvas.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\PlayerListingsMenu.cs" />
+    <Compile Include="Assets\Scripts\WhiteBoard\Whiteboard\Whiteboard.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\SpawnCharacter.cs" />
     <Compile Include="Assets\Scripts\BlockJump\CameraMovement.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\AvatarSelectionMenu.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\Portal.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\RoomListing.cs" />
+    <Compile Include="Assets\Scripts\Yacht\PickedSlotController.cs" />
+    <Compile Include="Assets\StaticAssets\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\CreateRoomMenu.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\MinimapPanel.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\CustomizingPanelScript.cs" />
+    <Compile Include="Assets\Scripts\Lobby\TestConnect.cs" />
     <Compile Include="Assets\Scripts\BlockJump\BlockMovement.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\MinimapScreenScript.cs" />
+    <Compile Include="Assets\Scripts\WhiteBoard\MarkerEraser_Drag\markerdrag.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\FreeBallScript.cs" />
+    <Compile Include="Assets\Scripts\Yacht\DiceCheckZoneScript.cs" />
+    <Compile Include="Assets\Prefabs\UI\Lobby\FlexibleColorPicker\Scripts\FlexibleColorPicker.cs" />
+    <Compile Include="Assets\StaticAssets\StarterAssets\ThirdPersonController\Scripts\ThirdPersonControllerMulti.cs" />
+    <Compile Include="Assets\Scripts\Yacht\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\PlayerNameInputMenu.cs" />
+    <Compile Include="Assets\Scripts\Lobby\SingletonReferences.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\ClickerGamePortal.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
+    <Compile Include="Assets\Scripts\Lobby\Managers\SingletonScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\WhiteBoard\WhiteboardEraser\WhiteboardMarker_erase.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\RandomCustomPropertyGenerator.cs" />
     <Compile Include="Assets\Scripts\BlockJump\BlockResize.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\FreeBallWhite.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\PlayerInfoCanvas.cs" />
+    <Compile Include="Assets\Prefabs\UI\Lobby\FlexibleColorPicker\Scripts\FCP_SpriteMeshEditor.cs" />
     <Compile Include="Assets\Scripts\BlockJump\PlayerController.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\LoadCharacter.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\PlayerNameInputCanvas.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\WorldMinimap.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\LeaveRoomMenu.cs" />
+    <Compile Include="Assets\StaticAssets\StarterAssets\ThirdPersonController\Scripts\ThirdPersonController.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\CustomizingButtonScript.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
     <Compile Include="Assets\Scripts\BlockJump\CoinScript.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatGui.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\CreateOrJoinRoomCanvas.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\PowerBarScript.cs" />
+    <Compile Include="Assets\Scripts\Yacht\PickedSlot.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\PlayerListing.cs" />
+    <Compile Include="Assets\Scripts\Yacht\PhotonLauncher.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\AvatarSelectionCanvas.cs" />
+    <Compile Include="Assets\Scripts\Player\Billboard.cs" />
+    <Compile Include="Assets\Scripts\Yacht\StrategyScript.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\DemoChat\ChatGui.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\ClickerGame\NetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Yacht\ShownSlot.cs" />
+    <Compile Include="Assets\Scripts\Lobby\Managers\MasterManager.cs" />
+    <Compile Include="Assets\Scripts\Yacht\DiceManager.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\Yacht\SelectScore.cs" />
+    <Compile Include="Assets\Scripts\TextChat\PhotonChatManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\TabGroup.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\NetworkLobby.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAvatar.cs" />
+    <Compile Include="Assets\Scripts\CharacterSelect\CharacterSelection.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\PanelSizeScript.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\Rooms\RoomsCanvases.cs" />
+    <Compile Include="Assets\Scripts\Lobby\Utilities\ExtTransforms.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\BallMovement.cs" />
+    <Compile Include="Assets\Scripts\ClickerGame\PlayerScript.cs" />
+    <Compile Include="Assets\StaticAssets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\HoleScript.cs" />
+    <Compile Include="Assets\Scripts\Yacht\CupManager.cs" />
+    <Compile Include="Assets\Scripts\MainRoom\UI\SettingCanvas.cs" />
     <Compile Include="Assets\Scripts\BlockJump\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\UI\AvatarCustomization\TabButton.cs" />
+    <Compile Include="Assets\Scripts\Pocketball\DrawTrajectory.cs" />
+    <Compile Include="Assets\Prefabs\UI\Lobby\FlexibleColorPicker\ExampleScene\FCP_ExampleScript.cs" />
+    <Compile Include="Assets\Scripts\BlockJump\PortalScript.cs" />
+    <Compile Include="Assets\Scripts\BlockJump\SavePoint.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\Photon\PhotonUnityNetworking\readme.txt" />
-    <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll" />
-    <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.dll" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\Photon\PhotonLibs\Metro\Photon3Unity3D.dll" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\StaticAssets\Photon\PhotonUnityNetworking\changelog.txt" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\StaticAssets\StarterAssets\Environment\Shaders\Built-in_RP\Triplanar.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\changes-library.txt" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\StaticAssets\Photon\PhotonUnityNetworking\readme.txt" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\Photon3Unity3D.dll" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\Metro\Photon3Unity3D.dll" />
+    <None Include="Assets\Prefabs\UI\Lobby\FlexibleColorPicker\Materials\FCP_Gradient.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\StaticAssets\StarterAssets\Environment\Shaders\Built-in_RP\ArmatureShader.shader" />
+    <None Include="Assets\StaticAssets\Photon\PhotonLibs\Photon3Unity3D.xml" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\StaticAssets\Photon\PhotonUnityNetworking\link.xml" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\StaticAssets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -335,10 +423,10 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.23f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
+      <HintPath>Assets\StaticAssets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll</HintPath>
+      <HintPath>Assets\StaticAssets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
@@ -697,9 +785,6 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
@@ -708,6 +793,9 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
@@ -718,19 +806,24 @@
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{F4440BC7-3A44-64B8-314D-9E4A457B39CE}</Project>
-      <Name>PhotonUnityNetworking</Name>
-    </ProjectReference>
     <ProjectReference Include="PhotonChat.csproj">
       <Project>{D6E03546-7E25-20AD-3465-96504E36F89C}</Project>
       <Name>PhotonChat</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
-      <Project>{AADBE07C-DC10-D83C-3831-515151322A30}</Project>
-      <Name>PhotonUnityNetworking.Demos</Name>
+    <ProjectReference Include="Siccity.GLTFUtility.csproj">
+      <Project>{222EDCEF-A485-33C2-C9E6-9EA8C21F01AB}</Project>
+      <Name>Siccity.GLTFUtility</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
       <Project>{AB53BE4C-E9A5-1DD1-8AF9-274A041F8291}</Project>
@@ -740,17 +833,45 @@
       <Project>{D3A627B5-A8CA-470F-2170-3261C02A6BC3}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
-      <Project>{571AB043-C05B-F2BF-3008-EFE46B128173}</Project>
-      <Name>PunDemos.DemoHubEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="PhotonRealtime.csproj">
       <Project>{2368A42F-19AC-7D4D-4C79-0D769170CBCC}</Project>
       <Name>PhotonRealtime</Name>
     </ProjectReference>
+    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
+      <Project>{571AB043-C05B-F2BF-3008-EFE46B128173}</Project>
+      <Name>PunDemos.DemoHubEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
       <Project>{A3BCC459-9AAE-3B80-4946-D4531359B482}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="Siccity.GLTFUtility.Editor.csproj">
+      <Project>{80E4D7D2-5FE7-AF24-1D48-65FC86EA596A}</Project>
+      <Name>Siccity.GLTFUtility.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.csproj">
+      <Project>{F4440BC7-3A44-64B8-314D-9E4A457B39CE}</Project>
+      <Name>PhotonUnityNetworking</Name>
+    </ProjectReference>
+    <ProjectReference Include="Wolf3D.ReadyPlayerMe.csproj">
+      <Project>{6F36FEEB-1177-5021-65F0-CCD1452C716D}</Project>
+      <Name>Wolf3D.ReadyPlayerMe</Name>
+    </ProjectReference>
+    <ProjectReference Include="WebView.csproj">
+      <Project>{F409E5AC-DF75-E667-FA57-5947958653F9}</Project>
+      <Name>WebView</Name>
+    </ProjectReference>
+    <ProjectReference Include="Wolf3D.ReadyPlayerMe.Editor.csproj">
+      <Project>{A99FADEE-A6D0-4DAE-AE2A-345E69E11DB2}</Project>
+      <Name>Wolf3D.ReadyPlayerMe.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
+      <Project>{AADBE07C-DC10-D83C-3831-515151322A30}</Project>
+      <Name>PhotonUnityNetworking.Demos</Name>
+    </ProjectReference>
+    <ProjectReference Include="Wolf3D.ReadyPlayerMe.Extras.Editor.csproj">
+      <Project>{8DFFCCB2-B55B-D67C-6529-FA8A985E4B9A}</Project>
+      <Name>Wolf3D.ReadyPlayerMe.Extras.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
       <Project>{C9334191-A479-E7BA-CBA8-768BD6C5425B}</Project>

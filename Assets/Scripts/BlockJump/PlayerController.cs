@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    /* 플레이어 이동 및 점프를 가능하게 합니다. */
-    /* 코인, 블록을 밟을 때마다 점수를 계산합니다. */
-
     private Rigidbody _rigidbody;
     public float speed;
     public float jumpforce;
@@ -17,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public Text CoinCountText;
     public Text ScoreCountText;
 
+    // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -27,7 +25,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //플레이어 이동 및 점프
         if (Input.GetKey("up"))
         {
             Debug.Log("up");
@@ -56,34 +53,31 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        //점수 계산
         if (other.gameObject.CompareTag("Coin")){
-            //other.gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
             Coincount = Coincount + 1;
             CoinSetCount();
-        }
-        if (other.gameObject.CompareTag("BlockStatic"))
-        {
-            //other.gameObject.SetActive(true);
-            Scorecount = Scorecount + 4;
-            Score();
         }
 
         if (other.gameObject.CompareTag("BlockMove")){
             //other.gameObject.SetActive(true);
-            Scorecount = Scorecount + 3;
+            Scorecount = Scorecount + 20;
             Score();
         }
 
         if (other.gameObject.CompareTag("BlockResize")){
             //other.gameObject.SetActive(true);
-            Scorecount = Scorecount + 2;
+            Scorecount = Scorecount + 20;
             Score();
         }
-        
+        if (other.gameObject.CompareTag("BlockStatic")){
+           // other.gameObject.SetActive(true);
+            Scorecount = Scorecount + 40;
+            Score();
+        }
         if (other.gameObject.CompareTag("BlockTrans")){
             //other.gameObject.SetActive(true);
-            Scorecount = Scorecount + 1;
+            Scorecount = Scorecount + 10;
             Score();
         }
     }
@@ -91,7 +85,8 @@ public class PlayerController : MonoBehaviour
     {
         CoinCountText.text = "CoinCount :"+ Coincount.ToString();
     }
-  
+
+    
     private void Score()
     {
         ScoreCountText.text = "Score :"+ Scorecount.ToString();

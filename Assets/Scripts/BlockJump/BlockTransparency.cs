@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class BlockTransparency : MonoBehaviour
 {
-    /* ÇÃ·¹ÀÌ¾î°¡ ºí·Ï¿¡ Á¢ÃË ½Ã, ºí·ÏÀÌ Åõ¸íÇØÁö°Ô ÇÕ´Ï´Ù. */
-    /* ÇÃ·¹ÀÌ¾î°¡ Á¢ÃËÇÏÁö ¾ÊÀ¸¸é ´Ù½Ã ºÒÅõ¸íÇÏ°Ô µ¹¾Æ¿É´Ï´Ù. */
+    /* í”Œë ˆì´ì–´ê°€ ë¸”ë¡ì— ì ‘ì´‰ ì‹œ, ë¸”ë¡ì´ íˆ¬ëª…í•´ì§€ê²Œ í•©ë‹ˆë‹¤. */
+    /* í”Œë ˆì´ì–´ê°€ ì ‘ì´‰í•˜ì§€ ì•Šìœ¼ë©´ ë‹¤ì‹œ ë¶ˆíˆ¬ëª…í•˜ê²Œ ëŒì•„ì˜µë‹ˆë‹¤. */
 
     Material Mat;
-    public float fadeSpeed; //ºí·Ï Åõ¸íÈ­ ¼Óµµ
-    private bool isPlayerOnBlock = false; //ÇÃ·¹ÀÌ¾îÀÇ ºí·Ï Á¢ÃË ¿©ºÎ
+    public float fadeSpeed; //ë¸”ë¡ íˆ¬ëª…í™” ì†ë„
+    private bool isPlayerOnBlock = false; //í”Œë ˆì´ì–´ì˜ ë¸”ë¡ ì ‘ì´‰ ì—¬ë¶€
 
     void Start()
     {
         Mat = GetComponent<Renderer>().material;
-        if(fadeSpeed == 0)
+        if (fadeSpeed == 0)
         {
-            fadeSpeed = 0.01f; //Åõ¸íÈ­ ¼Óµµ ±âº»°ª
+            fadeSpeed = 0.01f; //íˆ¬ëª…í™” ì†ë„ ê¸°ë³¸ê°’
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -25,52 +25,52 @@ public class BlockTransparency : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        isPlayerOnBlock = false; //ÇÃ·¹ÀÌ¾î°¡ ºí·Ï¿¡ Á¢ÃË ÁßÀÌ ¾Æ´Ñ °æ¿ì,
-        StopAllCoroutines(); //Åõ¸íÈ­¸¦ Áß´ÜÇÏ°í,
-        StartCoroutine(FadeInObject()); //´Ù½Ã ºÒÅõ¸íÈ­
+        isPlayerOnBlock = false; //í”Œë ˆì´ì–´ê°€ ë¸”ë¡ì— ì ‘ì´‰ ì¤‘ì´ ì•„ë‹Œ ê²½ìš°,
+        StopAllCoroutines(); //íˆ¬ëª…í™”ë¥¼ ì¤‘ë‹¨í•˜ê³ ,
+        StartCoroutine(FadeInObject()); //ë‹¤ì‹œ ë¶ˆíˆ¬ëª…í™”
     }
 
     void FixedUpdate()
     {
         if (isPlayerOnBlock == true)
         {
-            //ÇÃ·¹ÀÌ¾î°¡ ºí·Ï Á¢ÃË ½Ã, ºí·Ï Åõ¸íÈ­
+            //í”Œë ˆì´ì–´ê°€ ë¸”ë¡ ì ‘ì´‰ ì‹œ, ë¸”ë¡ íˆ¬ëª…í™”
             StartCoroutine(FadeOutObject());
         }
     }
 
     IEnumerator FadeOutObject()
     {
-        /* ºí·Ï Åõ¸íÈ­ÇÏ´Â ÇÔ¼ö */
-        while (Mat.color.a > 0.01f) //ºí·ÏÀÌ ºÒÅõ¸íÇÑ °æ¿ì
+        /* ë¸”ë¡ íˆ¬ëª…í™”í•˜ëŠ” í•¨ìˆ˜ */
+        while (Mat.color.a > 0.01f) //ë¸”ë¡ì´ ë¶ˆíˆ¬ëª…í•œ ê²½ìš°
         {
-            //ºí·Ï ¾ËÆÄ°ª °¨¼Ò
+            //ë¸”ë¡ ì•ŒíŒŒê°’ ê°ì†Œ
             Color ObjectColor = Mat.color;
             float fadeAmount = ObjectColor.a - (fadeSpeed * Time.deltaTime);
 
-            //°¨¼ÒµÈ ¾ËÆÄ°ªÀ¸·Î ºí·Ï »ö Àç¼³Á¤
+            //ê°ì†Œëœ ì•ŒíŒŒê°’ìœ¼ë¡œ ë¸”ë¡ ìƒ‰ ì¬ì„¤ì •
             ObjectColor = new Color(ObjectColor.r, ObjectColor.g, ObjectColor.b, fadeAmount);
             Mat.color = ObjectColor;
-            
+
             yield return null;
         }
-        if (Mat.color.a <= 0.01f) //ºí·ÏÀÌ Åõ¸íÇØÁø °æ¿ì
+        if (Mat.color.a <= 0.01f) //ë¸”ë¡ì´ íˆ¬ëª…í•´ì§„ ê²½ìš°
         {
-            //ºí·Ï Äİ¶óÀÌ´õ¸¦ ºñÈ°¼ºÈ­ÇÏ¿© ÇÃ·¹ÀÌ¾î°¡ Ãß¶ôÇÏ°Ô ÇÔ
+            //ë¸”ë¡ ì½œë¼ì´ë”ë¥¼ ë¹„í™œì„±í™”í•˜ì—¬ í”Œë ˆì´ì–´ê°€ ì¶”ë½í•˜ê²Œ í•¨
             gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
 
     IEnumerator FadeInObject()
     {
-        /* ºí·ÏÀÌ ´Ù½Ã ºÒÅõ¸íÇØÁö°Ô ÇÏ´Â ÇÔ¼ö */
+        /* ë¸”ë¡ì´ ë‹¤ì‹œ ë¶ˆíˆ¬ëª…í•´ì§€ê²Œ í•˜ëŠ” í•¨ìˆ˜ */
         gameObject.GetComponent<BoxCollider>().enabled = true;
-        while (Mat.color.a <= 0.5f) //ÃÊ±â ºÒÅõ¸íµµ·Î µ¹¾Æ¿À±â Àü±îÁö
+        while (Mat.color.a <= 0.5f) //ì´ˆê¸° ë¶ˆíˆ¬ëª…ë„ë¡œ ëŒì•„ì˜¤ê¸° ì „ê¹Œì§€
         {
-            // ºí·Ï ¾ËÆÄ°ª Áõ°¡
+            // ë¸”ë¡ ì•ŒíŒŒê°’ ì¦ê°€
             Color objectColor = Mat.color;
             float fadeAmount = objectColor.a + (Time.deltaTime);
-            //Áõ°¡µÈ ¾ËÆÄ°ªÀ¸·Î ºí·Ï »ö Àç¼³Á¤
+            //ì¦ê°€ëœ ì•ŒíŒŒê°’ìœ¼ë¡œ ë¸”ë¡ ìƒ‰ ì¬ì„¤ì •
             objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
             Mat.color = objectColor;
 
