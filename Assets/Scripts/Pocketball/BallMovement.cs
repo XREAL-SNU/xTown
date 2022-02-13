@@ -10,6 +10,7 @@ namespace JK
     {
         Rigidbody rb;
         public Vector3 ballVelocity;
+        public PhotonView _view;
         int BallNum;
         //PhotonView _view;
         //PhotonTransformView _transformView;
@@ -22,13 +23,14 @@ namespace JK
             //_view = GetComponent<PhotonView>();
             //_transformView = GetComponent<PhotonTransformView>();
             BallNum=int.Parse(gameObject.name.Substring(5));
+            _view = GetComponent<PhotonView>();
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
             ballVelocity=rb.velocity;
-            if(Mathf.Abs(ballVelocity.x) <= 0.0015 && Mathf.Abs(ballVelocity.z) <= 0.0015) // 공이 멈췄을 때
+            if(Mathf.Abs(ballVelocity.x) <= 0.0005 && Mathf.Abs(ballVelocity.z) <= 0.0005) // 공이 멈췄을 때
             {
                 //Debug.Log("hi"+BallNum.ToString());
                 GameManager.isBallStop[BallNum]=1;

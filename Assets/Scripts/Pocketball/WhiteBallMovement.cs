@@ -41,7 +41,7 @@ namespace JK
         void FixedUpdate()
         {
             whiteBallVelocity=rb.velocity;
-            if(Mathf.Abs(whiteBallVelocity.x) <= 0.0015 && Mathf.Abs(whiteBallVelocity.z) <= 0.0015) // 공이 멈췄을 때
+            if(Mathf.Abs(whiteBallVelocity.x) <= 0.0005 && Mathf.Abs(whiteBallVelocity.z) <= 0.0005) // 공이 멈췄을 때
             {
                 //Debug.Log("hi"+BallNum.ToString());
                 GameManager.isBallStop[BallNum]=1;
@@ -84,7 +84,7 @@ namespace JK
             if(!FreeBallScript.FreeBallBool)
             {
                 //Debug.Log(GameManager.isBallStop[0]); // 공이 없어지면서 뭔가 문제가 생긴듯
-                if(GameManager.isBallStop.Sum()==16) // 모든 공이 완전히 멈췄을 때
+                if(GameManager.isBallStop.Sum()==16 && _view.IsMine) // 모든 공이 완전히 멈췄을 때
                 {
                     CueBool = false;
                     whiteBallDirection=transform.position-_cameraLocation.transform.position;
@@ -98,7 +98,7 @@ namespace JK
                     {
                         power=500;
                     }
-                    if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
+                    if(PocketDyeNetworkManager.Instance.networked)
                     {
                         BallForce(whiteBallDirection,power);
                         _view.RPC("WaitCamera",RpcTarget.All);

@@ -27,6 +27,7 @@ namespace JK
         public GameObject A_Turn;
         public GameObject B_Turn;
         public CueScript _cueScript;
+        public BallMovement[] _ballMovement;
         public HoleScript[] _holeScript;
         public WhiteBallMovement _whiteBallMovement;
         public DrawTrajectory _trajectory;
@@ -109,7 +110,6 @@ namespace JK
             //UI
             if(isBallStop.Sum() == 16 && currentGameState == GameState.Rolling && !FreeBallScript.FreeBallBool)
             {
-                currentGameState = GameState.Stopped;
                 if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
                 _view.RPC("CueCameraSetting",RpcTarget.All);
                 else if(!PocketDyeNetworkManager.Instance.networked)
@@ -117,16 +117,20 @@ namespace JK
                 //아무것도 안 들어갔을 때 턴 넘겨짐 or 다른 팀(넣더라도 자기거 먼저넣으면 okay) or 흰공
                 if(NothingBool||OtherBool)
                 {
-                    AorB = !AorB;
                     if(PocketDyeNetworkManager.Instance.networked && _view.IsMine)
                     {
+                        AorB = !AorB;
                         _view.RPC("SwitchOwnerShip",RpcTarget.Others);
                         //Debug.Log("SwitchOwnership");
+                    }
+                    else if(!PocketDyeNetworkManager.Instance.networked)
+                    {
+                        AorB = !AorB;
                     }
                 }
                 if(!PocketDyeNetworkManager.Instance.networked)
                 AfterOwnerShip();
-                else
+                else if(_view.IsMine)
                 {
                     _view.RPC("AfterOwnerShip",RpcTarget.All);
                 }
@@ -146,6 +150,7 @@ namespace JK
         [PunRPC]
         void CueCameraSetting()
         {
+            currentGameState = GameState.Stopped;
             _cameraScript.SetCameraCue();   
         }
 
@@ -154,12 +159,14 @@ namespace JK
         {
             AorB = !AorB;
             _cueScript._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            _holeScript[0]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            _holeScript[1]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            _holeScript[2]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            _holeScript[3]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            _holeScript[4]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-            _holeScript[5]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);            
+            for(int i=0; i<6; i++)
+            {
+                _holeScript[i]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber); 
+            }
+            for(int i=0; i<15; i++)
+            {
+                _ballMovement[i]._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber); 
+            }           
             _whiteBallMovement._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
             _cameraLocation._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
             _trajectory._view.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
