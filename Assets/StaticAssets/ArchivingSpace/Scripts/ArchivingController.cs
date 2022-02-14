@@ -14,6 +14,8 @@ public class ArchivingController : MonoBehaviour
     private bool _isTriggered;
     public bool isTriggered { get { return _isTriggered; } set { _isTriggered = value; } }
 
+    private float _canvasWidth = 1330;
+
     private RectTransform _archivingRT;
 
     private Sequence _openSequence;
@@ -26,29 +28,30 @@ public class ArchivingController : MonoBehaviour
         _openSequence = DOTween.Sequence().
             OnStart(() =>
             {
+                Debug.Log("open");
                 _archivingCamera.SetActive(true);
                 _archivingCanvas.SetActive(true);
                 _archivingRT.sizeDelta = new Vector2(0, _archivingRT.sizeDelta.y);
-                Debug.Log("DF");
             })
-            .Append(DOVirtual.Float(0, 1330, 1f, RectTransformSize)).SetEase(Ease.OutCubic)
-            .SetAutoKill(false)
-            .Pause();
+            .Append(DOVirtual.Float(0, _canvasWidth, 1f, RectTransformSize)).SetEase(Ease.OutCubic)
+            .SetAutoKill(false);
 
         _closeSequence = DOTween.Sequence().
             OnStart(() =>
             {
+                Debug.Log("close");
                 _archivingCamera.SetActive(false);
                 _archivingRT.sizeDelta = new Vector2(0, _archivingRT.sizeDelta.y);
-                Debug.Log("DF");
             })
-            .Append(DOVirtual.Float(1330, 0, 1f, RectTransformSize)).SetEase(Ease.OutCubic)
+            .Append(DOVirtual.Float(_canvasWidth, 0, 1f, RectTransformSize)).SetEase(Ease.OutCubic)
             .OnComplete(() =>
             {
                 _archivingCanvas.SetActive(false);
             })
-            .SetAutoKill(false)
-            .Pause();
+            .SetAutoKill(false);
+
+        _openSequence.Pause();
+        _closeSequence.Pause();
     }
     public void OnTriggerChange()
     {
