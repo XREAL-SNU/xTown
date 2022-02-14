@@ -36,7 +36,7 @@ public class CameraControl : MonoBehaviour
     {
         // Initial Rotation Speed
         // Edit Here
-        xRotateSpeed = 5f;
+        xRotateSpeed = 7f;
         yRotateSpeed = 5f;
         xRotateDecelerate = 2f;
 
@@ -60,19 +60,21 @@ public class CameraControl : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeyCode.KeypadMinus) || Input.GetKey(KeyCode.Minus) || Input.GetKey(KeyCode.Equals))
+        if (Input.mouseScrollDelta.y < 0)
         {
             if (FreeLookCam.m_Lens.FieldOfView < 80)
             {
-                FreeLookCam.m_Lens.FieldOfView += zoomSpeed;
+                Debug.Log("Scroll Up");
+                FreeLookCam.m_Lens.FieldOfView += 5f;
             }
         }
 
-        if (Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.Plus))
+        if (Input.mouseScrollDelta.y > 0)
         {
             if (FreeLookCam.m_Lens.FieldOfView > 5)
             {
-                FreeLookCam.m_Lens.FieldOfView -= zoomSpeed;
+                Debug.Log("Scroll Down");
+                FreeLookCam.m_Lens.FieldOfView -= 5f;
             }
         }
 
@@ -121,8 +123,8 @@ public class CameraControl : MonoBehaviour
         m_Input.x = Input.GetAxis("Mouse X");
         m_Input.y = Input.GetAxis("Mouse Y");
 
-        float xRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.x - m_Input.x * turnSpeed, -60, 60);
-        float yRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.y + m_Input.y * turnSpeed, -45, 80);
+        float xRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.x - m_Input.x * turnSpeed * Time.deltaTime, -60, 60);
+        float yRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.y + m_Input.y * turnSpeed * Time.deltaTime, -45, 80);
 
         _firstPersonCam.transform.eulerAngles = new Vector3(xRotate, yRotate, 0);
     }
