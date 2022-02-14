@@ -10,36 +10,76 @@ public class AvatarFaceControl : MonoBehaviour
 
     [SerializeField] Texture _defaultTexture;
     
-    bool _isDefault = true;
+    /*bool _isDefault = true;*/
+    bool _isChanged = false;
+    int _currentTextureIndex;
+    float _counter = 0;
 
-    private void Start() { AvatarFace.SetTexture("_MainTex", _defaultTexture); }
+    private void Start() 
+    {
+        AvatarFace.SetTexture("_MainTex", _defaultTexture);
+        for(int i = 0; i < AvatarFaceManagement.s_avatarTextureList.Count; i++)
+        {
+            if (AvatarFaceManagement.s_avatarTextureList[i].name.Equals("happy"))
+            {
+                _currentTextureIndex = i;
+                break;
+            }
+        }
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) StartCoroutine(ShowFaceForSeconds(AvatarFaceManagement.s_favList[0].GetImageIndex()));
-        if (Input.GetKeyDown(KeyCode.Alpha2)) StartCoroutine(ShowFaceForSeconds(AvatarFaceManagement.s_favList[1].GetImageIndex()));
-        if (Input.GetKeyDown(KeyCode.Alpha3)) StartCoroutine(ShowFaceForSeconds(AvatarFaceManagement.s_favList[2].GetImageIndex()));
-        if (Input.GetKeyDown(KeyCode.Alpha4)) StartCoroutine(ShowFaceForSeconds(AvatarFaceManagement.s_favList[3].GetImageIndex()));
+        CountSeconds();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ShowFace(AvatarFaceManagement.s_favList[0].GetImageIndex());
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ShowFace(AvatarFaceManagement.s_favList[1].GetImageIndex());
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ShowFace(AvatarFaceManagement.s_favList[2].GetImageIndex());
+        if (Input.GetKeyDown(KeyCode.Alpha4)) ShowFace(AvatarFaceManagement.s_favList[3].GetImageIndex());
     }
 
     public void ChangeFace(int faceIndex) 
     {
         AvatarFace.SetTexture("_MainTex", AvatarFaceManagement.s_avatarTextureList[faceIndex]);
-
+/*
         if (AvatarFaceManagement.s_avatarTextureList[faceIndex].name.Equals("happy"))
             _isDefault = true;
         else
-            _isDefault = false;
+            _isDefault = false;*/
     }
 
-    IEnumerator ShowFaceForSeconds(int index)
+    void ChangeFace(Texture texture)
     {
-        if (!_isDefault) yield break;
+        AvatarFace.SetTexture("_MainTex", texture);
+/*
+        if (texture.name.Equals("happy"))
+            _isDefault = true;
+        else
+            _isDefault = false;*/
+    }
+
+    void ShowFace(int index)
+    {
+        /*if (!_isDefault) yield break;*/
 
         ChangeFace(index);
+        _currentTextureIndex = index;
 
-        yield return new WaitForSeconds(10f);
+        _isChanged = true;
+        _counter = 0;
+    }
 
-        ChangeFace(AvatarFaceManagement.DefaultIndex);
+    void CountSeconds()
+    {
+        if(_isChanged)
+        {
+            _counter += Time.deltaTime;
+        }
+        if(_counter > 10f)
+        {
+            _isChanged = false;
+            _counter = 0;
+            ChangeFace(_defaultTexture);
+        }
     }
 }
