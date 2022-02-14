@@ -54,7 +54,7 @@ namespace StarterAssets
         private void OnDisable()
         {
 			Debug.Log("Disabled controller, destroying character from scene.");
-			Destroy(this.gameObject);
+			//Destroy(this.gameObject);
         }
 
     }
