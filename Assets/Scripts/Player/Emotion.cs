@@ -27,7 +27,7 @@ public class Emotion : MonoBehaviour
     private void Start()
     {
         EmoticonMenu.gameObject.SetActive(false);
-        _player = GameObject.FindWithTag("Player").transform;
+        _player = PlayerManager.Players.LocalPlayerGo.transform;
         //_player = PlayerManager.Players.LocalPlayerGo.transform;
         _avatarFaceControl = _player.GetComponentInChildren<AvatarFaceControl>();
         _view = GetComponent<PhotonView>();
@@ -42,7 +42,7 @@ public class Emotion : MonoBehaviour
         if (_view is null || !_view.IsMine)
         {
             //Debug.Log("View Error");
-            return;
+            // return;
         }
 
         if (Input.GetKeyDown(KeyCode.T))
