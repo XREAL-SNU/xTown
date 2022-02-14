@@ -34,6 +34,10 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
+        xRotateSpeed = 5f;
+        yRotateSpeed = 5f;
+        xRotateDecelerate = 2f;
+
         //_player = GameObject.FindWithTag("Player");
         _player = PlayerManager.Players.LocalPlayerGo;
         _camTarget = _player.GetComponent<ThirdPersonControllerMulti>().CinemachineCameraTarget;
@@ -69,14 +73,17 @@ public class CameraControl : MonoBehaviour
         if (CameraManager.IsCurrentFp)
         {
             _useMouseToRotateTp = false;
-            FreeLookCam.m_XAxis.Value = 0;
-            FreeLookCam.m_YAxis.Value = 0;
+            /*FreeLookCam.m_XAxis.Value = 0;
+            FreeLookCam.m_YAxis.Value = 0;*/
 
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetMouseButtonUp(1))
             {
+                _cinemachineTargetYaw = 0;
+                _cinemachineTargetPitch = 0;
+
                 _useMouseToRotateFp = false;
             }
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetMouseButtonDown(1))
             {
                 _useMouseToRotateFp = true;
             }
@@ -85,11 +92,14 @@ public class CameraControl : MonoBehaviour
         {
             _useMouseToRotateFp = false;
             _firstPersonCam.transform.eulerAngles = new Vector3(0, 0, 0);
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetMouseButtonUp(1))
             {
+                _cinemachineTargetYaw = 0;
+                _cinemachineTargetPitch = 0;
+
                 _useMouseToRotateTp = false;
             }
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetMouseButtonDown(1))
             {
                 _useMouseToRotateTp = true;
             }
@@ -118,8 +128,8 @@ public class CameraControl : MonoBehaviour
         m_Input.x = Input.GetAxis("Mouse X");
         m_Input.y = Input.GetAxis("Mouse Y");
         if(m_Input.sqrMagnitude > _threshold) {
-            _cinemachineTargetYaw += m_Input.x * xRotateSpeed;
-            _cinemachineTargetPitch += -1 * m_Input.y * yRotateSpeed;
+            _cinemachineTargetYaw += m_Input.x * xRotateSpeed * Time.deltaTime;
+            _cinemachineTargetPitch += -1 * m_Input.y * yRotateSpeed * Time.deltaTime;
 
             // clamp to 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
