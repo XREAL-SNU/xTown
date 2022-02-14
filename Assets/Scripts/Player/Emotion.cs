@@ -39,11 +39,6 @@ public class Emotion : MonoBehaviour
     private void Update()
     {
         
-        if (_view is null || !_view.IsMine)
-        {
-            //Debug.Log("View Error");
-            return;
-        }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
