@@ -23,7 +23,7 @@ namespace XReal.Xtown.PhotonChat
         private readonly List<string> privateChannels = new List<string>();
         private string selectedChannelName = "Default"; // mainly used for GUI/input
         
-
+        
         // in development
         private readonly List<string> activeUsers = new List<string>();
 
@@ -53,7 +53,7 @@ namespace XReal.Xtown.PhotonChat
         //채팅방 관리 버튼을 만들어뒀는데 세부 채팅 씬 개발을 뒤로 미뤄서 일단 그냥 HideButton이랑 연결시켜둠
         public TextMeshProUGUI CurrentChannelText;
         
-
+        public PlayerManager _playermanager;
         //This is the Dropdown
         public Dropdown ChannelDropdown;
 
@@ -276,6 +276,8 @@ namespace XReal.Xtown.PhotonChat
 
         public void OnDisconnected()
         {
+            string[] defaultChannel = {"Default"};
+            this.chatClient.Unsubscribe(defaultChannel);
             Debug.Log("disconnected");
         }
 
@@ -295,6 +297,7 @@ namespace XReal.Xtown.PhotonChat
             selectedChannelName = channelName;
             Debug.Log("채널을 변경했습니다"+channelName);
             //selectedChannelName을 여기에서 바꿔주도록 하고
+            CurrentChannelText.text = "";
         }
 
         //this updates and shows messages buffered on the channel
@@ -342,13 +345,13 @@ namespace XReal.Xtown.PhotonChat
             if(channel.IsPrivate)
             {
                 CurrentChannelText.text=" ";
-                OnPrivateMessage(channel.Senders[0], channel.Messages, channel.Name);
+                CurrentChannelText.text = channel.ToStringMessages(userID);
                 //OnPrivateMessage만 해도 해당 채널의 모든 메시지를 불러오는 형태임
             }
             else
             {
                 Debug.Log("This is Public Chat");
-                CurrentChannelText.text = channel.ToStringMessages();
+                CurrentChannelText.text = channel.ToStringMessages(userID);
                 //글씨 색 버그가 있다.
                 //TostringMessage를 아예 ChatChannel에서 바꾸면 수정 가능한데 지금으로썬 할필요 없어짐
             }
