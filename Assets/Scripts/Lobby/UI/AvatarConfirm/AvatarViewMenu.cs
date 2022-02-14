@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AvatarViewMenu : MonoBehaviour
 {
     public GameObject[] CharacterPrefabs;
+    public Text _buttonText;
     private GameObject Player;
     private RoomsCanvases _roomCanvases;
     private GameObject _prefab;
@@ -27,6 +29,14 @@ public class AvatarViewMenu : MonoBehaviour
     public void ConvertMode()
     {
         _dragMode = !_dragMode;
+        if(_dragMode)
+        {
+            _buttonText.text = "Drag Mode";
+        }
+        else
+        {
+            _buttonText.text = "Click Mode";
+        }
     }
 
     public void ViewAvatar()
