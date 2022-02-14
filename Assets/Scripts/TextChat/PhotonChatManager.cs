@@ -341,6 +341,7 @@ namespace XReal.Xtown.PhotonChat
             
             if(channel.IsPrivate)
             {
+                CurrentChannelText.text=" ";
                 OnPrivateMessage(channel.Senders[0], channel.Messages, channel.Name);
                 //OnPrivateMessage만 해도 해당 채널의 모든 메시지를 불러오는 형태임
             }
@@ -398,6 +399,7 @@ namespace XReal.Xtown.PhotonChat
         public void OnPrivateMessage(string sender, object message, string channelName)
         {
             //add to channels.
+            
             if (!myChannels.Contains(channelName))
             {
                 myChannels.Add(channelName);
@@ -418,7 +420,7 @@ namespace XReal.Xtown.PhotonChat
             if (channelName.Equals(this.selectedChannelName))
             {
 
-                ShowChannel(userID+":"+channelName);
+                ShowChannel(channelName);
             }
             ChatChannel ch = this.chatClient.PrivateChannels[channelName];
             string newMessage = "";
@@ -604,7 +606,7 @@ namespace XReal.Xtown.PhotonChat
                     }
                     else
                     {
-                        // Debug.Log(myChannels);
+                        Debug.Log(myChannels);
                     }
                 }
             }
@@ -690,6 +692,14 @@ namespace XReal.Xtown.PhotonChat
                     option.text = channelNameParse[1];
                     ChannelDropdown.options.Add(option);
                 }
+                if(privateChannels.Count>0)
+                {
+                    this.chatClient.Subscribe(privateChannels[0]);
+                    ShowChannel(privateChannels[0]);
+                    selectedChannelName = privateChannels[0];
+                    Debug.Log("채널을 변경했습니다"+privateChannels[0]);
+                }
+                
             }
             else
             {
@@ -706,6 +716,8 @@ namespace XReal.Xtown.PhotonChat
                     option.text = channelName;
                     ChannelDropdown.options.Add(option);
                 }
+                ShowChannel("Default");
+                selectedChannelName = "Default";
             }
         }
 
