@@ -12,6 +12,7 @@ public class ClickerGamePortal : MonoBehaviour
         {
             PhotonNetwork.LeaveRoom();
             PlayerPrefs.SetString("PastScene", "MainRoom");
+            RoomsCanvases.Instance.gameObject.SetActive(true);
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Show();
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName = "GameScene";
         }

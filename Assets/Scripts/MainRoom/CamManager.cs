@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class CamManager : MonoBehaviour
 {
@@ -14,11 +15,14 @@ public class CamManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_player == null)
+        if (_player == null && PhotonNetwork.InRoom)
         {
-            //_player = GameObject.FindWithTag("Player");
-            _player = PlayerManager.Players.LocalPlayerGo;
-            FirstPersonCamObj = _player.transform.Find("FirstPersonCam").gameObject;
+            if (PhotonNetwork.CurrentRoom.Name.Contains("MainWorld"))
+            {
+                //_player = GameObject.FindWithTag("Player");
+                _player = PlayerManager.Players.LocalPlayerGo;
+                FirstPersonCamObj = _player.transform.Find("FirstPersonCam").gameObject;
+            }
         }
         else
         {

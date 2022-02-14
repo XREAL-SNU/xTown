@@ -17,11 +17,12 @@ public class AvatarSetMenu : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsConnected)
             return;
+        _roomCanvases.AvatarConfirmCanvas.Hide();
         Debug.Log(PhotonNetwork.LocalPlayer.NickName, this);
         RoomOptions options = new RoomOptions();
         options.BroadcastPropsChangeToAll = true;
         options.MaxPlayers = 20;
-        PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
+        PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room  
     }
     public override void OnJoinedRoom()
     {
