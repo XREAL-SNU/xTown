@@ -13,15 +13,15 @@ public class ProfileEditPanel : MonoBehaviour
     [SerializeField]
     private Button _confirmButtom;
     [SerializeField]
-    private TMP_InputField _nicknameInputField;
+    private InputField _nicknameInputField;
     [SerializeField]
-    private TMP_InputField _teamInputField;
+    private InputField _teamInputField;
     [SerializeField]
-    private TMP_InputField _fowInputField;
+    private InputField _fowInputField;
     [SerializeField]
-    private TMP_InputField _introInputField;
+    private InputField _introInputField;
     [SerializeField]
-    private TMP_InputField _contactInputField;
+    private InputField _contactInputField;
 
     // Start is called before the first frame update
     void Start()
@@ -75,7 +75,7 @@ public class ProfileEditPanel : MonoBehaviour
         return true;
     }
 
-    private bool CheckIfEmpty(TMP_InputField inputField)
+    private bool CheckIfEmpty(InputField inputField)
     {
         if (inputField.text == "")
         {
