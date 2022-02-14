@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -936,6 +936,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2794768155271370181, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2794768155271370181, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2794768155271370181, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2794768155271370181, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 404107250}
+    - target: {fileID: 2794768155271370181, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2794768155271370181, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick_VoiceChat
+      objectReference: {fileID: 0}
     - target: {fileID: 2794768155271370186, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1584,6 +1608,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+--- !u!114 &404107250 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2794768155322246056, guid: 4534177d5ab44ee409fcdc1c656b822e, type: 3}
+  m_PrefabInstance: {fileID: 404107249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91374fade5937bc469f5377502457b3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &404107251
 MonoBehaviour:
   m_ObjectHideFlags: 0
