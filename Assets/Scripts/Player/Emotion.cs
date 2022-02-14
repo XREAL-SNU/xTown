@@ -103,12 +103,19 @@ public class Emotion : MonoBehaviour
                 EmoticonSelect(_currentMenu);
             }
         }
-        if(Input.GetKeyDown(KeyCode.G) && _camManager.GetComponent<CamManager>().IsCurrentFp){
-            _faceCam.gameObject.SetActive(false);
+        if(Input.GetKeyDown(KeyCode.G)){
+            if(!_camManager.GetComponent<CamManager>().IsCurrentFp && _isMenuActive){
+                _faceCam.gameObject.SetActive(true);
+            }else{
+                _faceCam.gameObject.SetActive(false);
+            }
         }
     }
     public void EmoticonSelect(int num){
         // if coroutine exists stop it and run new coroutine
+        if(_camManager.GetComponent<CamManager>().IsCurrentFp){
+            _characterCam.SetFront();
+        }
         if(_crRunning){
             StopCoroutine(_coroutine);
         }
