@@ -11,7 +11,8 @@ public class AvatarAppearanceNew
         Metallic,
         Emission,
         Texture,
-        Transparency
+        Transparency,
+        Smoothness
     }
 
 
@@ -44,37 +45,36 @@ public class AvatarAppearanceNew
                 partBackpack.PartName = "Backpack";
                 partBackpack.PartPath = "Space_Suit/Tpose_/Man_Suit/Backpack";
                 partBackpack.Properties = new ObjectPartProperty[2];
-                partBackpack.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
-                partBackpack.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
-
+                partBackpack.Properties[0] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partBackpack.Properties[1] = new ObjectPartProperty("Smoothness", AppearancePropertyTypes.Smoothness);
 
                 ObjectPart partBody = new ObjectPart();
                 partBody.PartName = "Body";
                 partBody.PartPath = "Space_Suit/Tpose_/Man_Suit/Body";
                 partBody.Properties = new ObjectPartProperty[2];
-                partBody.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
-                partBody.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partBody.Properties[0] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partBody.Properties[1] = new ObjectPartProperty("Smoothness", AppearancePropertyTypes.Smoothness);
 
                 ObjectPart partBoots = new ObjectPart();
                 partBoots.PartName = "Boot";
                 partBoots.PartPath = "Space_Suit/Tpose_/Man_Suit/Boot";
                 partBoots.Properties = new ObjectPartProperty[2];
-                partBoots.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
-                partBoots.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partBoots.Properties[0] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partBoots.Properties[1] = new ObjectPartProperty("Smoothness", AppearancePropertyTypes.Smoothness);
 
                 ObjectPart partGloves = new ObjectPart();
                 partGloves.PartName = "Glove";
                 partGloves.PartPath = "Space_Suit/Tpose_/Man_Suit/Glove";
                 partGloves.Properties = new ObjectPartProperty[2];
-                partGloves.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
-                partGloves.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partGloves.Properties[0] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partGloves.Properties[1] = new ObjectPartProperty("Smoothness", AppearancePropertyTypes.Smoothness);
 
                 ObjectPart partHelmet = new ObjectPart();
                 partHelmet.PartName = "Helmet";
                 partHelmet.PartPath = "Space_Suit/Tpose_/Man_Suit/Helmet";
                 partHelmet.Properties = new ObjectPartProperty[2];
-                partHelmet.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
-                partHelmet.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partHelmet.Properties[0] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
+                partHelmet.Properties[1] = new ObjectPartProperty("Smoothness", AppearancePropertyTypes.Smoothness);
 
 
                 objectPartsInfo.Parts = new ObjectPart[] { partBackpack, partBody, partBoots, partGloves, partHelmet};
@@ -197,6 +197,9 @@ public class AvatarAppearanceNew
             case AppearancePropertyTypes.Metallic:
                 ApplyMetallic(go, LinearPalette.GetXrealPalette(paletteName)[pick]);
                 break;
+            case AppearancePropertyTypes.Smoothness:
+                ApplySmoothness(go, LinearPalette.GetXrealPalette(paletteName)[pick]);
+                break;
         }
     }
 
@@ -215,6 +218,9 @@ public class AvatarAppearanceNew
                     break;
                 case AppearancePropertyTypes.Metallic:
                     ApplyMetallic(go, LinearPalette.GetXrealPalette(paletteName)[pick]);
+                    break;
+                case AppearancePropertyTypes.Smoothness:
+                    ApplySmoothness(go, LinearPalette.GetXrealPalette(paletteName)[pick]);
                     break;
             }
         }
@@ -235,6 +241,13 @@ public class AvatarAppearanceNew
 
     }
 
+    public void ApplySmoothness(GameObject obj, float value)
+    {
+        Material mat = obj.GetComponent<Renderer>().material;
+        mat.SetFloat("_GlossMapScale", value);
+        Debug.Log("AvatarApperanceNew/ Applying Smoothness " + value);
+
+    }
 
 
 
@@ -335,6 +348,7 @@ public class ObjectPartProperty
             case AvatarAppearanceNew.AppearancePropertyTypes.Metallic:
             case AvatarAppearanceNew.AppearancePropertyTypes.Emission:
             case AvatarAppearanceNew.AppearancePropertyTypes.Transparency:
+            case AvatarAppearanceNew.AppearancePropertyTypes.Smoothness:
                 PaletteName = LinearPalette.DefaultLinearPalette.PaletteName;
                 Pick = 0;
                 TextColor = XTownColor.XTownBlue;
