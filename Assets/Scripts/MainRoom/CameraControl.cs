@@ -34,6 +34,8 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
+        // Initial Rotation Speed
+        // Edit Here
         xRotateSpeed = 5f;
         yRotateSpeed = 5f;
         xRotateDecelerate = 2f;
@@ -45,6 +47,10 @@ public class CameraControl : MonoBehaviour
         _useMouseToRotateTp = false;
         _useMouseToRotateFp = false;
         _firstPersonCam = CameraManager.FirstPersonCamObj;
+
+        // Set initial values for rotation
+        _cinemachineTargetYaw = FreeLookCam.m_XAxis.Value;
+        _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
     }
     void Update()
     {
@@ -73,13 +79,11 @@ public class CameraControl : MonoBehaviour
         if (CameraManager.IsCurrentFp)
         {
             _useMouseToRotateTp = false;
-            /*FreeLookCam.m_XAxis.Value = 0;
-            FreeLookCam.m_YAxis.Value = 0;*/
 
             if (Input.GetMouseButtonUp(1))
             {
-                _cinemachineTargetYaw = 0;
-                _cinemachineTargetPitch = 0;
+                _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
+                _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
 
                 _useMouseToRotateFp = false;
             }
@@ -94,8 +98,8 @@ public class CameraControl : MonoBehaviour
             _firstPersonCam.transform.eulerAngles = new Vector3(0, 0, 0);
             if (Input.GetMouseButtonUp(1))
             {
-                _cinemachineTargetYaw = 0;
-                _cinemachineTargetPitch = 0;
+                _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
+                _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
 
                 _useMouseToRotateTp = false;
             }
@@ -176,7 +180,6 @@ public class CameraControl : MonoBehaviour
         */
         FreeLookCam.m_XAxis.Value = _cinemachineTargetYaw;
         FreeLookCam.m_YAxis.Value = _cinemachineTargetPitch;
-
     }
     
     private float ClampAngle(float lfAngle, float lfMin, float lfMax)
