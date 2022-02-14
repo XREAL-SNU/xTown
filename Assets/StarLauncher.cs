@@ -50,8 +50,8 @@ public class StarLauncher : MonoBehaviour
         
         TPC = GetComponent<ThirdPersonControllerMulti>();
 
-        dollyCart = GameObject.Find("Dolly_Character").GetComponent<CinemachineDollyCart>();
-        playerParent = GameObject.Find("Player_Parent").transform;
+        dollyCart = GameObject.Find("Dolly_Character_Dome").GetComponent<CinemachineDollyCart>();
+        playerParent = GameObject.Find("Player_Parent_Dome").transform;
 
         trail = dollyCart.GetComponentInChildren<TrailRenderer>();
     }
