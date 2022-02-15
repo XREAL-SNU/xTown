@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class AvatarFaceManagement : MonoBehaviour
 {
+    public static AvatarFaceManagement SingletonInstance;
     // This needs to be setup in Editor
     // To get favorites data, access it by first referencing this script and:
     //      {Reference of this Script}.GetFavButton({index of button (0 ~ 4)}).GetButtonImageAsSprite();
@@ -26,6 +27,15 @@ public class AvatarFaceManagement : MonoBehaviour
     public static List<AvatarFaceButton> s_favList;
 
     public AvatarFaceButton GetFavButton(int index) { return _favList[index]; }
+
+    // Singleton 패턴을 반대로 적용해보았는데 문제가 발생하는지 지켜봐야될 것 같습니다
+    private void Awake()
+    {
+        if(SingletonInstance != null && SingletonInstance != this)
+            Destroy(SingletonInstance);
+        else
+            SingletonInstance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -51,8 +61,7 @@ public class AvatarFaceManagement : MonoBehaviour
             if (_avatarFaceList[i].name.Equals("happy")) DefaultIndex = i;
         }
 
-        s_avatarTextureList = _avatarTextureList;
-        s_favList = _favList;
+        UpdateLists();
     }
 
     // Invoke this Function when Button in Viewport is Clicked
@@ -105,7 +114,7 @@ public class AvatarFaceManagement : MonoBehaviour
             DeselectCurrentlySelected();
         }
 
-        s_favList = _favList;
+        UpdateLists();
     }
 
     // Checks whether input parameter is added to Favorites List.
@@ -132,5 +141,11 @@ public class AvatarFaceManagement : MonoBehaviour
         
         button1.SetButtonText(_currentlySelectedButton.GetButtonText());
         button1.SetButtonImage(_currentlySelectedButton.GetButtonImage());
+    }
+
+    void UpdateLists()
+    {
+        s_avatarTextureList = _avatarTextureList;
+        s_favList = _favList;
     }
 }
