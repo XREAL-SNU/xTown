@@ -10,10 +10,6 @@ public class InputManager : MonoBehaviour
     private InputField[] _inputFields;
     [SerializeField]
     private TMP_InputField[] _TMPinputFields;
-    [SerializeField]
-    private Button[] _lockUI;
-    [SerializeField]
-    private Button[] _unlockUI;
 
     private bool _islock = false;
 
@@ -33,30 +29,22 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public static void  Lock()
+    public static void Lock()
     {
-        PlayerKeyboard.PlayerInputLock();
-        PlayerMouse.PlayerInputLock();
+        PlayerKeyboard.InputLockAll(true);
+        PlayerMouse.InputLockAll(true);
     }
 
     public static void UnLock()
     {
-        PlayerKeyboard.PlayerInputUnLock();
-        PlayerMouse.PlayerInputUnLock();
+        PlayerKeyboard.InputLockAll(false);
+        PlayerMouse.InputLockAll(false);
     }
 
     public void ButtonLock()
     {
         _islock = !_islock;
-        if (!_islock)
-        {
-            UnLock();
-            Debug.Log("unlock");
-        }
-        else
-        {
-            Lock();
-            Debug.Log("lock");
-        }
+        if (!_islock) UnLock();
+        else Lock();
     }
 }

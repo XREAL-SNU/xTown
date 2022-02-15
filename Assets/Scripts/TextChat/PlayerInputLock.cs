@@ -7,11 +7,11 @@ public class PlayerInputLock : MonoBehaviour, IPointerEnterHandler, IPointerExit
 {
     public void OnPointerEnter(PointerEventData data)
     {
-        PlayerMouse.PlayerInputLock();
+        PlayerMouse.WheelPlayerMouse.InputLock();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        PlayerMouse.PlayerInputUnLock();
+        PlayerMouse.WheelPlayerMouse.InputUnLock();
     }
 }

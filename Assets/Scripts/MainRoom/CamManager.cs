@@ -33,7 +33,7 @@ public class CamManager : MonoBehaviour
 
     private void CamChange()
     {
-        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.CameraViewChange))
+        if (PlayerKeyboard.KeyboardInput("Camera", KeyboardInput.CameraViewChange))
         {
             IsCurrentFp = !IsCurrentFp;
             FirstPersonCamObj.transform.rotation = new Quaternion(0,0,0,0);

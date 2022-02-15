@@ -16,53 +16,67 @@ public class PlayerKeyboard
         Key, KeyDown, KeyUp
     }
 
-    public static bool KeyboardAvailable = true;
+    public bool KeyboardAvailable;
     public string KeyboardSetName;
     public KeyboardInput[] KeyboardInputs;
 
     // lock 제한을 받을 input set
-    public static KeyboardInput[] LockKeyboardInputSet = new KeyboardInput[]
+    public static KeyboardInput[] EmotionKeyboardSet = new KeyboardInput[]
     {
-        KeyboardInput.EmotionToggle, KeyboardInput.Emotion1, KeyboardInput.Emotion2, KeyboardInput.Emotion3, KeyboardInput.Emotion4,
-        KeyboardInput.CameraViewChange
+        global::KeyboardInput.EmotionToggle, global::KeyboardInput.Emotion1, global::KeyboardInput.Emotion2, global::KeyboardInput.Emotion3, global::KeyboardInput.Emotion4
     };
 
-    // 어떤 상황에서든 항상 구현되어야 할 input set
-    public static KeyboardInput[] UnLockKeyboardInputSet = new KeyboardInput[]
+    public static KeyboardInput[] CameraKeyboardSet = new KeyboardInput[]
     {
-
+        global::KeyboardInput.CameraViewChange
     };
 
-    public static PlayerKeyboard DefaultPlayerKeyboard = new PlayerKeyboard("LockInput");
+    public static PlayerKeyboard MovementPlayerKeyboard = new PlayerKeyboard("Movement");
+    public static PlayerKeyboard EmotionPlayerKeyboard = new PlayerKeyboard("Emotion", EmotionKeyboardSet);
+    public static PlayerKeyboard CameraPlayerKeyboard = new PlayerKeyboard("Camera", CameraKeyboardSet);
 
+    static List<PlayerKeyboard> PlayerKeyboards = new List<PlayerKeyboard> 
+    { 
+        MovementPlayerKeyboard, EmotionPlayerKeyboard, CameraPlayerKeyboard 
+    };
 
     public PlayerKeyboard(string name)
     {
-        KeyboardSetName = name;
-        KeyboardInputs = LockKeyboardInputSet;
+        this.KeyboardSetName = name;
+        this.KeyboardAvailable = true;
     }
 
     public PlayerKeyboard(string name, KeyboardInput[] keySet)
     {
-        KeyboardSetName = name;
-        KeyboardInputs = keySet;
+        this.KeyboardSetName = name;
+        this.KeyboardInputs = keySet;
+        this.KeyboardAvailable = true;
     }
 
-
-    public static bool KeyboardInputSet(KeyboardInput input)
+    public static PlayerKeyboard GetPlayerKeyboard(string name)
     {
-        foreach(KeyboardInput key in DefaultPlayerKeyboard.KeyboardInputs)
+        foreach(PlayerKeyboard set in PlayerKeyboards)
+        {
+            if (set.KeyboardSetName.Equals(name)) return set;
+        }
+        Debug.LogError($"{name} PlayerKeyboard is null");
+        return null;
+    }
+
+    public static bool KeyboardInput(string name, KeyboardInput input)
+    {
+        foreach(KeyboardInput key in GetPlayerKeyboard(name).KeyboardInputs)
         {
             if (input.Equals(key))
             {
                 switch (input.inputKeyType)
                 {
                     case KeyboardInputType.Key:
-                        return Input.GetKey(input.ToKeyCode()) && KeyboardAvailable;
+                        return Input.GetKey(input.ToKeyCode()) && GetPlayerKeyboard(name).KeyboardAvailable;
                     case KeyboardInputType.KeyDown:
-                        return Input.GetKeyDown(input.ToKeyCode()) && KeyboardAvailable;
+                        return Input.GetKeyDown(input.ToKeyCode()) && GetPlayerKeyboard(name).KeyboardAvailable;
                     case KeyboardInputType.KeyUp:
-                        return Input.GetKeyUp(input.ToKeyCode()) && KeyboardAvailable;
+                        return Input.GetKeyUp(input.ToKeyCode()) && GetPlayerKeyboard(name).KeyboardAvailable;
                 }
             }
         }
@@ -70,15 +84,34 @@ public class PlayerKeyboard
         return false;
     }
 
-    public static void PlayerInputLock()
+    public void InputLock()
     {
-        KeyboardAvailable = false;
+        this.KeyboardAvailable = false;
     }
 
-    public static void PlayerInputUnLock()
+    public void InputUnLock()
     {
-        KeyboardAvailable = true;
+        this.KeyboardAvailable = true;
     }
+
+    public void InputUnLockOnly()
+    {
+        foreach(PlayerKeyboard set in PlayerKeyboards)
+        {
+            set.InputLock();
+        }
+        this.InputUnLock();
+    }
+
+    public static void InputLockAll(bool isLock)
+    {
+        foreach(PlayerKeyboard set in PlayerKeyboards)
+        {
+            if (isLock) set.InputLock();
+            else set.InputUnLock();
+        }
+    }
+
 }
 
 [Serializable]
@@ -94,50 +127,57 @@ public class PlayerMouse
         Mouse, MouseDown, MouseUp
     }
 
-    public static bool MouseAvailable = true;
+    public bool MouseAvailable;
     public string MouseSetName;
     public MouseInput[] MouseInputs;
 
-    public static MouseInput[] LockMouseInputSet = new MouseInput[]
+    public static MouseInput[] CameraMouseSet = new MouseInput[]
     {
-        MouseInput.CameraDrag, MouseInput.CameraDragExit
+        global::MouseInput.CameraDrag, global::MouseInput.CameraDragExit
     };
 
-    public static MouseInput[] UnLockMouseInputSet = new MouseInput[]
-    {
+    public static PlayerMouse WheelPlayerMouse = new PlayerMouse("Zoom");
+    public static PlayerMouse CameraPlayerMouse = new PlayerMouse("Camera", CameraMouseSet);
 
-    };
-
-    public static PlayerMouse DefaultPlayerMouse = new PlayerMouse("LockInput");
-
+    static List<PlayerMouse> PlayerMice = new List<PlayerMouse> { WheelPlayerMouse, CameraPlayerMouse };
 
     public PlayerMouse(string name)
     {
-        MouseSetName = name;
-        MouseInputs = LockMouseInputSet;
+        this.MouseSetName = name;
+        this.MouseAvailable = true;
     }
 
     public PlayerMouse(string name, MouseInput[] keySet)
     {
-        MouseSetName = name;
-        MouseInputs = keySet;
+        this.MouseSetName = name;
+        this.MouseInputs = keySet;
+        this.MouseAvailable = true;
     }
 
-
-    public static bool MouseInputSet(MouseInput input)
+    public static PlayerMouse GetPlayerMouse(string name)
     {
-        foreach (MouseInput key in DefaultPlayerMouse.MouseInputs)
+        foreach(PlayerMouse set in PlayerMice)
+        {
+            if (set.MouseSetName.Equals(name)) return set;
+        }
+        Debug.LogError($"{name} PlayerMouse is null");
+        return null;
+    }
+
+    public static bool MouseInput(string name, MouseInput input)
+    {
+        foreach(MouseInput key in GetPlayerMouse(name).MouseInputs)
         {
             if (input.Equals(key))
             {
                 switch (input.inputMouseType)
                 {
                     case MouseInputType.Mouse:
-                        return Input.GetMouseButton((int)input.inputMouseName) && MouseAvailable;
+                        return Input.GetMouseButton((int)input.inputMouseName) && GetPlayerMouse(name).MouseAvailable;
                     case MouseInputType.MouseDown:
-                        return Input.GetMouseButtonDown((int)input.inputMouseName) && MouseAvailable;
+                        return Input.GetMouseButtonDown((int)input.inputMouseName) && GetPlayerMouse(name).MouseAvailable;
                     case MouseInputType.MouseUp:
-                        return Input.GetMouseButtonUp((int)input.inputMouseName) && MouseAvailable;
+                        return Input.GetMouseButtonUp((int)input.inputMouseName) && GetPlayerMouse(name).MouseAvailable;
                 }
             }
         }
@@ -145,16 +185,33 @@ public class PlayerMouse
         return false;
     }
 
-    public static void PlayerInputLock()
+    public void InputLock()
     {
-        MouseAvailable = false;
+        this.MouseAvailable = false;
     }
 
-    public static void PlayerInputUnLock()
+    public void InputUnLock()
     {
-        MouseAvailable = true;
+        this.MouseAvailable = true;
     }
 
+    public void InputUnLockOnly()
+    {
+        foreach(PlayerMouse set in PlayerMice)
+        {
+            set.InputLock();
+        }
+        this.InputUnLock();
+    }
+
+    public static void InputLockAll(bool isLock)
+    {
+        foreach(PlayerMouse set in PlayerMice)
+        {
+            if (isLock) set.InputLock();
+            else set.InputUnLock();
+        }
+    }
 }
 
 [Serializable]

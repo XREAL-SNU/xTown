@@ -32,10 +32,10 @@ public class AvatarFaceControl : MonoBehaviour
     {
         CountSeconds();
 
-        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion1)) ShowFace(AvatarFaceManagement.s_favList[0].GetImageIndex());
-        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion2)) ShowFace(AvatarFaceManagement.s_favList[1].GetImageIndex());
-        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion3)) ShowFace(AvatarFaceManagement.s_favList[2].GetImageIndex());
-        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion4)) ShowFace(AvatarFaceManagement.s_favList[3].GetImageIndex());
+        if (PlayerKeyboard.KeyboardInput("Emotion",KeyboardInput.Emotion1)) ShowFace(AvatarFaceManagement.s_favList[0].GetImageIndex());
+        if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion2)) ShowFace(AvatarFaceManagement.s_favList[1].GetImageIndex());
+        if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion3)) ShowFace(AvatarFaceManagement.s_favList[2].GetImageIndex());
+        if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion4)) ShowFace(AvatarFaceManagement.s_favList[3].GetImageIndex());
     }
 
     public void ChangeFace(int faceIndex) 
