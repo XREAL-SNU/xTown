@@ -188,7 +188,6 @@ public class StarLauncher : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("hi");
         if (other.CompareTag("Launch"))
         {
             insideLaunchStar = false;
