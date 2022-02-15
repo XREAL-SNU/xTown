@@ -19,10 +19,9 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-		
 		public void OnMove(InputValue value)
 		{
-			if (PlayerKeyboard.KeyboardAvailable) MoveInput(value.Get<Vector2>());
+			if (PlayerKeyboard.MovementPlayerKeyboard.KeyboardAvailable) MoveInput(value.Get<Vector2>());
 		}
 
 		public void OnLook(InputValue value)
@@ -35,17 +34,17 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			if (PlayerKeyboard.KeyboardAvailable) JumpInput(value.isPressed);
+			if (PlayerKeyboard.MovementPlayerKeyboard.KeyboardAvailable) JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			if (PlayerKeyboard.KeyboardAvailable) SprintInput(value.isPressed);
+			if (PlayerKeyboard.MovementPlayerKeyboard.KeyboardAvailable) SprintInput(value.isPressed);
 		}
 
 		public void OnSit(InputValue value)
 		{
-			if (PlayerKeyboard.KeyboardAvailable) SitInput(value.isPressed);
+			if (PlayerKeyboard.MovementPlayerKeyboard.KeyboardAvailable) SitInput(value.isPressed);
 		}
 
 		public void SitInput(bool newSitState)

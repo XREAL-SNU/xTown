@@ -45,7 +45,7 @@ public class Emotion : MonoBehaviour
             // return;
         }
 
-        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.EmotionToggle))
+        if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.EmotionToggle))
         {
             _faceList = Face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
@@ -79,20 +79,20 @@ public class Emotion : MonoBehaviour
                 EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(1400,400);
             }
             
-            if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion1)){
+            if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion1)){
                 MenuSlice[0].color = Color.black;
                 _currentMenu = 0;
-            } else if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion2)){
+            } else if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion2)){
                 MenuSlice[1].color = Color.black;
                 _currentMenu = 1;
-            } else if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion3)){
+            } else if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion3)){
                 MenuSlice[2].color = Color.black;
                 _currentMenu = 2;
-            } else if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion4)){
+            } else if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion4)){
                 MenuSlice[3].color = Color.black;
                 _currentMenu = 3;
             }
-            if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion1) || PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion2) || PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion3) || PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion4))
+            if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion1) || PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion2) || PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion3) || PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion4))
             {       
                 _isSelected = true;
             }
@@ -105,7 +105,7 @@ public class Emotion : MonoBehaviour
             }
         }
 
-        if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.CameraViewChange)){
+        if(PlayerKeyboard.KeyboardInput("Camera", KeyboardInput.CameraViewChange)){
             if (!_camManager.GetComponent<CamManager>().IsCurrentFp && _isMenuActive)
             {
                 _faceCam.gameObject.SetActive(true);
@@ -139,8 +139,6 @@ public class Emotion : MonoBehaviour
     // {
     //     StartCoroutine(EmoticonShow(emojiId));
     // }
-
-
 
     IEnumerator ChangeFace(int faceIndex)
     {

@@ -60,7 +60,7 @@ public class CameraControl : MonoBehaviour
             return;
         }
 
-        if (Input.mouseScrollDelta.y < 0 && PlayerMouse.MouseAvailable)
+        if (Input.mouseScrollDelta.y < 0 && PlayerMouse.WheelPlayerMouse.MouseAvailable)
         {
             if (FreeLookCam.m_Lens.FieldOfView < 80)
             {
@@ -69,7 +69,7 @@ public class CameraControl : MonoBehaviour
             }
         }
 
-        if (Input.mouseScrollDelta.y > 0 && PlayerMouse.MouseAvailable)
+        if (Input.mouseScrollDelta.y > 0 && PlayerMouse.WheelPlayerMouse.MouseAvailable)
         {
             if (FreeLookCam.m_Lens.FieldOfView > 5)
             {
@@ -82,14 +82,14 @@ public class CameraControl : MonoBehaviour
         {
             _useMouseToRotateTp = false;
 
-            if (PlayerMouse.MouseInputSet(MouseInput.CameraDragExit))
+            if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDragExit))
             {
                 _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
                 _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
 
                 _useMouseToRotateFp = false;
             }
-            if (PlayerMouse.MouseInputSet(MouseInput.CameraDrag))
+            if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDrag))
             {
                 _useMouseToRotateFp = true;
             }
@@ -98,14 +98,14 @@ public class CameraControl : MonoBehaviour
         {
             _useMouseToRotateFp = false;
             _firstPersonCam.transform.eulerAngles = new Vector3(0, 0, 0);
-            if (PlayerMouse.MouseInputSet(MouseInput.CameraDragExit))
+            if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDragExit))
             {
                 _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
                 _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
 
                 _useMouseToRotateTp = false;
             }
-            if (PlayerMouse.MouseInputSet(MouseInput.CameraDrag))
+            if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDrag))
             {
                 _useMouseToRotateTp = true;
             }
