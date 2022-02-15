@@ -9,11 +9,14 @@ public class AvatarFaceControl : MonoBehaviour
     public Material AvatarFace;
 
     [SerializeField] Texture _defaultTexture;
-    
-    /*bool _isDefault = true;*/
+
+    /*bool _isDefault = true;
     bool _isChanged = false;
+    float _counter = 0;*/
+
     int _currentTextureIndex;
-    float _counter = 0;
+    bool _crRunning;
+    IEnumerator _coroutine;
 
     private void Start() 
     {
@@ -30,8 +33,6 @@ public class AvatarFaceControl : MonoBehaviour
 
     private void Update()
     {
-        CountSeconds();
-
         if (PlayerKeyboard.KeyboardInput("Emotion",KeyboardInput.Emotion1)) ShowFace(AvatarFaceManagement.s_favList[0].GetImageIndex());
         if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion2)) ShowFace(AvatarFaceManagement.s_favList[1].GetImageIndex());
         if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion3)) ShowFace(AvatarFaceManagement.s_favList[2].GetImageIndex());
@@ -48,38 +49,41 @@ public class AvatarFaceControl : MonoBehaviour
             _isDefault = false;*/
     }
 
-    void ChangeFace(Texture texture)
+    /*void ChangeFace(Texture texture)
     {
         AvatarFace.SetTexture("_MainTex", texture);
-/*
+
         if (texture.name.Equals("happy"))
             _isDefault = true;
         else
-            _isDefault = false;*/
-    }
+            _isDefault = false;
+    }*/
 
     void ShowFace(int index)
     {
         /*if (!_isDefault) yield break;*/
 
-        ChangeFace(index);
+        if (_crRunning)
+        {
+            StopCoroutine(_coroutine);
+        }
+        _coroutine = ShowFaceCoroutine(index);
+        StartCoroutine(_coroutine);
         _currentTextureIndex = index;
-
-        _isChanged = true;
-        _counter = 0;
     }
 
-    void CountSeconds()
+    IEnumerator ShowFaceCoroutine(int index)
     {
-        if(_isChanged)
-        {
-            _counter += Time.deltaTime;
-        }
-        if(_counter > 10f)
-        {
-            _isChanged = false;
-            _counter = 0;
-            ChangeFace(_defaultTexture);
-        }
+        _crRunning = true;
+        Debug.Log("_crRunning = true");
+
+        ChangeFace(index);
+        
+        yield return new WaitForSeconds(10f);
+        
+        ChangeFace(11);
+
+        _crRunning = false;
+        Debug.Log("_crRunning = false");
     }
 }
