@@ -22,7 +22,12 @@ public class AvatarAppearanceNew
     {
         get => _descriptor;
     }
-
+    public string InfoJson
+    {
+        get {
+            return JsonUtility.ToJson(_descriptor);
+        }
+    }
 
 
 
@@ -76,7 +81,6 @@ public class AvatarAppearanceNew
                 partHelmet.Properties[0] = new ObjectPartProperty("Metallic", AppearancePropertyTypes.Metallic);
                 partHelmet.Properties[1] = new ObjectPartProperty("Color", AppearancePropertyTypes.BaseColor);
 
-
                 objectPartsInfo.Parts = new ObjectPart[] { partBackpack, partBody, partBoots, partGloves, partHelmet};
                 _XRealSpaceSuitAppreanceDescriptor = objectPartsInfo;
 
@@ -92,7 +96,10 @@ public class AvatarAppearanceNew
     public AvatarAppearanceNew(ObjectPartsInfo info, GameObject target)
     {
         Debug.Log("AvatarApperanceNew/ ctor binding info to target");
-        _descriptor = info;
+        // we copy info to bind into _descriptor.
+        _descriptor = new ObjectPartsInfo();
+        _descriptor.CopyFrom(info);
+         
         foreach(ObjectPart part in info.Parts)
         {
             GameObject go = target.transform.Find(part.PartPath).gameObject;
@@ -109,6 +116,7 @@ public class AvatarAppearanceNew
         }
     }
 
+
     public AvatarAppearanceNew() { }
     public static int MaterialsCount = 0;
 
@@ -116,10 +124,11 @@ public class AvatarAppearanceNew
     {
         CustomParts.Add(PartName, go);
         Material mat = go.GetComponent<Renderer>().material;
+        // sets the material to a copy of the material
         mat = new Material(mat);
 
         MaterialsCount++;
-        Debug.Log($"custom part {PartName}, material count: {MaterialsCount}");
+        //Debug.Log($"custom part {PartName}, material count: {MaterialsCount}");
     }
 
 
@@ -223,7 +232,7 @@ public class AvatarAppearanceNew
     {
         Material mat = obj.GetComponent<Renderer>().material;
         mat.SetColor("_Color", color.ToColor());
-        Debug.Log("AvatarApperanceNew/ Applying BaseColor " + color.ToColor());
+        //Debug.Log("AvatarApperanceNew/ Applying BaseColor " + color.ToColor());
 
     }
 
@@ -231,7 +240,7 @@ public class AvatarAppearanceNew
     {
         Material mat = obj.GetComponent<Renderer>().material;
         mat.SetFloat("_Metallic", value);
-        Debug.Log("AvatarApperanceNew/ Applying Metallic " + value);
+        //Debug.Log("AvatarApperanceNew/ Applying Metallic " + value);
 
     }
 
@@ -248,6 +257,63 @@ public class ObjectPartsInfo
     // SpaceSuit, Alienware, ...
     public string ObjectName;
     public ObjectPart[] Parts;
+
+    // ctor
+    public ObjectPartsInfo(string type, string name)
+    {
+        ObjectType = type;
+        ObjectName = name;
+    }
+    public ObjectPartsInfo() { }
+
+    // getter
+    public ObjectPart this[string name]
+    {
+        get
+        {
+            ObjectPart part = null;
+            for (int i = 0; i < Parts.Length; ++i)
+            {
+                if (Parts[i].PartName.Equals(name))
+                {
+                    part = Parts[i];
+                }
+            }
+            if (part is null)
+            {
+                Debug.LogError($"AvatarAppearanceNew/ property with name {name} does not exist");
+            }
+            return part;
+        }
+    }
+
+
+    // recursive copy "constructor" we allocate everything here, assuming previous structure had nothing in it.
+    public void CopyFrom(ObjectPartsInfo source)
+    {
+        // string are copied by reference so we deep copy them.
+        this.ObjectType = String.Copy(source.ObjectType);
+        this.ObjectName = String.Copy(source.ObjectName);
+
+        if(Parts is null)
+        {
+            // copy only when not initalized
+            Parts = new ObjectPart[source.Parts.Length];
+            int i = 0;
+            foreach (ObjectPart part in source.Parts)
+            {
+                ObjectPart m_part = new ObjectPart();
+                Parts[i] = m_part;
+                m_part.CopyFrom(part);
+                ++i;
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerAvatar/ Copy failed: Trying to copy into a non null struct");
+        }
+        
+    }
 }
 
 
@@ -265,6 +331,32 @@ public class ObjectPart
     }
 
     public ObjectPart() { }
+
+    // recursive copy constructor
+    public void CopyFrom(ObjectPart part)
+    {
+        this.PartName = String.Copy(part.PartName);
+        this.PartPath = String.Copy(part.PartPath);
+
+        if(Properties is null)
+        {
+            Properties = new ObjectPartProperty[part.Properties.Length];
+            int i = 0;
+            foreach (ObjectPartProperty prop in part.Properties)
+            {
+                // asign them new
+                ObjectPartProperty m_prop = new ObjectPartProperty();
+                Properties[i] = m_prop;
+                m_prop.CopyFrom(prop);
+                ++i;
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerAvatar/ Copy failed: copying into not null struct");
+        }
+
+    }
 
     // getters and setters
 
@@ -349,14 +441,40 @@ public class ObjectPartProperty
         PropertyType = type.ToString();
         PaletteName = paletteName;
         Pick = defaultPick;
+
+        switch (type)
+        {
+            case AvatarAppearanceNew.AppearancePropertyTypes.BaseColor:
+                TextColor = XTownColor.XTownRed;
+                break;
+            case AvatarAppearanceNew.AppearancePropertyTypes.Metallic:
+            case AvatarAppearanceNew.AppearancePropertyTypes.Emission:
+            case AvatarAppearanceNew.AppearancePropertyTypes.Transparency:
+                TextColor = XTownColor.XTownRed;
+                break;
+        }
     }
     public ObjectPartProperty() { }
+
+    // copy constructor
+    public void CopyFrom(ObjectPartProperty source)
+    {
+        this.PropertyName = source.PropertyName;
+        this.PropertyType = source.PropertyType;
+
+        // copy modifiable strings by value.
+        this.PaletteName = String.Copy(source.PaletteName);
+        this.Pick = source.Pick;
+        this.TextColor = source.TextColor;
+    }
 
     // setter
     public ObjectPartProperty SetProperty(string paletteName, int pick)
     {
         // maybe we should check existence of palette
         // and range validness of pick?
+        Debug.Log($"Edited property {PropertyName} to {paletteName}.{pick}");
+
         PaletteName = paletteName;
         Pick = pick;
         return this;
