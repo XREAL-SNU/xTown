@@ -111,7 +111,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
                 if (index != -1)
                 {
                     Debug.Log("TestConnect/RoomListRemoved " + _listings[index].RoomInfo.Name);
-                    if (_listings[index].gameObject == null) return;
+                    if (_listings[index] == null) return;
                     Destroy(_listings[index].gameObject);
                     _listings.RemoveAt(index);
                 }

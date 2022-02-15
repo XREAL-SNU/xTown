@@ -16,7 +16,8 @@ public class CamManager : MonoBehaviour
     void Update()
     {
         if (!PhotonNetwork.InRoom) return;
-        if (_player == null)
+        else if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld")) return;
+        else if (_player == null)
         {
             //_player = GameObject.FindWithTag("Player");
             _player = PlayerManager.Players.LocalPlayerGo;

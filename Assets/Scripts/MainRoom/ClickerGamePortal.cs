@@ -16,6 +16,7 @@ public class ClickerGamePortal : MonoBehaviour
             RoomsCanvases.Instance.AvatarConfirmCanvas.Hide();
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Show();
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName = "GameScene";
+            PhotonNetwork.JoinLobby();
         }
     }
 }
