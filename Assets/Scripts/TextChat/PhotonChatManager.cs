@@ -14,7 +14,7 @@ using TMPro;
 
 namespace XReal.Xtown.PhotonChat
 {
-    public class PhotonChatManager : MonoBehaviour, IChatClientListener{
+    public class PhotonChatManager : MonoBehaviourPunCallbacks, IChatClientListener{
 
         //channels
         //list of channels currently subscribed to
@@ -53,7 +53,7 @@ namespace XReal.Xtown.PhotonChat
         //채팅방 관리 버튼을 만들어뒀는데 세부 채팅 씬 개발을 뒤로 미뤄서 일단 그냥 HideButton이랑 연결시켜둠
         public TextMeshProUGUI CurrentChannelText;
         
-        public PlayerManager _playermanager;
+        public RoomManager roomManager;
         //This is the Dropdown
         public Dropdown ChannelDropdown;
 
@@ -84,7 +84,7 @@ namespace XReal.Xtown.PhotonChat
                 //check for new messages: call every frame
                 this.chatClient.Service();
             }
-            if(myChannels.Contains("Default"))
+            if(PhotonNetwork.CurrentRoom.PlayerCount>1)
             {
                 GetUsersFromDefalut();
             }
@@ -153,7 +153,7 @@ namespace XReal.Xtown.PhotonChat
             Debug.Log("ChatManager/Connecting as: " + userID);
         }
 
-        void OnJoinedRoom()
+        public override void OnJoinedRoom()
         {
             JoinRoomChannel();
             //특정 Room을 떠나고 다른 Room으로 들어갈 때 알아서 구독 해제 됨. 
@@ -163,6 +163,8 @@ namespace XReal.Xtown.PhotonChat
         /* main parsing function */
         // tooo large for a function. split!!!
         // parse the message(including command)
+
+
         void SendChatMessage(string inputLine, string channelName)
         {
             //nothing to send
@@ -256,13 +258,17 @@ namespace XReal.Xtown.PhotonChat
             }
         }
 
+
+
         public void SendHello(string toID)
         {
             this.chatClient.SendPrivateMessage(toID, "user " + userID + " says hi");
         }
 
         /* Photon Callbacks */
-        public void OnConnected()
+
+
+        public new void OnConnected()
         {
             //automatic subscription to default channels.
             if (this.ChannelsToJoinOnConnect != null && this.ChannelsToJoinOnConnect.Length > 0)
@@ -586,14 +592,10 @@ namespace XReal.Xtown.PhotonChat
 
         public void GetUsersFromDefalut()
         {
-            this.chatClient.TryGetChannel(channelName: "Default", out ChatChannel defaultChannel);
-            foreach(string user in defaultChannel.Subscribers)
+            List<string> playerNameList = roomManager.GetPlayerNameList();
+            foreach(string user in playerNameList)
             {
-                if(user == userID)
-                {
-                    string channelName = userID+":"+user;
-                }
-                else
+                if(user != userID)
                 {
                     string channelName = userID+":"+user;
                     if(!myChannels.Contains(channelName))
@@ -611,6 +613,61 @@ namespace XReal.Xtown.PhotonChat
                     {
                         Debug.Log(myChannels);
                     }
+                    
+                }
+                else
+                {
+                    string channelName = userID+":"+user;
+                }
+            }
+        }
+
+        /*public void RemoveLeavedUsers()
+        {
+            List<string> playerNameList = roomManager.GetPlayerNameList();
+            foreach(string channelName in privateChannels)
+            {
+                string user = channelName.Split(':')[1];
+                if(!playerNameList.Contains(user))
+                {
+                    myChannels.Remove(channelName);
+                    privateChannels.Remove(channelName);
+                    if(SelectedChannelText.text =="Personal Chat")
+                    {
+                        ChannelDropdown.options.RemoveAll(item => item.text.Equals(user));
+                    }
+                    break;
+                }
+                else
+                {
+                    foreach(string user1 in playerNameList)
+                    {
+                        Debug.Log(user1);
+                    }
+                }
+            }
+            OnPlayerLeftRoom으로 일단 구독해제를 만들어놓긴 했는데 예외 케이스 때문에
+            이 코드도 남겨두도록 하겠음.
+        }*/
+
+
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            //언젠가 써먹을 것 같아서 남겨둠
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            string user = otherPlayer.NickName;
+            string channelName = userID+":"+user;
+            if(privateChannels.Contains(channelName))
+            {
+                myChannels.Remove(channelName);
+                privateChannels.Remove(channelName);
+                if(SelectedChannelText.text =="Personal Chat")
+                {
+                    ChannelDropdown.options.RemoveAll(item => item.text.Equals(user));
                 }
             }
         }
@@ -629,6 +686,7 @@ namespace XReal.Xtown.PhotonChat
 
         아직 상대방이 나갈 때 채널목록에서 자동으로 삭제되지는 않음.
         이건 개개인이 채널하고 연결이 끊길 때 모든 채널의 구독을 해제하도록 만들어야 할 듯함
+        ->위의 OnPlayerLeftRoom Callback으로 임시로 해결함.
         */
 
 

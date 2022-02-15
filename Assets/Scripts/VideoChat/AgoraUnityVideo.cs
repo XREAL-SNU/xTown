@@ -13,7 +13,7 @@ using UnityEngine.Android;
 // How to enable video
 // How to join/leave channel
 // 
-public class TestHelloUnityVideo: MonoBehaviour
+public class AgoraUnityVideo: MonoBehaviour
 {
 
     // instance of agora engine
@@ -23,7 +23,7 @@ public class TestHelloUnityVideo: MonoBehaviour
 
     // a token is a channel key that works with a AppID that requires it. 
     // Generate one by your token server or get a temporary token from the developer console
-    public string token;
+    public string token = "00667cb00c63d4341ec8aba2d7de7283bbdIAByIMR2DG5wc4BUWbvF5nKkQ/2T4Y6LqpOXolN8kv6mc15liXkAAAAAEADzxwcSvskMYgEAAQC/yQxi";
     //token이 만료가 되는걸 어떻게 방지하는지? 혹은 아예 token없이 통신해야 하는지
     //token 없앴는데 통신 잘 됨.
     // load agora engine
@@ -256,11 +256,7 @@ public class TestHelloUnityVideo: MonoBehaviour
         SetButtonActive();
 
         UserInfo newUserInfo = mRtcEngine.GetUserInfoByUid(uid);
-        Debug.Log("유저이름: "+newUserInfo.userAccount+"UID: "+newUserInfo.uid.ToString());
-        if(newUserInfo.userAccount==null)
-        {
-            Debug.Log("이름없는 사나이 입장");
-        }
+        Debug.Log("유저이름: "+newUserInfo.userAccount + "UID: "+newUserInfo.uid.ToString());
         // this is called in main thread
         
         //일단 이걸로 버튼 active해야하는지부터 확인함
@@ -571,7 +567,6 @@ public class TestHelloUnityVideo: MonoBehaviour
     {
         mRtcEngine.RenewToken(token);
     }
-
 
     #endregion
 }

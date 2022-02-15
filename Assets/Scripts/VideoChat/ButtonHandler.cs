@@ -18,7 +18,7 @@ public class ButtonHandler : MonoBehaviour
         GameObject go = GameObject.Find("GameController");
         if (go != null)
         {
-            TestHome gameController = go.GetComponent<TestHome>();
+            VideoChatHome gameController = go.GetComponent<VideoChatHome>();
             if (gameController == null)
             {
                 Debug.LogError("Missing game controller");

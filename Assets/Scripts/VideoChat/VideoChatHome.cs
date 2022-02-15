@@ -11,14 +11,14 @@ using Photon.Pun;
 /// <summary>
 ///    TestHome serves a game controller object for this application.
 /// </summary>
-public class TestHome : MonoBehaviour
+public class VideoChatHome : MonoBehaviour
 {
 
     // Use this for initialization
 #if (UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
     private ArrayList permissionList = new ArrayList();
 #endif
-    static TestHelloUnityVideo app = null;
+    static AgoraUnityVideo app = null;
 
     private string HomeSceneName = "MainRoom";
 
@@ -35,7 +35,7 @@ public class TestHome : MonoBehaviour
     private string AppID = "your_appid";
     private string AppName = "Xreal";
     private bool isClicked = false;
-
+    private bool isRegistered = false;
     void Awake()
     {
 #if (UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
@@ -136,7 +136,7 @@ public class TestHome : MonoBehaviour
         // create app if nonexistent
         if (ReferenceEquals(app, null))
         {
-            app = new TestHelloUnityVideo(); // create app
+            app = new AgoraUnityVideo(); // create app
             
         }
         app.loadEngine(AppID); // load engine
@@ -145,7 +145,10 @@ public class TestHome : MonoBehaviour
         app.join(AppName);
         app.onSceneHelloVideoLoaded();
         
-        
+        if(!isRegistered)
+        {
+            RegisterAccount();
+        }
         //내가 만든 채널에 바로 접속하도록 설정해둠.
 
 
@@ -159,8 +162,11 @@ public class TestHome : MonoBehaviour
         {
             app.leave(); // leave channel
             app.unloadEngine(); // delete engine
-            app = null; // delete app
+            app = null;
         }
+        GameObject videoScreen = GameObject.Find("Screen");
+        VideoSurface videoSurface = videoScreen.GetComponent<VideoSurface>();
+        Destroy(videoSurface);
         GameObject VideoCanvas = GameObject.Find("VideoCanvas");
         VideoCanvas.SetActive(false);
     }
@@ -233,5 +239,17 @@ public class TestHome : MonoBehaviour
         Debug.Log("Device count =============== " + cnt);
     }
 
-    
+    void RegisterAccount()
+    {
+        var engine = IRtcEngine.GetEngine(AppID);
+        int success = engine.RegisterLocalUserAccount(AppID, PhotonNetwork.NickName);
+        isRegistered = true;
+        UserInfo myInfo = engine.GetUserInfoByUserAccount(PhotonNetwork.NickName);
+        Debug.Log(myInfo.uid+myInfo.userAccount+"내 정보");
+        Debug.Log(success+"Success Return값");
+        if(success == 0)
+        {
+            
+        }
+    }
 }
