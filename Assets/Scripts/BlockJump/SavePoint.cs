@@ -12,7 +12,7 @@ public class SavePoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameManager.savePoint = other.transform.position; // savepoint에 현재 플레이어 위치 저장
+        GameManager.savePoint = this.transform.position + new Vector3(0, 10, 0); // savepoint에 위치 저장
     }
     // Update is called once per frame
     void Update()

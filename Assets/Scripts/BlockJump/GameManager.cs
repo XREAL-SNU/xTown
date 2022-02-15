@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
 
     static public Vector3 savePoint; //추락시 돌아오는 지점
+    private CharacterController CharController;
+    private GameObject Player;
 
-    
     // Start is called before the first frame update
     void Start()
     {
-
+        Player = GameObject.FindGameObjectWithTag("Player");    
+        CharController = Player.GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -25,8 +27,9 @@ public class GameManager : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.transform.position = savePoint; //추락 시 savePoint로 이동
-            other.GetComponent<Rigidbody>().velocity = Vector3.zero; //이동한 위치에서 정지
+            CharController.enabled = false;
+            CharController.transform.position = savePoint; //추락 시 savePoint로 이동
+            CharController.enabled = true;
         }
     }
 
