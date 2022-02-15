@@ -192,4 +192,14 @@ public class CameraControl : MonoBehaviour
         _alreadyFront = true;
         _useMouseToRotateTp = true;
     }
+
+    public void SetBeneath()
+    {
+       FreeLookCam.gameObject.SetActive(false);
+        _useMouseToRotateTp = false;
+        Vector3 _playerPos = _camTarget.gameObject.transform.position;
+        FreeLookCam.ForceCameraPosition(new Vector3(0f,12.5f,82f),Quaternion.Euler(0,90,0));
+        FreeLookCam.gameObject.SetActive(true);
+        _useMouseToRotateTp = true;
+    }
 }

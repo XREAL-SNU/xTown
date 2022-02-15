@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameZone : MonoBehaviour
+public class UFOZone : MonoBehaviour
 {
     public GameObject _interactionCanvas;
-    public GameZonePanel _gameZonePanel;
+    public UFOZonePanel _ufoZonePanel;
     void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Player")
         {
             _interactionCanvas.gameObject.SetActive(!_interactionCanvas.gameObject.activeSelf);
-            _gameZonePanel.gameObject.SetActive(!_gameZonePanel.gameObject.activeSelf);
-            _gameZonePanel._player = col.gameObject;
+            _ufoZonePanel.gameObject.SetActive(!_ufoZonePanel.gameObject.activeSelf);
+            _ufoZonePanel._player = col.gameObject;
         }
     }
     void OnTriggerExit(Collider col)
@@ -20,7 +20,7 @@ public class GameZone : MonoBehaviour
         if(col.tag == "Player")
         {
             _interactionCanvas.gameObject.SetActive(false);
-            _gameZonePanel.gameObject.SetActive(false);
+            _ufoZonePanel.gameObject.SetActive(false);
         }
     }
 }

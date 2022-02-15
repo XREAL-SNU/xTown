@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class GameZonePanel : MonoBehaviour
+public class UFOZonePanel : MonoBehaviour
 {
     public GameObject _interactionCanvas;
     public GameObject _player;
-    public GameObject gameZoneSpawnPoint;
+    public GameObject ufoZoneSpawnPoint;
     private CharacterController _playerController;
     private Vector3 targetDirection;
+    private float elapsed_time = 0f;
+    public CameraControl cameraControl;
     public void OnClickYes()
     {
         _playerController = _player.GetComponent<CharacterController>();
         _playerController.enabled = false;
-        _player.transform.position = gameZoneSpawnPoint.transform.position;
+        cameraControl.SetBeneath();
+        _player.transform.DOLocalMove(ufoZoneSpawnPoint.transform.position,5);
         _playerController.enabled = true;
-        //Hide();
+
+        Hide();
     }
     public void OnClickNo()
     {
