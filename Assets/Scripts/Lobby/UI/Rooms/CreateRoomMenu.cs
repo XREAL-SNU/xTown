@@ -22,10 +22,11 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsConnected)
             return;
 
+        if (!PhotonNetwork.InLobby) PhotonNetwork.JoinLobby();
         RoomOptions options = new RoomOptions();
         options.BroadcastPropsChangeToAll = true;
         options.MaxPlayers = 10;
-        PhotonNetwork.JoinOrCreateRoom(_roomName.text, options, null);
+        PhotonNetwork.JoinOrCreateRoom(_roomName.text, options, TypedLobby.Default);
     }
 
     public void OnClick_BackToLobby()

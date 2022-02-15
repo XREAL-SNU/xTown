@@ -28,6 +28,8 @@ public class AvatarSetMenu : MonoBehaviourPunCallbacks
         Debug.Log("AvatarSelectionMenu/Joined MainWorld!!!");
         //SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
         gameObject.SetActive(false);
+        _roomCanvases.PlayerNameInputCanvas.Hide();
+        _roomCanvases.AvatarConfirmCanvas.Hide();
         _roomCanvases.gameObject.SetActive(false);
     }
     public override void OnCreatedRoom()
