@@ -34,6 +34,12 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
+        // Initial Rotation Speed
+        // Edit Here
+        xRotateSpeed = 7f;
+        yRotateSpeed = 5f;
+        xRotateDecelerate = 2f;
+
         //_player = GameObject.FindWithTag("Player");
         _player = PlayerManager.Players.LocalPlayerGo;
         _camTarget = _player.GetComponent<ThirdPersonControllerMulti>().CinemachineCameraTarget;
@@ -41,6 +47,10 @@ public class CameraControl : MonoBehaviour
         _useMouseToRotateTp = false;
         _useMouseToRotateFp = false;
         _firstPersonCam = CameraManager.FirstPersonCamObj;
+
+        // Set initial values for rotation
+        _cinemachineTargetYaw = FreeLookCam.m_XAxis.Value;
+        _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
     }
     void Update()
     {
@@ -50,33 +60,36 @@ public class CameraControl : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeyCode.KeypadMinus) || Input.GetKey(KeyCode.Minus) || Input.GetKey(KeyCode.Equals))
+        if (Input.mouseScrollDelta.y < 0)
         {
             if (FreeLookCam.m_Lens.FieldOfView < 80)
             {
-                FreeLookCam.m_Lens.FieldOfView += zoomSpeed;
+                Debug.Log("Scroll Up");
+                FreeLookCam.m_Lens.FieldOfView += 5f;
             }
         }
 
-        if (Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.Plus))
+        if (Input.mouseScrollDelta.y > 0)
         {
             if (FreeLookCam.m_Lens.FieldOfView > 5)
             {
-                FreeLookCam.m_Lens.FieldOfView -= zoomSpeed;
+                Debug.Log("Scroll Down");
+                FreeLookCam.m_Lens.FieldOfView -= 5f;
             }
         }
 
         if (CameraManager.IsCurrentFp)
         {
             _useMouseToRotateTp = false;
-            FreeLookCam.m_XAxis.Value = 0;
-            FreeLookCam.m_YAxis.Value = 0;
 
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetMouseButtonUp(1))
             {
+                _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
+                _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
+
                 _useMouseToRotateFp = false;
             }
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetMouseButtonDown(1))
             {
                 _useMouseToRotateFp = true;
             }
@@ -85,11 +98,14 @@ public class CameraControl : MonoBehaviour
         {
             _useMouseToRotateFp = false;
             _firstPersonCam.transform.eulerAngles = new Vector3(0, 0, 0);
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetMouseButtonUp(1))
             {
+                _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
+                _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
+
                 _useMouseToRotateTp = false;
             }
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetMouseButtonDown(1))
             {
                 _useMouseToRotateTp = true;
             }
@@ -107,8 +123,8 @@ public class CameraControl : MonoBehaviour
         m_Input.x = Input.GetAxis("Mouse X");
         m_Input.y = Input.GetAxis("Mouse Y");
 
-        float xRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.x - m_Input.x * turnSpeed, -60, 60);
-        float yRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.y + m_Input.y * turnSpeed, -45, 80);
+        float xRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.x - m_Input.x * turnSpeed * Time.deltaTime, -60, 60);
+        float yRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.y + m_Input.y * turnSpeed * Time.deltaTime, -45, 80);
 
         _firstPersonCam.transform.eulerAngles = new Vector3(xRotate, yRotate, 0);
     }
@@ -118,8 +134,8 @@ public class CameraControl : MonoBehaviour
         m_Input.x = Input.GetAxis("Mouse X");
         m_Input.y = Input.GetAxis("Mouse Y");
         if(m_Input.sqrMagnitude > _threshold) {
-            _cinemachineTargetYaw += m_Input.x * xRotateSpeed;
-            _cinemachineTargetPitch += -1 * m_Input.y * yRotateSpeed;
+            _cinemachineTargetYaw += m_Input.x * xRotateSpeed * Time.deltaTime;
+            _cinemachineTargetPitch += -1 * m_Input.y * yRotateSpeed * Time.deltaTime;
 
             // clamp to 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
@@ -166,7 +182,6 @@ public class CameraControl : MonoBehaviour
         */
         FreeLookCam.m_XAxis.Value = _cinemachineTargetYaw;
         FreeLookCam.m_YAxis.Value = _cinemachineTargetPitch;
-
     }
     
     private float ClampAngle(float lfAngle, float lfMin, float lfMax)
