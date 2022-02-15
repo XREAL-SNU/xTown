@@ -36,10 +36,10 @@ public class CamManager : MonoBehaviour
         if (PlayerKeyboard.KeyboardInput("Camera", KeyboardInput.CameraViewChange))
         {
             IsCurrentFp = !IsCurrentFp;
-            FirstPersonCamObj.transform.rotation = new Quaternion(0,0,0,0);
             FirstPersonCamObj.SetActive(IsCurrentFp);
 
             ThirdPersonCamObj.SetActive(!IsCurrentFp);
+            FirstPersonCamObj.transform.rotation = new Quaternion(0,0,0,0);
         }
     }
 }

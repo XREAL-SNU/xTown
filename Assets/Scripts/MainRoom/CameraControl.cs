@@ -115,7 +115,7 @@ public class CameraControl : MonoBehaviour
     private void LateUpdate()
     {
         if (_useMouseToRotateTp) RotateTp();
-        //if (_useMouseToRotateFp) RotateFp();
+        if (_useMouseToRotateFp) RotateFp();
     }
 
     private void RotateFp()
