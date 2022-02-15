@@ -181,15 +181,28 @@ public class CameraControl : MonoBehaviour
             _alreadyFront = false;
             return;
         }
-        FreeLookCam.gameObject.SetActive(false);
         _useMouseToRotateTp = false;
         Vector3 _playerPos = _camTarget.gameObject.transform.position;
         Vector3 _playerForward = _camTarget.gameObject.transform.forward;
-        FreeLookCam.VirtualCameraGameObject.transform.position = _playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius);
-        _cinemachineTargetYaw = 0f;
-        _cinemachineTargetPitch = 0f;
-        FreeLookCam.gameObject.SetActive(true);
+        StartCoroutine(camSetFront(_playerPos,_playerForward));
+        // FreeLookCam.ForceCameraPosition(_playerPos + _playerForward * FreeLookCam.m_Orbits[1].m_Radius,_camTarget.gameObject.transform.rotation);
+        // FreeLookCam.VirtualCameraGameObject.transform.position = _playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius);
+        // FreeLookCam.m_YAxis.Value = 0.4f;
         _alreadyFront = true;
-        _useMouseToRotateTp = true;
+        
+    }
+    IEnumerator camSetFront(Vector3 _playerPos, Vector3 _playerForward){
+        // float _angle = (180/Mathf.PI) * Mathf.Atan2(FreeLookCam.VirtualCameraGameObject.transform.position.x-(_playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius)).x,FreeLookCam.VirtualCameraGameObject.transform.position.z-(_playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius)).z);
+        // if(_angle>180f) _angle-=360f;
+        // float _distance = Mathf.Abs(FreeLookCam.VirtualCameraGameObject.transform.position.y - _playerPos.y);
+        Vector3 _camPos=FreeLookCam.VirtualCameraGameObject.transform.position;
+        while(Vector3.Distance(FreeLookCam.VirtualCameraGameObject.transform.position,_playerPos + _playerForward * FreeLookCam.m_Orbits[1].m_Radius)>1f){
+            _camPos = Vector3.Lerp(_camPos,_playerPos + _playerForward * FreeLookCam.m_Orbits[1].m_Radius,Time.deltaTime*3f);
+            FreeLookCam.ForceCameraPosition(_camPos,_camTarget.gameObject.transform.rotation);
+            // FreeLookCam.m_XAxis.Value = Mathf.Lerp(FreeLookCam.m_XAxis.Value,_angle,Time.deltaTime*2f);
+            // FreeLookCam.m_YAxis.Value = Mathf.Lerp(FreeLookCam.m_YAxis.Value,0.33f,Time.deltaTime*_distance);
+            yield return null;
+        }
+        
     }
 }

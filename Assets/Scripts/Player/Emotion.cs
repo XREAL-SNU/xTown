@@ -27,7 +27,7 @@ public class Emotion : MonoBehaviour
     private void Start()
     {
         EmoticonMenu.gameObject.SetActive(false);
-        _player = GameObject.FindWithTag("Player").transform;
+        _player = PlayerManager.Players.LocalPlayerGo.transform;
         //_player = PlayerManager.Players.LocalPlayerGo.transform;
         _avatarFaceControl = _player.GetComponentInChildren<AvatarFaceControl>();
         _view = GetComponent<PhotonView>();
@@ -42,7 +42,7 @@ public class Emotion : MonoBehaviour
         if (_view is null || !_view.IsMine)
         {
             //Debug.Log("View Error");
-            return;
+            // return;
         }
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -62,9 +62,9 @@ public class Emotion : MonoBehaviour
             }else{
                 if(_camManager.GetComponent<CamManager>().IsCurrentFp){
                     _faceCam.gameObject.SetActive(false);
-                }else{
-                    _characterCam.SetFront();
                 }
+                _characterCam.SetFront();
+            
                 EmoticonMenu.gameObject.SetActive(false);
                 _isMenuActive = false;
             }
@@ -103,12 +103,19 @@ public class Emotion : MonoBehaviour
                 EmoticonSelect(_currentMenu);
             }
         }
-        if(Input.GetKeyDown(KeyCode.G) && _camManager.GetComponent<CamManager>().IsCurrentFp){
-            _faceCam.gameObject.SetActive(false);
+        if(Input.GetKeyDown(KeyCode.G)){
+            if(!_camManager.GetComponent<CamManager>().IsCurrentFp && _isMenuActive){
+                _faceCam.gameObject.SetActive(true);
+            }else{
+                _faceCam.gameObject.SetActive(false);
+            }
         }
     }
     public void EmoticonSelect(int num){
         // if coroutine exists stop it and run new coroutine
+        if(_camManager.GetComponent<CamManager>().IsCurrentFp){
+            _characterCam.SetFront();
+        }
         if(_crRunning){
             StopCoroutine(_coroutine);
         }

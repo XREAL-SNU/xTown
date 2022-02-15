@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CamManager : MonoBehaviour
 {
@@ -11,14 +12,18 @@ public class CamManager : MonoBehaviour
     public GameObject FirstPersonCamObj;
     public GameObject ThirdPersonCamObj;
 
+    private CinemachineVirtualCamera _vCam;
+
+
     // Update is called once per frame
     void Update()
     {
         if (_player == null)
         {
-            //_player = GameObject.FindWithTag("Player");
             _player = PlayerManager.Players.LocalPlayerGo;
             FirstPersonCamObj = _player.transform.Find("FirstPersonCam").gameObject;
+            _vCam = FirstPersonCamObj.GetComponent<CinemachineVirtualCamera>();
+            _vCam.Priority = 20;
         }
         else
         {
@@ -31,6 +36,7 @@ public class CamManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             IsCurrentFp = !IsCurrentFp;
+            FirstPersonCamObj.transform.rotation = new Quaternion(0,0,0,0);
             FirstPersonCamObj.SetActive(IsCurrentFp);
 
             ThirdPersonCamObj.SetActive(!IsCurrentFp);
