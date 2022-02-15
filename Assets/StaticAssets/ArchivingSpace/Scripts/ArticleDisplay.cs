@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ArticleDisplay : MonoBehaviour
 {
     [SerializeField]
+    private FullArticleDisplay _fullArticleDisplay;
+    [SerializeField]
     private Article _article;
 
     [SerializeField]
@@ -29,6 +31,6 @@ public class ArticleDisplay : MonoBehaviour
 
     private void OnClick_Article()
     {
-
+        _fullArticleDisplay.Show(_article.content);
     }
 }

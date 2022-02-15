@@ -10,6 +10,8 @@ public class ArchivingController : MonoBehaviour
     private GameObject _archivingCamera;
     [SerializeField]
     private GameObject _archivingCanvas;
+    [SerializeField]
+    private FullArticleDisplay _fullArticleDisplay;
 
     private bool _isTriggered;
     public bool isTriggered { get { return _isTriggered; } set { _isTriggered = value; } }
@@ -21,6 +23,7 @@ public class ArchivingController : MonoBehaviour
     private void Start()
     {
         _archivingRT = _archivingCanvas.GetComponent<RectTransform>();
+        _fullArticleDisplay.Initialize();
     }
     public void OnTriggerChange()
     {
@@ -58,6 +61,10 @@ public class ArchivingController : MonoBehaviour
             {
                 _archivingCamera.SetActive(false);
                 _archivingRT.sizeDelta = new Vector2(0, _archivingRT.sizeDelta.y);
+            })
+            .PrependCallback(() =>
+            {
+                _fullArticleDisplay.Hide();
             })
             .Append(DOVirtual.Float(_canvasWidth, 0, 1f, RectTransformSize)).SetEase(Ease.OutCubic)
             .OnComplete(() =>

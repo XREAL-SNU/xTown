@@ -7,6 +7,8 @@ using DG.Tweening;
 public class FullArticleDisplay : MonoBehaviour
 {
     [SerializeField]
+    private ScrollRect _scrollRect;
+    [SerializeField]
     private Image _fullArticleImage;
     [SerializeField]
     private Button _closeButton;
@@ -15,9 +17,9 @@ public class FullArticleDisplay : MonoBehaviour
     private RectTransform _rectTransform;
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
+        _scrollRect = GetComponentInChildren<ScrollRect>();
         _closeButton.onClick.AddListener(Hide);
 
         _layoutElement = _fullArticleImage.GetComponent<LayoutElement>();
@@ -26,9 +28,7 @@ public class FullArticleDisplay : MonoBehaviour
 
     public void Show(Sprite article)
     {
-        SwitchArticle(article);
-
-        PlayShowSequence();
+        PlayShowSequence(article);
     }
 
     public void Hide()
@@ -40,27 +40,37 @@ public class FullArticleDisplay : MonoBehaviour
     {
         _fullArticleImage.sprite = article;
 
-        float articleWidth = 640;
-        float articleHeight = articleWidth * (article.rect.y / article.rect.x);
+        float articleWidth = 770;
+        float articleHeight = articleWidth * (article.rect.height / article.rect.width);
         _layoutElement.minWidth = articleWidth;
         _layoutElement.minHeight = articleHeight;
+
+        _scrollRect.verticalNormalizedPosition = 1f;
+
     }
 
-    private void PlayShowSequence()
+    private void PlayShowSequence(Sprite article)
     {
-        Sequence _openSequence = DOTween.Sequence()
+        Sequence showSequence = DOTween.Sequence();
+
+        showSequence
             .OnStart(() =>
             {
                 gameObject.SetActive(true);
-                _rectTransform.DOAnchorPosY(-800, 0);
             })
-            .Append(_rectTransform.DOAnchorPosY(0, 1).SetEase(Ease.OutBack));
+            .Append(_rectTransform.DOAnchorPosY(900, 0.5f).SetEase(Ease.InBack))
+            .AppendCallback(() =>
+            {
+                SwitchArticle(article);
+            })
+            .Append(_rectTransform.DOAnchorPosY(0, 0.5f).SetEase(Ease.OutBack));
     }
 
     private void PlayHideSequence()
     {
-        Sequence _openSequence = DOTween.Sequence()
-            .Append(_rectTransform.DOAnchorPosY(800, 1).SetEase(Ease.InBack))
+        Sequence hideSequence = DOTween.Sequence()
+            .Append(_rectTransform.DOAnchorPosY(900, 0.5f).SetEase(Ease.InBack))
+            //.Join(_fullArticleImage.DOFade(0, 0.5f))
             .OnComplete(() =>
             {
                 gameObject.SetActive(false);
