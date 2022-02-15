@@ -13,6 +13,7 @@ public class Portal : MonoBehaviour
         {
             PlayerPrefs.SetString("PastScene", "MainRoom");
             PhotonNetwork.LeaveRoom();
+            RoomsCanvases.Instance.gameObject.SetActive(true);
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.Show();
             RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName = SceneName;
         }
