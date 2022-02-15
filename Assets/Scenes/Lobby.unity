@@ -673,6 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f52236682b2260489b7cdf262c012cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   EffectSounds:
   - name: JumpSound
     clip: {fileID: 8300000, guid: 8f7286bfb27afc44bae039dcba1a44f3, type: 3}
@@ -689,6 +690,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 304ff376677784e478e3a4a06d41b4f7, type: 3}
   AudioSourceBFM: {fileID: 1058663795}
   AudioSourceEffects:
+  - {fileID: 0}
   - {fileID: 0}
   PlaySoundName: []
 --- !u!4 &1058663794
@@ -715,7 +717,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 304ff376677784e478e3a4a06d41b4f7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b000c3f1c0ab70848bb1b6c7bf151186, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

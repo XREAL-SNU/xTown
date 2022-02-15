@@ -58,8 +58,8 @@ public class SoundManager : MonoBehaviour
             }
             
             Player = PlayerManager.Players.LocalPlayerGo;
-            
-            AudioSourceEffects[0] = Player.GetComponent<AudioSource>();
+            AudioSourceEffects[0] = Player.GetComponents<AudioSource>()[0];
+            AudioSourceEffects[1] = Player.GetComponents<AudioSource>()[1];
             PlaySE("SpawnSound");
         }
     }
