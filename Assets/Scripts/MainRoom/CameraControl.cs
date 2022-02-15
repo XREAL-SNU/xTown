@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
+using Photon.Pun;
 
 public class CameraControl : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
+        if (!PhotonNetwork.InRoom) return;
+        if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld")) return;
         //_player = GameObject.FindWithTag("Player");
         _player = PlayerManager.Players.LocalPlayerGo;
         _camTarget = _player.GetComponent<ThirdPersonControllerMulti>().CinemachineCameraTarget;

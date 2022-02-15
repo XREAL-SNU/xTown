@@ -19,7 +19,6 @@ public class PlayerListingsMenu : MonoBehaviourPunCallbacks
     private RoomsCanvases _roomsCanvases;
     private bool _ready = false;
 
-
     public override void OnEnable()
     {
         Debug.Log("PlayerListingMenu/fetching current room's players!");

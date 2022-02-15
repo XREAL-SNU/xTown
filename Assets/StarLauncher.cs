@@ -2,6 +2,8 @@
 using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
+using Photon.Pun;
+
 namespace StarterAssets
 {
 public class StarLauncher : MonoBehaviour
@@ -45,6 +47,9 @@ public class StarLauncher : MonoBehaviour
 
     void Start()
     {
+        if (!PhotonNetwork.InRoom) return;
+        if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld")) return;
+
         animator = GetComponent<Animator>();
         movement = GetComponent<StarterAssetsInputs>();
         

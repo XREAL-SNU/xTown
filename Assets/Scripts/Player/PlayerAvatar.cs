@@ -44,7 +44,8 @@ public class PlayerAvatar: MonoBehaviour
     
     private void Start()
     {
-        
+        if (!PhotonNetwork.InRoom) return;
+        if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld")) return;
         PhotonView = GetComponent<PhotonView>();
         
         if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
