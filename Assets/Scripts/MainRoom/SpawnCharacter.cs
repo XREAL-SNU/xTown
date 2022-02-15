@@ -13,6 +13,7 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
     private Transform FollowTarget;
     private GameObject Player;
 
+    private int _randNum;
     public static SpawnCharacter Instance = null;
     // Start is called before the first frame update
     void Awake()
@@ -26,11 +27,13 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
             Destroy(this.gameObject);
         }
 
+        _randNum = Random.Range(1,9);
+
         Debug.Log("SpawnCharactery/Awake");
         if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
 
-        SpawnPoint = GameObject.Find("SpawnPoint").transform;
+        SpawnPoint = GameObject.Find("SpawnPoint_"+_randNum.ToString()).transform;
         FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
 
         // disable currentRoomCanvas
@@ -94,13 +97,13 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
         {// instantiate locally
             Debug.Log("SpawnCharacter/Instantiating player locally");
-            Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+            Instantiate(_prefab, SpawnPoint.position, Quaternion.Euler(new Vector3(0,-45-45*(_randNum-1),0)));
         }
         else
         {
             // instantiate over the network
             Debug.Log("SpawnCharacter/Instantiating player over the network");
-            Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+            Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.Euler(new Vector3(0,-45-45*(_randNum-1),0)));
             PhotonView view = Player.GetComponent<PhotonView>();
             if (view.IsMine) PlayerManager.Players.LocalPlayerGo = Player;
         }
