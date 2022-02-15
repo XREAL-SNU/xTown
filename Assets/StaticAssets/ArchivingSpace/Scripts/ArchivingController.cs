@@ -37,10 +37,14 @@ public class ArchivingController : MonoBehaviour
     private void PlayOpenSequence()
     {
         Sequence _openSequence = DOTween.Sequence()
+            .PrependInterval(1f)
             .OnStart(() =>
             {
-                Debug.Log("open");
                 _archivingCamera.SetActive(true);
+
+            })
+            .InsertCallback(1, () =>
+            {
                 _archivingCanvas.SetActive(true);
                 _archivingRT.sizeDelta = new Vector2(0, _archivingRT.sizeDelta.y);
             })
@@ -52,7 +56,6 @@ public class ArchivingController : MonoBehaviour
         Sequence _closeSequence = DOTween.Sequence()
             .OnStart(() =>
             {
-                Debug.Log("close");
                 _archivingCamera.SetActive(false);
                 _archivingRT.sizeDelta = new Vector2(0, _archivingRT.sizeDelta.y);
             })
