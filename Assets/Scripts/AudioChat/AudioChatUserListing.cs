@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using XReal.XTown.UI;
+using XReal.XTown.VoiceChat;
 
 public class AudioChatUserListing : UIBase
 {
@@ -61,6 +62,14 @@ public class AudioChatUserListing : UIBase
         // mute that person's audiosource.
         SpeakerOnImage.enabled = false;
         SpeakerOffImage.enabled = true;
+
+        if (ActorNr < 1)
+        {
+            Debug.LogError("AudioChatUserListing/ ActorNr of item not set");
+            return;
+        }
+        PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(this.ActorNr);
+        voice.AudioSourceMuted = true;
     }
 
     public void OnClick_Unmute(PointerEventData evData)
@@ -68,6 +77,9 @@ public class AudioChatUserListing : UIBase
         // unmute that person's audiosource.
         SpeakerOnImage.enabled = true;
         SpeakerOffImage.enabled = false;
+
+        PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(this.ActorNr);
+        voice.AudioSourceMuted = false;
     }
 
     public string PlayerNameText

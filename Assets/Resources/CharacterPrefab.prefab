@@ -2080,7 +2080,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3801566193995872776}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13d36e040da5ac043846621e51ed48d1, type: 3}
   m_Name: 
@@ -2206,6 +2206,8 @@ GameObject:
   - component: {fileID: 4733403235914078483}
   - component: {fileID: 6075342936895137862}
   - component: {fileID: 2860716928886699988}
+  - component: {fileID: 1138374259395030195}
+  - component: {fileID: -8478484832084735747}
   m_Layer: 0
   m_Name: CharacterPrefab
   m_TagString: Player
@@ -2452,6 +2454,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: Sitting
+  - Type: 1
+    SynchronizeType: 0
+    Name: Path
+  - Type: 4
+    SynchronizeType: 0
+    Name: flying
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -2543,6 +2551,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5559453e619fc2a40a1b168e138e8953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1138374259395030195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142847262815404090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d36e040da5ac043846621e51ed48d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AvatarFace: {fileID: 2100000, guid: 4cbbf307fcd6d974db7a6b7254415c34, type: 2}
+  _defaultTexture: {fileID: 2800000, guid: 52a2d7980a266ee42b6cfad2d157be65, type: 3}
+--- !u!114 &-8478484832084735747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142847262815404090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d522c55aabc29b745ac9161b296aed81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speed: 10
+  insideLaunchStar: 0
+  flying: 0
+  almostFinished: 0
+  thirdPersonCamera: {fileID: 0}
+  dollyCart: {fileID: 0}
+  playerParent: {fileID: 0}
+  prepMoveDuration: 0.15
+  launchInterval: 0.5
+  followParticles: {fileID: 0}
+  smokeParticle: {fileID: 0}
 --- !u!1 &4184396513334393585
 GameObject:
   m_ObjectHideFlags: 0
@@ -5342,6 +5393,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3617948570369366656}
     m_Modifications:
+    - target: {fileID: 3375685004021106452, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3375685004021106452, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5507593579429309341, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5372,11 +5431,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5507593579429309341, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5507593579429309341, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5507593579429309341, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5412,7 +5471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5507593579429309341, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 2.05
       objectReference: {fileID: 0}
     - target: {fileID: 5507593579429309341, guid: e56829f019d953245b5ccadf686bba5c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
