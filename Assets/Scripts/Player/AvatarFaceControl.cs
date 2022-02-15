@@ -67,6 +67,8 @@ public class AvatarFaceControl : MonoBehaviour
     public void InvokeShowFace(int index)
     {
         int imageIndex = AvatarFaceManagement.s_favList[index].GetImageIndex();
+        StopAllCoroutines();
+        ChangeFace(AvatarFaceManagement.DefaultIndex);
         StartCoroutine(ShowFaceForSeconds(imageIndex));
 
         if (!_view.IsMine) return;
@@ -86,14 +88,20 @@ public class AvatarFaceControl : MonoBehaviour
     public void SetSyncedFace(int imageIndex, PhotonMessageInfo info)
     {
         Debug.Log($"AvatarFaceControl/ Start RPC face image#{imageIndex} by {info.Sender.NickName}");
+
+        StopAllCoroutines();
+        ChangeFace(AvatarFaceManagement.DefaultIndex);
         StartCoroutine(ShowFaceForSeconds(imageIndex));
     }
     #endregion
 
     IEnumerator ShowFaceForSeconds(int index)
     {
-        if (!_isDefault) yield break;
 
+        if (!_isDefault)
+        {
+            yield break;
+        }
         ChangeFace(index);
 
         yield return new WaitForSeconds(10f);
