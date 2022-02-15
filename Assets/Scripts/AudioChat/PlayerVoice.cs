@@ -84,6 +84,8 @@ namespace XReal.XTown.VoiceChat{
         public void SetVoiceState(bool state, int actorNr = -1)
         {
             IsVoiceOn = state;
+            // _view may be null depending on timing of call
+            if (_view is null) _view = GetComponent<PhotonView>();
             if (_view.IsMine) _view.RPC("SyncVoiceStateRPC", RpcTarget.Others, state, actorNr);
         }
 

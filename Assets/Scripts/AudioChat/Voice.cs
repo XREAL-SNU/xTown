@@ -34,7 +34,8 @@ namespace XReal.XTown.VoiceChat
             get
             {
                 if (!PhotonNetwork.InRoom) return null;
-                PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(PhotonNetwork.LocalPlayer.ActorNumber);
+                //PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(PhotonNetwork.LocalPlayer.ActorNumber);
+                PlayerVoice voice = PlayerManager.Players.LocalPlayerGo.GetComponent<PlayerVoice>();
                 return voice;
             }
         }
