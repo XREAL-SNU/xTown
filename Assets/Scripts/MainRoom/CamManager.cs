@@ -31,6 +31,7 @@ public class CamManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             IsCurrentFp = !IsCurrentFp;
+            FirstPersonCamObj.transform.rotation = new Quaternion(0,0,0,0);
             FirstPersonCamObj.SetActive(IsCurrentFp);
 
             ThirdPersonCamObj.SetActive(!IsCurrentFp);

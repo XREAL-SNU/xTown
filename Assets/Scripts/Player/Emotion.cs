@@ -62,9 +62,9 @@ public class Emotion : MonoBehaviour
             }else{
                 if(_camManager.GetComponent<CamManager>().IsCurrentFp){
                     _faceCam.gameObject.SetActive(false);
-                }else{
-                    _characterCam.SetFront();
                 }
+                _characterCam.SetFront();
+            
                 EmoticonMenu.gameObject.SetActive(false);
                 _isMenuActive = false;
             }
