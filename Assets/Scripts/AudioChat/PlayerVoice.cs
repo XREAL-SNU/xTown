@@ -10,28 +10,23 @@ namespace XReal.XTown.VoiceChat{
     public class PlayerVoice : MonoBehaviour
     {
         PhotonVoiceView _voiceView;
-
+        PhotonView _view;
         Recorder _recorder;
         Speaker _speaker;
         AudioSource _audioSource;
 
-        AudioChatSettings _settings;
+        public bool IsVoiceOn;
 
-        // editor
-        [SerializeField]
-        private bool _isMine = false;
 
         void Start()
         {
-
-
             InitVoice();
-
+            RoomManager.BindEvent(gameObject, OnPlayerJoined_SetPlayerVoice, RoomManager.RoomEvent.PlayerJoined);
         }
 
         void InitVoice()
         {
-            _voiceView = GetComponentInParent<PhotonVoiceView>();
+            _voiceView = GetComponent<PhotonVoiceView>();
 
             if (!_voiceView.isActiveAndEnabled)
             {
@@ -39,11 +34,11 @@ namespace XReal.XTown.VoiceChat{
                 return;
             }
             _speaker = _voiceView.SpeakerInUse;
-            _audioSource = GetComponent<AudioSource>();
+            _audioSource = GetComponentInChildren<AudioSource>();
             _recorder = _voiceView.RecorderInUse;
 
-            PhotonView view = GetComponentInParent<PhotonView>();
-            _isMine = view.IsMine;
+            _view = GetComponent<PhotonView>();
+
         }
 
         // controls the audio source, not speaker playback.
@@ -52,9 +47,8 @@ namespace XReal.XTown.VoiceChat{
             get => _audioSource.mute;
             set
             {
-                PhotonView view = GetComponentInParent<PhotonView>();
 
-                Debug.Log($"audio muted: {view.Owner.NickName}");
+                Debug.Log($"audio muted: {_view.Owner.NickName}");
                 _audioSource.mute = value;
             }
         }
@@ -78,6 +72,34 @@ namespace XReal.XTown.VoiceChat{
                 }
             }
         }
+
+        // Room events
+        public void OnPlayerJoined_SetPlayerVoice(PlayerInfo info)
+        {
+            Debug.Log($"PlayerVoice/ On player {info.PlayerName} joined");
+            // broadcast my state to the new joined actor. specify actor target~!
+            SetVoiceState(IsVoiceOn, info.ActorNr);
+        }
+        // Netcode
+        public void SetVoiceState(bool state, int actorNr = -1)
+        {
+            IsVoiceOn = state;
+            if (_view.IsMine) _view.RPC("SyncVoiceStateRPC", RpcTarget.Others, state, actorNr);
+        }
+
+        [PunRPC]
+        public void SyncVoiceStateRPC(bool state, int actorNr)
+        {
+            // if specified, return if not mine.
+            if(actorNr > 0 && PhotonNetwork.LocalPlayer.ActorNumber != actorNr)
+            {
+                return;
+            }
+            Debug.Log("SyncPlayerVoice RPC " + state);
+            IsVoiceOn = state;
+        }
+
+
     }
 
 

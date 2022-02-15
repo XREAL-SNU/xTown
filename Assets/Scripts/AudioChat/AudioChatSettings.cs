@@ -8,6 +8,8 @@ namespace XReal.XTown.VoiceChat
     public class AudioChatSettings : MonoBehaviour
     {
         Recorder _recorder;
+        public bool EnableVoiceOnJoin = false;
+
         // Start is called before the first frame update
         void Start()
         {
