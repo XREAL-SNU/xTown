@@ -11771,7 +11771,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3801566193995872776}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13d36e040da5ac043846621e51ed48d1, type: 3}
   m_Name: 
@@ -11897,6 +11897,7 @@ GameObject:
   - component: {fileID: 4733403235914078483}
   - component: {fileID: 6075342936895137862}
   - component: {fileID: 2860716928886699988}
+  - component: {fileID: 6075026403358411791}
   - component: {fileID: 2492397504308322708}
   m_Layer: 0
   m_Name: CharacterPrefab
@@ -12243,6 +12244,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5559453e619fc2a40a1b168e138e8953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6075026403358411791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142847262815404090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d36e040da5ac043846621e51ed48d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AvatarFace: {fileID: 2100000, guid: 4cbbf307fcd6d974db7a6b7254415c34, type: 2}
+  _defaultTexture: {fileID: 2800000, guid: 52a2d7980a266ee42b6cfad2d157be65, type: 3}
 --- !u!114 &2492397504308322708
 MonoBehaviour:
   m_ObjectHideFlags: 0
