@@ -11,8 +11,11 @@ public class PlayerController : MonoBehaviour
 
     private int Coincount = 0;
     private int Scorecount = 0;
+    private float scoreNumber = 0;
     public Text CoinCountText;
     public Text ScoreCountText;
+    public Text endScoreText;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +82,13 @@ public class PlayerController : MonoBehaviour
             //other.gameObject.SetActive(true);
             Scorecount = Scorecount + 10;
             Score();
+        }
+
+        if (other.gameObject.CompareTag("Ending"))
+        {
+            endScoreText.gameObject.SetActive(true);
+            scoreNumber = Coincount + Scorecount - GameObject.Find("Time").GetComponent<Timer>().time;
+            endScoreText.text = scoreNumber.ToString();
         }
     }
     private void CoinSetCount()

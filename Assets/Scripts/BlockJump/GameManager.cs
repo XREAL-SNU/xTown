@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
 
     static public Vector3 savePoint; //추락시 돌아오는 지점
-    public Text pointText;
 
     
     // Start is called before the first frame update
@@ -31,8 +30,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EndGame()
-    {
-        pointText.text = pointText.ToString();
-    }
+
 }
