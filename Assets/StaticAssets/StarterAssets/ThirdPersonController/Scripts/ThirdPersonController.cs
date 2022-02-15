@@ -241,7 +241,6 @@ namespace StarterAssets
 
 			// move the player
 			_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-			SoundManager.instance.PlaySE("WalkSound");
 			
 			// update animator if using character
 			if (_hasAnimator)
@@ -275,6 +274,7 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
+					SoundManager.instance.PlaySE("JumpSound");
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 

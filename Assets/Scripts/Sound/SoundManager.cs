@@ -58,8 +58,9 @@ public class SoundManager : MonoBehaviour
             }
             
             Player = PlayerManager.Players.LocalPlayerGo;
-            AudioSourceEffects[0] = Player.GetComponents<AudioSource>()[0];
-            AudioSourceEffects[1] = Player.GetComponents<AudioSource>()[1];
+            AudioSourceEffects[0] = Player.GetComponents<AudioSource>()[0]; //SpawnSound
+            AudioSourceEffects[1] = Player.GetComponents<AudioSource>()[1]; //WalkSound
+            AudioSourceEffects[2] = Player.GetComponents<AudioSource>()[2]; //JumpSound
             PlaySE("SpawnSound");
         }
     }
@@ -84,6 +85,10 @@ public class SoundManager : MonoBehaviour
                 return;
             }
         }
+        /*if(_name == "WalkSound")
+        {
+            //간격 주기
+        }*/
         Debug.Log(_name + "Sound SoundManager에 등록되지 않음");
     }
 
