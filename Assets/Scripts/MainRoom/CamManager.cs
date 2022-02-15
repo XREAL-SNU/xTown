@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,9 @@ public class CamManager : MonoBehaviour
         if (_player == null)
         {
             //_player = GameObject.FindWithTag("Player");
+            if (!PhotonNetwork.InRoom) return;
+            else if (!PhotonNetwork.CurrentRoom.Name.Contains("MainWorld")) return;
+
             _player = PlayerManager.Players.LocalPlayerGo;
             FirstPersonCamObj = _player.transform.Find("FirstPersonCam").gameObject;
         }
