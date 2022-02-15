@@ -22,7 +22,7 @@ namespace StarterAssets
 		
 		public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			if (PlayerKeyboard.KeyboardAvailable) MoveInput(value.Get<Vector2>());
 		}
 
 		public void OnLook(InputValue value)
@@ -35,17 +35,17 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
-			JumpInput(value.isPressed);
+			if (PlayerKeyboard.KeyboardAvailable) JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			SprintInput(value.isPressed);
+			if (PlayerKeyboard.KeyboardAvailable) SprintInput(value.isPressed);
 		}
 
 		public void OnSit(InputValue value)
 		{
-			SitInput(value.isPressed);
+			if (PlayerKeyboard.KeyboardAvailable) SitInput(value.isPressed);
 		}
 
 		public void SitInput(bool newSitState)

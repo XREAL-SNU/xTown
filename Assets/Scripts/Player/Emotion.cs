@@ -45,7 +45,7 @@ public class Emotion : MonoBehaviour
             // return;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (PlayerKeyboard.KeyboardInputSet(KeyboardInput.EmotionToggle))
         {
             _faceList = Face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
@@ -79,20 +79,21 @@ public class Emotion : MonoBehaviour
                 EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(1400,400);
             }
             
-            if(Input.GetKeyDown(KeyCode.Alpha1)){
+            if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion1)){
                 MenuSlice[0].color = Color.black;
                 _currentMenu = 0;
-            } else if(Input.GetKeyDown(KeyCode.Alpha2)){
+            } else if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion2)){
                 MenuSlice[1].color = Color.black;
                 _currentMenu = 1;
-            } else if(Input.GetKeyDown(KeyCode.Alpha3)){
+            } else if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion3)){
                 MenuSlice[2].color = Color.black;
                 _currentMenu = 2;
-            } else if(Input.GetKeyDown(KeyCode.Alpha4)){
+            } else if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion4)){
                 MenuSlice[3].color = Color.black;
                 _currentMenu = 3;
             }
-            if(Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3) || Input.GetKeyUp(KeyCode.Alpha4)){       
+            if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion1) || PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion2) || PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion3) || PlayerKeyboard.KeyboardInputSet(KeyboardInput.Emotion4))
+            {       
                 _isSelected = true;
             }
 
@@ -103,14 +104,12 @@ public class Emotion : MonoBehaviour
                 EmoticonSelect(_currentMenu);
             }
         }
-        if(Input.GetKeyDown(KeyCode.G)){
-            if(!_camManager.GetComponent<CamManager>().IsCurrentFp && _isMenuActive){
-                _faceCam.gameObject.SetActive(true);
-            }else{
-                _faceCam.gameObject.SetActive(false);
-            }
+
+        if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.CameraViewChange) && _camManager.GetComponent<CamManager>().IsCurrentFp){
+            _faceCam.gameObject.SetActive(false);
         }
     }
+    
     public void EmoticonSelect(int num){
         // if coroutine exists stop it and run new coroutine
         if(_camManager.GetComponent<CamManager>().IsCurrentFp){
