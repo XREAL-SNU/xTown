@@ -105,8 +105,15 @@ public class Emotion : MonoBehaviour
             }
         }
 
-        if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.CameraViewChange) && _camManager.GetComponent<CamManager>().IsCurrentFp){
-            _faceCam.gameObject.SetActive(false);
+        if(PlayerKeyboard.KeyboardInputSet(KeyboardInput.CameraViewChange)){
+            if (!_camManager.GetComponent<CamManager>().IsCurrentFp && _isMenuActive)
+            {
+                _faceCam.gameObject.SetActive(true);
+            }
+            else
+            {
+                _faceCam.gameObject.SetActive(false);
+            }
         }
     }
     
