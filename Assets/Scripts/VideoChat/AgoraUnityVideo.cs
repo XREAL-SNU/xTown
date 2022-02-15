@@ -19,6 +19,9 @@ public class AgoraUnityVideo: MonoBehaviour
     // instance of agora engine
     private IRtcEngine mRtcEngine;
     private UserInfo userInfo;
+    private UserInfo remoteUserInfo;
+    private Text NickName;
+    private Text remoteUserNickNameText;
     private Text MessageText;
 
     // a token is a channel key that works with a AppID that requires it. 
@@ -93,6 +96,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
         /*  This API Accepts AppID with token; by default omiting info and use 0 as the local user id */
         mRtcEngine.JoinChannelByKey(channelKey: token, channelName: channel);
+
     }
 
 
@@ -197,7 +201,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
 
 
-        GameObject text = GameObject.Find("MessageText");
+        /*GameObject text = GameObject.Find("MessageText");
         if (!ReferenceEquals(text, null))
         {
             MessageText = text.GetComponent<Text>();
@@ -211,7 +215,15 @@ public class AgoraUnityVideo: MonoBehaviour
             {
                 button.onClick.AddListener(HandleHelp);
 	        }
-	    }
+	    }*/
+
+        GameObject NickNameField = screen.transform.Find("NickNameField").gameObject;
+        GameObject text = NickNameField.transform.Find("MyNickName").gameObject;
+        if(!ReferenceEquals(text, null))
+        {
+            NickName = text.GetComponent<Text>();
+            NickName.text = PhotonNetwork.NickName;
+        }
     }
 
 
@@ -299,6 +311,14 @@ public class AgoraUnityVideo: MonoBehaviour
             videoSurface.SetForUser(uid);
             videoSurface.SetEnable(true);
             videoSurface.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
+        }
+
+        GameObject remoteUserNickName = GameObject.Find(uid.ToString()).transform.Find("NickNameField").transform.Find("MyNickName").gameObject;
+        if(!ReferenceEquals(remoteUserNickName, null))
+        {
+            remoteUserNickNameText = remoteUserNickName.GetComponent<Text>();
+            remoteUserInfo = mRtcEngine.GetUserInfoByUid(uid);
+            remoteUserNickNameText.text = remoteUserInfo.userAccount;
         }
         Debug.Log(channelJoined+"ChannelJoined");
     }
@@ -408,7 +428,7 @@ public class AgoraUnityVideo: MonoBehaviour
     private const float Offset = 100;
     public VideoSurface makeImageSurface(string goName)
     {
-        GameObject go = new GameObject();
+        GameObject go = (GameObject)Instantiate(Resources.Load("Screen"));
         int num = channelJoined%6; //나머지를 통해 각 화면의 위치 잡아줌
         int num2 = channelJoined/6; //각 화면이 몇 번째 패널에 들어갈지 잡아줌
         if (go == null)
@@ -429,7 +449,7 @@ public class AgoraUnityVideo: MonoBehaviour
             go.transform.parent = canvas.transform;
         }
         // set up transform
-        go.transform.Rotate(0f, 0.0f, 180.0f);
+        go.transform.Rotate(0f, 0.0f, 0f);
         
         if(num==1)
         {
@@ -465,7 +485,7 @@ public class AgoraUnityVideo: MonoBehaviour
             yPos = -70;
         }
         go.transform.localPosition = new Vector3(xPos, yPos, 0f);
-        go.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+        go.transform.localScale = new Vector3(1f, 1f, 1f);
         // configure videoSurface
         VideoSurface videoSurface = go.AddComponent<VideoSurface>();
         return videoSurface;
