@@ -21,6 +21,8 @@ public class AvatarSetMenu : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions();
         options.BroadcastPropsChangeToAll = true;
         options.MaxPlayers = 20;
+        options.EmptyRoomTtl = 20000;
+        options.PlayerTtl = 30000;
         PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default); // Access MainWorld Room
     }
     public override void OnJoinedRoom()

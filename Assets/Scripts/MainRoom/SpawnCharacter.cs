@@ -9,6 +9,7 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
 {
     public GameObject[] CharacterPrefabs;
     public Transform SpawnPoint;
+    public Transform SpawnPoint_Whiteboard;
     public CinemachineFreeLook FreeLookCam;
     private Transform FollowTarget;
     private GameObject Player;
@@ -94,13 +95,39 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
         {// instantiate locally
             Debug.Log("SpawnCharacter/Instantiating player locally");
-            Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+            switch (PlayerPrefs.GetString("prevScene"))
+            {
+                case "None":
+                    Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+                    break;
+
+                case "Whiteboard":
+                    Player = Instantiate(_prefab, SpawnPoint_Whiteboard.position, Quaternion.identity);
+                    break;
+
+                default:
+                    Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+                    break;
+            }
         }
         else
         {
             // instantiate over the network
             Debug.Log("SpawnCharacter/Instantiating player over the network");
-            Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+            switch (PlayerPrefs.GetString("prevScene"))
+            {
+                case "None":
+                    Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+                    break;
+
+                case "Whiteboard":
+                    Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint_Whiteboard.position, Quaternion.identity);
+                    break;
+
+                default:
+                    Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+                    break;
+            }
             PhotonView view = Player.GetComponent<PhotonView>();
             if (view.IsMine) PlayerManager.Players.LocalPlayerGo = Player;
         }

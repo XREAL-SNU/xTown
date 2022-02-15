@@ -21,6 +21,7 @@ public class Portal : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
+        MainCanvases.Instance.gameObject.SetActive(false);
         RoomOptions options = new RoomOptions();
         options.BroadcastPropsChangeToAll = true;
         options.MaxPlayers = 10;
@@ -30,7 +31,6 @@ public class Portal : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Portal/Joined Whiteboard Room!!!");
-        MainCanvases.Instance.gameObject.SetActive(false);
         //SceneManager.LoadScene("MainRoom", LoadSceneMode.Single);
     }
     public override void OnCreatedRoom()
