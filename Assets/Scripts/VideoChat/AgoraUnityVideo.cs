@@ -78,7 +78,8 @@ public class AgoraUnityVideo: MonoBehaviour
         mRtcEngine.OnUserOffline = onUserOffline;
         mRtcEngine.OnRequestToken = OnRequestToken;
         mRtcEngine.OnUserMutedAudio = OnUserMutedAudio;
-        mRtcEngine.OnUserMuteVideo = OnUserMutedVideo;
+        mRtcEngine.OnUserMuteVideo = OnUserMuteVideo;
+        mRtcEngine.OnRemoteVideoStateChanged = OnRemoteVideoStateChanged;
         mRtcEngine.OnWarning = (int warn, string msg) =>
         {
             Debug.LogWarningFormat("Warning code:{0} msg:{1}", warn, IRtcEngine.GetErrorDescription(warn));
@@ -445,7 +446,7 @@ public class AgoraUnityVideo: MonoBehaviour
         go.name = goName;
 
         // to be renderered onto
-        go.AddComponent<RawImage>();
+        //go.AddComponent<RawImage>();
 
         // make the object draggable
         go.AddComponent<UIElementDragger>();
@@ -460,34 +461,34 @@ public class AgoraUnityVideo: MonoBehaviour
         if(num==1)
         {
             //new Panel생성, Panel안에 화면 띄움, 기존 Panel에 setActive false설정,
-            xPos = -60;
+            xPos = -100;
             yPos = 110;
         }
         else if(num==2)
         {
-            xPos = 120;
+            xPos = 125;
             yPos = 110;
         }
         else if(num==3)
         {
-            xPos = 300;
+            xPos = 350;
             yPos = 110;
             //이거 이런 식으로 하는게 아니라 숫자 별로 위치 다 지정해주기
             //한명 나가면 ReRendering하도록 만들어야 하나? (Userleave어쩌고에서)
         }
         else if(num==4)
         {
-            xPos = -60;
+            xPos = -100;
             yPos = -70;
         }
         else if(num==5)
         {
-            xPos = 120;
+            xPos = 125;
             yPos = -70;
         }
         else if(num==0)
         {
-            xPos = 300;
+            xPos = 350;
             yPos = -70;
         }
         go.transform.localPosition = new Vector3(xPos, yPos, 0f);
@@ -580,28 +581,46 @@ public class AgoraUnityVideo: MonoBehaviour
         Debug.Log(uid+"OnUserMutedAudio 동작하는지");
         if(muted)
         {
-            //GameObject audioButton = GameObject.Find("AudioButton"+uid.ToString());
-            //Destroy(audioButton);
             Debug.Log(uid+"가 음소거를 합니다.");
         }
         else
         {
-
+            Debug.Log(uid+"가 음소거를 해제하였습니다.");
         }
     }
 
-    public void OnUserMutedVideo(uint uid, bool muted)
+
+
+
+
+    public void OnUserMuteVideo(uint uid, bool muted)
     {
         Debug.Log(uid+"OnUserMutedVideo 동작하는지");
         if(muted)
         {
-            Debug.Log(uid+"비디오 중지함.");
+            GameObject remoteUserScreen = GameObject.Find(uid.ToString());
+            VideoSurface videoSurface = remoteUserScreen.GetComponent<VideoSurface>();
+            Destroy(videoSurface);
         }
         else
         {
-
+            GameObject remoteUserScreen = GameObject.Find(uid.ToString());
+            VideoSurface videoSurface = remoteUserScreen.AddComponent<VideoSurface>();
+            videoSurface.SetForUser(uid);
+            videoSurface.SetEnable(true);
+            videoSurface.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
         }
     }
+
+
+    /*public void OnRemoteVideoStateChanged(REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason)
+    {
+        if(state==1)
+        {
+
+        }
+    }*/
+
 
 
     void OnRequestToken()
@@ -610,4 +629,6 @@ public class AgoraUnityVideo: MonoBehaviour
     }
 
     #endregion
+
+
 }
