@@ -48,7 +48,7 @@ public class MinimapScreenScript : MonoBehaviour
             _playerPos=Player.transform.position;   //매 프레임마다 받아오면 computing이 너무 많아져서 delay를 걸어야할듯.(0.1~0.2초에 한번씩 불러오도록)
             
             //플레이어 움직임에 따라 미니맵의 점이 움직이도록 설정. why 420?? -> 월드 미니맵 스크린의 scale
-            MinimapImage.GetComponent<RectTransform>().anchoredPosition = new Vector3(3.0f/_worldWidth*_playerPos.x, 3.0f/_worldHeight*_playerPos.z,0);
+            MinimapImage.GetComponent<RectTransform>().anchoredPosition = new Vector3(2.8f/_worldWidth*_playerPos.x, 2.8f/_worldHeight*_playerPos.z,0);
             
         }
         //Local Minimap
