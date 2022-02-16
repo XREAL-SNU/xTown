@@ -12,6 +12,25 @@ public class AudioChatUserListing : UIBase
     // maybe we want PlayerInfo, but we probably won't need ALL of its information.
     // so for minimality.
     public int ActorNr;
+
+    private bool _isMe = false;
+
+    // is this listing me?
+    // valid only after Init.
+    public bool IsMe
+    {
+        get => _isMe;
+        set
+        {
+            _isMe = value;
+            if(value)
+            {
+                // if mine, delete the speaker image.
+                SpeakerOffImage.enabled = false;
+                SpeakerOnImage.enabled = false;
+            }
+        }
+    }
     enum Texts
     {
         PlayerNameText
@@ -20,14 +39,14 @@ public class AudioChatUserListing : UIBase
     enum Images
     {
         SpeakerOnImage,
-        SpeakerOffImage
+        SpeakerOffImage,
+        VoiceOnImage
     }
 
     public override void Init()
     {
 
         Bind<Text>(typeof(Texts));
-
         Bind<Image>(typeof(Images));
         // to get a bound gameObject, use GetUIComponent and provide it with UIElementType and UIElementId.
         GetUIComponent<Image>((int)Images.SpeakerOffImage).gameObject.BindEvent(OnClick_Unmute);
@@ -35,8 +54,16 @@ public class AudioChatUserListing : UIBase
 
         SpeakerOffImage.enabled = false;
     }
-    
-    Image SpeakerOffImage
+
+    public Image VoiceOnImage
+    {
+        get
+        {
+            return GetUIComponent<Image>((int)Images.VoiceOnImage);
+        }
+    }
+
+    public Image SpeakerOffImage
     {
         get
         {
@@ -44,7 +71,7 @@ public class AudioChatUserListing : UIBase
         }
     }
 
-    Image SpeakerOnImage
+    public Image SpeakerOnImage
     {
         get
         {
@@ -53,8 +80,6 @@ public class AudioChatUserListing : UIBase
     }
 
 
-    // save current volume before muting.
-    float _previousVolume;
 
     public void OnClick_Mute(PointerEventData evData)
     {
@@ -91,7 +116,11 @@ public class AudioChatUserListing : UIBase
         }
         set
         {
-            GetUIComponent<Text>((int)Texts.PlayerNameText).text = value;
+            string text = value;
+            // if me, add (me) to the end.
+            if (IsMe) text = text + " (me)";
+            GetUIComponent<Text>((int)Texts.PlayerNameText).text = text;
+            
         }
     }
 
