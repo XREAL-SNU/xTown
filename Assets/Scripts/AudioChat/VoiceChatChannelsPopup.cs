@@ -34,8 +34,8 @@ public class VoiceChatChannelsPopup : UIPopup
         // tweening
         RectTransform panelTransfrom = transform.Find("Panel").GetComponent<RectTransform>();
         var y = panelTransfrom.anchoredPosition.y;
-        panelTransfrom.anchoredPosition = new Vector2(1467, y);
-        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(540, 0.3f)).SetEase(Ease.InCubic);
+        panelTransfrom.anchoredPosition = new Vector2(1200, y);
+        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(700, 0.3f)).SetEase(Ease.InCubic);
 
         Init();
     }
@@ -155,7 +155,7 @@ public class VoiceChatChannelsPopup : UIPopup
     {
         // DOtween
         RectTransform panelTransfrom = transform.Find("Panel").GetComponent<RectTransform>();
-        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(1467, 0.3f))
+        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(1200, 0.3f))
             .SetEase(Ease.OutCubic)
             .OnComplete(base.ClosePopup);
 
