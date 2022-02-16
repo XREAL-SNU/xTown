@@ -15,6 +15,19 @@ public class BoatSeat : MonoBehaviour
     private float _embarkRange = 10;
     private bool _isOccupied;
 
+    public bool IsOccupied
+    {
+        get => _isOccupied;
+        set
+        {
+            Debug.Log($"Boatseat/ spot#{_index} occuppied? {value}");
+            _isOccupied = value;
+        }
+    }
+
+
+    private int _index;
+    private Boat _boat;
     private void Start()
     {
         Debug.Log(transform.rotation.eulerAngles.y);
@@ -22,8 +35,8 @@ public class BoatSeat : MonoBehaviour
         _iconCanvas.seat = this;
         _iconCanvas.gameObject.SetActive(false);
 
-        // netcode
-        _view = GetComponent<PhotonView>();
+        _index = transform.GetSiblingIndex();
+        _boat = GetComponentInParent<Boat>();
     }
 
     public void OnMouseDown()
@@ -86,11 +99,17 @@ public class BoatSeat : MonoBehaviour
     private void Embark()
     {
         _isOccupied = true;
-        SyncIsOccupied(true);
+        // netcode
+        Boat boat = GetComponentInParent<Boat>();
+        boat.SyncIsOccupied(true, _index);
+        //
         _iconCanvas.Hide();
 
         GameObject player = PlayerManager.Players.LocalPlayerGo;
         player.transform.parent = gameObject.transform;
+        // netcode
+        boat.SyncEmbark(true, _index);
+        //
         player.transform.localPosition = Vector3.zero;
         player.transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
         player.GetComponent<ThirdPersonControllerMulti>().enabled = false;
@@ -103,9 +122,16 @@ public class BoatSeat : MonoBehaviour
     public void Disembark(Vector3 disembarkLocation)
     {
         _isOccupied = false;
+        // netcode
+        Boat boat = GetComponentInParent<Boat>();
+        boat.SyncIsOccupied(false, _index);
+        //
 
         GameObject player = PlayerManager.Players.LocalPlayerGo;
         player.transform.SetParent(null);
+        // netcode
+        boat.SyncEmbark(false, _index);
+        //
         player.GetComponent<ThirdPersonControllerMulti>().enabled = true;
         player.GetComponent<Animator>().SetBool("Sitting", false);
         Debug.Log(player.transform.parent);
@@ -115,12 +141,5 @@ public class BoatSeat : MonoBehaviour
         _buttonCanvas.Hide();
     }
 
-    #region NETCODE
 
-    PhotonView _view;
-    void SyncIsOccupied(bool isOccupied)
-    {
-        if(_view)
-    }
-    #endregion
 }
