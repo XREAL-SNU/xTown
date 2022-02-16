@@ -53,18 +53,19 @@ public class PlayerAvatar: MonoBehaviour
             return;
         }
 
+        
         // add gameObject to managed list
         RoomManager.Room.AddPlayerGameObject(PhotonView.OwnerActorNr, gameObject);
-
+        
         if (PhotonView.IsMine)
         {
-            //PlayerManager.Players.LocalPlayerGo = gameObject; moved to spawnCharacter Init line.
+            // if my character, fetch my persistent data.
             Appearance = PlayerManager.Players.LocalAvatarAppearance;
 
-            /* Test code
+            // apply once more.. redundant?
             Appearance.Apply(gameObject);
-            */ 
-            Debug.Log($"<color=red> PlayerAvatar/ setting my appearance: actor#{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
+            
+            Debug.Log($"<color=red> [view{PhotonView.ViewID}] PlayerAvatar/ setting my appearance: actor#{PhotonNetwork.LocalPlayer.ActorNumber} </color>");
             // automatic application? Appearance.Apply(PlayerManager.Players.LocalPlayerGo);
 
             // also sync for others (instantiation time)
@@ -74,19 +75,21 @@ public class PlayerAvatar: MonoBehaviour
             RoomManager.BindEvent(gameObject, SyncAvatarProperties, RoomManager.RoomEvent.PlayerJoined);
         }
         else
-        {   
+        {
             // if not mine, create blank appearance to be synced later.
-            if(Appearance is null) Appearance = new AvatarAppearanceNew(AvatarAppearanceNew.XRealSpaceSuitAppearanceDescriptor, gameObject);
-        }
 
-        if (Appearance is null) Debug.LogError("PlayerAvatar/ could not fetch or create appearance for this avatar");
+            if (Appearance is null)
+            {
+                Appearance = new AvatarAppearanceNew(AvatarAppearanceNew.XRealSpaceSuitAppearanceDescriptor, gameObject);
+            }
+            
+        }
     }
     
     ~PlayerAvatar()
     {
-        Debug.Log("PlayerAvatar/Destructor");
+        //Debug.Log("PlayerAvatar/Destructor");
     }
-
 
 
 
@@ -94,20 +97,24 @@ public class PlayerAvatar: MonoBehaviour
     // Photon Avatar Sync
     public void SyncAvatarProperties(PlayerInfo playerInfo)
     {
-        Debug.Log($"<color=blue> PlayerAvatar/Sending my avatar to {playerInfo.PlayerName} </color>");
+        Debug.Log($"<color=blue> PlayerAvatar/Sending my avatar with viewId {PhotonView.ViewID} to {playerInfo.PlayerName} </color>");
+
+        // call only on the newly joined player.
         SyncAvatarProperties(playerInfo.ActorNr);
     }
 
     public void SyncAvatarProperties(int actorNr = -1)
     {
         ObjectPartsInfo info = Appearance.Descriptor;
+        PhotonView photonView = GetComponent<PhotonView>();
         foreach (ObjectPart part in info.Parts)
         {
             GameObject go = Appearance.GetCustomPartGo(part.PartName);
-            Debug.Log($"<color=green> Sync apperance part {part.PartName} of player {PhotonView.OwnerActorNr} </color>");
-
+            //Debug.Log($"<color=green> Sync apperance part {part.PartName} of player {PhotonView.OwnerActorNr} </color>");
+            //_logger.Log($"<color=green> Sync apperance part {part.PartName} of player {PhotonView.OwnerActorNr} </color>");
             foreach (ObjectPartProperty prop in part.Properties)
             {
+                // call on everyone but me.
                 PhotonView.RPC("SetAndApplyObjectPartPropertyRPC", RpcTarget.Others, part.PartName, prop.PropertyName,
                     prop.PaletteName, prop.Pick, actorNr);
             }
@@ -124,20 +131,27 @@ public class PlayerAvatar: MonoBehaviour
         // if an actor number to execute the sync is specified, skip if I'm not that one.
         if (actorNr > 0 && PhotonNetwork.LocalPlayer.ActorNumber != actorNr) return;
 
+        PhotonView photonView = GetComponent<PhotonView>();
+
         // depending on timing, Appearance may be null at time of player join.
         if (Appearance is null)
         {
-            Debug.LogWarning("Appearance null at sync stage, creating new");
+            Debug.LogWarning("Appearance null at sync stage, creating new: ");
+            // create from default feature
             Appearance = new AvatarAppearanceNew(AvatarAppearanceNew.XRealSpaceSuitAppearanceDescriptor, gameObject);
         }
-
+        //debug
+        Debug.Log($"<color=green> sync sender {info.Sender.NickName} == owner {info.photonView.OwnerActorNr}, sender viewID {info.photonView.ViewID} == {photonView.ViewID}: {partName}'s {propName} = {palette}.{pick} </color>");
 
         GameObject partGO = Appearance.GetCustomPartGo(partName);
         ObjectPartProperty prop = Appearance.GetCustomPart(partName)[propName];
         prop = prop.SetProperty(palette, pick);
+        /*
         AvatarAppearanceNew.AppearancePropertyTypes type = (AvatarAppearanceNew.AppearancePropertyTypes)
             Enum.Parse(typeof(AvatarAppearanceNew.AppearancePropertyTypes), prop.PropertyType);
         Appearance.GetCustomPart(partName).SetProperty(propName, type, palette, pick);
+        */
+        // RPC called on each small part, so we apply one by one, not by Apperance.Apply(gameObject).
         Appearance.ApplyProperty(partGO, prop);
     }
 

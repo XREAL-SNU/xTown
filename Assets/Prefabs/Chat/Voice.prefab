@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6972155236296729783}
   - component: {fileID: 6972155236296729782}
   - component: {fileID: 6972155236296729802}
+  - component: {fileID: 505332388038039826}
   m_Layer: 0
   m_Name: Voice
   m_TagString: Untagged
@@ -50,11 +51,11 @@ MonoBehaviour:
   voiceDetection: 1
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
-  unityMicrophoneDevice: "\uB9C8\uC774\uD06C \uBC30\uC5F4 (\uC778\uD154\xAE \uC2A4\uB9C8\uD2B8
-    \uC0AC\uC6B4\uB4DC \uAE30\uC220)"
+  unityMicrophoneDevice: "\uB9C8\uC774\uD06C \uBC30\uC5F4 (\uB514\uC9C0\uD138 \uB9C8\uC774\uD06C\uC6A9
+    \uC778\uD154\xAE \uC2A4\uB9C8\uD2B8 \uC0AC\uC6B4\uB4DC \uAE30\uC220)"
   photonMicrophoneDeviceId: 0
   interestGroup: 0
-  debugEchoMode: 1
+  debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
   transmitEnabled: 1
@@ -151,3 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9f9281c8d387e4aaabcad061357518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnableVoiceOnJoin: 0
+--- !u!114 &505332388038039826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6972155236296729804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b377c79553624e42b92754f89ece8bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsVoiceOn: 1
