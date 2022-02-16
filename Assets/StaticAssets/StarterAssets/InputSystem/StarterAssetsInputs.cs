@@ -19,7 +19,7 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-		public void OnMove(InputValue value)
+        public void OnMove(InputValue value)
 		{
 			if (PlayerKeyboard.MovementPlayerKeyboard.KeyboardAvailable) MoveInput(value.Get<Vector2>());
 		}

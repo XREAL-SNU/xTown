@@ -32,10 +32,13 @@ public class CameraControl : MonoBehaviour
     private float _defaultY = 0.0f;
     private bool _alreadyFront;
     private CinemachinePOVExtension _fpExtension;
+    private Transform _mainCameraTransform;
+    CharacterController _playerController;
 
     private void Start()
     {
         if(CameraManager == null) CameraManager = FindObjectOfType<CamManager>();
+        _mainCameraTransform = Camera.main.transform;
 
         // Initial Rotation Speed
         // Edit Here
@@ -47,6 +50,7 @@ public class CameraControl : MonoBehaviour
         _player = PlayerManager.Players.LocalPlayerGo;
         _camTarget = _player.GetComponent<ThirdPersonControllerMulti>().CinemachineCameraTarget;
         _input = _player.GetComponent<ThirdPersonControllerMulti>().GetComponent<StarterAssetsInputs>();
+        _playerController = _player.GetComponent<CharacterController>();
         _useMouseToRotateTp = false;
         _useMouseToRotateFp = false;
         _firstPersonCam = CameraManager.FirstPersonCamObj;
@@ -99,6 +103,8 @@ public class CameraControl : MonoBehaviour
                 {
                     /*_useMouseToRotateFp = true;*/
                     _fpExtension.enabled = true;
+                    _playerController.attachedRigidbody.transform.rotation = 
+                        Quaternion.Euler(_player.transform.eulerAngles.x, _mainCameraTransform.eulerAngles.y, _player.transform.eulerAngles.z);
                 }
             }
             else _fpExtension.enabled = false;
