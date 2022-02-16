@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Portal : MonoBehaviourPunCallbacks
 {
     public string SceneName;
+    private bool _portalConnect = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -16,16 +17,20 @@ public class Portal : MonoBehaviourPunCallbacks
             PlayerPrefs.SetString("PastScene", "MainRoom");
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.JoinLobby();
+            _portalConnect = true;
         }
     }
 
     public override void OnJoinedLobby()
     {
-        MainCanvases.Instance.gameObject.SetActive(false);
-        RoomOptions options = new RoomOptions();
-        options.BroadcastPropsChangeToAll = true;
-        options.MaxPlayers = 10;
-        PhotonNetwork.JoinOrCreateRoom("Whiteboard", options, TypedLobby.Default);
+        if(_portalConnect)
+        {
+            MainCanvases.Instance.gameObject.SetActive(false);
+            RoomOptions options = new RoomOptions();
+            options.BroadcastPropsChangeToAll = true;
+            options.MaxPlayers = 10;
+            PhotonNetwork.JoinOrCreateRoom(SceneName, options, TypedLobby.Default);
+        }
     }
 
     public override void OnJoinedRoom()
@@ -35,8 +40,11 @@ public class Portal : MonoBehaviourPunCallbacks
     }
     public override void OnCreatedRoom()
     {
-        Debug.Log("Portal/Created Whiteboard Room!!!");
-        PhotonNetwork.LoadLevel("Whiteboard");
+        if(_portalConnect)
+        {
+            Debug.Log("Portal/Created Whiteboard Room!!!");
+            PhotonNetwork.LoadLevel(SceneName);
+        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

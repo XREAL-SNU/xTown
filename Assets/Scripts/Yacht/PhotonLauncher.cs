@@ -13,9 +13,17 @@ namespace XReal.XTown.Yacht
 		/* public fields */
 		[SerializeField]
 		private GameObject _joinPanel;
+		[SerializeField]
+		private GameObject _playPanel;
 
 		[SerializeField]
 		private byte _maxPlayersPerRoom = 2;
+		[SerializeField]
+		private Text _playerNumText;
+		private PhotonView _view;
+		private int _currentPlayers = 0;
+		private int _currentRoomNum = 0;
+		private string _sceneName = "Yacht";
 
 		/* private fields */
 
@@ -30,6 +38,7 @@ namespace XReal.XTown.Yacht
 		{
 			_joinPanel.SetActive(false);
 			PhotonNetwork.AutomaticallySyncScene = true;
+			_view = GetComponent<PhotonView>();
 		}
 
 
@@ -37,10 +46,13 @@ namespace XReal.XTown.Yacht
 
 		public void Connect()
 		{
-
 			isConnecting = true;
 			_joinPanel.SetActive(false);
-
+			_playPanel.SetActive(true);
+			PlayerPrefs.SetString("PastScene", "MainRoom");
+            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.JoinLobby();
+			_view.RPC("addPlayers",RpcTarget.All);
 			/*
 			if (PhotonNetwork.IsConnected)
 			{
@@ -54,13 +66,14 @@ namespace XReal.XTown.Yacht
 				PhotonNetwork.GameVersion = _gameVersion;
 			}
 			*/
+
 		}
 
 
 		/* Yacht scene specific funcs */
 		void Update()
         {
-			if (Input.GetMouseButtonDown(0) && GameManager.turnCount <= 3)
+			if (Input.GetMouseButtonDown(0))
 			{
 				RaycastHit hit;
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -70,6 +83,7 @@ namespace XReal.XTown.Yacht
 					if (!_joinPanel.activeInHierarchy) _joinPanel.SetActive(true);
 				}
 			}
+			_playerNumText.text = _currentPlayers+"/2 players waiting...";
 		}
 		/* Pun Callbacks */
 
@@ -81,25 +95,42 @@ namespace XReal.XTown.Yacht
 				Debug.Log("Yacht/PhotonLauncher: OnConnectedToMaster");
 				PhotonNetwork.JoinRandomRoom();
 			}
-		}
+		}*/
 
 		
 		public override void OnJoinedRoom()
 		{
-			Debug.Log("Yacht/PhotonLauncher: Joined Room");
-
-			if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+			if(isConnecting)
 			{
-				Debug.Log("Yacht/PhotonLauncher: waiting for other player");
-				PhotonNetwork.LoadLevel("Yacht");
-            }
-            else
-            {
-				Debug.Log("Yacht/PhotonLauncher: you are the second player");
-            }
+				Debug.Log("Yacht/PhotonLauncher: Joined Room");
+				if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+				{
+					Debug.Log("Yacht/PhotonLauncher: waiting for other player");
+					PhotonNetwork.LoadLevel("Yacht");
+            	}
+            	else
+            	{
+					Debug.Log("Yacht/PhotonLauncher: you are the second player");
+            	}
+			}
+		}
+		
+		public override void OnJoinedLobby()
+		{
+			if(_currentPlayers%2 == 1)
+			{
+				RoomOptions options = new RoomOptions();
+        		options.BroadcastPropsChangeToAll = true;
+        		options.MaxPlayers = 2;
+        		PhotonNetwork.JoinOrCreateRoom(_sceneName+_currentRoomNum.ToString(), options, TypedLobby.Default);
+			}
+			else if(_currentPlayers%2 == 0)
+			{
+				PhotonNetwork.JoinRoom(_sceneName+_currentRoomNum.ToString());
+			}
 		}
 
-
+		/*
 		public override void OnJoinRandomFailed(short returnCode, string message)
 		{
 			Debug.Log("Yacht/PhotonLauncher: OnJoinRandomFailed");
@@ -116,6 +147,12 @@ namespace XReal.XTown.Yacht
 		}
 
 		*/
+		[PunRPC]
+		void addPlayers()
+		{
+			_currentPlayers = _currentPlayers/2;
+			++_currentPlayers;
+		}
 	}
 
 
