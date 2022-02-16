@@ -78,7 +78,7 @@ namespace XReal.XTown.Yacht
 
         public override void OnLeftRoom()
         {
-            if(_isYachtLeaving)
+            if(_isYachtLeaving && !PhotonNetwork.InLobby)
             {
                 Debug.Log("NetworkManager/YachtLeaved");
                 PhotonNetwork.JoinLobby();
@@ -87,7 +87,7 @@ namespace XReal.XTown.Yacht
 
         public override void OnJoinedLobby()
         {
-            if(_isYachtLeaving)
+            /*if (_isYachtLeaving)
             {
                 Debug.Log("NetworkManager/OnJoinedLobby");
                 RoomOptions options = new RoomOptions();
@@ -95,14 +95,16 @@ namespace XReal.XTown.Yacht
                 options.MaxPlayers = 20;
                 options.EmptyRoomTtl = 20000;
                 options.PlayerTtl = 30000;
-                PhotonNetwork.JoinOrCreateRoom("MainWorld",options, TypedLobby.Default);
+                //PhotonNetwork.JoinOrCreateRoom("MainWorld",options, TypedLobby.Default);
+                //PhotonNetwork.JoinRoom("MainWorld");
             }
+            else return;*/
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             base.OnJoinRoomFailed(returnCode, message);
         }
-    public override void OnCreateRoomFailed(short returnCode, string message)
+        public override void OnCreateRoomFailed(short returnCode, string message)
         {
             base.OnCreateRoomFailed(returnCode, message);
         }
@@ -126,18 +128,6 @@ namespace XReal.XTown.Yacht
                     // only second player will start the game
                     BeginTurn();
                 }
-            }
-            else if(_isYachtLeaving)
-            {
-                Debug.Log("YachtLeave / Joined MainWorld!!!");
-            }
-        }
-        public override void OnCreatedRoom()
-        {
-            if(_isYachtLeaving)
-            {
-                Debug.Log("WhiteboardLeave / Created MainWorld!!!");
-                PhotonNetwork.LoadLevel("MainRoom");
             }
         }
         /// turn passing methods

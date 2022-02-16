@@ -93,19 +93,21 @@ namespace XReal.XTown.Yacht
 		}*/
 		public override void OnJoinedLobby()
 		{
-			if(isYachtConnecting){
-			//if(_currentPlayers%2 == 1)
-			//{
+			if (isYachtConnecting)
+			{
+				//if(_currentPlayers%2 == 1)
+				//{
 				RoomOptions options = new RoomOptions();
-        		options.BroadcastPropsChangeToAll = true;
-        		options.MaxPlayers = 2;
-        		PhotonNetwork.JoinOrCreateRoom(_sceneName, options, TypedLobby.Default);
-			//}
-			//else if(_currentPlayers%2 == 0)
-			//{
-			//	PhotonNetwork.JoinRoom(_sceneName);
-			//}
+				options.BroadcastPropsChangeToAll = true;
+				options.MaxPlayers = 2;
+				PhotonNetwork.JoinOrCreateRoom(_sceneName, options, TypedLobby.Default);
+				//}
+				//else if(_currentPlayers%2 == 0)
+				//{
+				//	PhotonNetwork.JoinRoom(_sceneName);
+				//}
 			}
+			else return;
 		}
 		public override void OnJoinedRoom()
 		{

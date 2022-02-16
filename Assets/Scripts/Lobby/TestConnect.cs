@@ -17,6 +17,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     private List<RoomListing> _listings = new List<RoomListing>();
 
     public static TestConnect Instance = null;
+    public bool _isLeavingYacht = false;
 
     private void Awake()
     {
@@ -46,8 +47,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("TestConnect/Connected to Master.", this);
-
-        PhotonNetwork.JoinLobby(); // �����ϰ� �ٷ� �κ� join 
+        if (!PhotonNetwork.InLobby) PhotonNetwork.JoinLobby();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -65,6 +65,16 @@ public class TestConnect : MonoBehaviourPunCallbacks
         Debug.Log("TestConnect/Player Joined Lobby");
         RoomsCanvases.Instance.LoadingCanvas.Hide();
         RoomsCanvases.Instance.PlayerNameInputCanvas.Show();
+        if(_isLeavingYacht)
+        {
+            Debug.Log("isLeaving");
+            RoomOptions options = new RoomOptions();
+            options.BroadcastPropsChangeToAll = true;
+            options.MaxPlayers = 20;
+            options.EmptyRoomTtl = 20000;
+            options.PlayerTtl = 30000;
+            PhotonNetwork.JoinOrCreateRoom("MainWorld", options, TypedLobby.Default);
+        }
     }
 
     public override void OnJoinedRoom()
@@ -74,8 +84,16 @@ public class TestConnect : MonoBehaviourPunCallbacks
             Debug.Log("Player Joined Room, room_name:" + PhotonNetwork.CurrentRoom.Name + ", actor number:" + PhotonNetwork.LocalPlayer.ActorNumber);
             //SpawnCharacter.Instance.PlayerControl.enabled = false;
             // activate the current room canvases
+            if(PhotonNetwork.CurrentRoom.Name.Contains("Yacht"))
+            {
+                _isLeavingYacht = true;
+            }
             RoomsCanvases.Instance.CurrentRoomCanvas.Show();
             RoomsCanvases.Instance.CurrentRoomCanvas.LinkedSceneName = RoomsCanvases.Instance.CreateOrJoinRoomCanvas.LinkedSceneName;
+        }
+        else
+        {
+            Debug.Log("TestConeect/PlayerJoined MainWorld");
         }
     }
 
@@ -87,7 +105,7 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("Player Left Room");
-        PhotonNetwork.JoinLobby();
+        if(!PhotonNetwork.InLobby) PhotonNetwork.JoinLobby();
         // loading the default scene.
         // PhotonNetwork.LoadLevel("MainRoom");
 
