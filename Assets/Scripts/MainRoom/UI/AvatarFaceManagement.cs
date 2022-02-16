@@ -51,8 +51,7 @@ public class AvatarFaceManagement : MonoBehaviour
             if (_avatarFaceList[i].name.Equals("happy")) DefaultIndex = i;
         }
 
-        s_avatarTextureList = _avatarTextureList;
-        s_favList = _favList;
+        UpdateLists();
     }
 
     // Invoke this Function when Button in Viewport is Clicked
@@ -87,6 +86,8 @@ public class AvatarFaceManagement : MonoBehaviour
     // Invoke this Function when a FaceButton is Currently Selected & Favorites Face Button is Clicked
     public void AddToFavorites(AvatarFaceButton avatarFaceButton)
     {
+        if (_currentlySelectedButton == null) return;
+
         int index = IsAdded(avatarFaceButton);
 
         // If a button is selected and is NOT added to favorites
@@ -105,7 +106,7 @@ public class AvatarFaceManagement : MonoBehaviour
             DeselectCurrentlySelected();
         }
 
-        s_favList = _favList;
+        UpdateLists();
     }
 
     // Checks whether input parameter is added to Favorites List.
@@ -132,5 +133,11 @@ public class AvatarFaceManagement : MonoBehaviour
         
         button1.SetButtonText(_currentlySelectedButton.GetButtonText());
         button1.SetButtonImage(_currentlySelectedButton.GetButtonImage());
+    }
+
+    void UpdateLists()
+    {
+        s_avatarTextureList = _avatarTextureList;
+        s_favList = _favList;
     }
 }
