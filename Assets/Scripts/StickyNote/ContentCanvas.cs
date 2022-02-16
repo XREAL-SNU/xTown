@@ -17,12 +17,12 @@ public class ContentCanvas : MonoBehaviour
     [SerializeField]
     private Image _contentImage;
     [SerializeField]
-    private TMP_Text _contentText;
-    public TMP_Text ContentText { get { return _contentText; } }
+    private Text _contentText;
+    public Text ContentText { get { return _contentText; } }
     [SerializeField]
     private RectTransform _rectTransform;
     [SerializeField]
-    private BoxCollider2D _collider;
+    private BoxCollider _collider;
     [SerializeField]
     private Color[] _backgroundColors;
     [SerializeField]
@@ -41,9 +41,9 @@ public class ContentCanvas : MonoBehaviour
     private StickyNote _stickyNote;
 
     // ������ ���� ���� ������
-    private float _scalingSpeed = 0.05f;
-    private float _minScale = 1f;
-    private float _maxScale = 10f;
+    private float _scalingSpeed = 15f;
+    private float _minScale = 200f;
+    private float _maxScale = 2000f;
     private float _newScaleX = 0f;
     private float _newScaleY = 0f;
 
@@ -54,10 +54,10 @@ public class ContentCanvas : MonoBehaviour
     // private int _maxRotation = 60;
 
     // ��Ʈ ũ�� ���� ���� ������
-    private float _fontSizingSpeed = 0.02f;
-    private float _minFontSize = 0.15f;
-    private float _maxFontSize = 0.6f;
-    private float _newFontSize = 0f;
+    private int _fontSizingSpeed = 4;
+    private int _minFontSize = 30;
+    private int _maxFontSize = 120;
+    private int _newFontSize = 0;
 
     // ��ƼŰ��Ʈ ���� ���� ����
     private int _colorIndex = 0;
@@ -109,7 +109,7 @@ public class ContentCanvas : MonoBehaviour
         _exportToTxtIcon.color = _backgroundColors[GetNextColorIndex(_colorIndex)];
         _exportToTxtIcon.DOFade(0, 0);
 
-        _collider.size = new Vector2(_rectTransform.rect.width, _rectTransform.rect.height);
+        _collider.size = new Vector2(_rectTransform.rect.width * 0.005f, _rectTransform.rect.height * 0.005f);
         _hovering = false;
         _view = GetComponent<PhotonView>();
         _transformView = GetComponent<PhotonTransformView>();
@@ -139,18 +139,18 @@ public class ContentCanvas : MonoBehaviour
         _newScaleX = Mathf.Clamp(_newScaleX, _minScale, _maxScale);
         _newScaleY = Mathf.Clamp(_newScaleY, _minScale, _maxScale);
         _rectTransform.sizeDelta = new Vector2(_newScaleX, _newScaleY);
-        _collider.size = new Vector2(_rectTransform.rect.width, _rectTransform.rect.height);
+        _collider.size = new Vector3(_rectTransform.rect.width * 0.005f, _rectTransform.rect.height * 0.005f, 0.01f);
     }
     [PunRPC]
     public void Rotate(Vector2 delta)
     {
         if (delta.x > _rotationSensitivity)
         {
-            _rectTransform.eulerAngles = new Vector3(_rectTransform.eulerAngles.x, _rectTransform.eulerAngles.y - _rotationAngle, _rectTransform.eulerAngles.z);
+            _stickyNote.transform.eulerAngles = new Vector3(0, _stickyNote.transform.eulerAngles.y - _rotationAngle, 0);
         }
         else if (delta.x < -1 * _rotationSensitivity)
         {
-            _rectTransform.eulerAngles = new Vector3(_rectTransform.eulerAngles.x, _rectTransform.eulerAngles.y + _rotationAngle, _rectTransform.eulerAngles.z);
+            _stickyNote.transform.eulerAngles = new Vector3(0, _stickyNote.transform.eulerAngles.y + _rotationAngle, 0);
         }
 
         // x�� ȸ���� ��¦ ������ �־ ����
