@@ -8,7 +8,10 @@ public class BoatSeat : MonoBehaviour
 {
     [SerializeField]
     private BoatIconCanvas _iconCanvas;
+    [SerializeField]
+    private BoatButtonCanvas _buttonCanvas;
 
+    private float _embarkRange = 10;
     private bool _isOccupied;
 
     private void Start()
@@ -26,12 +29,31 @@ public class BoatSeat : MonoBehaviour
             return;
         }
 
+        GameObject player = PlayerManager.Players.LocalPlayerGo;
+
+        // 이미 배에 타고있으면 다른 자리에 못 탐. 내리고 타야 함
+        if (player.transform.parent != null)
+        {
+            return;
+        }
+
+        // 배와 플레이어 사이의 거리가 일정 거리 안에 있어야 배에 탈 수 있음
+        if (InsideEmbarkRange() == false)
+        {
+            return;
+        }
+
         Embark();
     }
 
     public void OnMouseEnter()
     {
         if (_isOccupied)
+        {
+            return;
+        }
+
+        if (InsideEmbarkRange() == false)
         {
             return;
         }
@@ -49,6 +71,14 @@ public class BoatSeat : MonoBehaviour
         _iconCanvas.Hide();
     }
 
+    private bool InsideEmbarkRange()
+    {
+        GameObject player = PlayerManager.Players.LocalPlayerGo;
+        bool b = (player.transform.position - transform.position).magnitude < _embarkRange;
+
+        return b;
+    }
+
     private void Embark()
     {
         _isOccupied = true;
@@ -58,11 +88,21 @@ public class BoatSeat : MonoBehaviour
         player.transform.parent = gameObject.transform;
         player.transform.localPosition = Vector3.zero;
         player.transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
-        PlayerManager.Players.LocalPlayerGo.GetComponent<ThirdPersonControllerMulti>().enabled = false;
+        player.GetComponent<ThirdPersonControllerMulti>().enabled = false;
+        player.GetComponent<Animator>().SetBool("Sitting", true);
+
+        _buttonCanvas.Show();
     }
 
     public void Disembark()
     {
-        _isOccupied = true;
+        _isOccupied = false;
+
+        GameObject player = PlayerManager.Players.LocalPlayerGo;
+        player.transform.SetParent(null);
+        player.GetComponent<ThirdPersonControllerMulti>().enabled = true;
+        player.GetComponent<Animator>().SetBool("Sitting", false);
+
+        _buttonCanvas.Hide();
     }
 }
