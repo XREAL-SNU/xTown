@@ -67,6 +67,7 @@ public class CustomizingButtonGroup : UIBase
                     case AvatarAppearanceNew.AppearancePropertyTypes.Metallic:
                     case AvatarAppearanceNew.AppearancePropertyTypes.Emission:
                     case AvatarAppearanceNew.AppearancePropertyTypes.Transparency:
+                    case AvatarAppearanceNew.AppearancePropertyTypes.Smoothness:
                         SetColGrid();
                         componentCount = LinearPalette.GetXrealPalette(paletteName).ValuesSet.Length;
                         foreach (float val in LinearPalette.GetXrealPalette(paletteName).ValuesSet)

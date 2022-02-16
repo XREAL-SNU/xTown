@@ -41,7 +41,6 @@ public class CustomizingButton : UIBase
         Bind<GameObject>(typeof(GameObjects));
 
         GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().text = Rename(_colorName);
-        GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().fontSize = 20;
 
         GetUIComponent<GameObject>((int)GameObjects.ButtonImage).gameObject.BindEvent(OnButtonSelect);
         GetUIComponent<GameObject>((int)GameObjects.ButtonImage).gameObject.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
@@ -53,12 +52,14 @@ public class CustomizingButton : UIBase
         {
             case AvatarAppearanceNew.AppearancePropertyTypes.BaseColor:
                 GetUIComponent<GameObject>((int)GameObjects.ButtonImage).GetComponent<Image>().color = ColorPalette.GetXrealPalette(_paletteName)[Pick].ToColor();
+                GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().fontSize = 20;
                 break;
             case AvatarAppearanceNew.AppearancePropertyTypes.Metallic:
             case AvatarAppearanceNew.AppearancePropertyTypes.Emission:
             case AvatarAppearanceNew.AppearancePropertyTypes.Transparency:
+            case AvatarAppearanceNew.AppearancePropertyTypes.Smoothness:
                 GetUIComponent<GameObject>((int)GameObjects.ButtonImage).GetComponent<Image>().color = new XTownColor(LinearPalette.GetXrealPalette(_paletteName)[Pick]).ToColor();
-                GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().fontSize = 20;
+                GetUIComponent<GameObject>((int)GameObjects.ButtonText).GetComponent<Text>().fontSize = 25;
                 break;
         }
 

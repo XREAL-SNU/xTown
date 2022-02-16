@@ -69,7 +69,7 @@ public class LinearPalette
     public string PaletteName;
     public float[] ValuesSet;
 
-    public static LinearPalette DefaultLinearPalette = new LinearPalette("DefaultLinearPalette", new float[] { 0.0f, 0.3f, 0.7f, 1.0f });
+    public static LinearPalette DefaultLinearPalette = new LinearPalette("DefaultLinearPalette", new float[] { 1.0f, 0.7f, 0.3f, 0.0f });
 
     static List<LinearPalette> XRealPalettes = new List<LinearPalette> { DefaultLinearPalette };
 
