@@ -9,14 +9,18 @@ public class CinemachinePOVExtension : CinemachineExtension
     [SerializeField] float verticalSpeed = 10f;
     [SerializeField] float clampAngle = 60f;
 
-    private FPManager fpManager;
-    private Vector3 initRotation;
+    private FPManager _fpManager;
+    private Camera _mainCamera;
+    private Vector3 _initRotation;
 
     protected override void Awake()
     {
-        fpManager = FPManager.Instance;
+        _fpManager = FPManager.Instance;
 
         base.Awake();
+        _mainCamera = Camera.main;
+        _initRotation = _mainCamera.transform.localRotation.eulerAngles;
+        this.enabled = false;
     }
 
     protected override void PostPipelineStageCallback(CinemachineVirtualCameraBase vcam, CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
@@ -25,12 +29,12 @@ public class CinemachinePOVExtension : CinemachineExtension
         {
             if(stage == CinemachineCore.Stage.Aim)
             {
-                if (initRotation == null) initRotation = transform.localRotation.eulerAngles;
-                Vector2 deltaInput = fpManager.GetMouseDelta();
-                initRotation.x += deltaInput.x * verticalSpeed * Time.deltaTime;
-                initRotation.y += -deltaInput.y * horizontalSpeed * Time.deltaTime;
-                initRotation.y = Mathf.Clamp(initRotation.y, -clampAngle, clampAngle);
-                state.RawOrientation = Quaternion.Euler(initRotation.y, initRotation.x, 0f);
+                if (_initRotation == null) _initRotation = transform.localRotation.eulerAngles;
+                Vector2 deltaInput = _fpManager.GetMouseDelta();
+                _initRotation.x += deltaInput.x * verticalSpeed * Time.deltaTime;
+                _initRotation.y += -deltaInput.y * horizontalSpeed * Time.deltaTime;
+                _initRotation.y = Mathf.Clamp(_initRotation.y, -clampAngle, clampAngle);
+                state.RawOrientation = Quaternion.Euler(_initRotation.y, _initRotation.x, 0f);
             }
         }
     }
