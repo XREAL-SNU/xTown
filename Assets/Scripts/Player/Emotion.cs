@@ -27,8 +27,8 @@ public class Emotion : MonoBehaviour
     private void Start()
     {
         EmoticonMenu.gameObject.SetActive(false);
-        //_player = GameObject.FindWithTag("Player").transform;
         _player = PlayerManager.Players.LocalPlayerGo.transform;
+        //_player = PlayerManager.Players.LocalPlayerGo.transform;
         _avatarFaceControl = _player.GetComponentInChildren<AvatarFaceControl>();
         _view = GetComponent<PhotonView>();
         _camManager = GameObject.Find("CamManager");
@@ -39,8 +39,13 @@ public class Emotion : MonoBehaviour
     private void Update()
     {
         
+        if (_view is null || !_view.IsMine)
+        {
+            //Debug.Log("View Error");
+            // return;
+        }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.EmotionToggle))
         {
             _faceList = Face.GetComponent<AvatarFaceManagement>()._favList;
             for(int i = 0;i<4;i++){
@@ -57,9 +62,9 @@ public class Emotion : MonoBehaviour
             }else{
                 if(_camManager.GetComponent<CamManager>().IsCurrentFp){
                     _faceCam.gameObject.SetActive(false);
-                }else{
-                    _characterCam.SetFront();
                 }
+                _characterCam.SetFront();
+            
                 EmoticonMenu.gameObject.SetActive(false);
                 _isMenuActive = false;
             }
@@ -74,20 +79,21 @@ public class Emotion : MonoBehaviour
                 EmoticonMenu.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(1400,400);
             }
             
-            if(Input.GetKeyDown(KeyCode.Alpha1)){
+            if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion1)){
                 MenuSlice[0].color = Color.black;
                 _currentMenu = 0;
-            } else if(Input.GetKeyDown(KeyCode.Alpha2)){
+            } else if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion2)){
                 MenuSlice[1].color = Color.black;
                 _currentMenu = 1;
-            } else if(Input.GetKeyDown(KeyCode.Alpha3)){
+            } else if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion3)){
                 MenuSlice[2].color = Color.black;
                 _currentMenu = 2;
-            } else if(Input.GetKeyDown(KeyCode.Alpha4)){
+            } else if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion4)){
                 MenuSlice[3].color = Color.black;
                 _currentMenu = 3;
             }
-            if(Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3) || Input.GetKeyUp(KeyCode.Alpha4)){       
+            if(PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion1) || PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion2) || PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion3) || PlayerKeyboard.KeyboardInput("Emotion", KeyboardInput.Emotion4))
+            {       
                 _isSelected = true;
             }
 
@@ -98,12 +104,24 @@ public class Emotion : MonoBehaviour
                 EmoticonSelect(_currentMenu);
             }
         }
-        if(Input.GetKeyDown(KeyCode.G) && _camManager.GetComponent<CamManager>().IsCurrentFp){
-            _faceCam.gameObject.SetActive(false);
+
+        if(PlayerKeyboard.KeyboardInput("Camera", KeyboardInput.CameraViewChange)){
+            if (!_camManager.GetComponent<CamManager>().IsCurrentFp && _isMenuActive)
+            {
+                _faceCam.gameObject.SetActive(true);
+            }
+            else
+            {
+                _faceCam.gameObject.SetActive(false);
+            }
         }
     }
+    
     public void EmoticonSelect(int num){
         // if coroutine exists stop it and run new coroutine
+        if(_camManager.GetComponent<CamManager>().IsCurrentFp){
+            _characterCam.SetFront();
+        }
         if(_crRunning){
             StopCoroutine(_coroutine);
         }
@@ -121,8 +139,6 @@ public class Emotion : MonoBehaviour
     // {
     //     StartCoroutine(EmoticonShow(emojiId));
     // }
-
-
 
     IEnumerator ChangeFace(int faceIndex)
     {

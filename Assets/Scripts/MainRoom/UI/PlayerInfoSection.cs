@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlayerInfoSection : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text _nicknameText;
     [SerializeField]
-    private TMP_Text _teamText;
+    private Text _teamText;
     [SerializeField]
-    private TMP_Text _fowText;
+    private Text _fowText;
     [SerializeField]
-    private TMP_Text _introText;
+    private Text _introText;
     [SerializeField]
-    private TMP_Text _contactText;
+    private Text _contactText;
 
     public void Initialize(string[] playerInfoData)
     {

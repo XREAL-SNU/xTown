@@ -34,8 +34,8 @@ public class VoiceChatChannelsPopup : UIPopup
         // tweening
         RectTransform panelTransfrom = transform.Find("Panel").GetComponent<RectTransform>();
         var y = panelTransfrom.anchoredPosition.y;
-        panelTransfrom.anchoredPosition = new Vector2(1260, y);
-        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(630, 0.3f)).SetEase(Ease.InCubic);
+        panelTransfrom.anchoredPosition = new Vector2(1200, y);
+        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(700, 0.3f)).SetEase(Ease.InCubic);
 
         Init();
     }
@@ -67,6 +67,36 @@ public class VoiceChatChannelsPopup : UIPopup
                 AddItem(info);
             }
         });
+
+        // bind player voice changed event
+        Voice.VoiceChat.AddListener(OnPlayerVoiceChanged_UpdateList);
+    }
+
+    // player voice event callback
+    public void OnPlayerVoiceChanged_UpdateList(int actorNr, bool state)
+    {
+        // if not listening return
+        if (!gameObject.activeInHierarchy) return;
+
+        Debug.Log($"ListPopup/ OnPlayerVoiceChanged event: {actorNr} state {state}");
+        bool existInList = false;
+        AudioChatUserListing[] list = GetComponentsInChildren<AudioChatUserListing>();
+        foreach(AudioChatUserListing listing in list)
+        {
+            if (listing.ActorNr != actorNr) continue;
+            Debug.Log($"Listing found {actorNr} event state {state}");
+            if (!state) listing.Remove();
+            existInList = true;
+        }
+        if (!existInList && state)
+        {
+            Debug.Log($"Listing NOT found {actorNr}, adding!");
+
+            PlayerInfo info = new PlayerInfo();
+            info.ActorNr = actorNr;
+            info.PlayerName = PhotonNetwork.CurrentRoom.GetPlayer(actorNr).NickName;
+            AddItem(info);
+        }
     }
 
     void AddItem(string name)
@@ -87,6 +117,18 @@ public class VoiceChatChannelsPopup : UIPopup
 
         listing.PlayerNameText = info.PlayerName;
         listing.ActorNr = info.ActorNr;
+        // remember and set voice state
+        PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(info.ActorNr);
+        if (!listing.IsMe && voice.AudioSourceMuted)
+        {
+            listing.SpeakerOffImage.enabled = true;
+            listing.SpeakerOnImage.enabled = false;
+        }
+        else if(!listing.IsMe)
+        {
+            listing.SpeakerOnImage.enabled = true;
+            listing.SpeakerOffImage.enabled = false;
+        }
     }
 
     void ClearList()
@@ -113,9 +155,10 @@ public class VoiceChatChannelsPopup : UIPopup
     {
         // DOtween
         RectTransform panelTransfrom = transform.Find("Panel").GetComponent<RectTransform>();
-        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(1260, 0.3f))
+        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(1200, 0.3f))
             .SetEase(Ease.OutCubic)
             .OnComplete(base.ClosePopup);
+
     }
 
     public void OnClick_Close(PointerEventData data)
@@ -124,6 +167,10 @@ public class VoiceChatChannelsPopup : UIPopup
         ClosePopup();
     }
 
+    private void OnDestroy()
+    {
+        Voice.VoiceChat.RemoveListener(OnPlayerVoiceChanged_UpdateList);
 
+    }
 }
 
