@@ -38,6 +38,8 @@ public class DoubleClick : MonoBehaviour, IPointerClickHandler
                 {
                     ChatPanel.gameObject.SetActive(true);
                     ChannelPanel.gameObject.SetActive(false);
+                    GameObject XbuttonRegion = GameObject.Find("XbuttonRegion");
+                    XbuttonRegion.transform.SetAsFirstSibling();
                     Debug.Log(ChatPanel.gameObject.activeSelf);
                 }
             }
