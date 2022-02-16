@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,5 +77,22 @@ namespace XReal.XTown.VoiceChat
             MyVoice.SetVoiceState(false);
         }
 
+
+        // events
+        public Action<int, bool> OnPlayerVoiceChangedHandler = null;
+
+        public void OnPlayerVoiceChanged(int actorNr, bool state)
+        {
+            if (OnPlayerVoiceChangedHandler != null)
+            {
+                OnPlayerVoiceChangedHandler.Invoke(actorNr, state);
+            }
+        }
+
+        public void AddListener(Action<int, bool> action)
+        {
+            OnPlayerVoiceChangedHandler -= action;
+            OnPlayerVoiceChangedHandler += action;
+        }
     }
 }

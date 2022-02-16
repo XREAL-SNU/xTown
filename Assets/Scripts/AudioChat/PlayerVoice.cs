@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -16,7 +17,6 @@ namespace XReal.XTown.VoiceChat{
         AudioSource _audioSource;
 
         public bool IsVoiceOn;
-
 
         void Start()
         {
@@ -48,7 +48,7 @@ namespace XReal.XTown.VoiceChat{
             set
             {
 
-                Debug.Log($"audio muted: {_view.Owner.NickName}");
+                Debug.Log($"audio muted: {_view.Owner.NickName} to {value}");
                 _audioSource.mute = value;
             }
         }
@@ -73,7 +73,8 @@ namespace XReal.XTown.VoiceChat{
             }
         }
 
-        // Room events
+
+        // bound to room event,initializes other player's voice on join.
         public void OnPlayerJoined_SetPlayerVoice(PlayerInfo info)
         {
             Debug.Log($"PlayerVoice/ On player {info.PlayerName} joined");
@@ -83,9 +84,12 @@ namespace XReal.XTown.VoiceChat{
         // Netcode
         public void SetVoiceState(bool state, int actorNr = -1)
         {
-            IsVoiceOn = state;
             // _view may be null depending on timing of call
             if (_view is null) _view = GetComponent<PhotonView>();
+
+            IsVoiceOn = state;
+            Voice.VoiceChat.OnPlayerVoiceChanged(_view.OwnerActorNr, state);
+
             if (_view.IsMine) _view.RPC("SyncVoiceStateRPC", RpcTarget.Others, state, actorNr);
         }
 
@@ -99,6 +103,9 @@ namespace XReal.XTown.VoiceChat{
             }
             Debug.Log("SyncPlayerVoice RPC " + state);
             IsVoiceOn = state;
+
+            Voice.VoiceChat.OnPlayerVoiceChanged(GetComponent<PhotonView>().Owner.ActorNumber, IsVoiceOn);
+
         }
 
 

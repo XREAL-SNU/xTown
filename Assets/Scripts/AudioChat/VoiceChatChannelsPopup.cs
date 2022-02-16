@@ -67,6 +67,33 @@ public class VoiceChatChannelsPopup : UIPopup
                 AddItem(info);
             }
         });
+
+        // bind player voice changed event
+        Voice.VoiceChat.AddListener(OnPlayerVoiceChanged_UpdateList);
+    }
+
+    public void OnPlayerVoiceChanged_UpdateList(int actorNr, bool state)
+    {
+        // if not my event return
+        Debug.Log($"ListPopup/ OnPlayerVoiceChanged event: {actorNr} state {state}");
+        bool existInList = false;
+        AudioChatUserListing[] list = GetComponentsInChildren<AudioChatUserListing>();
+        foreach(AudioChatUserListing listing in list)
+        {
+            if (listing.ActorNr != actorNr) continue;
+            Debug.Log($"Listing found {actorNr} event state {state}");
+            if (!state) listing.Remove();
+            existInList = true;
+        }
+        if (!existInList && state)
+        {
+            Debug.Log($"Listing NOT found {actorNr}, adding!");
+
+            PlayerInfo info = new PlayerInfo();
+            info.ActorNr = actorNr;
+            info.PlayerName = PhotonNetwork.CurrentRoom.GetPlayer(actorNr).NickName;
+            AddItem(info);
+        }
     }
 
     void AddItem(string name)
@@ -87,6 +114,18 @@ public class VoiceChatChannelsPopup : UIPopup
 
         listing.PlayerNameText = info.PlayerName;
         listing.ActorNr = info.ActorNr;
+        // remember and set voice state
+        PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(info.ActorNr);
+        if (!listing.IsMe && voice.AudioSourceMuted)
+        {
+            listing.SpeakerOffImage.enabled = true;
+            listing.SpeakerOnImage.enabled = false;
+        }
+        else if(!listing.IsMe)
+        {
+            listing.SpeakerOnImage.enabled = true;
+            listing.SpeakerOffImage.enabled = false;
+        }
     }
 
     void ClearList()
