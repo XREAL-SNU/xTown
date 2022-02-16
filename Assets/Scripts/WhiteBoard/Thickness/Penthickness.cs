@@ -15,6 +15,12 @@ public class Penthickness : MonoBehaviour
         WBM_R._penSize = 50;
         WhiteboardMarker WBM_B = GameObject.Find("Blue Marker").GetComponent<WhiteboardMarker>();
         WBM_B._penSize = 50;
+        WhiteboardMarker WBM_BL = GameObject.Find("Black Marker").GetComponent<WhiteboardMarker>();
+        WBM_BL._penSize = 50;
+        WhiteboardMarker WBM_Y = GameObject.Find("Yellow Marker").GetComponent<WhiteboardMarker>();
+        WBM_Y._penSize = 50;
+        WhiteboardMarker WBM_G = GameObject.Find("Green Marker").GetComponent<WhiteboardMarker>();
+        WBM_G._penSize = 50;
     }
 
     public void thicknesschoose2()
@@ -25,6 +31,12 @@ public class Penthickness : MonoBehaviour
         WBM_R._penSize = 30;
         WhiteboardMarker WBM_B = GameObject.Find("Blue Marker").GetComponent<WhiteboardMarker>();
         WBM_B._penSize = 30;
+        WhiteboardMarker WBM_BL = GameObject.Find("Black Marker").GetComponent<WhiteboardMarker>();
+        WBM_BL._penSize = 30;
+        WhiteboardMarker WBM_Y = GameObject.Find("Yellow Marker").GetComponent<WhiteboardMarker>();
+        WBM_Y._penSize = 30;
+        WhiteboardMarker WBM_G = GameObject.Find("Green Marker").GetComponent<WhiteboardMarker>();
+        WBM_G._penSize = 30;
     }
 
     public void thicknesschoose1()
@@ -35,6 +47,12 @@ public class Penthickness : MonoBehaviour
         WBM_R._penSize = 10;
         WhiteboardMarker WBM_B = GameObject.Find("Blue Marker").GetComponent<WhiteboardMarker>();
         WBM_B._penSize = 10;
+        WhiteboardMarker WBM_BL = GameObject.Find("Black Marker").GetComponent<WhiteboardMarker>();
+        WBM_BL._penSize = 10;
+        WhiteboardMarker WBM_Y = GameObject.Find("Yellow Marker").GetComponent<WhiteboardMarker>();
+        WBM_Y._penSize = 10;
+        WhiteboardMarker WBM_G = GameObject.Find("Green Marker").GetComponent<WhiteboardMarker>();
+        WBM_G._penSize = 10;
     }
     // Start is called before the first frame update
     void Start()
