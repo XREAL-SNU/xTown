@@ -28,7 +28,7 @@ public class AgoraUnityVideo: MonoBehaviour
     private string AppID;
     // a token is a channel key that works with a AppID that requires it. 
     // Generate one by your token server or get a temporary token from the developer console
-    public string token = "00667cb00c63d4341ec8aba2d7de7283bbdIAByIMR2DG5wc4BUWbvF5nKkQ/2T4Y6LqpOXolN8kv6mc15liXkAAAAAEADzxwcSvskMYgEAAQC/yQxi";
+    public string token = "00667cb00c63d4341ec8aba2d7de7283bbdIAD6eGqFinQMESn69JIeGVVxpFfZWbokglXo4VZKYzdozl5liXkAAAAAEAAWylBUnBwOYgEAAQCbHA5i";
     public List<uint> uidList = new List<uint>();
     //token이 만료가 되는걸 어떻게 방지하는지? 혹은 아예 token없이 통신해야 하는지
     // load agora engine
@@ -79,7 +79,7 @@ public class AgoraUnityVideo: MonoBehaviour
         mRtcEngine.OnRequestToken = OnRequestToken;
         mRtcEngine.OnUserMutedAudio = OnUserMutedAudio;
         mRtcEngine.OnUserMuteVideo = OnUserMuteVideo;
-        mRtcEngine.OnRemoteVideoStateChanged = OnRemoteVideoStateChanged;
+        //mRtcEngine.OnRemoteVideoStateChanged = OnRemoteVideoStateChanged;
         mRtcEngine.OnWarning = (int warn, string msg) =>
         {
             Debug.LogWarningFormat("Warning code:{0} msg:{1}", warn, IRtcEngine.GetErrorDescription(warn));
@@ -268,10 +268,8 @@ public class AgoraUnityVideo: MonoBehaviour
     //다른 유저가 들어올 때는 makeImageSurface가 작동한다.
     private void onUserJoined(uint uid, int elapsed)
     {
-        SetButtonActive();
         Debug.Log("onUserJoined: uid = " + uid + " elapsed = " + elapsed);
         channelJoined+=1;
-        SetButtonActive();
 
         UserInfo newUserInfo = mRtcEngine.GetUserInfoByUid(uid);
         Debug.Log("유저이름: "+newUserInfo.userAccount + "UID: "+newUserInfo.uid.ToString());
@@ -294,20 +292,24 @@ public class AgoraUnityVideo: MonoBehaviour
         {
             Debug.Log("패널이 생성되는지 확인하기");
             panelNum+=1;
-            GameObject panel = new GameObject("VideoPanel"+panelNum.ToString());
+            Debug.Log(panelNum+"PanelNum");
+            GameObject panel = (GameObject)Instantiate(Resources.Load("VideoPanel1"));
+            panel.name = "VideoPanel"+panelNum.ToString();
             
-            panel.AddComponent<CanvasRenderer>();
-            panel.AddComponent<RectTransform>();
-            RectTransform rt = panel.GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector3(80, 45, 0);
+            //panel.AddComponent<CanvasRenderer>();
+            //panel.AddComponent<RectTransform>();
             GameObject VideoCanvas = GameObject.Find("VideoCanvas");
             if(VideoCanvas!=null)
             {
                 panel.transform.parent = VideoCanvas.transform;
             }
+            RectTransform panelRect = panel.GetComponent<RectTransform>();
+            /*Left, Bottom*/panelRect.offsetMin = new Vector2(80,61);
+            /*-Rignt, -Top*/panelRect.offsetMax = new Vector2(-97,-45);
+            panelRect.localScale = new Vector3(1f, 1f, 1f);
             
-
-
+            panel.SetActive(false);
+            SetButtonActive();
         }
         VideoSurface videoSurface = makeImageSurface(uid.ToString());
         //makePlaneSurface("Plane");
@@ -328,6 +330,8 @@ public class AgoraUnityVideo: MonoBehaviour
         }
         uidList.Add(uid);
         Debug.Log(channelJoined+"ChannelJoined");
+
+        
     }
 
 
@@ -343,14 +347,16 @@ public class AgoraUnityVideo: MonoBehaviour
         {   
             //첫 번째 페이지
             LeftButton.SetActive(false);
+            Debug.Log(channelJoined+"ChannelJoined");
             if(channelJoined>6)
             {
                 RightButton.SetActive(true);
             }
         }
-        else if(currentPage==panelNum)
+        else if(currentPage==channelJoined/6+1)
         {
             //마지막 페이지
+            Debug.Log("This is Last Page");
             RightButton.SetActive(false);
             LeftButton.SetActive(true);
             //else if이므로 첫 번째 페이지 일 때는 작동X
@@ -367,6 +373,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
     public void ClickRightButton()
     {
+        Debug.Log(channelJoined+"ChannelJoined");
         GameObject currentPanel = GameObject.Find("VideoPanel"+currentPage.ToString());
         currentPanel.SetActive(false);
         currentPage+=1;
@@ -377,6 +384,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
     public void ClickLeftButton()
     {
+        Debug.Log(channelJoined+"ChannelJoined");
         GameObject currentPanel = GameObject.Find("VideoPanel"+currentPage.ToString());
         currentPanel.SetActive(false);
         Debug.Log(currentPanel+"1빼기 전");
@@ -450,7 +458,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
         // make the object draggable
         go.AddComponent<UIElementDragger>();
-        GameObject canvas = GameObject.Find("VideoPanel"+panelNum.ToString());
+        GameObject canvas = GameObject.Find("VideoCanvas").transform.Find("VideoPanel"+panelNum.ToString()).gameObject;
         if (canvas != null)
         {
             go.transform.parent = canvas.transform;
@@ -532,6 +540,19 @@ public class AgoraUnityVideo: MonoBehaviour
         loadEngine(AppID);
         join(staticChannelName);
         onSceneHelloVideoLoaded();
+
+        if(channelJoined%6==0 && channelJoined>1)
+        {
+            if(panelNum==currentPage)
+            {
+                ClickLeftButton();
+            }
+            GameObject restPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel"+panelNum.ToString()).gameObject;
+            Destroy(restPanel);
+            SetButtonActive();
+            currentPage-=1;
+            panelNum-=1;
+        }
     }
 
 
