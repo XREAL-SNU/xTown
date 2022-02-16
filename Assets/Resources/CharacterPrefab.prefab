@@ -11946,7 +11946,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -12160,6 +12160,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: flying
+  - Type: 3
+    SynchronizeType: 0
+    Name: RandomIndex
+  - Type: 9
+    SynchronizeType: 0
+    Name: Random
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
