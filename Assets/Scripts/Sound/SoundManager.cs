@@ -62,6 +62,8 @@ public class SoundManager : MonoBehaviour
             AudioSourceEffects[0] = Player.GetComponents<AudioSource>()[0]; //SpawnSound
             AudioSourceEffects[1] = Player.GetComponents<AudioSource>()[1]; //WalkSound
             AudioSourceEffects[2] = Player.GetComponents<AudioSource>()[2]; //JumpSound
+            AudioSourceEffects[3] = Player.GetComponents<AudioSource>()[3]; //HumanRocket Sound
+
             PlaySE("SpawnSound");
         }
     }
