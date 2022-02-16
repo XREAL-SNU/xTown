@@ -27,8 +27,8 @@ public class VideoChatHome : MonoBehaviour
     public RectTransform VideoPanel;
     public RawImage Screen;
     public Text myNickName;
-    private bool _previewing = false;
-    private bool audioEnable = false;
+    private bool videoMute = false;
+    private bool audioMute = false;
     private bool IsJoined = false;
     // PLEASE KEEP THIS App ID IN SAFE PLACE
     // Get your own App ID at https://dashboard.agora.io/
@@ -109,14 +109,14 @@ public class VideoChatHome : MonoBehaviour
         {
             onJoinButtonClicked();
             isClicked=true;
-            _previewing = true;
+            videoMute = true;
             Debug.Log("VideoChat Start");
         }
         else
         {
             onLeaveButtonClicked();
             isClicked=false;
-            _previewing = false;
+            videoMute = false;
             Debug.Log("VideoChat End");
         }
     }
@@ -192,7 +192,7 @@ public class VideoChatHome : MonoBehaviour
     {
         if (!ReferenceEquals(app, null))
         {
-            app.EnableVideo(paused);
+            app.MuteVideo(paused);
         }
     }
 
@@ -209,29 +209,51 @@ public class VideoChatHome : MonoBehaviour
     {
         var engine = IRtcEngine.GetEngine(AppID);
         //Screen.GetComponent<VideoSurface>().SetEnable(_previewing);
-        app.EnableVideo(_previewing);
-        
-        if (_previewing)
+        videoMute= !videoMute;
+        app.MuteVideo(videoMute);
+        GameObject myScreen = GameObject.Find("Screen");
+        GameObject videoButton = myScreen.transform.Find("Video").gameObject;
+        GameObject mutedVideoButton = myScreen.transform.Find("MutedVideo").gameObject;
+        if (videoMute)
         {
             //button.GetComponentInChildren<Text>().text = "StopVideo";
             CheckDevices(engine);
+            videoButton.SetActive(false);
+            mutedVideoButton.SetActive(true);
         }
         else
         {
             //button.GetComponentInChildren<Text>().text = "StartVideo";
+            videoButton.SetActive(true);
+            mutedVideoButton.SetActive(false);
         }
 
-        _previewing= !_previewing;
+        
     }
 
 
     public void AudioButtonClicked()
     {
         var engine = IRtcEngine.GetEngine(AppID);
-
-        app.EnableAudio(audioEnable);
-        audioEnable=!audioEnable;
-
+        audioMute=!audioMute;
+        app.MuteAudio(audioMute);
+        
+        GameObject myScreen = GameObject.Find("Screen");
+        GameObject audioButton = myScreen.transform.Find("Audio").gameObject;
+        GameObject mutedAudioButton = myScreen.transform.Find("MutedAudio").gameObject;
+        if (audioMute)
+        {
+            //button.GetComponentInChildren<Text>().text = "StopVideo";
+            CheckDevices(engine);
+            audioButton.SetActive(false);
+            mutedAudioButton.SetActive(true);
+        }
+        else
+        {
+            //button.GetComponentInChildren<Text>().text = "StartVideo";
+            audioButton.SetActive(true);
+            mutedAudioButton.SetActive(false);
+        }
     }
 
 

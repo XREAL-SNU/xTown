@@ -728,7 +728,6 @@ namespace XReal.Xtown.PhotonChat
                             option.text = channelName[0];
                             ChannelDropdown.options.Add(option);
                         }
-                        //뒤에 숫자 0으로 그냥 써놔도 무방한지 확실히하기
                     }
                 }
             }

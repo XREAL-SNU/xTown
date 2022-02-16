@@ -151,7 +151,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
 
 
-    public void EnableVideo(bool pauseVideo)
+    public void MuteVideo(bool pauseVideo)
     {
         if (mRtcEngine != null)
         {
@@ -170,7 +170,7 @@ public class AgoraUnityVideo: MonoBehaviour
         }
     }
 
-    public void EnableAudio(bool muteAudio)
+    public void MuteAudio(bool muteAudio)
     {
         if (mRtcEngine != null)
         {
@@ -311,7 +311,7 @@ public class AgoraUnityVideo: MonoBehaviour
             panel.SetActive(false);
             SetButtonActive();
         }
-        VideoSurface videoSurface = makeImageSurface(uid.ToString());
+        VideoSurface videoSurface = makeImageSurface(uid);
         //makePlaneSurface("Plane");
         if (!ReferenceEquals(videoSurface, null))
         {
@@ -322,12 +322,9 @@ public class AgoraUnityVideo: MonoBehaviour
         }
 
         GameObject remoteUserNickName = GameObject.Find(uid.ToString()).transform.Find("NickNameField").transform.Find("MyNickName").gameObject;
-        if(!ReferenceEquals(remoteUserNickName, null))
-        {
-            remoteUserNickNameText = remoteUserNickName.GetComponent<Text>();
-            remoteUserInfo = mRtcEngine.GetUserInfoByUid(uid);
-            remoteUserNickNameText.text = remoteUserInfo.userAccount;
-        }
+        remoteUserNickNameText = remoteUserNickName.GetComponent<Text>();
+        remoteUserInfo = mRtcEngine.GetUserInfoByUid(uid);
+        remoteUserNickNameText.text = remoteUserInfo.userAccount;
         uidList.Add(uid);
         Debug.Log(channelJoined+"ChannelJoined");
 
@@ -441,9 +438,9 @@ public class AgoraUnityVideo: MonoBehaviour
 
 
     private const float Offset = 100;
-    public VideoSurface makeImageSurface(string goName)
+    public VideoSurface makeImageSurface(uint uid)
     {
-        GameObject go = (GameObject)Instantiate(Resources.Load("Screen"));
+        GameObject go = (GameObject)Instantiate(Resources.Load("remoteScreen"));
         int num = channelJoined%6; //나머지를 통해 각 화면의 위치 잡아줌
         int num2 = channelJoined/6; //각 화면이 몇 번째 패널에 들어갈지 잡아줌
         if (go == null)
@@ -451,7 +448,7 @@ public class AgoraUnityVideo: MonoBehaviour
             return null;
         }
 
-        go.name = goName;
+        go.name = uid.ToString();
 
         // to be renderered onto
         //go.AddComponent<RawImage>();
@@ -503,6 +500,11 @@ public class AgoraUnityVideo: MonoBehaviour
         go.transform.localScale = new Vector3(1f, 1f, 1f);
         // configure videoSurface
         VideoSurface videoSurface = go.AddComponent<VideoSurface>();
+
+        UserInfo remoteUserInfo = mRtcEngine.GetUserInfoByUid(uid);
+        Text NickNameText = go.transform.Find("NickNameField").transform.Find("MyNickName").gameObject.GetComponent<Text>();
+        NickNameText.text = remoteUserInfo.userAccount;
+
         return videoSurface;
     }
     // When remote user is offline, this delegate will be called. Typically
@@ -602,11 +604,19 @@ public class AgoraUnityVideo: MonoBehaviour
         Debug.Log(uid+"OnUserMutedAudio 동작하는지");
         if(muted)
         {
-            Debug.Log(uid+"가 음소거를 합니다.");
+            GameObject remoteUserScreen = GameObject.Find(uid.ToString());
+            GameObject AudioIcon = remoteUserScreen.transform.Find("Audio").gameObject;
+            GameObject MutedAudioIcon = remoteUserScreen.transform.Find("MutedAudio").gameObject;
+            AudioIcon.SetActive(false);
+            MutedAudioIcon.SetActive(true);
         }
         else
         {
-            Debug.Log(uid+"가 음소거를 해제하였습니다.");
+            GameObject remoteUserScreen = GameObject.Find(uid.ToString());
+            GameObject AudioIcon = remoteUserScreen.transform.Find("Audio").gameObject;
+            GameObject MutedAudioIcon = remoteUserScreen.transform.Find("MutedAudio").gameObject;
+            AudioIcon.SetActive(true);
+            MutedAudioIcon.SetActive(false);
         }
     }
 
@@ -621,15 +631,21 @@ public class AgoraUnityVideo: MonoBehaviour
         {
             GameObject remoteUserScreen = GameObject.Find(uid.ToString());
             VideoSurface videoSurface = remoteUserScreen.GetComponent<VideoSurface>();
-            Destroy(videoSurface);
+            videoSurface.SetEnable(false);
+            GameObject VideoIcon = remoteUserScreen.transform.Find("Video").gameObject;
+            GameObject MutedVideoIcon = remoteUserScreen.transform.Find("MutedVideo").gameObject;
+            VideoIcon.SetActive(false);
+            MutedVideoIcon.SetActive(true);
         }
         else
         {
             GameObject remoteUserScreen = GameObject.Find(uid.ToString());
             VideoSurface videoSurface = remoteUserScreen.AddComponent<VideoSurface>();
-            videoSurface.SetForUser(uid);
             videoSurface.SetEnable(true);
-            videoSurface.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
+            GameObject VideoIcon = remoteUserScreen.transform.Find("Video").gameObject;
+            GameObject MutedVideoIcon = remoteUserScreen.transform.Find("MutedVideo").gameObject;
+            VideoIcon.SetActive(true);
+            MutedVideoIcon.SetActive(false);
         }
     }
 
