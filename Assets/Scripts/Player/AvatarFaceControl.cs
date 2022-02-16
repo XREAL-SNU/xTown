@@ -46,6 +46,8 @@ public class AvatarFaceControl : MonoBehaviour
 
     private void Update()
     {
+        if (_view == null) return;
+
         if (!_view.IsMine) return;
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) InvokeShowFace(0);
