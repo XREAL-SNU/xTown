@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using agora_gaming_rtc;
 using agora_utilities;
 using Photon.Pun;
@@ -23,16 +24,17 @@ public class AgoraUnityVideo: MonoBehaviour
     private Text NickName;
     private Text remoteUserNickNameText;
     private Text MessageText;
-
+    private string staticChannelName = "Xreal";
+    private string AppID;
     // a token is a channel key that works with a AppID that requires it. 
     // Generate one by your token server or get a temporary token from the developer console
     public string token = "00667cb00c63d4341ec8aba2d7de7283bbdIAByIMR2DG5wc4BUWbvF5nKkQ/2T4Y6LqpOXolN8kv6mc15liXkAAAAAEADzxwcSvskMYgEAAQC/yQxi";
+    public List<uint> uidList = new List<uint>();
     //token이 만료가 되는걸 어떻게 방지하는지? 혹은 아예 token없이 통신해야 하는지
-    //token 없앴는데 통신 잘 됨.
     // load agora engine
     float xPos = -220;
     float yPos = 110;
-    int channelJoined = 1;
+    public int channelJoined = 1;
     int panelNum = 1;
     int currentPage = 1;
     void Awake()
@@ -49,7 +51,7 @@ public class AgoraUnityVideo: MonoBehaviour
     {
         // start sdk
         Debug.Log("initializeEngine");
-
+        AppID = appId;
         if (mRtcEngine != null)
         {
             Debug.Log("Engine exists. Please unload it first!");
@@ -95,7 +97,10 @@ public class AgoraUnityVideo: MonoBehaviour
         */
 
         /*  This API Accepts AppID with token; by default omiting info and use 0 as the local user id */
-        mRtcEngine.JoinChannelByKey(channelKey: token, channelName: channel);
+        int i = mRtcEngine.RegisterLocalUserAccount(AppID, PhotonNetwork.NickName);
+        mRtcEngine.JoinChannelWithUserAccount(token, channel, PhotonNetwork.NickName);
+        Debug.Log("RegisterUserAccount Result"+i);
+        //JoinChannelByKey(channelKey: token, channelName: channel);
 
     }
 
@@ -320,6 +325,7 @@ public class AgoraUnityVideo: MonoBehaviour
             remoteUserInfo = mRtcEngine.GetUserInfoByUid(uid);
             remoteUserNickNameText.text = remoteUserInfo.userAccount;
         }
+        uidList.Add(uid);
         Debug.Log(channelJoined+"ChannelJoined");
     }
 
@@ -505,11 +511,26 @@ public class AgoraUnityVideo: MonoBehaviour
         Debug.Log("onUserOffline: uid = " + uid + " reason = " + reason);
         channelJoined-=1;
         // this is called in main thread
-        GameObject go = GameObject.Find(uid.ToString());
+       /* GameObject go = GameObject.Find(uid.ToString());
         if (!ReferenceEquals(go, null))
         {
             Object.Destroy(go);
+        }*/
+        Debug.Log(channelJoined+"ChannelJoined");
+        foreach(uint remoteUid in uidList)
+        {
+            GameObject remoteUserScreen = GameObject.Find(remoteUid.ToString());
+            Destroy(remoteUserScreen);
         }
+        leave();
+        channelJoined = 1;
+        unloadEngine();
+        GameObject videoScreen = GameObject.Find("Screen");
+        VideoSurface videoSurface = videoScreen.GetComponent<VideoSurface>();
+        Destroy(videoSurface);
+        loadEngine(AppID);
+        join(staticChannelName);
+        onSceneHelloVideoLoaded();
     }
 
 

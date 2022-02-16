@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Android;
 #endif
 using System.Collections;
+using System.Collections.Generic;
 using agora_gaming_rtc;
 using Photon.Pun;
 /// <summary>
@@ -35,7 +36,6 @@ public class VideoChatHome : MonoBehaviour
     private string AppID = "your_appid";
     private string AppName = "Xreal";
     private bool isClicked = false;
-    private bool isRegistered = false;
     void Awake()
     {
 #if (UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
@@ -145,10 +145,6 @@ public class VideoChatHome : MonoBehaviour
         app.join(AppName);
         app.onSceneHelloVideoLoaded();
         
-        if(!isRegistered)
-        {
-            RegisterAccount();
-        }
         //내가 만든 채널에 바로 접속하도록 설정해둠.
 
 
@@ -158,12 +154,21 @@ public class VideoChatHome : MonoBehaviour
 
     public void onLeaveButtonClicked()
     {
+        List<uint> remoteUserUid = app.uidList;
+        foreach(uint uid in remoteUserUid)
+        {
+            GameObject remoteUserScreen = GameObject.Find(uid.ToString());
+            Destroy(remoteUserScreen);
+        }
         if (!ReferenceEquals(app, null))
         {
             app.leave(); // leave channel
+            app.channelJoined = 1;
             app.unloadEngine(); // delete engine
             app = null;
         }
+
+
         GameObject videoScreen = GameObject.Find("Screen");
         VideoSurface videoSurface = videoScreen.GetComponent<VideoSurface>();
         Destroy(videoSurface);
@@ -239,7 +244,7 @@ public class VideoChatHome : MonoBehaviour
         Debug.Log("Device count =============== " + cnt);
     }
 
-    void RegisterAccount()
+    /*void RegisterAccount()
     {
         var engine = IRtcEngine.GetEngine(AppID);
         int success = engine.RegisterLocalUserAccount(AppID, PhotonNetwork.NickName);
@@ -251,5 +256,5 @@ public class VideoChatHome : MonoBehaviour
         {
             
         }
-    }
+    }*/
 }
