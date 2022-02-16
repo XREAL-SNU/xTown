@@ -52,10 +52,23 @@ namespace XReal.XTown.VoiceChat
 
         private void Init()
         {
+            Debug.Log("Voice/ INIT!");
             if (!_settings.EnableVoiceOnJoin)
             {
-                PauseVoice();
+                StartCoroutine("PauseVoiceOnJoinCoroutine");
             }
+        }
+
+        // stop voice on join if setting says so.
+        IEnumerator PauseVoiceOnJoinCoroutine()
+        {
+            while (!_recorder.IsRecording)
+            {
+                Debug.Log("Voice/ Inside coroutine, waiting for init");
+                yield return null;
+            }
+            PauseVoice();
+            Debug.Log("Voice/ paused.Coroutine returns.");
         }
 
         // button callbacks
@@ -86,6 +99,14 @@ namespace XReal.XTown.VoiceChat
             if (OnPlayerVoiceChangedHandler != null)
             {
                 OnPlayerVoiceChangedHandler.Invoke(actorNr, state);
+            }
+        }
+
+        public void RemoveListener(Action<int, bool> action)
+        {
+            if(OnPlayerVoiceChangedHandler != null)
+            {
+                OnPlayerVoiceChangedHandler -= action;
             }
         }
 

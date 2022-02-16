@@ -8,7 +8,7 @@ using Unity.Collections;
 using UnityEngine;
 
 namespace XReal.XTown.VoiceChat{
-    public class PlayerVoice : MonoBehaviour
+    public class PlayerVoice : MonoBehaviour, IOnPhotonViewPreNetDestroy
     {
         PhotonVoiceView _voiceView;
         PhotonView _view;
@@ -34,7 +34,7 @@ namespace XReal.XTown.VoiceChat{
                 return;
             }
             _speaker = _voiceView.SpeakerInUse;
-            _audioSource = GetComponentInChildren<AudioSource>();
+            _audioSource = transform.Find("Speaker").GetComponent<AudioSource>();
             _recorder = _voiceView.RecorderInUse;
 
             _view = GetComponent<PhotonView>();
@@ -47,7 +47,6 @@ namespace XReal.XTown.VoiceChat{
             get => _audioSource.mute;
             set
             {
-
                 Debug.Log($"audio muted: {_view.Owner.NickName} to {value}");
                 _audioSource.mute = value;
             }
@@ -80,6 +79,12 @@ namespace XReal.XTown.VoiceChat{
             Debug.Log($"PlayerVoice/ On player {info.PlayerName} joined");
             // broadcast my state to the new joined actor. specify actor target~!
             SetVoiceState(IsVoiceOn, info.ActorNr);
+        }
+
+        void IOnPhotonViewPreNetDestroy.OnPreNetDestroy(PhotonView rootView)
+        {
+            // cleanup jobs
+            SetVoiceState(false, _view.OwnerActorNr);
         }
         // Netcode
         public void SetVoiceState(bool state, int actorNr = -1)

@@ -34,8 +34,8 @@ public class VoiceChatChannelsPopup : UIPopup
         // tweening
         RectTransform panelTransfrom = transform.Find("Panel").GetComponent<RectTransform>();
         var y = panelTransfrom.anchoredPosition.y;
-        panelTransfrom.anchoredPosition = new Vector2(1260, y);
-        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(630, 0.3f)).SetEase(Ease.InCubic);
+        panelTransfrom.anchoredPosition = new Vector2(1467, y);
+        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(540, 0.3f)).SetEase(Ease.InCubic);
 
         Init();
     }
@@ -72,9 +72,12 @@ public class VoiceChatChannelsPopup : UIPopup
         Voice.VoiceChat.AddListener(OnPlayerVoiceChanged_UpdateList);
     }
 
+    // player voice event callback
     public void OnPlayerVoiceChanged_UpdateList(int actorNr, bool state)
     {
-        // if not my event return
+        // if not listening return
+        if (!gameObject.activeInHierarchy) return;
+
         Debug.Log($"ListPopup/ OnPlayerVoiceChanged event: {actorNr} state {state}");
         bool existInList = false;
         AudioChatUserListing[] list = GetComponentsInChildren<AudioChatUserListing>();
@@ -152,9 +155,10 @@ public class VoiceChatChannelsPopup : UIPopup
     {
         // DOtween
         RectTransform panelTransfrom = transform.Find("Panel").GetComponent<RectTransform>();
-        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(1260, 0.3f))
+        Sequence easeInFromRight = DOTween.Sequence().Append(panelTransfrom.DOAnchorPosX(1467, 0.3f))
             .SetEase(Ease.OutCubic)
             .OnComplete(base.ClosePopup);
+
     }
 
     public void OnClick_Close(PointerEventData data)
@@ -163,6 +167,10 @@ public class VoiceChatChannelsPopup : UIPopup
         ClosePopup();
     }
 
+    private void OnDestroy()
+    {
+        Voice.VoiceChat.RemoveListener(OnPlayerVoiceChanged_UpdateList);
 
+    }
 }
 
