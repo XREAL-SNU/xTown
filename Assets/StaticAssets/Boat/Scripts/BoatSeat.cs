@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using StarterAssets;
+using Photon.Pun;
 
 public class BoatSeat : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class BoatSeat : MonoBehaviour
         _iconCanvas = transform.GetChild(0).GetComponent<BoatIconCanvas>();
         _iconCanvas.seat = this;
         _iconCanvas.gameObject.SetActive(false);
+
+        // netcode
+        _view = GetComponent<PhotonView>();
     }
 
     public void OnMouseDown()
@@ -82,6 +86,7 @@ public class BoatSeat : MonoBehaviour
     private void Embark()
     {
         _isOccupied = true;
+        SyncIsOccupied(true);
         _iconCanvas.Hide();
 
         GameObject player = PlayerManager.Players.LocalPlayerGo;
@@ -109,4 +114,13 @@ public class BoatSeat : MonoBehaviour
         _buttonCanvas.gameObject.SetActive(false);
         _buttonCanvas.Hide();
     }
+
+    #region NETCODE
+
+    PhotonView _view;
+    void SyncIsOccupied(bool isOccupied)
+    {
+        if(_view)
+    }
+    #endregion
 }
