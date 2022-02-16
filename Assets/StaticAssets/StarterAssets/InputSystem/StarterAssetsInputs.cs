@@ -11,6 +11,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool sit;
+		public bool randomReady;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -46,6 +47,21 @@ namespace StarterAssets
 		public void OnSit(InputValue value)
 		{
 			SitInput(value.isPressed);
+		}
+
+		public void OnRandomReady(InputValue value)
+		{
+			RandomReadyInput(value.isPressed);
+		}
+
+		public void OnRandom(InputValue value)
+        {
+			Debug.Log(value.Get());
+        }
+
+		public void RandomReadyInput(bool newRandomReadyState)
+		{
+			randomReady = newRandomReadyState;
 		}
 
 		public void SitInput(bool newSitState)

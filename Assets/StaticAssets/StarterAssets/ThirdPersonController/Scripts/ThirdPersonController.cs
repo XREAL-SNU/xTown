@@ -49,6 +49,7 @@ namespace StarterAssets
 		private float _verticalVelocity;
 		private float _terminalVelocity = 53.0f;
 		private bool _sitting = false;
+		private bool _random = false;
 
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
@@ -60,6 +61,7 @@ namespace StarterAssets
 		private int _animIDJump;
 		private int _animIDFreeFall;
 		private int _animIDSit;
+		private int _animIDRandomReady;
 		private int _animIDMotionSpeed;
 
 		private Animator _animator;
@@ -112,6 +114,8 @@ namespace StarterAssets
 
 			SitCheck();
 
+			RandomCheck();
+
 		}
 
 		/*
@@ -129,6 +133,7 @@ namespace StarterAssets
 			_animIDFreeFall = Animator.StringToHash("FreeFall");
 			_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 			_animIDSit = Animator.StringToHash("Sitting");
+			_animIDRandomReady = Animator.StringToHash("RandomReady");
 		}
 
 		private void GroundedCheck()
@@ -172,6 +177,19 @@ namespace StarterAssets
 			}
 
 		}
+
+		private void RandomCheck()
+        {
+			if (_input.randomReady)
+            {
+				if (_hasAnimator)
+				{
+					_animator.SetTrigger(_animIDRandomReady);
+				}
+				_input.randomReady = false;
+			}
+        }
+
 		private void CameraRotation()
 		{
 			// if there is an input and camera position is not fixed
