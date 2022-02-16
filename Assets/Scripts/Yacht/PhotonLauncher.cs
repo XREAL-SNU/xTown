@@ -13,15 +13,15 @@ namespace XReal.XTown.Yacht
 		/* public fields */
 		[SerializeField]
 		private GameObject _joinPanel;
-		[SerializeField]
-		private GameObject _playPanel;
 
 		[SerializeField]
 		private byte _maxPlayersPerRoom = 2;
+		//[SerializeField]
+		//private Text _playerNumText;
 		[SerializeField]
-		private Text _playerNumText;
+		private GameObject _mainCanvas;
 		private PhotonView _view;
-		private int _currentPlayers = 0;
+		//private int _currentPlayers = 0;
 		private int _currentRoomNum = 0;
 		private string _sceneName = "Yacht";
 
@@ -29,7 +29,7 @@ namespace XReal.XTown.Yacht
 
 		// required so different version users cannot play together
 		private string _gameVersion = "0";
-		private bool isConnecting;
+		private bool isYachtConnecting = false;
 
 
 		/* Monobehaviour callbacks */
@@ -40,19 +40,31 @@ namespace XReal.XTown.Yacht
 			PhotonNetwork.AutomaticallySyncScene = true;
 			_view = GetComponent<PhotonView>();
 		}
-
+		void Update()
+        {
+			if (Input.GetMouseButtonDown(0))
+			{
+				RaycastHit hit;
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				Debug.DrawRay(ray.origin, ray.direction, Color.green);
+				if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
+				{
+					if (!_joinPanel.activeInHierarchy) _joinPanel.SetActive(true);
+				}
+				isYachtConnecting = true;
+			}
+			//_playerNumText.text = _currentPlayers+"/2 players waiting...";
+		}
 
 		/* public connection management methods */
 
 		public void Connect()
 		{
-			isConnecting = true;
 			_joinPanel.SetActive(false);
-			_playPanel.SetActive(true);
+			_mainCanvas.SetActive(false);
 			PlayerPrefs.SetString("PastScene", "MainRoom");
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.JoinLobby();
-			_view.RPC("addPlayers",RpcTarget.All);
 			/*
 			if (PhotonNetwork.IsConnected)
 			{
@@ -68,23 +80,6 @@ namespace XReal.XTown.Yacht
 			*/
 
 		}
-
-
-		/* Yacht scene specific funcs */
-		void Update()
-        {
-			if (Input.GetMouseButtonDown(0))
-			{
-				RaycastHit hit;
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				Debug.DrawRay(ray.origin, ray.direction, Color.green);
-				if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
-				{
-					if (!_joinPanel.activeInHierarchy) _joinPanel.SetActive(true);
-				}
-			}
-			_playerNumText.text = _currentPlayers+"/2 players waiting...";
-		}
 		/* Pun Callbacks */
 
 		/* called even when we just exited a scene. that's why we need that isConnecting variable
@@ -96,11 +91,25 @@ namespace XReal.XTown.Yacht
 				PhotonNetwork.JoinRandomRoom();
 			}
 		}*/
-
-		
+		public override void OnJoinedLobby()
+		{
+			if(isYachtConnecting){
+			//if(_currentPlayers%2 == 1)
+			//{
+				RoomOptions options = new RoomOptions();
+        		options.BroadcastPropsChangeToAll = true;
+        		options.MaxPlayers = 2;
+        		PhotonNetwork.JoinOrCreateRoom(_sceneName, options, TypedLobby.Default);
+			//}
+			//else if(_currentPlayers%2 == 0)
+			//{
+			//	PhotonNetwork.JoinRoom(_sceneName);
+			//}
+			}
+		}
 		public override void OnJoinedRoom()
 		{
-			if(isConnecting)
+			if(isYachtConnecting)
 			{
 				Debug.Log("Yacht/PhotonLauncher: Joined Room");
 				if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
@@ -114,22 +123,6 @@ namespace XReal.XTown.Yacht
             	}
 			}
 		}
-		
-		public override void OnJoinedLobby()
-		{
-			if(_currentPlayers%2 == 1)
-			{
-				RoomOptions options = new RoomOptions();
-        		options.BroadcastPropsChangeToAll = true;
-        		options.MaxPlayers = 2;
-        		PhotonNetwork.JoinOrCreateRoom(_sceneName+_currentRoomNum.ToString(), options, TypedLobby.Default);
-			}
-			else if(_currentPlayers%2 == 0)
-			{
-				PhotonNetwork.JoinRoom(_sceneName+_currentRoomNum.ToString());
-			}
-		}
-
 		/*
 		public override void OnJoinRandomFailed(short returnCode, string message)
 		{
@@ -145,14 +138,12 @@ namespace XReal.XTown.Yacht
 			isConnecting = false;
 			_joinPanel.SetActive(true);
 		}
-
-		*/
 		[PunRPC]
 		void addPlayers()
 		{
 			_currentPlayers = _currentPlayers/2;
 			++_currentPlayers;
-		}
+		}*/
 	}
 
 

@@ -8,26 +8,17 @@ namespace XReal.XTown.Yacht
 {
     public class DiceManager : MonoBehaviour
     {
-        public static DiceScript[] dices;
+        public static List<DiceScriptMulti> dices;
         public UnityEvent onRollingFinish;
 
-        // Start is called before the first frame update
-        void Awake()
+        public static DiceManager instance;
+        protected virtual void Awake()
         {
-            dices = transform.GetComponentsInChildren<DiceScript>();
-            int diceIndex = 0;
-            foreach (var dice in dices)
-            {
-                dice.diceIndex = diceIndex;
-                diceIndex += 1;
-            }
+            instance = this;
+            dices = transform.GetComponentsInChildren<DiceScriptMulti>().ToList();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
 
-        }
 
         public void OnInitialze()
         {
@@ -79,7 +70,6 @@ namespace XReal.XTown.Yacht
         public void OnRollingFinish()
         {
             var sortedList = DiceScript.diceInfoList.OrderBy(x => x.diceNumber).ToList();
-
             int i = 0;
             foreach (DiceInfo sortedDiceInfo in sortedList)
             {
@@ -87,13 +77,11 @@ namespace XReal.XTown.Yacht
                 diceInfo.sortedIndex = i;
                 i += 1;
             }
-
-            // keeping이 false인 것들에 대해서만 loop through
             var sortedUnkeptList = sortedList.Where(x => x.keeping == false).ToList();
             StartCoroutine(DiceRollFinish(sortedUnkeptList));
         }
 
-        public void OnFinish()
+        public virtual void OnFinish()
         {
             var sortedList = DiceScript.diceInfoList.OrderBy(x => x.diceNumber).ToList();
 
@@ -114,12 +102,13 @@ namespace XReal.XTown.Yacht
             foreach (DiceInfo diceInfo in sortedUnkeptList)
             {
                 int i = diceInfo.diceIndex;
+                Debug.Log("DiceRollFinish@DiceManager #" + diceInfo.diceIndex);
                 dices[i].OnRollingFinish();
                 yield return new WaitForSecondsRealtime(0.05f);
             }
         }
 
-        IEnumerator TurnFinish(List<DiceInfo> sortedUnkeptList)
+        protected virtual IEnumerator TurnFinish(List<DiceInfo> sortedUnkeptList)
         {
             foreach (DiceInfo diceInfo in sortedUnkeptList)
             {

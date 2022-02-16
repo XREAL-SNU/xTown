@@ -5,25 +5,18 @@ using UnityEngine.UI;
 
 namespace XReal.XTown.Yacht
 {
-    public class ScoreTable : MonoBehaviour
+    public class ScoreTableMulti : ScoreTable
     {
-        protected static Transform scoreContainer;
-        protected static Transform scoreTemplate;
-
-        protected Dictionary<string, Dictionary<string, int>> strategies = StrategyScript.strategies;
-        protected static List<Text> scoreTexts = new List<Text>();
-
-        protected virtual void Awake()
+        private static List<Text> scoreTextsOther = new List<Text>();
+        private static int[] otherPoints = new int[14];
+        public static void InitMultiTable()
         {
-            scoreContainer = transform.Find("ScoreContainer");
-
-        }
-        public static void InitSingleTable()
-        {
-            scoreTemplate = scoreContainer.Find("ScoreTemplateMulti");
-            scoreTemplate.gameObject.SetActive(false);
+            // set all templates inactive
             scoreTemplate = scoreContainer.Find("ScoreTemplate");
             scoreTemplate.gameObject.SetActive(false);
+            scoreTemplate = scoreContainer.Find("ScoreTemplateMulti");
+            scoreTemplate.gameObject.SetActive(false);
+
 
             float templateHeight = 24f;
             for (int i = 0; i < 14; i++)
@@ -33,22 +26,21 @@ namespace XReal.XTown.Yacht
                 scoreRectTransform.anchoredPosition = new Vector2(0, -templateHeight * i);
                 scoreTransform.gameObject.SetActive(true);
 
-                scoreTransform.Find("ScoreBackground/CategoryText").GetComponent<Text>().text = StrategyScript.strategiesOrder[i];
+                scoreTransform.Find("CategoryText").GetComponent<Text>().text = StrategyScript.strategiesOrder[i];
                 Text scoreText = scoreTransform.Find("ScoreText").GetComponent<Text>();
                 scoreTexts.Add(scoreText);
+                Text scoreText2 = scoreTransform.Find("ScoreTextOther").GetComponent<Text>();
+                scoreTextsOther.Add(scoreText2);
 
             }
         }
-
-        public virtual void UpdateScoreTable()
+        public override void UpdateScoreTable()
         {
             GameState _gameState = GameManager.currentGameState;
             Dictionary<string, int> _strategy = null;
-
             for (int i = 0; i < 14; i++)
             {
                 _strategy = strategies[StrategyScript.strategiesOrder[i]];
-
                 if ((_gameState != GameState.selecting) && _strategy["done"] == 0)
                 {
                     scoreTexts[i].text = "";
@@ -57,7 +49,6 @@ namespace XReal.XTown.Yacht
                 {
                     scoreTexts[i].text = _strategy["score"].ToString();
                 }
-
                 if (_strategy["done"] == 1)
                 {
                     scoreTexts[i].color = Color.black;
@@ -65,6 +56,34 @@ namespace XReal.XTown.Yacht
                 }
             }
         }
+        public static int UpdateOtherScoreTable(int move, int points)
+        {
+            int bonusSum = 0;
+            otherPoints[move] = points;
+            otherPoints[13] = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                bonusSum += otherPoints[i];
+                otherPoints[13] += otherPoints[i];
+                scoreTextsOther[i].color = Color.black;
+                scoreTextsOther[i].text = otherPoints[i].ToString();
+
+            }
+            if(bonusSum>62)
+            {
+                otherPoints[6] = 35;
+            }
+            for(int i = 6; i<13; i++)
+            {
+                otherPoints[13] += otherPoints[i];
+                scoreTextsOther[i].color = Color.black;
+                scoreTextsOther[i].text = otherPoints[i].ToString();
+            }
+            scoreTextsOther[13].color = Color.black;
+            scoreTextsOther[13].text = otherPoints[13].ToString();
+            return otherPoints[13];
+        }     
+
     }
 }
 
