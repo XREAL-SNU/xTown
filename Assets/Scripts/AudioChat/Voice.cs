@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,8 @@ namespace XReal.XTown.VoiceChat
             get
             {
                 if (!PhotonNetwork.InRoom) return null;
-                PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(PhotonNetwork.LocalPlayer.ActorNumber);
+                //PlayerVoice voice = RoomManager.Room.GetComponentInPlayerById<PlayerVoice>(PhotonNetwork.LocalPlayer.ActorNumber);
+                PlayerVoice voice = PlayerManager.Players.LocalPlayerGo.GetComponent<PlayerVoice>();
                 return voice;
             }
         }
@@ -50,10 +52,23 @@ namespace XReal.XTown.VoiceChat
 
         private void Init()
         {
+            Debug.Log("Voice/ INIT!");
             if (!_settings.EnableVoiceOnJoin)
             {
-                PauseVoice();
+                StartCoroutine("PauseVoiceOnJoinCoroutine");
             }
+        }
+
+        // stop voice on join if setting says so.
+        IEnumerator PauseVoiceOnJoinCoroutine()
+        {
+            while (!_recorder.IsRecording)
+            {
+                Debug.Log("Voice/ Inside coroutine, waiting for init");
+                yield return null;
+            }
+            PauseVoice();
+            Debug.Log("Voice/ paused.Coroutine returns.");
         }
 
         // button callbacks
@@ -75,5 +90,30 @@ namespace XReal.XTown.VoiceChat
             MyVoice.SetVoiceState(false);
         }
 
+
+        // events
+        public Action<int, bool> OnPlayerVoiceChangedHandler = null;
+
+        public void OnPlayerVoiceChanged(int actorNr, bool state)
+        {
+            if (OnPlayerVoiceChangedHandler != null)
+            {
+                OnPlayerVoiceChangedHandler.Invoke(actorNr, state);
+            }
+        }
+
+        public void RemoveListener(Action<int, bool> action)
+        {
+            if(OnPlayerVoiceChangedHandler != null)
+            {
+                OnPlayerVoiceChangedHandler -= action;
+            }
+        }
+
+        public void AddListener(Action<int, bool> action)
+        {
+            OnPlayerVoiceChangedHandler -= action;
+            OnPlayerVoiceChangedHandler += action;
+        }
     }
 }
