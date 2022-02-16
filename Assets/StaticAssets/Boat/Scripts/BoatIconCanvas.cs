@@ -14,7 +14,7 @@ public class BoatIconCanvas : MonoBehaviour
 
     void FixedUpdate()
     {
-        _iconImage.rectTransform.position = Camera.main.WorldToScreenPoint(transform.parent.position + new Vector3(0, 1, 0));
+        _iconImage.rectTransform.position = Camera.main.WorldToScreenPoint(transform.parent.position + new Vector3(0, 0.5f, 0));
     }
 
     public void Show()
