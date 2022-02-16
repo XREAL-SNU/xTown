@@ -87,6 +87,8 @@ public class AvatarFaceManagement : MonoBehaviour
     // Invoke this Function when a FaceButton is Currently Selected & Favorites Face Button is Clicked
     public void AddToFavorites(AvatarFaceButton avatarFaceButton)
     {
+        if (_currentlySelectedButton == null) return;
+
         int index = IsAdded(avatarFaceButton);
 
         // If a button is selected and is NOT added to favorites
