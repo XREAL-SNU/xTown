@@ -23,15 +23,4 @@ public class EmoticonMenuScript : MonoBehaviour, IPointerEnterHandler, IPointerD
     public void OnPointerExit(PointerEventData eventData){
         gameObject.GetComponent<Image>().color = Color.white;
     }
-
-    private void OnEnable()
-    {
-        PlayerKeyboard.GetPlayerKeyboard("Emotion").InputUnLockOnly();
-        PlayerMouse.GetPlayerMouse("Zoom").InputUnLockOnly();
-    }
-
-    private void OnDisable()
-    {
-        InputManager.UnLock();
-    }
 }
