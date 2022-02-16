@@ -110,7 +110,7 @@ namespace StarterAssets
 				GroundedCheck();
 			}
 
-			SitCheck();
+			//SitCheck();
 
 		}
 

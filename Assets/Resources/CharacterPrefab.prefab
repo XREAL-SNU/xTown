@@ -12154,6 +12154,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: flying
+  - Type: 9
+    SynchronizeType: 0
+    Name: SittingFront
+  - Type: 9
+    SynchronizeType: 0
+    Name: WalkTowardChair
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -12169,8 +12175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44ab34f838cec84093f3dc647431b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
-  SprintSpeed: 20
+  MoveSpeed: 5
+  SprintSpeed: 10
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   JumpHeight: 1.2
