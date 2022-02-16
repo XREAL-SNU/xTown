@@ -53,9 +53,10 @@ public class PlayerAvatar: MonoBehaviour
             return;
         }
 
+        
         // add gameObject to managed list
         RoomManager.Room.AddPlayerGameObject(PhotonView.OwnerActorNr, gameObject);
-
+        
         if (PhotonView.IsMine)
         {
             // if my character, fetch my persistent data.

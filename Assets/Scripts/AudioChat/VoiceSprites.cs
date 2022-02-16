@@ -23,12 +23,17 @@ public class VoiceSprites : MonoBehaviour
     private void Start()
     {
         _view = GetComponentInParent<PhotonView>();
-        if (_view.IsMine) speakerSprite.enabled = false;
     }
 
     private void Update()
     {
-        if (_view.IsMine) return;
-        speakerSprite.enabled = _voiceView.IsSpeaking;
+        if (_view.IsMine)
+        {
+            speakerSprite.enabled = _voiceView.RecorderInUse.IsCurrentlyTransmitting;
+        }
+        else
+        {
+            speakerSprite.enabled = _voiceView.IsSpeaking;
+        }
     }
 }

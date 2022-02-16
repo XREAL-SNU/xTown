@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,10 +40,10 @@ public class AudioChatUserListing : UIBase
     enum Images
     {
         SpeakerOnImage,
-        SpeakerOffImage,
-        VoiceOnImage
+        SpeakerOffImage
     }
-
+    
+    // must have 0 arguments
     public override void Init()
     {
 
@@ -52,9 +53,12 @@ public class AudioChatUserListing : UIBase
         GetUIComponent<Image>((int)Images.SpeakerOffImage).gameObject.BindEvent(OnClick_Unmute);
         GetUIComponent<Image>((int)Images.SpeakerOnImage).gameObject.BindEvent(OnClick_Mute);
 
+
+
         SpeakerOffImage.enabled = false;
     }
 
+    /*
     public Image VoiceOnImage
     {
         get
@@ -62,7 +66,7 @@ public class AudioChatUserListing : UIBase
             return GetUIComponent<Image>((int)Images.VoiceOnImage);
         }
     }
-
+    */
     public Image SpeakerOffImage
     {
         get
