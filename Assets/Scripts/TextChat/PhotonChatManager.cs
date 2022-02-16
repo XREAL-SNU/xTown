@@ -52,7 +52,7 @@ namespace XReal.Xtown.PhotonChat
         
         //채팅방 관리 버튼을 만들어뒀는데 세부 채팅 씬 개발을 뒤로 미뤄서 일단 그냥 HideButton이랑 연결시켜둠
         public TextMeshProUGUI CurrentChannelText;
-        
+        //public Text CurrentChannelText;
 
         //This is the Dropdown
         public Dropdown ChannelDropdown;
