@@ -53,6 +53,7 @@ public class SoundManager : MonoBehaviour
     {
         if(scene.name == "MainRoom")
         {
+            StopBGM();
             if(PlayerManager.Players.LocalPlayerGo == null){
                 return;
             }
