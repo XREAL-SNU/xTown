@@ -4617,6 +4617,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Lock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2794768153910687747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5012,6 +5024,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Lock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2794768154827489505
 GameObject:
   m_ObjectHideFlags: 0
@@ -5135,6 +5159,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2794768155322246056}
         m_TargetAssemblyTypeName: MainCanvas, Assembly-CSharp
         m_MethodName: OnClick_AvatarInteraction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: Lock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7834,6 +7870,18 @@ MonoBehaviour:
       - m_Target: {fileID: 4638741033727324120}
         m_TargetAssemblyTypeName: PanelOpener, Assembly-CSharp
         m_MethodName: OpenPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: ButtonLock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12753,9 +12801,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AlarmListPanel, Assembly-CSharp
-        m_MethodName: OnClcikShow
+      - m_Target: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: ButtonLock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15826,6 +15874,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -44.4
       objectReference: {fileID: 0}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UnLock
+      objectReference: {fileID: 0}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: InputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8691852772203662375, guid: ae67378aee761564497f52735165e265, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae67378aee761564497f52735165e265, type: 3}
 --- !u!114 &2844779799567160193 stripped
@@ -15934,6 +16010,34 @@ PrefabInstance:
     - target: {fileID: 205397005235852819, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UnLock
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: InputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1038381027929915304, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1193537848000957203, guid: 04dcc19c28a99c44eb0e8e3e874f0733, type: 3}
       propertyPath: m_Name
@@ -16132,6 +16236,34 @@ PrefabInstance:
     - target: {fileID: 872998223667757758, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
       propertyPath: m_Value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1050175914571162234, guid: 2c1f082c99ea64f4496a7e8c07b875bc, type: 3}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UnLock
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114371369741411182, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1982751899752672014, guid: cfdc8b6df901a304fa6ec5b09e0c525c, type: 3}
       propertyPath: m_Name
