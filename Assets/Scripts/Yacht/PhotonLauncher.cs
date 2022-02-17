@@ -42,18 +42,13 @@ namespace XReal.XTown.Yacht
 			PhotonNetwork.AutomaticallySyncScene = true;
 			_view = GetComponent<PhotonView>();
 		}
-		void Update()
+		private void OnTriggerEnter(Collider other)
         {
-			if (Input.GetMouseButtonDown(0))
+			if (other.tag == "Player")
 			{
-				RaycastHit hit;
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				Debug.DrawRay(ray.origin, ray.direction, Color.green);
-				if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
-				{
 					_joinPanel.SetActive(true);
 					isYachtConnecting = true;
-				}
+
 			}
 			//_playerNumText.text = _currentPlayers+"/2 players waiting...";
 		}

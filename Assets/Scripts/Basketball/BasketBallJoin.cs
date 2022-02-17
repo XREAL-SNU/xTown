@@ -35,21 +35,16 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
 		_joinPanel.SetActive(false);
 		PhotonNetwork.AutomaticallySyncScene = true;
 	}
-	void Update()
-    {
-		if (Input.GetMouseButtonDown(0))
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			Debug.DrawRay(ray.origin, ray.direction, Color.green);
-			if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
+    private void OnTriggerEnter(Collider other)
+        {
+			if (other.tag == "Player")
 			{
-				_joinPanel.SetActive(true);
-				isBasketBallConnecting = true;
+					_joinPanel.SetActive(true);
+					isBasketBallConnecting = true;
+
 			}
-		}
 			//_playerNumText.text = _currentPlayers+"/2 players waiting...";
-	}
+		}
 
 	/* public connection management methods */
 
@@ -59,7 +54,6 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
 		_mainCanvas.SetActive(false);
 		_camManager.enabled = false;
 		PlayerPrefs.SetString("PastScene", "MainRoom");
-		TestConnect.Instance._isStartingPocket = true;
         PhotonNetwork.LeaveRoom();
 	}
 		/* Pun Callbacks */
@@ -93,7 +87,7 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
 	{
 		if(isBasketBallConnecting)
 		{
-			Debug.Log("PocketBallJoin: Joined Room");
+			Debug.Log("BasketBallJoin: Joined Room");
 			PhotonNetwork.LoadLevel("Basketball");
 		}
 	}

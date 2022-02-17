@@ -24,6 +24,8 @@ public class TestConnect : MonoBehaviourPunCallbacks
     public bool _isLeavingPortal = false;
     public bool _isStartingPocket = false;
     public bool _isLeavingPocket = false;
+    public bool _isStartingBasket = false;
+    public bool _isLeavingBasket = false; 
     public bool _notStart = false;
     public string _portalSceneName;
 
