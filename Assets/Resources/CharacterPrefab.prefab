@@ -12250,7 +12250,6 @@ GameObject:
   - component: {fileID: 8804271251157672311}
   - component: {fileID: 785595142864034658}
   - component: {fileID: 4716362168694986599}
-  - component: {fileID: 5478846460915643131}
   - component: {fileID: 3535905232019834431}
   - component: {fileID: 6875119767526470927}
   - component: {fileID: 4733403235914078483}
@@ -12260,6 +12259,7 @@ GameObject:
   - component: {fileID: 2492397504308322708}
   - component: {fileID: 4463091753809351765}
   - component: {fileID: 2313838941012366524}
+  - component: {fileID: 5478846460915643131}
   - component: {fileID: 7694991560350443291}
   - component: {fileID: 5942435168139685065}
   - component: {fileID: 3161885990346937622}
@@ -12481,54 +12481,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
---- !u!114 &5478846460915643131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4142847262815404090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 1
-    SynchronizeType: 1
-    Name: Speed
-  - Type: 4
-    SynchronizeType: 1
-    Name: Jump
-  - Type: 4
-    SynchronizeType: 1
-    Name: Grounded
-  - Type: 4
-    SynchronizeType: 1
-    Name: FreeFall
-  - Type: 1
-    SynchronizeType: 1
-    Name: MotionSpeed
-  - Type: 4
-    SynchronizeType: 1
-    Name: Sitting
-  - Type: 1
-    SynchronizeType: 1
-    Name: Path
-  - Type: 4
-    SynchronizeType: 1
-    Name: flying
-  - Type: 3
-    SynchronizeType: 1
-    Name: RandomIndex
-  - Type: 9
-    SynchronizeType: 1
-    Name: Random
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!114 &3535905232019834431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12541,8 +12493,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44ab34f838cec84093f3dc647431b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  SprintSpeed: 10
+  MoveSpeed: 40
+  SprintSpeed: 60
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   JumpHeight: 4
@@ -12703,6 +12655,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsVoiceOn: 0
+--- !u!114 &5478846460915643131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142847262815404090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: Jump
+  - Type: 4
+    SynchronizeType: 1
+    Name: Grounded
+  - Type: 4
+    SynchronizeType: 1
+    Name: FreeFall
+  - Type: 1
+    SynchronizeType: 1
+    Name: MotionSpeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: Sitting
+  - Type: 1
+    SynchronizeType: 1
+    Name: Path
+  - Type: 4
+    SynchronizeType: 1
+    Name: flying
+  - Type: 3
+    SynchronizeType: 1
+    Name: RandomIndex
+  - Type: 9
+    SynchronizeType: 1
+    Name: Random
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!82 &7694991560350443291
 AudioSource:
   m_ObjectHideFlags: 0
