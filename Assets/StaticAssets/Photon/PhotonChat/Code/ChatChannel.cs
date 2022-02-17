@@ -131,6 +131,24 @@ namespace Photon.Chat
             return txt.ToString();
         }
 
+
+        public string ToStringMessages(string userName)
+        {
+            StringBuilder txt = new StringBuilder();
+            for (int i = 0; i < this.Messages.Count; i++)
+            {
+                if(this.Senders[i]==userName)
+                {
+                    txt.AppendLine(string.Format("<#CB3A3A>{0}: {1}</color>", this.Senders[i], this.Messages[i]));
+                }
+                else
+                {
+                    txt.AppendLine(string.Format("{0}: {1}", this.Senders[i], this.Messages[i]));
+                }
+            }
+            return txt.ToString();
+        }
+
         internal void ReadChannelProperties(Dictionary<object, object> newProperties)
         {
             if (newProperties != null && newProperties.Count > 0)
@@ -184,6 +202,7 @@ namespace Photon.Chat
             this.Subscribers.Add(user);
             
         }
+
 
         #if CHAT_EXTENDED
         internal void ReadUserProperties(string userId, Dictionary<object, object> changedProperties)

@@ -60,6 +60,8 @@ namespace StarterAssets
 		private int _animIDJump;
 		private int _animIDFreeFall;
 		private int _animIDSit;
+		private int _animIDRandom;
+		private int _animIDRandomIndex;
 		private int _animIDMotionSpeed;
 
 		private Animator _animator;
@@ -112,6 +114,8 @@ namespace StarterAssets
 
 			SitCheck();
 
+			RandomCheck();
+
 		}
 
 		/*
@@ -129,6 +133,8 @@ namespace StarterAssets
 			_animIDFreeFall = Animator.StringToHash("FreeFall");
 			_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 			_animIDSit = Animator.StringToHash("Sitting");
+			_animIDRandom = Animator.StringToHash("Random");
+			_animIDRandomIndex = Animator.StringToHash("RandomIndex");
 		}
 
 		private void GroundedCheck()
@@ -172,6 +178,20 @@ namespace StarterAssets
 			}
 
 		}
+
+		private void RandomCheck()
+        {
+			if (_input.random)
+            {
+				if (_hasAnimator)
+				{
+					_input.random = false;
+					_animator.SetInteger(_animIDRandomIndex, _input.randomIndex);
+					_animator.SetTrigger(_animIDRandom);
+				}
+			}
+        }
+
 		private void CameraRotation()
 		{
 			// if there is an input and camera position is not fixed

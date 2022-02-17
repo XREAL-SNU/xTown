@@ -35,7 +35,7 @@ public class AvatarFaceButton : MonoBehaviour
     public void SelectButton()
     {
         Selected = true;
-        _buttonBorder.color = Color.blue;
+        _buttonBorder.color = Color.yellow;
     }
 
     public void DeselectButton()
