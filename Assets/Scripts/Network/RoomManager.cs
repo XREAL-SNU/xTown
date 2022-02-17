@@ -65,6 +65,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         return playerInfos;
     }
 
+
+
     // key is photonView Id in room, which may be reused.
     Dictionary<int, GameObject> _playerObjects = new Dictionary<int, GameObject>();
     public T GetComponentInPlayerById<T>(int id) where T : UnityEngine.Object

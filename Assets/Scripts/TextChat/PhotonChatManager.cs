@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 //photon chat
 using Photon.Chat;
 using Photon.Realtime;
@@ -23,7 +24,7 @@ namespace XReal.Xtown.PhotonChat
         private readonly List<string> privateChannels = new List<string>();
         private string selectedChannelName = "Default"; // mainly used for GUI/input
         
-        
+
         // in development
         private readonly List<string> activeUsers = new List<string>();
 
@@ -42,7 +43,9 @@ namespace XReal.Xtown.PhotonChat
         public Text ChannelToggleText;
         public Text CurrentRoom;
         public Button AnnounceButton;
-        public Text AnnounceText;    
+        public Button Xbutton;
+        public Text AnnounceText;
+        public Text TextinAnnounceButton;    
 
         [Header("UI")]
         //the ui elements - buttons and texts -> set in inspector
@@ -52,11 +55,11 @@ namespace XReal.Xtown.PhotonChat
         
         //채팅방 관리 버튼을 만들어뒀는데 세부 채팅 씬 개발을 뒤로 미뤄서 일단 그냥 HideButton이랑 연결시켜둠
         public TextMeshProUGUI CurrentChannelText;
-        
-        public RoomManager roomManager;
+        //public Text CurrentChannelText;
+
         //This is the Dropdown
         public Dropdown ChannelDropdown;
-
+        public RoomManager roomManager;
         private bool isAnnounce = false;
         private string userID;
 
@@ -84,7 +87,7 @@ namespace XReal.Xtown.PhotonChat
                 //check for new messages: call every frame
                 this.chatClient.Service();
             }
-            if(PhotonNetwork.CurrentRoom.PlayerCount>1)
+            if(myChannels.Contains("Default"))
             {
                 GetUsersFromDefalut();
             }
@@ -92,7 +95,13 @@ namespace XReal.Xtown.PhotonChat
         }
         
 
-
+        public void OnClickXbutton()
+        {
+            Debug.Log("Xbutton Clicked!");
+            ChatPanel.gameObject.SetActive(false);
+            ChannelPanel.gameObject.SetActive(true);
+            Debug.Log(ChatPanel.gameObject.activeSelf);
+        }
 
         /* UI callbacks */
 
@@ -108,6 +117,15 @@ namespace XReal.Xtown.PhotonChat
             }
         }
 
+
+        public void OnClickSend()
+        {
+            SendChatMessage(InputFieldChat.text, selectedChannelName);
+            //InputFieldChat.Select();
+            InputFieldChat.text = "";
+            InputFieldChat.OnDeselect(new BaseEventData(EventSystem.current));
+            EventSystem.current.SetSelectedGameObject(null);
+        }
 
         // 현재 이 함수도 필요가 없고 '채팅방 관리'버튼을 누르면 OnClickHide가 실행됨
         //없어도 되는 함수임
@@ -163,8 +181,6 @@ namespace XReal.Xtown.PhotonChat
         /* main parsing function */
         // tooo large for a function. split!!!
         // parse the message(including command)
-
-
         void SendChatMessage(string inputLine, string channelName)
         {
             //nothing to send
@@ -258,17 +274,13 @@ namespace XReal.Xtown.PhotonChat
             }
         }
 
-
-
         public void SendHello(string toID)
         {
             this.chatClient.SendPrivateMessage(toID, "user " + userID + " says hi");
         }
 
         /* Photon Callbacks */
-
-
-        public new void OnConnected()
+        public void OnConnected()
         {
             //automatic subscription to default channels.
             if (this.ChannelsToJoinOnConnect != null && this.ChannelsToJoinOnConnect.Length > 0)
@@ -350,14 +362,14 @@ namespace XReal.Xtown.PhotonChat
             
             if(channel.IsPrivate)
             {
-                CurrentChannelText.text=" ";
-                CurrentChannelText.text = channel.ToStringMessages(userID);
+               CurrentChannelText.text=" ";
+               CurrentChannelText.text = channel.ToStringMessages(userID);
                 //OnPrivateMessage만 해도 해당 채널의 모든 메시지를 불러오는 형태임
             }
             else
             {
                 Debug.Log("This is Public Chat");
-                CurrentChannelText.text = channel.ToStringMessages(userID);
+                CurrentChannelText.text = channel.ToStringMessages();
                 //글씨 색 버그가 있다.
                 //TostringMessage를 아예 ChatChannel에서 바꾸면 수정 가능한데 지금으로썬 할필요 없어짐
             }
@@ -381,11 +393,11 @@ namespace XReal.Xtown.PhotonChat
                 {
                     if(channelName=="Default")
                     {
-                        newMessage+= "<#CB3A3A>"+"("+senders[i]+")"+": "+messages[i]+"</color>"+"\r\n";
+                        newMessage+= "<#4452CE>"+"("+senders[i]+")"+"</color>"+": "+messages[i]+"\r\n";
                     }
                     else
                     {
-                        newMessage+= "<#CB3A3A>"+"("+senders[i]+")"+": "+messages[i]+"</color>"+"\r\n";
+                        newMessage+= "<#4452CE>"+"("+senders[i]+")"+"</color>"+": "+messages[i]+"\r\n";
                     }
                 }
                 else
@@ -408,7 +420,6 @@ namespace XReal.Xtown.PhotonChat
         public void OnPrivateMessage(string sender, object message, string channelName)
         {
             //add to channels.
-            
             if (!myChannels.Contains(channelName))
             {
                 myChannels.Add(channelName);
@@ -429,7 +440,7 @@ namespace XReal.Xtown.PhotonChat
             if (channelName.Equals(this.selectedChannelName))
             {
 
-                ShowChannel(channelName);
+                ShowChannel(userID+":"+channelName);
             }
             ChatChannel ch = this.chatClient.PrivateChannels[channelName];
             string newMessage = "";
@@ -439,7 +450,7 @@ namespace XReal.Xtown.PhotonChat
                 if(sender==userID)
                 {
                     string[] words= channelName.Split(':');
-                    newMessage+= "<#CB3A3A>"+"("+sender+"):"+msg+"</color>"+"\r\n";
+                    newMessage+= "<#4452CE>"+"("+sender+")"+"</color>"+":"+msg+"\r\n";
                 }
                 else
                 {
@@ -622,35 +633,6 @@ namespace XReal.Xtown.PhotonChat
             }
         }
 
-        /*public void RemoveLeavedUsers()
-        {
-            List<string> playerNameList = roomManager.GetPlayerNameList();
-            foreach(string channelName in privateChannels)
-            {
-                string user = channelName.Split(':')[1];
-                if(!playerNameList.Contains(user))
-                {
-                    myChannels.Remove(channelName);
-                    privateChannels.Remove(channelName);
-                    if(SelectedChannelText.text =="Personal Chat")
-                    {
-                        ChannelDropdown.options.RemoveAll(item => item.text.Equals(user));
-                    }
-                    break;
-                }
-                else
-                {
-                    foreach(string user1 in playerNameList)
-                    {
-                        Debug.Log(user1);
-                    }
-                }
-            }
-            OnPlayerLeftRoom으로 일단 구독해제를 만들어놓긴 했는데 예외 케이스 때문에
-            이 코드도 남겨두도록 하겠음.
-        }*/
-
-
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -686,7 +668,6 @@ namespace XReal.Xtown.PhotonChat
 
         아직 상대방이 나갈 때 채널목록에서 자동으로 삭제되지는 않음.
         이건 개개인이 채널하고 연결이 끊길 때 모든 채널의 구독을 해제하도록 만들어야 할 듯함
-        ->위의 OnPlayerLeftRoom Callback으로 임시로 해결함.
         */
 
 
@@ -728,6 +709,7 @@ namespace XReal.Xtown.PhotonChat
                             option.text = channelName[0];
                             ChannelDropdown.options.Add(option);
                         }
+                        //뒤에 숫자 0으로 그냥 써놔도 무방한지 확실히하기
                     }
                 }
             }
@@ -787,6 +769,7 @@ namespace XReal.Xtown.PhotonChat
             {
                 isAnnounce = false;
                 ColorBlock cb = AnnounceButton.colors;
+                TextinAnnounceButton.text = "Announce";
                 Color newColor = new Color32(245, 245, 245, 225);
                 cb.normalColor = newColor;
                 cb.highlightedColor = newColor;
@@ -801,7 +784,8 @@ namespace XReal.Xtown.PhotonChat
             {
                 isAnnounce = true;
                 ColorBlock cb = AnnounceButton.colors;
-                Color newColor = new Color32(69, 199, 247, 225);
+                TextinAnnounceButton.text = "<color=#FFFFFF>Announce</color>";
+                Color newColor = new Color32(53, 68, 202, 255);
                 cb.normalColor = newColor;
                 cb.highlightedColor = newColor;
                 cb.pressedColor = newColor;
