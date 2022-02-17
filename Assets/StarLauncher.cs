@@ -50,18 +50,34 @@ public class StarLauncher : MonoBehaviour
         
         TPC = GetComponent<ThirdPersonControllerMulti>();
 
-        dollyCart = GameObject.Find("Dolly_Character_Dome").GetComponent<CinemachineDollyCart>();
-        playerParent = GameObject.Find("Player_Parent_Dome").transform;
+        // dollyCart = GameObject.Find("Dolly_Character_Dome").GetComponent<CinemachineDollyCart>();
+        // playerParent = GameObject.Find("Player_Parent_Dome").transform;
 
-        trail = dollyCart.GetComponentInChildren<TrailRenderer>();
+        // trail = dollyCart.GetComponentInChildren<TrailRenderer>();
     }
 
     void Update()
     {
         if (insideLaunchStar)
+        {
             if (Input.GetKeyDown(KeyCode.L))
+            {
+                if (dollyCart == null)
+                {
+                    GameObject dollyCartGo = Instantiate(Resources.Load<GameObject>("Monorail/Dolly_Character"), Vector3.zero, Quaternion.identity);
+                    dollyCart = dollyCartGo.GetComponent<CinemachineDollyCart>();
+                    trail = dollyCart.GetComponentInChildren<TrailRenderer>();
+                }
+                
+                if (playerParent == null)
+                {
+                    GameObject playerParentGo = Instantiate(Resources.Load<GameObject>("Monorail/Player_Parent"), Vector3.zero, Quaternion.identity);
+                    playerParent = playerParentGo.transform;
+                }
+                
                 StartCoroutine(CenterLaunch());
-
+            }
+        }
 
         if (flying)
         {
@@ -70,6 +86,23 @@ public class StarLauncher : MonoBehaviour
             if (!almostFinished)
             {
                 playerParent.transform.rotation = dollyCart.transform.rotation;
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                playerParent.DOComplete();
+                dollyCart.enabled = false;
+                dollyCart.m_Position = 0;
+                animator.applyRootMotion = true;
+                movement.enabled = true;
+                TPC.enabled = true;
+                transform.parent = null;
+
+                flying = false;
+                almostFinished = false;
+                animator.SetBool("flying", false);
+                followParticles.Stop();
+                trail.emitting = false;
             }
         }
 
@@ -85,6 +118,7 @@ public class StarLauncher : MonoBehaviour
 
     IEnumerator CenterLaunch()
     {
+        animator.applyRootMotion = false;
         movement.enabled = false;
         transform.parent = null;
         TPC.enabled = false;
@@ -152,6 +186,7 @@ public class StarLauncher : MonoBehaviour
         playerParent.DOComplete();
         dollyCart.enabled = false;
         dollyCart.m_Position = 0;
+        animator.applyRootMotion = true;
         movement.enabled = true;
         TPC.enabled = true;
         transform.parent = null;
@@ -188,7 +223,6 @@ public class StarLauncher : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("hi");
         if (other.CompareTag("Launch"))
         {
             insideLaunchStar = false;
