@@ -169,12 +169,18 @@ public class CustomizingOther : UIScene
     public void OnButtonEnter(PointerEventData data)
     {
         GameObject btn = data.pointerEnter.transform.parent.gameObject;
-        btn.GetComponent<Image>().color = XTownColor.XTownGrey.ToColor();
+        if (btn.GetComponent<Image>() != null)
+        {
+            btn.GetComponent<Image>().color = XTownColor.XTownGrey.ToColor();
+        }
     }
 
     public void OnButtonExit(PointerEventData data)
     {
         GameObject btn = data.pointerEnter.transform.parent.gameObject;
-        btn.GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
+        if (btn.GetComponent<Image>() != null)
+        {
+            btn.GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
+        }
     }
 }
