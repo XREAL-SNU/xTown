@@ -12,6 +12,8 @@ public class PocketBallJoin : MonoBehaviourPunCallbacks
 
 	[SerializeField]
     private GameObject _mainCanvas;
+	[SerializeField]
+	private CamManager _camManager;
 	private byte _maxPlayersPerRoom = 2;
 		//[SerializeField]
 		//private Text _playerNumText;
@@ -42,7 +44,7 @@ public class PocketBallJoin : MonoBehaviourPunCallbacks
 			Debug.DrawRay(ray.origin, ray.direction, Color.green);
 			if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
 			{
-				if (!_joinPanel.activeInHierarchy) _joinPanel.SetActive(true);
+				_joinPanel.SetActive(true);
 				isPocketBallConnecting = true;
 			}
 		}
@@ -55,6 +57,7 @@ public class PocketBallJoin : MonoBehaviourPunCallbacks
 	{
 		_joinPanel.SetActive(false);
 		_mainCanvas.SetActive(false);
+		_camManager.enabled = false;
 		PlayerPrefs.SetString("PastScene", "MainRoom");
 		TestConnect.Instance._isStartingPocket = true;
         PhotonNetwork.LeaveRoom();

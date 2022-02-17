@@ -20,6 +20,8 @@ namespace XReal.XTown.Yacht
 		//private Text _playerNumText;
 		[SerializeField]
 		private GameObject _mainCanvas;
+		[SerializeField]
+		private CamManager _camManager;
 		private PhotonView _view;
 		//private int _currentPlayers = 0;
 		private int _currentRoomNum = 0;
@@ -49,7 +51,7 @@ namespace XReal.XTown.Yacht
 				Debug.DrawRay(ray.origin, ray.direction, Color.green);
 				if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
 				{
-					if (!_joinPanel.activeInHierarchy) _joinPanel.SetActive(true);
+					_joinPanel.SetActive(true);
 					isYachtConnecting = true;
 				}
 			}
@@ -62,6 +64,7 @@ namespace XReal.XTown.Yacht
 		{
 			_joinPanel.SetActive(false);
 			_mainCanvas.SetActive(false);
+			_camManager.enabled = false;
 			PlayerPrefs.SetString("PastScene", "MainRoom");
 			TestConnect.Instance._isStartingYacht = true;
             PhotonNetwork.LeaveRoom();
