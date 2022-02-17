@@ -113,6 +113,7 @@ public class BoatSeat : MonoBehaviour
         player.transform.localPosition = Vector3.zero;
         player.transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
         player.GetComponent<ThirdPersonControllerMulti>().enabled = false;
+        player.GetComponent<Animator>().applyRootMotion = false;
         player.GetComponent<Animator>().SetBool("Grounded", true);
         player.GetComponent<Animator>().SetBool("Sitting", true);
 
@@ -136,6 +137,7 @@ public class BoatSeat : MonoBehaviour
         player.GetComponent<Animator>().SetBool("Sitting", false);
         Debug.Log(player.transform.parent);
         player.transform.position = disembarkLocation;
+        player.GetComponent<Animator>().applyRootMotion = true;
 
         _buttonCanvas.gameObject.SetActive(false);
         _buttonCanvas.Hide();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Threading;
 
 public class UFOZonePanel : MonoBehaviour
 {
@@ -15,8 +16,13 @@ public class UFOZonePanel : MonoBehaviour
     public void OnClickYes()
     {
         _playerController.enabled = false;
-        //cameraControl.SetBeneath();
-        _player.transform.DOLocalMove(ufoZoneSpawnPoint.transform.position,5);
+        //Vector3 prev_position = _player.transform.position;
+        //
+        
+        _player.transform.DOLocalMove(ufoZoneSpawnPoint.transform.position,2);
+        _player.transform.position = ufoZoneSpawnPoint.transform.position;
+        //
+
         _playerController.enabled = true;
         Hide();
     }
