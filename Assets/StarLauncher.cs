@@ -28,6 +28,7 @@ public class StarLauncher : MonoBehaviour
     private Transform launchStar;
     private Transform launchSurf;
     private bool isStarBool;
+    public static bool exitBool;
 
     [Space]
     [Header("Public References")]
@@ -59,6 +60,7 @@ public class StarLauncher : MonoBehaviour
         trail = dollyCart.GetComponentInChildren<TrailRenderer>();
 
         isStarBool = true;
+        exitBool = false;
     }
 
     void Update()
@@ -82,7 +84,7 @@ public class StarLauncher : MonoBehaviour
         {
             almostFinished = true;
             //thirdPersonCamera.m_XAxis.Value = cameraRotation;
-            if(isStarBool){
+            if(isStarBool && !exitBool){
                 playerParent.DORotate(new Vector3(360 + 180, 0, 0), .5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear)
                     .OnComplete(() => playerParent.DORotate(new Vector3(-90, playerParent.eulerAngles.y, playerParent.eulerAngles.z), .2f));
             }
@@ -218,13 +220,16 @@ public class StarLauncher : MonoBehaviour
         movement.enabled = true;
         TPC.enabled = true;
 
-        if(!isStarBool)
+        if(!isStarBool && !exitBool)
         {
             ThirdPersonController.Gravity = 15.0f;
 
             ThirdPersonController.UpsideBool = true;
+        }
+        else{
+            ThirdPersonController.Gravity = -15.0f;
 
-            //transform.up = new Vector3(0,-1,0);
+            ThirdPersonController.UpsideBool = false;
         }
         transform.parent = null;
 
@@ -257,6 +262,12 @@ public class StarLauncher : MonoBehaviour
             if(other.gameObject.name == "SurfBoard_Water"){
                 launchSurf = other.transform;
                 isStarBool = false;
+                exitBool = false;
+            }
+            else if(other.gameObject.name == "SurfBoard_Ceiling"){
+                launchSurf = other.transform;
+                isStarBool = false;
+                exitBool = true;
             }
             else{
                 launchStar = other.transform;
@@ -267,7 +278,6 @@ public class StarLauncher : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("hi");
         if (other.CompareTag("Launch"))
         {
             insideLaunchStar = false;
