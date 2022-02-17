@@ -124,9 +124,9 @@ public class XTownColor
     public static XTownColor XTownBlack = new XTownColor("XTownBlack", Color.black);
     public static XTownColor XTownCyan = new XTownColor("XTownCyan", Color.cyan);
 
-    public static XTownColor ButtonOutlineDefault = new XTownColor("ButtonOutlineDefault", Color.black);
-    public static XTownColor ButtonOutlineEnter = new XTownColor("ButtonOutlineEnter", new Color(0.2f, 0.3f, 0.7f, 1.0f));
-    public static XTownColor ButtonOutlineClick = new XTownColor("ButtonOutlineClick", new Color(0.2f, 0.7f, 0.3f, 1.0f));
+    public static XTownColor ButtonOutlineDefault = new XTownColor("ButtonOutlineDefault", new Color(0, 0, 0, 0));
+    public static XTownColor ButtonOutlineEnter = new XTownColor("ButtonOutlineEnter", new Color32(40, 56, 195, 255));
+    public static XTownColor ButtonOutlineClick = new XTownColor("ButtonOutlineClick", new Color32(67, 86, 255, 255));
 
     public XTownColor(string name, float r, float g, float b, float a)
     {

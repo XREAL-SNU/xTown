@@ -47,6 +47,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
         return playerInfos;
     }
 
+    public List<string> GetPlayerNameList()
+    {
+
+        List<string> playerInfos = new List<string>();
+        if (!PhotonNetwork.InRoom)
+        { // if not in room, just return empty.
+            return playerInfos;
+        }
+        foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            string playerInfo = player.NickName;
+            //playerInfo.PlayerName = (string)player.CustomProperties[PlayerInfo.PlayerInfoField.PlayerName.ToString()];
+            playerInfos.Add(playerInfo);
+        }
+        Debug.Log($"GetPlayerInfoList returning {playerInfos.Count} players");
+        return playerInfos;
+    }
+
     // key is photonView Id in room, which may be reused.
     Dictionary<int, GameObject> _playerObjects = new Dictionary<int, GameObject>();
     public T GetComponentInPlayerById<T>(int id) where T : UnityEngine.Object

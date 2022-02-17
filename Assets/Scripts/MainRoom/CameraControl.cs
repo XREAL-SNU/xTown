@@ -31,16 +31,38 @@ public class CameraControl : MonoBehaviour
     private float _cinemachineTargetYaw;
     private float _defaultY = 0.0f;
     private bool _alreadyFront;
+    private CinemachinePOVExtension _fpExtension;
+    private Transform _mainCameraTransform;
+    CharacterController _playerController;
 
     private void Start()
     {
+        if(CameraManager == null) CameraManager = FindObjectOfType<CamManager>();
+        _mainCameraTransform = Camera.main.transform;
+
+        // Initial Rotation Speed
+        // Edit Here
+        xRotateSpeed = 7f;
+        yRotateSpeed = 5f;
+        xRotateDecelerate = 2f;
+
         //_player = GameObject.FindWithTag("Player");
         _player = PlayerManager.Players.LocalPlayerGo;
         _camTarget = _player.GetComponent<ThirdPersonControllerMulti>().CinemachineCameraTarget;
         _input = _player.GetComponent<ThirdPersonControllerMulti>().GetComponent<StarterAssetsInputs>();
+        _playerController = _player.GetComponent<CharacterController>();
         _useMouseToRotateTp = false;
         _useMouseToRotateFp = false;
         _firstPersonCam = CameraManager.FirstPersonCamObj;
+
+        // Set initial values for rotation
+        if(FreeLookCam != null)
+        {
+            _cinemachineTargetYaw = FreeLookCam.m_XAxis.Value;
+            _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
+        }
+
+        if(TryGetComponent(out CinemachinePOVExtension fpExtension)) _fpExtension = fpExtension;
     }
     void Update()
     {
@@ -50,56 +72,94 @@ public class CameraControl : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeyCode.KeypadMinus) || Input.GetKey(KeyCode.Minus) || Input.GetKey(KeyCode.Equals))
+        if (Input.mouseScrollDelta.y < 0 && PlayerMouse.WheelPlayerMouse.MouseAvailable)
         {
-            if (FreeLookCam.m_Lens.FieldOfView < 80)
+            if (FreeLookCam?.m_Lens.FieldOfView < 80)
             {
-                FreeLookCam.m_Lens.FieldOfView += zoomSpeed;
+                Debug.Log("Scroll Up");
+                FreeLookCam.m_Lens.FieldOfView += 5f;
             }
         }
 
-        if (Input.GetKey(KeyCode.KeypadPlus) || Input.GetKey(KeyCode.Plus))
+        if (Input.mouseScrollDelta.y > 0 && PlayerMouse.WheelPlayerMouse.MouseAvailable)
         {
-            if (FreeLookCam.m_Lens.FieldOfView > 5)
+            if (FreeLookCam?.m_Lens.FieldOfView > 5)
             {
-                FreeLookCam.m_Lens.FieldOfView -= zoomSpeed;
+                Debug.Log("Scroll Down");
+                FreeLookCam.m_Lens.FieldOfView -= 5f;
             }
         }
 
-        if (CameraManager.IsCurrentFp)
+        if (_fpExtension != null)
         {
-            _useMouseToRotateTp = false;
-            FreeLookCam.m_XAxis.Value = 0;
-            FreeLookCam.m_YAxis.Value = 0;
-
-            if (Input.GetKey(KeyCode.Escape))
+            if (CameraManager.IsCurrentFp)
             {
-                _useMouseToRotateFp = false;
+                if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDragExit))
+                {
+                    /*_useMouseToRotateFp = false;*/
+                    _fpExtension.enabled = false;
+                }
+                if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDrag))
+                {
+                    /*_useMouseToRotateFp = true;*/
+                    _fpExtension.enabled = true;
+                    _playerController.attachedRigidbody.transform.rotation = 
+                        Quaternion.Euler(_player.transform.eulerAngles.x, _mainCameraTransform.eulerAngles.y, _player.transform.eulerAngles.z);
+                }
             }
-            if (Input.GetKey(KeyCode.R))
-            {
-                _useMouseToRotateFp = true;
-            }
+            else _fpExtension.enabled = false;
+        }
+        /*if(_fpExtension != null)
+        {
+            Debug.Log("Cinemachine FP Extension Found");
         }
         else
         {
-            _useMouseToRotateFp = false;
-            _firstPersonCam.transform.eulerAngles = new Vector3(0, 0, 0);
-            if (Input.GetKey(KeyCode.Escape))
+            Debug.Log("Cinemachine FP Extension NOT Found");
+        }*/
+
+        if (FreeLookCam != null)
+        {
+            if (CameraManager.IsCurrentFp)
             {
                 _useMouseToRotateTp = false;
+
+                if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDragExit))
+                {
+                    _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
+                    _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
+
+                    _useMouseToRotateFp = false;
+                }
+                if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDrag))
+                {
+                    _useMouseToRotateFp = true;
+                }
             }
-            if (Input.GetKey(KeyCode.R))
+            else
             {
-                _useMouseToRotateTp = true;
+                _useMouseToRotateFp = false;
+                _firstPersonCam.transform.eulerAngles = new Vector3(0, 0, 0);
+                if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDragExit))
+                {
+                    _cinemachineTargetYaw =   FreeLookCam.m_XAxis.Value;
+                    _cinemachineTargetPitch = FreeLookCam.m_YAxis.Value;
+
+                    _useMouseToRotateTp = false;
+                }
+                if (PlayerMouse.MouseInput("Camera", MouseInput.CameraDrag))
+                {
+                    _useMouseToRotateTp = true;
+                }
             }
         }
+        
     }
 
     private void LateUpdate()
     {
         if (_useMouseToRotateTp) RotateTp();
-        //if (_useMouseToRotateFp) RotateFp();
+        if (_useMouseToRotateFp) RotateFp();
     }
 
     private void RotateFp()
@@ -107,8 +167,8 @@ public class CameraControl : MonoBehaviour
         m_Input.x = Input.GetAxis("Mouse X");
         m_Input.y = Input.GetAxis("Mouse Y");
 
-        float xRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.x - m_Input.x * turnSpeed, -60, 60);
-        float yRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.y + m_Input.y * turnSpeed, -45, 80);
+        float xRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.x - m_Input.x * turnSpeed * Time.deltaTime, -60, 60);
+        float yRotate = Mathf.Clamp(_firstPersonCam.transform.eulerAngles.y + m_Input.y * turnSpeed * Time.deltaTime, -45, 80);
 
         _firstPersonCam.transform.eulerAngles = new Vector3(xRotate, yRotate, 0);
     }
@@ -118,8 +178,8 @@ public class CameraControl : MonoBehaviour
         m_Input.x = Input.GetAxis("Mouse X");
         m_Input.y = Input.GetAxis("Mouse Y");
         if(m_Input.sqrMagnitude > _threshold) {
-            _cinemachineTargetYaw += m_Input.x * xRotateSpeed;
-            _cinemachineTargetPitch += -1 * m_Input.y * yRotateSpeed;
+            _cinemachineTargetYaw += m_Input.x * xRotateSpeed * Time.deltaTime;
+            _cinemachineTargetPitch += -1 * m_Input.y * yRotateSpeed * Time.deltaTime;
 
             // clamp to 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
@@ -166,7 +226,6 @@ public class CameraControl : MonoBehaviour
         */
         FreeLookCam.m_XAxis.Value = _cinemachineTargetYaw;
         FreeLookCam.m_YAxis.Value = _cinemachineTargetPitch;
-
     }
     
     private float ClampAngle(float lfAngle, float lfMin, float lfMax)
@@ -181,15 +240,28 @@ public class CameraControl : MonoBehaviour
             _alreadyFront = false;
             return;
         }
-        FreeLookCam.gameObject.SetActive(false);
         _useMouseToRotateTp = false;
         Vector3 _playerPos = _camTarget.gameObject.transform.position;
         Vector3 _playerForward = _camTarget.gameObject.transform.forward;
-        FreeLookCam.VirtualCameraGameObject.transform.position = _playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius);
-        _cinemachineTargetYaw = 0f;
-        _cinemachineTargetPitch = 0f;
-        FreeLookCam.gameObject.SetActive(true);
+        StartCoroutine(camSetFront(_playerPos,_playerForward));
+        // FreeLookCam.ForceCameraPosition(_playerPos + _playerForward * FreeLookCam.m_Orbits[1].m_Radius,_camTarget.gameObject.transform.rotation);
+        // FreeLookCam.VirtualCameraGameObject.transform.position = _playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius);
+        // FreeLookCam.m_YAxis.Value = 0.4f;
         _alreadyFront = true;
-        _useMouseToRotateTp = true;
+        
+    }
+    IEnumerator camSetFront(Vector3 _playerPos, Vector3 _playerForward){
+        // float _angle = (180/Mathf.PI) * Mathf.Atan2(FreeLookCam.VirtualCameraGameObject.transform.position.x-(_playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius)).x,FreeLookCam.VirtualCameraGameObject.transform.position.z-(_playerPos + (_playerForward * FreeLookCam.m_Orbits[1].m_Radius)).z);
+        // if(_angle>180f) _angle-=360f;
+        // float _distance = Mathf.Abs(FreeLookCam.VirtualCameraGameObject.transform.position.y - _playerPos.y);
+        Vector3 _camPos=FreeLookCam.VirtualCameraGameObject.transform.position;
+        while(Vector3.Distance(FreeLookCam.VirtualCameraGameObject.transform.position,_playerPos + _playerForward * FreeLookCam.m_Orbits[1].m_Radius)>1f){
+            _camPos = Vector3.Lerp(_camPos,_playerPos + _playerForward * FreeLookCam.m_Orbits[1].m_Radius,Time.deltaTime*3f);
+            FreeLookCam.ForceCameraPosition(_camPos,_camTarget.gameObject.transform.rotation);
+            // FreeLookCam.m_XAxis.Value = Mathf.Lerp(FreeLookCam.m_XAxis.Value,_angle,Time.deltaTime*2f);
+            // FreeLookCam.m_YAxis.Value = Mathf.Lerp(FreeLookCam.m_YAxis.Value,0.33f,Time.deltaTime*_distance);
+            yield return null;
+        }
+        
     }
 }
