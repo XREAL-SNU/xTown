@@ -221,6 +221,9 @@ public class StarLauncher : MonoBehaviour
         if(!isStarBool)
         {
             ThirdPersonController.Gravity = 15.0f;
+
+            ThirdPersonController.UpsideBool = true;
+
             //transform.up = new Vector3(0,-1,0);
         }
         transform.parent = null;

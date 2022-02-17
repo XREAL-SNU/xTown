@@ -12065,7 +12065,6 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   JumpHeight: 2
-  Gravity: -15
   JumpTimeout: 0.3
   FallTimeout: 0.15
   Grounded: 1
@@ -12074,6 +12073,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 256
+  targetDirection: {x: 0, y: 0, z: 0}
   CinemachineCameraTarget: {fileID: 2101063149519507855}
   TopClamp: 70
   BottomClamp: -30
@@ -12178,7 +12178,6 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   JumpHeight: 1.2
-  Gravity: -15
   JumpTimeout: 0.5
   FallTimeout: 0.15
   Grounded: 1
@@ -12187,6 +12186,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 256
+  targetDirection: {x: 0, y: 0, z: 0}
   CinemachineCameraTarget: {fileID: 2101063149519507855}
   TopClamp: 70
   BottomClamp: -30

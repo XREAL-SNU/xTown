@@ -29,6 +29,8 @@ namespace StarterAssets
 		public float GroundedOffset = -0.14f;
 		public float GroundedRadius = 0.28f;
 		public LayerMask GroundLayers;
+		public static bool UpsideBool;
+		public Vector3 targetDirection;
 
 		[Header("Cinemachine")]
 		public GameObject CinemachineCameraTarget;
@@ -87,10 +89,12 @@ namespace StarterAssets
 			_input = GetComponent<StarterAssetsInputs>();
 
 			AssignAnimationIDs();
-
+			
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+
+			UpsideBool = false;
 		}
 
 		protected virtual void Update()
@@ -229,15 +233,23 @@ namespace StarterAssets
 			if (_input.move != Vector2.zero)
 			{
 				_targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-				float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
-
-				// rotate to face input direction relative to camera position
-				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+				
+				// rotate to face input direction relative to camera position 뒤집히고 나면 반대로 뒤집어버리기
+				if(!UpsideBool){
+					float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+					targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+				}
+				else{
+					float rotation = Mathf.SmoothDampAngle(180f + transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+					transform.rotation = Quaternion.Euler(180, rotation, 0.0f);
+					targetDirection = Quaternion.Euler(180f, _targetRotation, 0.0f) * Vector3.forward;
+				}
 			}
 
 			
 
-			Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+			
 
 			// move the player
 			_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
@@ -276,7 +288,7 @@ namespace StarterAssets
 				{
 					SoundManager.instance.PlaySE("JumpSound");
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					_verticalVelocity = Mathf.Sqrt(Mathf.Abs(JumpHeight * -2f * Gravity));
 
 					// update animator if using character
 					if (_hasAnimator)
