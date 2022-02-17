@@ -44,6 +44,7 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
 			Debug.DrawRay(ray.origin, ray.direction, Color.green);
 			if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == gameObject)
 			{
+				Debug.Log("basketballjoin");
 				_joinPanel.SetActive(true);
 				isBasketBallConnecting = true;
 			}
