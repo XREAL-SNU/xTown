@@ -53,7 +53,7 @@ namespace XReal.Xtown.PhotonChat
         // Start is called before the first frame update
         void Start()
         {
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
             userID = "ChatUser" + UnityEngine.Random.Range(0, 1000).ToString();
             //add listeners to input field and send button
             InputFieldChat.onEndEdit.AddListener(delegate { OnEnterSend(); });

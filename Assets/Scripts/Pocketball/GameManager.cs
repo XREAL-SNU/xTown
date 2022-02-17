@@ -87,21 +87,26 @@ namespace JK
                     if(AorB)
                     {
                         GameOver_B_Win.SetActive(true);
+                                        i = 1;
+                        
                     }
                     else
                     {
                         GameOver_A_Win.SetActive(true);
+                                        i = 1;
                     }
                 }
                 else if(countA ==0 && isBall[8]==1)
                 {
                     GameOver_Panel.SetActive(true);
                     GameOver_A_Win.SetActive(true);
+                                    i = 1;
                 }
                 else if(countB == 0 && isBall[8] == 1)
                 {
                     GameOver_Panel.SetActive(true);
                     GameOver_B_Win.SetActive(true);
+                                    i = 1;
                 }
             }
         }
