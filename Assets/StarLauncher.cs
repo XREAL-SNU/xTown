@@ -54,8 +54,8 @@ public class StarLauncher : MonoBehaviour
         
         TPC = GetComponent<ThirdPersonControllerMulti>();
 
-        dollyCart = GameObject.Find("Dolly_Character_Dome").GetComponent<CinemachineDollyCart>();
-        playerParent = GameObject.Find("Player_Parent_Dome").transform;
+        dollyCart = GameObject.Find("Dolly_Character_Water").GetComponent<CinemachineDollyCart>();
+        playerParent = GameObject.Find("Player_Parent_Water").transform;
 
         trail = dollyCart.GetComponentInChildren<TrailRenderer>();
 
@@ -89,7 +89,7 @@ public class StarLauncher : MonoBehaviour
                     .OnComplete(() => playerParent.DORotate(new Vector3(-90, playerParent.eulerAngles.y, playerParent.eulerAngles.z), .2f));
             }
             else{
-                playerParent.DORotate(new Vector3(360 + 180, 0, 0), .5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear);
+                //playerParent.DORotate(new Vector3(360 + 180, 0, 0), .5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear);
             }
         }
     }
@@ -143,7 +143,7 @@ public class StarLauncher : MonoBehaviour
 
             Sequence CenterLaunch = DOTween.Sequence();
             CenterLaunch.Append(transform.DOMove(dollyCart.transform.position, .2f));
-            CenterLaunch.Join(transform.DORotate(dollyCart.transform.eulerAngles + new Vector3(90, 0, 0), .2f));
+            //CenterLaunch.Join(transform.DORotate(dollyCart.transform.eulerAngles + new Vector3(90, 0, 0), .2f));
             CenterLaunch.Join(surfAnimation.Reset(.2f));
             CenterLaunch.OnComplete(() => LaunchSequence());
         }
@@ -189,8 +189,7 @@ public class StarLauncher : MonoBehaviour
             playerParent.transform.position = launchSurf.position;
             playerParent.transform.rotation = transform.rotation;
 
-            flying = true;
-            animator.SetBool("flying", true);
+            animator.SetTrigger("flyingTrigger");
             Sequence s = DOTween.Sequence();
 
             s.AppendCallback(() => transform.parent = playerParent.transform);                                           // Attatch the player to the empty gameObject
@@ -199,6 +198,7 @@ public class StarLauncher : MonoBehaviour
             s.Join(surfAnimation.PullStar(prepMoveDuration));
             s.AppendInterval(launchInterval);                                                                            // Wait for a while before the launch
             s.AppendCallback(() => trail.emitting = true);
+            animator.SetTrigger("standTrigger");
             s.AppendCallback(() => followParticles.Play());
             s.Append(DOVirtual.Float(dollyCart.m_Position, 1, finalSpeed, PathSpeed).SetEase(pathCurve));                // Lerp the value of the Dolly Cart position from 0 to 1
             s.Join(surfAnimation.PunchStar(.5f));
@@ -219,6 +219,7 @@ public class StarLauncher : MonoBehaviour
         dollyCart.m_Position = 0;
         movement.enabled = true;
         TPC.enabled = true;
+        animator.SetTrigger("exitTrigger");
 
         if(!isStarBool && !exitBool)
         {
