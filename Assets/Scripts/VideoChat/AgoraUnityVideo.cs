@@ -28,7 +28,7 @@ public class AgoraUnityVideo: MonoBehaviour
     private string AppID;
     // a token is a channel key that works with a AppID that requires it. 
     // Generate one by your token server or get a temporary token from the developer console
-    public string token = "00667cb00c63d4341ec8aba2d7de7283bbdIAD6eGqFinQMESn69JIeGVVxpFfZWbokglXo4VZKYzdozl5liXkAAAAAEAAWylBUnBwOYgEAAQCbHA5i";
+    public string token = "00667cb00c63d4341ec8aba2d7de7283bbdIACupMV4JWMZKuh9fui4E8SdYCilGtSgJkB3pp/Gj1Yd5V5liXkAAAAAEAAWylBUFHUPYgEAAQATdQ9i";
     public List<uint> uidList = new List<uint>();
     //token이 만료가 되는걸 어떻게 방지하는지? 혹은 아예 token없이 통신해야 하는지
     // load agora engine
