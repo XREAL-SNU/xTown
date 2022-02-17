@@ -129,6 +129,8 @@ namespace StarterAssets
                     animator.SetBool("flying", false);
                     followParticles.Stop();
                     trail.emitting = false;
+
+                    _view.RPC("EvacuateRPC", RpcTarget.Others);
                 }
             }
 
@@ -283,7 +285,6 @@ namespace StarterAssets
         [PunRPC]
         public void GetOnCartRPC(int playerParentViewId, int launchObjectViewId)
         {
-            Debug.Log("GetOnCartRPC: looking for playerParent and launchObject");
             // FREEZE movement
             movement.enabled = false;
             transform.parent = null;
@@ -301,7 +302,6 @@ namespace StarterAssets
         [PunRPC]
         public void LaunchSequenceRPC()
         {
-            Debug.Log("LaunchSequencePRC/ LAUNCH!!! setting parent");
             //cameraRotation = transform.eulerAngles.y;
 
             // SET parent to playerParent.
@@ -315,7 +315,6 @@ namespace StarterAssets
         [PunRPC]
         public void LandRPC()
         {
-            Debug.Log("LandRPC/ LAND!! detaching parent");
             PlaySmoke();
             // ENABLE controls
             movement.enabled = true;
@@ -328,6 +327,20 @@ namespace StarterAssets
             followParticles.Stop();
         }
 
+        [PunRPC]
+        public void EvacuateRPC()
+        {
+            // ENABLE controls
+            animator.applyRootMotion = true;
+            movement.enabled = true;
+            TPC.enabled = true;
+
+            // SET parent to null
+            transform.parent = null;
+
+            // STOP particles
+            followParticles.Stop();
+        }
         /* 
         // IPunObservables impl
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
