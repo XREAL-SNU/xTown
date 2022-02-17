@@ -6,23 +6,27 @@ namespace XReal.XTown.Yacht
 {
     public class DiceCheckZoneScript : MonoBehaviour
     {
-        Vector3 diceVelocity;
-        DiceScript diceScript;
+        protected Vector3 diceVelocity;
+        private DiceScript diceScript;
 
         // Update is called once per frame
         void FixedUpdate()
         {
         }
 
-        void OnTriggerStay(Collider col)
+        protected virtual void OnTriggerStay(Collider col)
         {
+            if(col is null)
+            return; 
             if (col.gameObject.tag == "Side")
             {
-                diceScript = col.transform.parent.gameObject.GetComponent<DiceScript>();
+                diceScript = col.transform.parent.gameObject.GetComponent<DiceScriptMulti>();
                 diceVelocity = diceScript.diceVelocity;
 
                 if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
                 {
+                    if(diceScript is null || diceScript.diceInfo is null)
+                    return;
                     switch (col.gameObject.name)
                     {
                         case "Side1":

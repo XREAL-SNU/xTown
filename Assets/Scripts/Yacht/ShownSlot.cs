@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace XReal.XTown.Yacht
 {
-    // 미완성된 기능입니다. 무시하셔도 됩니다.
     public class ShownSlot : MonoBehaviour
     {
         public int slotIndex = 0;

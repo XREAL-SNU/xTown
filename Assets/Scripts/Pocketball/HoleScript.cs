@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 namespace JK
 {
     public class HoleScript : MonoBehaviour
@@ -13,25 +15,39 @@ namespace JK
         public GameObject A_Color;
         public GameObject Color_Balls;
         public GameObject Line_Balls;
+        [SerializeField]
+        public GameObject[] Balls;
+        public PhotonView _view;
+        
         void Start()
         {
-
+            _view = GetComponent<PhotonView>();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-        
         void OnTriggerEnter(Collider ball)
         {
-            
+            int ballNum= int.Parse(ball.gameObject.name.Substring(5));
+            if(PocketDyeNetworkManager.Instance.networked&&_view.IsMine)
+            {
+                _view.RPC("EnterBall",RpcTarget.All,ballNum);
+            }
+            else if(!PocketDyeNetworkManager.Instance.networked)
+            {
+                EnterBall(ballNum);
+            }
+        }
+        IEnumerator SetActiveObjInSecond(GameObject obj, float second)
+        {
+            obj.SetActive(true);
 
+            yield return new WaitForSeconds(second);
+            obj.SetActive(false);
+        }
+        [PunRPC]
+        void EnterBall(int BallNum)
+        {
             //구멍에 들어가면 해당 번호 GameManager에 기록
-            int BallNum= int.Parse(ball.gameObject.name.Substring(5));
-
             //첫번째 공이 들어간 경우
+            Balls[BallNum].gameObject.SetActive(false);
             if(BallNum != 0)
             {
                 if(GameManager.ballChoice==0)
@@ -81,10 +97,6 @@ namespace JK
                     GameManager.ballChoice=1;
                 }
             }
-
-
-
-
             for(int i=0; i<16; i++)
             {
                 if(i==BallNum)
@@ -102,9 +114,7 @@ namespace JK
                     Debug.Log(i.ToString());
                 }
             }
-
             //구멍에 들어가면 공 없어짐
-            ball.gameObject.SetActive(false);
             //isBallStop에 영향 안가도록 1로 설정
             if(BallNum != 0)
             {
@@ -115,12 +125,7 @@ namespace JK
                 GameManager.isBallStop[BallNum]=0;
                 FreeBallScript.FreeBallBool = true;
             }
-            
-            
-            
-
             //각자 팀에 맞는 공을 넣었는지 확인
-
             //A팀인 경우
             if(GameManager.AorB)
             {
@@ -136,14 +141,12 @@ namespace JK
                     else if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.countB=GameManager.countB-1;
-                        GameManager.AorB=false;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=false;
                         GameManager.OtherBool = true;
                     }
                 }
@@ -159,14 +162,12 @@ namespace JK
                     else if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.countB=GameManager.countB-1;
-                        GameManager.AorB=false;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=false;
                         GameManager.OtherBool = true;
                     }
                 }
@@ -187,14 +188,12 @@ namespace JK
                     else if(BallNum>=1 && BallNum<=7)
                     {
                         GameManager.countA=GameManager.countA-1;
-                        GameManager.AorB=true;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=true;
                         GameManager.OtherBool = true;
                     }
                 }
@@ -210,36 +209,16 @@ namespace JK
                     else if(BallNum>=9 && BallNum<=15)
                     {
                         GameManager.countA=GameManager.countA-1;
-                        GameManager.AorB=true;
+                        if(GameManager.NothingBool)
                         GameManager.OtherBool = true;
                     }
                     //흰 공 넣었을 때
                     else if(BallNum==0)
                     {
-
-                        GameManager.AorB=true;
                         GameManager.OtherBool = true;
                     }
                 }
             }
-
-            //OnTriggerEnter 끝난 후
-
-
-
-            
-        }
-
-        IEnumerator SetActiveObjInSecond(GameObject obj, float second)
-        {
-            obj.SetActive(true);
-
-            yield return new WaitForSeconds(second);
-            obj.SetActive(false);
-        }
-
-
-
-
+        } 
     }
 }

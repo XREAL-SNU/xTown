@@ -9,11 +9,12 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
 {
     public GameObject[] CharacterPrefabs;
     public Transform SpawnPoint;
+    public Transform SpawnPoint_Whiteboard;
+    public Transform SpawnPoint_Yacht;
     public CinemachineFreeLook FreeLookCam;
     private Transform FollowTarget;
     private GameObject Player;
 
-    private int _randNum;
     public static SpawnCharacter Instance = null;
     // Start is called before the first frame update
     void Awake()
@@ -27,17 +28,15 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
             Destroy(this.gameObject);
         }
 
-        _randNum = Random.Range(1,9);
-
         Debug.Log("SpawnCharactery/Awake");
         if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
 
-        SpawnPoint = GameObject.Find("SpawnPoint_"+_randNum.ToString()).transform;
+        SpawnPoint = GameObject.Find("SpawnPoint").transform;
         FreeLookCam = GameObject.Find("CharacterCam").GetComponent<CinemachineFreeLook>();
 
         // disable currentRoomCanvas
-        RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
+        //RoomsCanvases.Instance.CurrentRoomCanvas.Hide();
         // this ensures that LocalPlayerGo is always set at Start time.
         InitCharacter();
     }
@@ -97,13 +96,41 @@ public class SpawnCharacter : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InRoom || !PhotonNetwork.IsConnected)
         {// instantiate locally
             Debug.Log("SpawnCharacter/Instantiating player locally");
-            Instantiate(_prefab, SpawnPoint.position, Quaternion.Euler(new Vector3(0,-45-45*(_randNum-1),0)));
+            switch (PlayerPrefs.GetString("prevScene"))
+            {
+                case "None":
+                    Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+                    break;
+
+                case "Whiteboard":
+                    Player = Instantiate(_prefab, SpawnPoint_Whiteboard.position, Quaternion.identity);
+                    break;
+                case "Yacht":
+                    Player = Instantiate(_prefab, SpawnPoint_Yacht.position, Quaternion.identity);
+                    break;
+                default:
+                    Player = Instantiate(_prefab, SpawnPoint.position, Quaternion.identity);
+                    break;
+            }
         }
         else
         {
             // instantiate over the network
             Debug.Log("SpawnCharacter/Instantiating player over the network");
-            Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.Euler(new Vector3(0,-45-45*(_randNum-1),0)));
+            switch (PlayerPrefs.GetString("prevScene"))
+            {
+                case "None":
+                    Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+                    break;
+
+                case "Whiteboard":
+                    Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint_Whiteboard.position, Quaternion.identity);
+                    break;
+
+                default:
+                    Player = PhotonNetwork.Instantiate("CharacterPrefab", SpawnPoint.position, Quaternion.identity);
+                    break;
+            }
             PhotonView view = Player.GetComponent<PhotonView>();
             if (view.IsMine) PlayerManager.Players.LocalPlayerGo = Player;
         }

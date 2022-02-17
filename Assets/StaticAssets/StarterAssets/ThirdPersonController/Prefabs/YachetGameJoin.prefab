@@ -44,6 +44,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.002
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2524544927476644120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4504201627477158425}
+  m_Layer: 0
+  m_Name: ReSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4504201627477158425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2524544927476644120}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0194, y: -0.0018, z: 0.0094}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.010000002}
+  m_Children: []
+  m_Father: {fileID: 8667720417596989894}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3818833222379485462
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +245,7 @@ Transform:
   - {fileID: 4170178196449679512}
   - {fileID: 3735805504423087282}
   - {fileID: 8994611093072253129}
+  - {fileID: 4504201627477158425}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -333,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _joinPanel: {fileID: 0}
   _maxPlayersPerRoom: 2
+  _mainCanvas: {fileID: 0}
 --- !u!1 &8382460045414713002
 GameObject:
   m_ObjectHideFlags: 0

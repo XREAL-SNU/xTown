@@ -35,7 +35,7 @@ public class MainCanvases : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
 
         FirstInitialize();
     }

@@ -84,10 +84,15 @@ namespace XReal.Xtown.PhotonChat
                 //check for new messages: call every frame
                 this.chatClient.Service();
             }
+            if(PhotonNetwork.CurrentRoom == null)
+            {
+                return;
+            }
             if(PhotonNetwork.CurrentRoom.PlayerCount>1)
             {
                 GetUsersFromDefalut();
             }
+            
             //update가 채널 가입보다 빠르게 시작되어 Default Channel에 가입한 이후부터 동작하도록 만듦
         }
         

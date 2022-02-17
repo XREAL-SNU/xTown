@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace XReal.XTown.Yacht
 {
-    // ¹Ì¿Ï¼ºµÈ ±â´ÉÀÔ´Ï´Ù. ¹«½ÃÇÏ¼Åµµ µË´Ï´Ù.
+    // ï¿½Ì¿Ï¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼Åµï¿½ ï¿½Ë´Ï´ï¿½.
     public class ShownSlotController : MonoBehaviour
     {
         public static ShownSlotController instance;
@@ -15,7 +15,7 @@ namespace XReal.XTown.Yacht
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
             else
             {
