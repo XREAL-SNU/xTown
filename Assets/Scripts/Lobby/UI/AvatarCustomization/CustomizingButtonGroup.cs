@@ -35,8 +35,9 @@ public class CustomizingButtonGroup : UIBase
 
         GameObject gridPanel = GetUIComponent<GameObject>((int)GameObjects.GridPanel);
         gridPanel.GetComponent<Text>().text = _propertyName;
-        gridPanel.GetComponent<Text>().fontSize = 45;
-        gridPanel.GetComponent<Text>().color = _textColor.ToColor();
+        gridPanel.GetComponent<Text>().fontSize = 24;
+        gridPanel.GetComponent<Text>().color = Color.white;
+        // gridPanel.GetComponent<Text>().color = _textColor.ToColor();
         _gridLayout = gridPanel.GetComponent<GridLayoutGroup>();
 
         foreach(ObjectPartProperty props in PlayerManager.Players.LocalAvatarAppearance.Descriptor.Parts[_partsIndex].Properties)

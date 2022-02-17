@@ -29,8 +29,8 @@ public class CustomizingTab : UIBase
 
         Bind<GameObject>(typeof(GameObjects));
 
-        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().text = _partName;
-        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().fontSize = 25;
+        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().text = _partName.ToUpper();
+        GetUIComponent<GameObject>((int)GameObjects.CustomizingTabText).GetComponent<Text>().fontSize = 18;
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).gameObject.BindEvent(OnTabSelect);
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).gameObject.BindEvent(OnTabEnter, UIEvents.UIEvent.Enter);
         GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).gameObject.BindEvent(OnTabExit, UIEvents.UIEvent.Exit);
@@ -59,6 +59,7 @@ public class CustomizingTab : UIBase
         if (_partName != _tabGroup.SelectedTab)
         {
             GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).GetComponent<Image>().color = XTownColor.XTownBlue.ToColor();
+            GetUIComponent<GameObject>((int)GameObjects.CustomizingTabImage).GetComponent<Image>().color = XTownColor.ButtonOutlineEnter.ToColor();
         }
     }
 
@@ -85,7 +86,7 @@ public class CustomizingTab : UIBase
         {
             GameObject btn = this.transform.parent.GetChild(i).gameObject;
             btn.transform.Find("CustomizingTabImage").GetComponent<Image>().color = XTownColor.XTownWhite.ToColor();
-            if (btn.GetComponent<CustomizingTab>()._partName.Equals(_tabGroup.SelectedTab)) btn.transform.Find("CustomizingTabImage").GetComponent<Image>().color = XTownColor.XTownGreen.ToColor();
+            if (btn.GetComponent<CustomizingTab>()._partName.Equals(_tabGroup.SelectedTab)) btn.transform.Find("CustomizingTabImage").GetComponent<Image>().color = XTownColor.ButtonOutlineClick.ToColor();
         }
     }
 

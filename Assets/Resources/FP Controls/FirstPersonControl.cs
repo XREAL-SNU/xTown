@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Resources/FirstPersonControl.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Resources/FP Controls/FirstPersonControl.inputactions'
 
 using System;
 using System.Collections;
