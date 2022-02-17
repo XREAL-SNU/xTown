@@ -12,6 +12,8 @@ namespace XReal.XTown.Yacht
 	{
 		/* public fields */
 		[SerializeField]
+		private GameObject _joinUI;
+		[SerializeField]
 		private GameObject _joinPanel;
 
 		[SerializeField]
@@ -38,6 +40,7 @@ namespace XReal.XTown.Yacht
 
 		void Awake()
 		{
+			_joinUI.SetActive(false);
 			_joinPanel.SetActive(false);
 			PhotonNetwork.AutomaticallySyncScene = true;
 			_view = GetComponent<PhotonView>();
@@ -46,6 +49,7 @@ namespace XReal.XTown.Yacht
         {
 			if (other.tag == "Player")
 			{
+				_joinUI.SetActive(true);
 					_joinPanel.SetActive(true);
 					isYachtConnecting = true;
 

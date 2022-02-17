@@ -8,6 +8,8 @@ public class PocketBallJoin : MonoBehaviourPunCallbacks
 {
 	/* public fields */
 	[SerializeField]
+	private GameObject _joinUI;
+	[SerializeField]
 	private GameObject _joinPanel;
 
 	[SerializeField]
@@ -32,6 +34,7 @@ public class PocketBallJoin : MonoBehaviourPunCallbacks
 
 	void Awake()
 	{
+		_joinUI.SetActive(false);
 		_joinPanel.SetActive(false);
 		PhotonNetwork.AutomaticallySyncScene = true;
 	}
@@ -39,6 +42,7 @@ public class PocketBallJoin : MonoBehaviourPunCallbacks
         {
 			if (other.tag == "Player")
 			{
+				_joinUI.SetActive(true);
 					_joinPanel.SetActive(true);
 					isPocketBallConnecting = true;
 

@@ -9,6 +9,8 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
 	/* public fields */
 	[SerializeField]
 	private GameObject _joinPanel;
+	[SerializeField]
+	private GameObject _joinUI;
 
 	[SerializeField]
     private GameObject _mainCanvas;
@@ -32,6 +34,7 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
 
 	void Awake()
 	{
+		_joinUI.SetActive(false);
 		_joinPanel.SetActive(false);
 		PhotonNetwork.AutomaticallySyncScene = true;
 	}
@@ -39,6 +42,7 @@ public class BasketBallJoin : MonoBehaviourPunCallbacks
         {
 			if (other.tag == "Player")
 			{
+				_joinUI.SetActive(true);
 					_joinPanel.SetActive(true);
 					isBasketBallConnecting = true;
 
