@@ -18,7 +18,7 @@ namespace StarterAssets
 
 		[Space(10)]
 		public float JumpHeight = 1.2f;
-		public float Gravity = -15.0f;
+		public static float Gravity = -15.0f;
 
 		[Space(10)]
 		public float JumpTimeout = 0.50f;
