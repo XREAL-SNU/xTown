@@ -23,6 +23,7 @@ public class StarLauncher : MonoBehaviour
     public bool insideLaunchStar;
     public bool flying;
     public bool almostFinished;
+    public bool rideLoopTrack;
 
     private Transform launchObject;
 
@@ -106,7 +107,15 @@ public class StarLauncher : MonoBehaviour
             }
         }
 
-        if(dollyCart.m_Position > .7f && !almostFinished && flying)
+        if(dollyCart.m_Position > .7f && !almostFinished && flying && !rideLoopTrack)
+        {
+            almostFinished = true;
+            //thirdPersonCamera.m_XAxis.Value = cameraRotation;
+
+            playerParent.DORotate(new Vector3(360 + 180, 0, 0), .5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear)
+                .OnComplete(() => playerParent.DORotate(new Vector3(-90, playerParent.eulerAngles.y, playerParent.eulerAngles.z), .2f));
+        }
+        if (dollyCart.m_Position > .99f && !almostFinished && flying && rideLoopTrack)
         {
             almostFinished = true;
             //thirdPersonCamera.m_XAxis.Value = cameraRotation;
@@ -137,6 +146,18 @@ public class StarLauncher : MonoBehaviour
         dollyCart.m_Path = null;
         dollyCart.m_Path = launchObject.GetComponent<CinemachineSmoothPath>();
         dollyCart.enabled = true;
+        float dollyCartLength = dollyCart.m_Path.PathLength;
+
+        if (dollyCartLength > 100)
+        {
+            rideLoopTrack = true;
+        }
+        else
+        {
+            rideLoopTrack = false;
+        }
+
+        animator.SetBool("rideLoopTrack", rideLoopTrack);
 
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
@@ -161,6 +182,7 @@ public class StarLauncher : MonoBehaviour
 
         flying = true;
         animator.SetBool("flying", true);
+
         Sequence s = DOTween.Sequence();
 
         s.AppendCallback(() => transform.parent = playerParent.transform);                                           // Attatch the player to the empty gameObject
