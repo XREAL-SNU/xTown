@@ -14,7 +14,7 @@ using UnityEngine.Android;
 // How to enable video
 // How to join/leave channel
 // 
-public class AgoraUnityVideo : MonoBehaviour
+public class AgoraUnityVideoReview : MonoBehaviour
 {
 
     // instance of agora engine
