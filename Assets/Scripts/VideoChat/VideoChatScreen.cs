@@ -12,7 +12,7 @@ public class VideoChatScreen : UIBase
 
     enum Toggles
     {
-        VideoToggle, AudioToggle
+        VideoToggle, AudioToggle, PinToggle
     }
 
     enum InfoText
@@ -21,13 +21,21 @@ public class VideoChatScreen : UIBase
     }
 
     public bool IsLocal = false;
+
     public bool Pinned = false;
     #region MonobehaviourCallbacks
     private void OnEnable()
     {
         GetUIComponent<ImageToggle>((int)Toggles.VideoToggle).AddListener(SetVideoMute);
         GetUIComponent<ImageToggle>((int)Toggles.AudioToggle).AddListener(SetAudioMute);
-        Debug.Log($"VideoChatScreen/ enabled: Nickname{GetNickName()}");
+        if (IsLocal)
+        {
+            GetUIComponent<ImageToggle>((int)Toggles.PinToggle).gameObject.SetActive(false);
+        }
+        else
+        {
+            GetUIComponent<ImageToggle>((int)Toggles.PinToggle).AddListener(Pin);
+        }
         // custom logic to bind the video surface to this screen.
     }
 
@@ -35,7 +43,7 @@ public class VideoChatScreen : UIBase
     {
         GetUIComponent<ImageToggle>((int)Toggles.VideoToggle).RemoveListener(SetVideoMute);
         GetUIComponent<ImageToggle>((int)Toggles.AudioToggle).RemoveListener(SetAudioMute);
-        Debug.Log($"VideoChatScreen/ disabled: Nickname{GetNickName()}");
+        GetUIComponent<ImageToggle>((int)Toggles.PinToggle).RemoveListener(Pin);
         // custom logic to un-bind the video surface from this screen.
     }
 
@@ -50,10 +58,30 @@ public class VideoChatScreen : UIBase
         Bind<ImageToggle>(typeof(Toggles));
         Bind<Text>(typeof(InfoText));
 
-        SetNickName("Default Name");
+        ScreenUser = new User();
     }
 
     #endregion
+
+    #region User
+    User _screenUser;
+
+    public User ScreenUser
+    {
+        get
+        {
+            if (_screenUser is null) _screenUser = new User();
+            return _screenUser;
+        }
+        set
+        {
+            _screenUser = value;
+
+            // sets displayed name as well
+            if (value.Name is null) return;
+            SetNickName(value.Name);
+        }
+    }
 
     // TODO set nickname of player
     public void SetNickName(string name)
@@ -65,6 +93,8 @@ public class VideoChatScreen : UIBase
     {
         return GetUIComponent<Text>((int)InfoText.NickNameText).text;
     }
+
+    #endregion
 
     void SetVideoMute(bool state)
     {
@@ -93,9 +123,46 @@ public class VideoChatScreen : UIBase
         // TODO : mute audio from state
     }
 
+    void Pin(bool state)
+    {
+        var container = GetComponentInParent<VideoChatScreens>();
+        Pinned = state;
+        if (state) container.PinScreen(transform.GetSiblingIndex());
+        if (!state) container.UnpinScreen(transform.GetSiblingIndex());
+    }
+
+    public void ForceUnpin()
+    {
+        GetUIComponent<ImageToggle>((int)Toggles.PinToggle).SetToggleValue(false);
+    }
+
+    // destruction of screen
+    public void Hide()
+    {
+        // TODO detach stream from this screen
+        gameObject.SetActive(false);
+    }
+
     public void Destroy()
     {
-        // do cleanup for destruction
+        // TODO: do cleanup for destruction
+        gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
+
+    //test
+    Button killBtn;
+    private void Start()
+    {
+        if (TryGetComponent(out Button btn)){
+            killBtn = btn;
+        }
+    }
+
+    public void OnClick_KillItem()
+    {
+        Debug.Log($"killed user {_screenUser.Name}");
+        VideoChatUsers.RemoveUser(_screenUser);
+    }
+
 }

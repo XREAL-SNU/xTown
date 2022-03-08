@@ -15,7 +15,7 @@ public class PagingUI : UIPopup
     // total number of pages
     public int FinalPageNum = 0;
 
-    enum Navigation_Buttons
+    protected enum Navigation_Buttons
     {
         PrevButton, NextButton, CloseButton
     }
@@ -33,31 +33,32 @@ public class PagingUI : UIPopup
         GetUIComponent<Image>((int)Navigation_Buttons.CloseButton).gameObject.BindEvent(OnClick_Close);
         GetUIComponent<Image>((int)Navigation_Buttons.NextButton).gameObject.BindEvent(OnClick_PageNext);
         GetUIComponent<Image>((int)Navigation_Buttons.PrevButton).gameObject.BindEvent(OnClick_PagePrev);
+
+        GetUIComponent<Image>((int)Navigation_Buttons.NextButton).enabled = false;
+        GetUIComponent<Image>((int)Navigation_Buttons.PrevButton).enabled = false;
+
     }
 
 
 
     #region UICallbacks
+
+    public enum PageEvents
+    {
+        Prev, Next
+    }
+
+
     public void OnClick_PagePrev(PointerEventData data)
     {
-        if(CurrentPageNum < 1)
-        {
-            Debug.LogError("PagingUI/ page # outside range");
-            return;
-        }
         CurrentPageNum--;
-        OnPaged();
+        OnPaged(PageEvents.Prev);
     }
 
     public void OnClick_PageNext(PointerEventData data)
     {
-        if (CurrentPageNum >= FinalPageNum)
-        {
-            Debug.LogError("PagingUI/ page # outside range");
-            return;
-        }
         CurrentPageNum++;
-        OnPaged();
+        OnPaged(PageEvents.Next);
     }
 
     public void OnClick_Close(PointerEventData data)
@@ -67,24 +68,22 @@ public class PagingUI : UIPopup
     #endregion
 
     #region PageHandlers
-    Action<int> OnPagedHandler = null;
-    public virtual void OnPaged()
+    Action<PageEvents> OnPagedHandler = null;
+    public virtual void OnPaged(PageEvents eventType)
     {
-        GetUIComponent<Image>((int)Navigation_Buttons.PrevButton).gameObject.SetActive(CurrentPageNum > 0);
-        GetUIComponent<Image>((int)Navigation_Buttons.NextButton).gameObject.SetActive(CurrentPageNum < FinalPageNum);
-
         if(OnPagedHandler != null)
         {
-            OnPagedHandler.Invoke(CurrentPageNum);
+
+            OnPagedHandler.Invoke(eventType);
         }
     }
 
-    public void AddListener(Action<int> action)
+    public void AddListener(Action<PageEvents> action)
     {
         OnPagedHandler -= action;
         OnPagedHandler += action;
     }
-    public void RemoveListener(Action<int> action)
+    public void RemoveListener(Action<PageEvents> action)
     {
         OnPagedHandler -= action;
     }

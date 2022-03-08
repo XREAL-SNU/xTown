@@ -9,10 +9,10 @@ using XReal.XTown.UI;
 public class ImageToggle : UIBase
 {
     bool _isOn = false;
-    public bool IsOn
+    public virtual bool IsOn
     {
         get => _isOn;
-        private set
+        protected set
         {
             _isOn = value;
 
@@ -49,7 +49,9 @@ public class ImageToggle : UIBase
         OffImage.gameObject.BindEvent((PointerEventData data) => IsOn = true);
         OnImage.gameObject.BindEvent((PointerEventData data) => IsOn = false);
 
-        IsOn = false;
+        // set initial state of image
+        OnImage.enabled = IsOn;
+        OffImage.enabled = !IsOn;
     }
 
     // toggle methods

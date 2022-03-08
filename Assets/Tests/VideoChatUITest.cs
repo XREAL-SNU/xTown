@@ -11,6 +11,5 @@ public class VideoChatUITest : MonoBehaviour
         if (GUI.Button(new Rect(10, 10, 50, 50), "OpenCanvas"))
             UIManager.UI.ShowPopupUI<PagingUI>("VideoChat/VideoChatCanvas");
 
-
     }
 }
