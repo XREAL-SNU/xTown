@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class TestConnect : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
     private Transform _content;
 
     [SerializeField]
