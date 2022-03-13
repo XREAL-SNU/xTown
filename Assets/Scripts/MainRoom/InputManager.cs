@@ -8,8 +8,8 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField]
     private InputField[] _inputFields;
-    [SerializeField]
-    private TMP_InputField[] _TMPinputFields;
+    //[SerializeField]
+    //private TMP_InputField[] _TMPinputFields;
 
     private bool _islock = false;
 
@@ -22,11 +22,11 @@ public class InputManager : MonoBehaviour
             input.onEndEdit.AddListener(delegate { UnLock(); });
         }
 
-        foreach (TMP_InputField input in _TMPinputFields)
+        /*foreach (TMP_InputField input in _TMPinputFields)
         {
             input.onValueChanged.AddListener(delegate { Lock(); });
             input.onEndEdit.AddListener(delegate { UnLock(); });
-        }
+        }*/
     }
 
     public static void Lock()

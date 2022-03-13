@@ -4,8 +4,8 @@ using UnityEngine;
 using XReal.XTown.UI;
 public class MainCanvas : MonoBehaviour
 {
-    [SerializeField]
-    private MinimapPanel _minimapPanel;
+    //[SerializeField]
+    //private MinimapPanel _minimapPanel;
 
     private MainCanvases _mainCanvases;
 
@@ -14,7 +14,7 @@ public class MainCanvas : MonoBehaviour
         _mainCanvases = canvases;
     }
 
-    public void OnClick_PlayerInfo()
+    /*public void OnClick_PlayerInfo()
     {
         _mainCanvases.PlayerInfoCanvas.Show();
     }
@@ -28,17 +28,17 @@ public class MainCanvas : MonoBehaviour
     {
         _mainCanvases.SettingCanvas.Show();
         //UIManager.UI.ShowPopupUI<SettingsPopup>("SettingsPopup");
-    }
+    }*/
 
     public void OnClick_Exit()
     {
         // Exit game
     }
-
+    /*
     public void OnClick_AvatarInteraction()
     {
         _mainCanvases.AvatarInteractionCanvas.Show();
-    }
+    }*/
 
     public void Show()
     {

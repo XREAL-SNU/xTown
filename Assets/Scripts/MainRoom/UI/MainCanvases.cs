@@ -8,7 +8,7 @@ public class MainCanvases : MonoBehaviour
     private MainCanvas _mainCanvas;
     public MainCanvas MainCanvas { get { return _mainCanvas; } }
 
-    [SerializeField]
+    /*[SerializeField]
     private PlayerInfoCanvas _playerInfoCanvas;
     public PlayerInfoCanvas PlayerInfoCanvas { get { return _playerInfoCanvas; } }
 
@@ -19,7 +19,7 @@ public class MainCanvases : MonoBehaviour
     [SerializeField]
     private AvatarInteractionCanvas _avatarInteractionCanvas;
     public AvatarInteractionCanvas AvatarInteractionCanvas { get { return _avatarInteractionCanvas; } }
-
+    */
     public static MainCanvases Instance = null;
 
     private void Awake()
@@ -43,8 +43,8 @@ public class MainCanvases : MonoBehaviour
     private void FirstInitialize()
     {
         MainCanvas.FirstInitialize(this);
-        PlayerInfoCanvas.FirstInitialize(this);
-        SettingCanvas.FirstInitialize(this);
-        AvatarInteractionCanvas.FirstInitialize(this);
+        //PlayerInfoCanvas.FirstInitialize(this);
+        //SettingCanvas.FirstInitialize(this);
+        //AvatarInteractionCanvas.FirstInitialize(this);
     }
 }
