@@ -139,7 +139,7 @@ public class StarLauncher : MonoBehaviour
         s.Append(DOVirtual.Float(dollyCart.m_Position, 1, finalSpeed, PathSpeed).SetEase(pathCurve));                // Lerp the value of the Dolly Cart position from 0 to 1
         s.Join(starAnimation.PunchStar(.5f));      
         s.Join(transform.DOLocalMove(new Vector3(0,0,-.5f), .5f));   
-        SoundManager.instance.PlaySE("HumanRocket");                                                   // Return player's Y position
+        //SoundManager.instance.PlaySE("HumanRocket");                                                   // Return player's Y position
         s.Join(transform.DOLocalRotate(new Vector3(0, 360, 0),                                                       // Slow rotation for when player is flying
             (finalSpeed/1.3f), RotateMode.LocalAxisAdd)).SetEase(Ease.InOutSine); 
         s.AppendCallback(() => Land());                                                                              // Call Land Function

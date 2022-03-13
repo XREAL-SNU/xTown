@@ -22,7 +22,7 @@ public class MainCanvas : MonoBehaviour
     public void OnClick_VoiceChat()
     {
         Debug.Log("onclick voicechat");
-        UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
+        //UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
     }
     public void OnClick_Setting()
     {

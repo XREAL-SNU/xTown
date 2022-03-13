@@ -7,7 +7,7 @@ public class VoiceChatButton : MonoBehaviour
 {
     public void OnClick_ShowVoiceChatPopup()
     {
-        UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
+        //UIManager.UI.ShowPopupUI<VoiceChatChannelsPopup>("VoiceChatChannelsPopup");
 
     }
 }
