@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class QuickSlotManager : MonoBehaviour, IPointerClickHandler
+public class QuickSlotManager_Sol : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] List<Sprite> _buttonIcons;
-    [SerializeField] List<QuickSlotButton> _quickSlots;
+    [SerializeField] List<QuickSlotButton_Sol> _quickSlots;
 
     public Transform GridLayout;
 
-    public static QuickSlotButton CurrentlySelected;
-    static List<QuickSlotButton> s_quickSlots;
+    public static QuickSlotButton_Sol CurrentlySelected;
+    static List<QuickSlotButton_Sol> s_quickSlots;
 
     void Start()
     {
-        QuickSlotButton buttonProp;
+        QuickSlotButton_Sol buttonProp;
 
         for(int i = 0; i < GridLayout.childCount; i++)
         {
-            buttonProp = GridLayout.GetChild(i).GetComponent<QuickSlotButton>();
+            buttonProp = GridLayout.GetChild(i).GetComponent<QuickSlotButton_Sol>();
             buttonProp.ButtonImage.sprite = _buttonIcons[i];
             buttonProp.ButtonText.text = _buttonIcons[i].name;
             buttonProp.fid = i;
         }
 
-        s_quickSlots = new List<QuickSlotButton>();
+        s_quickSlots = new List<QuickSlotButton_Sol>();
         for (int i = 0; i < _quickSlots.Count; i++)
         {
             s_quickSlots.Add(_quickSlots[i]);
         }
     }
 
-    public static void AddToQuickSlot(QuickSlotButton quickslotButton)
+    public static void AddToQuickSlot(QuickSlotButton_Sol quickslotButton)
     {
         int index = CheckDistinct();
 
@@ -63,7 +63,7 @@ public class QuickSlotManager : MonoBehaviour, IPointerClickHandler
         return retVal;
     }
 
-    static void SwapButtons(QuickSlotButton quickslotButton, int index)
+    static void SwapButtons(QuickSlotButton_Sol quickslotButton, int index)
     {
         Sprite spriteBuf = quickslotButton.ButtonImage.sprite;
         string textBuf = quickslotButton.ButtonText.text;

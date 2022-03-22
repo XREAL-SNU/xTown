@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class QuickSlotButton : MonoBehaviour, ISelectHandler, IPointerClickHandler
+public class QuickSlotButton_Sol : MonoBehaviour, ISelectHandler, IPointerClickHandler
 {
     public enum _ButtonType { Quickslot, Viewport }
 
@@ -16,14 +16,14 @@ public class QuickSlotButton : MonoBehaviour, ISelectHandler, IPointerClickHandl
     public void OnSelect(BaseEventData eventData)
     {
         if (ButtonType == _ButtonType.Viewport)
-            QuickSlotManager.CurrentlySelected = this;
+            QuickSlotManager_Sol.CurrentlySelected = this;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (ButtonType == _ButtonType.Quickslot && QuickSlotManager.CurrentlySelected != null)
+        if (ButtonType == _ButtonType.Quickslot && QuickSlotManager_Sol.CurrentlySelected != null)
         {
-            QuickSlotManager.AddToQuickSlot(this);
+            QuickSlotManager_Sol.AddToQuickSlot(this);
         }
     }
 }
