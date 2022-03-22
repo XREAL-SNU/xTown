@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fa0f5da447c6b7646a83046f015cecd9, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: amazed
+  m_Text: Name
 --- !u!1 &3510864122193514003
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 3510864122193513999}
   - component: {fileID: -7001041277775412532}
   m_Layer: 5
-  m_Name: "Quickslot\u2705Button"
+  m_Name: Quickslot Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,5 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cbde748294a40a479902aba895ccc55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonText: {fileID: 3510864122061700998}
+  ButtonType: 0
   ButtonImage: {fileID: 3510864121146988181}
+  ButtonText: {fileID: 3510864122061700998}

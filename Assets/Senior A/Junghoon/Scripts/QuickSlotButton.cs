@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class QuickSlotButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    public enum _ButtonType {Quickslot, Viewport }
+    public enum _ButtonType { Quickslot, Viewport }
 
     public _ButtonType ButtonType;
     public Image ButtonImage;
