@@ -8,7 +8,8 @@ public class QuickSlotManager : MonoBehaviour
 
     public Transform GridLayout;
 
-    // Start is called before the first frame update
+    public static QuickSlotButton CurrentlySelected;
+
     void Start()
     {
         QuickSlotButton buttonProp;
@@ -19,5 +20,18 @@ public class QuickSlotManager : MonoBehaviour
             buttonProp.ButtonImage.sprite = _buttonIcons[i];
             buttonProp.ButtonText.text = _buttonIcons[i].name;
         }
+    }
+
+    private void Update()
+    {
+        if (CurrentlySelected == null) Debug.Log("Nothing Selected");
+    }
+
+    public static void AddToQuickSlot(QuickSlotButton quickslotButton)
+    {
+        quickslotButton.ButtonImage.sprite = CurrentlySelected.ButtonImage.sprite;
+        quickslotButton.ButtonText.text = CurrentlySelected.ButtonText.text;
+
+        CurrentlySelected = null;
     }
 }
