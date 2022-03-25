@@ -8,13 +8,15 @@ public class QuickSlotManager_Sol : MonoBehaviour, IPointerClickHandler
     // Reference(s) in Scene
     [SerializeField] List<QuickSlotButton_Sol> _quickSlots;
     [SerializeField] List<Sprite> _buttonIcons;
+    [SerializeField] List<Texture> _faceTextures;
     public Transform GridLayout;
 
     // Reference(s) in Directory    
     [SerializeField] GameObject _viewportButtonPrefab;
 
     public static QuickSlotButton_Sol CurrentlySelected;
-    static List<QuickSlotButton_Sol> s_quickSlots;
+    public static List<QuickSlotButton_Sol> s_quickSlots;
+    public static List<Texture> s_faceTextures;
 
     void Start()
     {
@@ -40,6 +42,13 @@ public class QuickSlotManager_Sol : MonoBehaviour, IPointerClickHandler
         for (int i = 0; i < _quickSlots.Count; i++)
         {
             s_quickSlots.Add(_quickSlots[i]);
+        }
+
+        // Add References of Face Textures to Static List
+        s_faceTextures = new List<Texture>();
+        for (int i = 0; i < _faceTextures.Count; i++)
+        {
+            s_faceTextures.Add(_faceTextures[i]);
         }
     }
 
@@ -93,8 +102,5 @@ public class QuickSlotManager_Sol : MonoBehaviour, IPointerClickHandler
     }
 
     // Clear Buffer if Canvas is Clicked
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        CurrentlySelected = null;
-    }
+    public void OnPointerClick(PointerEventData eventData) => CurrentlySelected = null;
 }
