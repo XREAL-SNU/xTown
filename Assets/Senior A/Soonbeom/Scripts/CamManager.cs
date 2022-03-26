@@ -28,7 +28,6 @@ using Cinemachine;
 
 public class CamManager : MonoBehaviour
 {
-    public GameObject faceCamCanvas;
     public GameObject faceCam;
     public CinemachineFreeLook thirdPersonCam;
     public CinemachineVirtualCamera firstPersonCam;
@@ -52,13 +51,11 @@ public class CamManager : MonoBehaviour
         thirdPersonCam = GameObject.Find("ThirdPersonCam").GetComponent<CinemachineFreeLook>();
         thirdPersonCam.Follow = player.transform;
         thirdPersonCam.LookAt = player.transform;
-        faceCamCanvas = GameObject.Find("FaceCamCanvas");
-        faceCam = faceCamCanvas.transform.Find("FaceCam").gameObject;
+        faceCam = firstPersonCam.transform.Find("FaceCamCanvas").transform.Find("FaceCam").gameObject;
 
         // 처음에는 3인칭카메라로 시작할 것이기 때문에 1인칭카메라를 비활성화시켜줍니다.
         firstPersonCam.gameObject.SetActive(false);
         thirdPersonCam.gameObject.SetActive(true);
-        faceCamCanvas.gameObject.SetActive(false);
         _isCurrentFp = false;
     }
     private void Update(){
@@ -92,17 +89,15 @@ public class CamManager : MonoBehaviour
 	}
     // CamChange에서 1인칭과 3인칭카메라를 변환합니다.
     private void CamChange(){
-        _isCurrentFp = !_isCurrentFp;
-        if(thirdPersonCam.gameObject.activeSelf){
-            firstPersonCam.gameObject.SetActive(true);
-            thirdPersonCam.gameObject.SetActive(false);
-            faceCamCanvas.gameObject.SetActive(true);
-        }
-        else{
+        if(_isCurrentFp){
             firstPersonCam.gameObject.SetActive(false);
             thirdPersonCam.gameObject.SetActive(true);
-            faceCamCanvas.gameObject.SetActive(false);
         }
+        else{
+            firstPersonCam.gameObject.SetActive(true);
+            thirdPersonCam.gameObject.SetActive(false);
+        }
+        _isCurrentFp = !_isCurrentFp;
     }
     // RotateTp에서 3인칭 시점 조절을 합니다.
     private void RotateTp()
