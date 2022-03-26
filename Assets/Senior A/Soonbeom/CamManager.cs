@@ -28,8 +28,6 @@ using Cinemachine;
 
 public class CamManager : MonoBehaviour
 {
-    public GameObject thirdPersonCamObj;
-    public GameObject firstPersonCamObj;
     public GameObject faceCamCanvas;
     public GameObject faceCam;
     public CinemachineFreeLook thirdPersonCam;
@@ -48,14 +46,10 @@ public class CamManager : MonoBehaviour
         playerFace = player.transform.Find("FollowTarget").gameObject;
 
         // 1인칭 카메라와 3인칭카메라를 초기화시키고 카메라의 타겟을 설정합니다.
-        firstPersonCamObj = GameObject.Find("FirstPersonCam");
-        firstPersonCam = firstPersonCamObj.GetComponent<CinemachineVirtualCamera>();
+        firstPersonCam = GameObject.Find("FirstPersonCam").GetComponent<CinemachineVirtualCamera>();
         firstPersonCam.Follow = playerFace.transform;
         firstPersonCam.LookAt = playerFace.transform;
-        // firstPersonCamObj = player.transform.Find("FirstPersonCam").gameObject;
-        // firstPersonCam = firstPersonCamObj.GetComponent<CinemachineVirtualCamera>();
-        thirdPersonCamObj = GameObject.Find("ThirdPersonCam");
-        thirdPersonCam = thirdPersonCamObj.GetComponent<CinemachineFreeLook>();
+        thirdPersonCam = GameObject.Find("ThirdPersonCam").GetComponent<CinemachineFreeLook>();
         thirdPersonCam.Follow = player.transform;
         thirdPersonCam.LookAt = player.transform;
         faceCamCanvas = GameObject.Find("FaceCamCanvas");
@@ -89,7 +83,7 @@ public class CamManager : MonoBehaviour
             thirdPersonCam.m_YAxis.m_MaxSpeed = 0;
         }
         if(_isCurrentFp){
-            faceCam.transform.position =  playerFace.transform.position + player.transform.forward * 0.9f;
+            faceCam.transform.position =  playerFace.transform.position + player.transform.forward * 0.8f;
             faceCam.transform.LookAt(playerFace.transform.position);
         }
         if(Input.mouseScrollDelta.y != 0 && !_isCurrentFp){
