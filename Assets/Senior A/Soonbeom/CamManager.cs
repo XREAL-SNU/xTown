@@ -48,8 +48,12 @@ public class CamManager : MonoBehaviour
         playerFace = player.transform.Find("FollowTarget").gameObject;
 
         // 1인칭 카메라와 3인칭카메라를 초기화시키고 카메라의 타겟을 설정합니다.
-        firstPersonCamObj = player.transform.Find("FirstPersonCam").gameObject;
+        firstPersonCamObj = GameObject.Find("FirstPersonCam");
         firstPersonCam = firstPersonCamObj.GetComponent<CinemachineVirtualCamera>();
+        firstPersonCam.Follow = playerFace.transform;
+        firstPersonCam.LookAt = playerFace.transform;
+        // firstPersonCamObj = player.transform.Find("FirstPersonCam").gameObject;
+        // firstPersonCam = firstPersonCamObj.GetComponent<CinemachineVirtualCamera>();
         thirdPersonCamObj = GameObject.Find("ThirdPersonCam");
         thirdPersonCam = thirdPersonCamObj.GetComponent<CinemachineFreeLook>();
         thirdPersonCam.Follow = player.transform;
