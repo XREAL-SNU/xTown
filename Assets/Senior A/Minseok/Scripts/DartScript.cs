@@ -7,6 +7,8 @@ public class DartScript : MonoBehaviour
 {
     public Vector2 moveVal;
     public GameObject target;
+    public GameObject Dart2;
+    public GameObject Dart3;
     private Rigidbody rb;
 
     void Start()
@@ -27,6 +29,41 @@ public class DartScript : MonoBehaviour
         rb.useGravity = true;
         //던지고 난 후에는 더이상 방향 조절 or 발사 불가
         this.GetComponent<PlayerInput>().enabled = false;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.CompareTag("Balloon"))
+        {
+            col.gameObject.SetActive(false);
+
+            //Dart_2, Dart_3 오브젝트를 disable 시켜놨다가, 하나씩 SetActive(true)하는 방식을 사용한다
+            if(this.gameObject.name == "darts_3ds1")
+            {
+                Dart2.SetActive(true);
+            }
+            else if(this.gameObject.name == "darts_3ds2")
+            {
+                Dart3.SetActive(true);
+            }
+
+            //Dart disabled
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+
+            if(this.gameObject.name == "darts_3ds1")
+            {
+                Dart2.SetActive(true);
+            }
+            else if(this.gameObject.name == "darts_3ds2")
+            {
+                Dart3.SetActive(true);
+            }
+        }
+        
     }
 
     void Update()
