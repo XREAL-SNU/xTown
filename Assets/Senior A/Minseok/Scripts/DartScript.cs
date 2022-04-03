@@ -50,6 +50,20 @@ public class DartScript : MonoBehaviour
             //Dart disabled
             this.gameObject.SetActive(false);
         }
+        else if(col.CompareTag("Obstacle"))
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX;
+
+            if(this.gameObject.name == "darts_3ds1")
+            {
+                Dart2.SetActive(true);
+            }
+            else if(this.gameObject.name == "darts_3ds2")
+            {
+                Dart3.SetActive(true);
+            }
+        }
+
         else
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
