@@ -59,7 +59,7 @@ namespace XReal.Xtown.PhotonChat
 
         //This is the Dropdown
         public Dropdown ChannelDropdown;
-        public RoomManager roomManager;
+        public RoomManager roomManager ;
         private bool isAnnounce = false;
         private string userID;
 
@@ -604,6 +604,7 @@ namespace XReal.Xtown.PhotonChat
         public void GetUsersFromDefalut()
         {
             List<string> playerNameList = roomManager.GetPlayerNameList();
+            //if (playerNameList is null) return;
             foreach(string user in playerNameList)
             {
                 if(user != userID)
