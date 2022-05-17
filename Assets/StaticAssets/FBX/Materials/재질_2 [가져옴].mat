@@ -1,26 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3534473121666064702
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "\uC7AC\uC9C8_2 [\uAC00\uC838\uC634]"
-  m_Shader: {fileID: 4800000, guid: 1f53b2e079258874d987bc2948630b78, type: 3}
-  m_ShaderKeywords: _DETAILSOURCE_SPECULARALPHA _ENABLETRIPLANARPROJECTION_ON _NORMALMAP
-    _SOURCE_SPECULARALPHA _TRIPLANARSPACEPROJECTION_OBJECTSPACE _USEAOFROMMAINPROPERTIES_ON
-    _USEEMISSIONFROMMAINPROPERTIES_ON
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_ValidKeywords:
+  - _EMISSION
+  - _NORMALMAP
+  - _PARALLAXMAP
+  m_InvalidKeywords:
+  - _DETAILSOURCE_SPECULARALPHA
+  - _ENABLETRIPLANARPROJECTION_ON
+  - _SOURCE_SPECULARALPHA
+  - _TRIPLANARSPACEPROJECTION_OBJECTSPACE
+  - _USEAOFROMMAINPROPERTIES_ON
+  - _USEEMISSIONFROMMAINPROPERTIES_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 4b9e21714998d244288fc214b514456a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseTex:
         m_Texture: {fileID: 2800000, guid: 4b9e21714998d244288fc214b514456a, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -105,7 +131,21 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
     - _AlphaCutoff: 0
     - _Ambient: 0.5
     - _AoIntensity: 1
@@ -116,17 +156,21 @@ Material:
     - _BevelOffset: 0
     - _BevelRoundness: 0
     - _BevelWidth: 0
+    - _Blend: 0
     - _BlendMainNormal: 0
     - _BlendmodeOverlay: 0
     - _Brightness: 1
     - _BumpFace: 0.5
     - _BumpOutline: 0.5
     - _BumpScale: 0.69
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _ColorMask: 15
     - _ContrastDetailMap: 0
     - _Cull: 0
     - _CullMode: 1
     - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
     - _DetailBrightness: 1
     - _DetailGlossiness: 0.5
     - _DetailNormalMapScale: 1
@@ -140,6 +184,7 @@ Material:
     - _EmissionIntensity: 1
     - _EnableDetailMask: 0
     - _EnableTriplanarProjection: 1
+    - _EnvironmentReflections: 1
     - _FaceDilate: 0
     - _FaceShininess: 0
     - _FaceUVSpeedX: 0
@@ -174,6 +219,8 @@ Material:
     - _Padding: 0
     - _Parallax: 0.055
     - _PerspectiveFilter: 0.875
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _Reflectivity: 10
     - _Roughness: 1
     - _Saturation: 0
@@ -184,6 +231,7 @@ Material:
     - _ScaleY: 1
     - _ShaderFlags: 0
     - _Sharpness: 0
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _Source: 0
     - _SpecularHighlights: 1
@@ -196,6 +244,7 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
+    - _Surface: 0
     - _TextureHeight: 512
     - _TextureWidth: 512
     - _TriplanarFalloff: 20
@@ -213,11 +262,12 @@ Material:
     - _VisualizeMask: 0
     - _WeightBold: 0.5
     - _WeightNormal: 0
+    - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.9913308, g: 0.9913308, b: 0.9913308, a: 1}
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _Color: {r: 0.9913308, g: 0.9913308, b: 0.9913308, a: 1}
     - _Color1: {r: 1, g: 1, b: 1, a: 1}
