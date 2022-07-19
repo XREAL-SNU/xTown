@@ -13,7 +13,7 @@ Shader "XTown/XRay"
         Tags
         {
             "RenderPipeline"="UniversalPipeline"
-            "RenderType"="Trnasparent"          
+            "RenderType"="Transparent"          
             "Queue"="Transparent"
         }
 
