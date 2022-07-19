@@ -32,5 +32,5 @@
         float NdotL = saturate(1 - dot(i.viewDir, i.normal));
         float rim = pow(NdotL, _Intensity);
         
-        return rim * _TintColor;  
+        return rim * _TintColor;
     }
