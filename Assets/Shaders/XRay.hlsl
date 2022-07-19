@@ -1,5 +1,6 @@
     CBUFFER_START(UnityPerMaterial)
         float4 _TintColor;
+        float _Power;
         float _Intensity;
     CBUFFER_END
 
@@ -30,7 +31,7 @@
     half4 frag(VertexOutput i) : SV_Target
     {
         float NdotL = saturate(1 - dot(i.viewDir, i.normal));
-        float rim = pow(NdotL, _Intensity);
+        float rim = pow(NdotL, _Power);
         
-        return rim * _TintColor;
+        return rim * _TintColor * _Intensity;
     }

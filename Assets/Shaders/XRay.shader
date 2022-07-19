@@ -2,10 +2,9 @@ Shader "XTown/XRay"
 {
     Properties
     {
-        [IntRange] _StencilID("Stencil ID", Range(0,255)) = 0
-
         _TintColor("Tint Color", color) = (1, 1, 1, 1)
-	    _Intensity("Intensity", Range(0, 1.5)) = 0.5
+	    _Power("Power", Range(1, 5)) = 0.5
+        _Intensity("Intensity", Range(1,5)) = 1
     }  
 
 	SubShader
@@ -14,8 +13,8 @@ Shader "XTown/XRay"
         Tags
         {
             "RenderPipeline"="UniversalPipeline"
-            "RenderType"="Opaque"          
-            "Queue"="Geometry"
+            "RenderType"="Trnasparent"          
+            "Queue"="Transparent"
         }
 
     	Pass
@@ -23,17 +22,9 @@ Shader "XTown/XRay"
             Name "Universal Forward"
             Tags { "LightMode" = "UniversalForward" }
 
-            Blend Zero One
+            Blend SrcAlpha OneMinusSrcAlpha
             ZWrite Off
             ZTest GEqual
-
-            Stencil{
-                Ref [_StencilID]
-                Comp Always
-                Pass Keep
-                Fail Keep
-                ZFail Replace
-            }
 
             HLSLPROGRAM
 
