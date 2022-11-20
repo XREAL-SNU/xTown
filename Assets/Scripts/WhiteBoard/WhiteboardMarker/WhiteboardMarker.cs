@@ -6,7 +6,7 @@ using UnityEngine;
 public class WhiteboardMarker : MonoBehaviour
 {
     [SerializeField] private Transform _tip;
-    [SerializeField] private int _penSize = 5;
+    [SerializeField] public int _penSize = 50;
 
     private Renderer _renderer;
     private Color[] _colors,_colors2;
@@ -35,6 +35,7 @@ public class WhiteboardMarker : MonoBehaviour
 */
     void Update()
     {
+      _colors = Enumerable.Repeat(_renderer.material.color, _penSize*_penSize).ToArray();
         Draw();
         //OnMouseDrag();
     }
