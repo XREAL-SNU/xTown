@@ -14,7 +14,7 @@ using UnityEngine.Android;
 // How to enable video
 // How to join/leave channel
 // 
-public class AgoraUnityVideo: MonoBehaviour
+public class AgoraUnityVideo : MonoBehaviour
 {
 
     // instance of agora engine
@@ -38,15 +38,15 @@ public class AgoraUnityVideo: MonoBehaviour
     int panelNum = 1;
     int currentPage = 1;
     void Awake()
-        {
-    #if (UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
+    {
+#if (UNITY_2018_3_OR_NEWER && UNITY_ANDROID)
             permissionList.Add(Permission.Microphone);         
             permissionList.Add(Permission.Camera);               
-    #endif
-        }
+#endif
+    }
 
 
-    
+
     public void loadEngine(string appId)
     {
         // start sdk
@@ -85,7 +85,7 @@ public class AgoraUnityVideo: MonoBehaviour
             Debug.LogWarningFormat("Warning code:{0} msg:{1}", warn, IRtcEngine.GetErrorDescription(warn));
         };
         mRtcEngine.OnError = HandleError;
-        
+
 
         // enable video
         mRtcEngine.EnableVideo();
@@ -100,7 +100,7 @@ public class AgoraUnityVideo: MonoBehaviour
         /*  This API Accepts AppID with token; by default omiting info and use 0 as the local user id */
         int i = mRtcEngine.RegisterLocalUserAccount(AppID, PhotonNetwork.NickName);
         mRtcEngine.JoinChannelWithUserAccount(token, channel, PhotonNetwork.NickName);
-        Debug.Log("RegisterUserAccount Result"+i);
+        Debug.Log("RegisterUserAccount Result" + i);
         //JoinChannelByKey(channelKey: token, channelName: channel);
 
     }
@@ -157,7 +157,7 @@ public class AgoraUnityVideo: MonoBehaviour
         {
             GameObject screen = GameObject.Find("Screen");
             VideoSurface vs = screen.GetComponent<VideoSurface>();
-            if(pauseVideo)
+            if (pauseVideo)
             {
                 vs.SetEnable(false);
                 mRtcEngine.MuteLocalVideoStream(true);
@@ -174,7 +174,7 @@ public class AgoraUnityVideo: MonoBehaviour
     {
         if (mRtcEngine != null)
         {
-            if(muteAudio)
+            if (muteAudio)
             {
                 mRtcEngine.MuteLocalAudioStream(true);
             }
@@ -195,7 +195,7 @@ public class AgoraUnityVideo: MonoBehaviour
     {
 
         GameObject screen = GameObject.Find("Screen");
-        if(ReferenceEquals(screen, null))
+        if (ReferenceEquals(screen, null))
         {
             Debug.Log("failed to find screen");
             return;
@@ -225,7 +225,7 @@ public class AgoraUnityVideo: MonoBehaviour
 
         GameObject NickNameField = screen.transform.Find("NickNameField").gameObject;
         GameObject text = NickNameField.transform.Find("MyNickName").gameObject;
-        if(!ReferenceEquals(text, null))
+        if (!ReferenceEquals(text, null))
         {
             NickName = text.GetComponent<Text>();
             NickName.text = PhotonNetwork.NickName;
@@ -250,7 +250,7 @@ public class AgoraUnityVideo: MonoBehaviour
     private void onJoinChannelSuccess(string channelName, uint uid, int elapsed)
     {
         Debug.Log("JoinChannelSuccessHandler: uid = " + uid);
-        
+
         //기본적으로 Room에 있는 모든 사람들이 channelJoined를 PunRPC로 공유하도록 할 것
         //본인이 들어올 때는 channelJoined를 하나 늘리면서 들어옴.
         //GameObject textVersionGameObject = GameObject.Find("VersionText");
@@ -269,12 +269,12 @@ public class AgoraUnityVideo: MonoBehaviour
     private void onUserJoined(uint uid, int elapsed)
     {
         Debug.Log("onUserJoined: uid = " + uid + " elapsed = " + elapsed);
-        channelJoined+=1;
+        channelJoined += 1;
 
         UserInfo newUserInfo = mRtcEngine.GetUserInfoByUid(uid);
-        Debug.Log("유저이름: "+newUserInfo.userAccount + "UID: "+newUserInfo.uid.ToString());
+        Debug.Log("유저이름: " + newUserInfo.userAccount + "UID: " + newUserInfo.uid.ToString());
         // this is called in main thread
-        
+
         //일단 이걸로 버튼 active해야하는지부터 확인함
         // find a game object to render video stream from 'uid'
         GameObject go = GameObject.Find(uid.ToString());
@@ -284,30 +284,32 @@ public class AgoraUnityVideo: MonoBehaviour
         }
 
         // create a GameObject and assign to this new user
-        
-        int num = channelJoined%6;
+
+        int num = channelJoined % 6;
         //여기에서 channelJoined가 6명 이상이면 새 패널을 만들고 거기에 VideoSurface를 추가해줌
         //버튼은 그냥 사람수보고 위에서 Active한다
-        if (num==1 && channelJoined>1)
+        if (num == 1 && channelJoined > 1)
         {
             Debug.Log("패널이 생성되는지 확인하기");
-            panelNum+=1;
-            Debug.Log(panelNum+"PanelNum");
+            panelNum += 1;
+            Debug.Log(panelNum + "PanelNum");
             GameObject panel = (GameObject)Instantiate(Resources.Load("VideoPanel1"));
-            panel.name = "VideoPanel"+panelNum.ToString();
-            
+            panel.name = "VideoPanel" + panelNum.ToString();
+
             //panel.AddComponent<CanvasRenderer>();
             //panel.AddComponent<RectTransform>();
             GameObject VideoCanvas = GameObject.Find("VideoCanvas");
-            if(VideoCanvas!=null)
+            if (VideoCanvas != null)
             {
                 panel.transform.parent = VideoCanvas.transform;
             }
             RectTransform panelRect = panel.GetComponent<RectTransform>();
-            /*Left, Bottom*/panelRect.offsetMin = new Vector2(80,61);
-            /*-Rignt, -Top*/panelRect.offsetMax = new Vector2(-97,-45);
+            /*Left, Bottom*/
+            panelRect.offsetMin = new Vector2(80, 61);
+            /*-Rignt, -Top*/
+            panelRect.offsetMax = new Vector2(-97, -45);
             panelRect.localScale = new Vector3(1f, 1f, 1f);
-            
+
             panel.SetActive(false);
             SetButtonActive();
         }
@@ -326,9 +328,9 @@ public class AgoraUnityVideo: MonoBehaviour
         remoteUserInfo = mRtcEngine.GetUserInfoByUid(uid);
         remoteUserNickNameText.text = remoteUserInfo.userAccount;
         uidList.Add(uid);
-        Debug.Log(channelJoined+"ChannelJoined");
+        Debug.Log(channelJoined + "ChannelJoined");
 
-        
+
     }
 
 
@@ -340,17 +342,17 @@ public class AgoraUnityVideo: MonoBehaviour
         GameObject RightButton = GameObject.Find("VideoCanvas").transform.Find("RightButton").gameObject;
 
 
-        if(currentPage==1)
-        {   
+        if (currentPage == 1)
+        {
             //첫 번째 페이지
             LeftButton.SetActive(false);
-            Debug.Log(channelJoined+"ChannelJoined");
-            if(channelJoined>6)
+            Debug.Log(channelJoined + "ChannelJoined");
+            if (channelJoined > 6)
             {
                 RightButton.SetActive(true);
             }
         }
-        else if(currentPage==channelJoined/6+1)
+        else if (currentPage == channelJoined / 6 + 1)
         {
             //마지막 페이지
             Debug.Log("This is Last Page");
@@ -370,23 +372,23 @@ public class AgoraUnityVideo: MonoBehaviour
 
     public void ClickRightButton()
     {
-        Debug.Log(channelJoined+"ChannelJoined");
-        GameObject currentPanel = GameObject.Find("VideoPanel"+currentPage.ToString());
+        Debug.Log(channelJoined + "ChannelJoined");
+        GameObject currentPanel = GameObject.Find("VideoPanel" + currentPage.ToString());
         currentPanel.SetActive(false);
-        currentPage+=1;
-        currentPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel"+currentPage.ToString()).gameObject;
+        currentPage += 1;
+        currentPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel" + currentPage.ToString()).gameObject;
         currentPanel.SetActive(true);
         SetButtonActive();
     }
 
     public void ClickLeftButton()
     {
-        Debug.Log(channelJoined+"ChannelJoined");
-        GameObject currentPanel = GameObject.Find("VideoPanel"+currentPage.ToString());
+        Debug.Log(channelJoined + "ChannelJoined");
+        GameObject currentPanel = GameObject.Find("VideoPanel" + currentPage.ToString());
         currentPanel.SetActive(false);
-        Debug.Log(currentPanel+"1빼기 전");
-        currentPage = currentPage-1;
-        currentPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel"+currentPage.ToString()).gameObject;
+        Debug.Log(currentPanel + "1빼기 전");
+        currentPage = currentPage - 1;
+        currentPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel" + currentPage.ToString()).gameObject;
         currentPanel.SetActive(true);
         SetButtonActive();
     }
@@ -404,21 +406,21 @@ public class AgoraUnityVideo: MonoBehaviour
         go.name = goName;
         // set up transform
         go.transform.Rotate(-90.0f, 0.0f, 0.0f);
-        int num = channelJoined%6;
-        if(num==1)
+        int num = channelJoined % 6;
+        if (num == 1)
         {
             xPos = -220;
             yPos -= 100;
         }
-        else if(num==4)
+        else if (num == 4)
         {
             xPos = -220;
             yPos -= 100;
         }
-        else if(num==2 || num==3 || num==5 || num==0)
+        else if (num == 2 || num == 3 || num == 5 || num == 0)
         {
-            xPos+=50;
-        } 
+            xPos += 50;
+        }
         //channel
         go.transform.position = new Vector3(xPos, yPos, 0f);
         go.transform.localScale = new Vector3(0.25f, 0.5f, .5f);
@@ -441,8 +443,8 @@ public class AgoraUnityVideo: MonoBehaviour
     public VideoSurface makeImageSurface(uint uid)
     {
         GameObject go = (GameObject)Instantiate(Resources.Load("remoteScreen"));
-        int num = channelJoined%6; //나머지를 통해 각 화면의 위치 잡아줌
-        int num2 = channelJoined/6; //각 화면이 몇 번째 패널에 들어갈지 잡아줌
+        int num = channelJoined % 6; //나머지를 통해 각 화면의 위치 잡아줌
+        int num2 = channelJoined / 6; //각 화면이 몇 번째 패널에 들어갈지 잡아줌
         if (go == null)
         {
             return null;
@@ -455,43 +457,43 @@ public class AgoraUnityVideo: MonoBehaviour
 
         // make the object draggable
         go.AddComponent<UIElementDragger>();
-        GameObject canvas = GameObject.Find("VideoCanvas").transform.Find("VideoPanel"+panelNum.ToString()).gameObject;
+        GameObject canvas = GameObject.Find("VideoCanvas").transform.Find("VideoPanel" + panelNum.ToString()).gameObject;
         if (canvas != null)
         {
             go.transform.parent = canvas.transform;
         }
         // set up transform
         go.transform.Rotate(0f, 0.0f, 0f);
-        
-        if(num==1)
+
+        if (num == 1)
         {
             //new Panel생성, Panel안에 화면 띄움, 기존 Panel에 setActive false설정,
             xPos = -100;
             yPos = 110;
         }
-        else if(num==2)
+        else if (num == 2)
         {
             xPos = 125;
             yPos = 110;
         }
-        else if(num==3)
+        else if (num == 3)
         {
             xPos = 350;
             yPos = 110;
             //이거 이런 식으로 하는게 아니라 숫자 별로 위치 다 지정해주기
             //한명 나가면 ReRendering하도록 만들어야 하나? (Userleave어쩌고에서)
         }
-        else if(num==4)
+        else if (num == 4)
         {
             xPos = -100;
             yPos = -70;
         }
-        else if(num==5)
+        else if (num == 5)
         {
             xPos = 125;
             yPos = -70;
         }
-        else if(num==0)
+        else if (num == 0)
         {
             xPos = 350;
             yPos = -70;
@@ -520,15 +522,15 @@ public class AgoraUnityVideo: MonoBehaviour
     {
         // remove video stream
         Debug.Log("onUserOffline: uid = " + uid + " reason = " + reason);
-        channelJoined-=1;
+        channelJoined -= 1;
         // this is called in main thread
-       /* GameObject go = GameObject.Find(uid.ToString());
-        if (!ReferenceEquals(go, null))
-        {
-            Object.Destroy(go);
-        }*/
-        Debug.Log(channelJoined+"ChannelJoined");
-        foreach(uint remoteUid in uidList)
+        /* GameObject go = GameObject.Find(uid.ToString());
+         if (!ReferenceEquals(go, null))
+         {
+             Object.Destroy(go);
+         }*/
+        Debug.Log(channelJoined + "ChannelJoined");
+        foreach (uint remoteUid in uidList)
         {
             GameObject remoteUserScreen = GameObject.Find(remoteUid.ToString());
             Destroy(remoteUserScreen);
@@ -543,17 +545,17 @@ public class AgoraUnityVideo: MonoBehaviour
         join(staticChannelName);
         onSceneHelloVideoLoaded();
 
-        if(channelJoined%6==0 && channelJoined>1)
+        if (channelJoined % 6 == 0 && channelJoined > 1)
         {
-            if(panelNum==currentPage)
+            if (panelNum == currentPage)
             {
                 ClickLeftButton();
             }
-            GameObject restPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel"+panelNum.ToString()).gameObject;
+            GameObject restPanel = GameObject.Find("VideoCanvas").transform.Find("VideoPanel" + panelNum.ToString()).gameObject;
             Destroy(restPanel);
             SetButtonActive();
-            currentPage-=1;
-            panelNum-=1;
+            currentPage -= 1;
+            panelNum -= 1;
         }
     }
 
@@ -583,7 +585,7 @@ public class AgoraUnityVideo: MonoBehaviour
             case 101:
                 msg += "\nPlease make sure your AppId is valid and it does not require a certificate for this demo.";
                 break;
-            
+
         }
 
         Debug.LogError(msg);
@@ -601,8 +603,8 @@ public class AgoraUnityVideo: MonoBehaviour
 
     public void OnUserMutedAudio(uint uid, bool muted)
     {
-        Debug.Log(uid+"OnUserMutedAudio 동작하는지");
-        if(muted)
+        Debug.Log(uid + "OnUserMutedAudio 동작하는지");
+        if (muted)
         {
             GameObject remoteUserScreen = GameObject.Find(uid.ToString());
             GameObject AudioIcon = remoteUserScreen.transform.Find("Audio").gameObject;
@@ -626,8 +628,8 @@ public class AgoraUnityVideo: MonoBehaviour
 
     public void OnUserMuteVideo(uint uid, bool muted)
     {
-        Debug.Log(uid+"OnUserMutedVideo 동작하는지");
-        if(muted)
+        Debug.Log(uid + "OnUserMutedVideo 동작하는지");
+        if (muted)
         {
             GameObject remoteUserScreen = GameObject.Find(uid.ToString());
             VideoSurface videoSurface = remoteUserScreen.GetComponent<VideoSurface>();
